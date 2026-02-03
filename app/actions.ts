@@ -28,7 +28,13 @@ export async function generateMatImage(formData: FormData) {
             style: "natural"
         });
 
-        return { url: response.data[0].url };
+        const imageUrl = response.data?.[0]?.url;
+
+        if (!imageUrl) {
+            throw new Error('No se generó ninguna imagen.');
+        }
+
+        return { url: imageUrl };
 
     } catch (error: any) {
         console.error('OpenAI Error:', error);
