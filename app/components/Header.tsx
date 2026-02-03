@@ -11,6 +11,7 @@ export default function Header() {
                     </a>
                 </h1>
                 <nav className="hidden md:flex gap-6 text-sm font-medium text-zinc-400">
+                    <a href="/portfolio" className="hover:text-white transition-colors">Nuestros Trabajos</a>
                     <a href="/#sobre-nosotros" className="hover:text-white transition-colors">Sobre Nosotros</a>
                     <a href="/register" className="text-tropical font-bold hover:text-white transition-colors">Crear Cuenta</a>
                     <a href="/contact" className="hover:text-white transition-colors">Contacto</a>
