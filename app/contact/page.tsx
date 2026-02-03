@@ -4,26 +4,14 @@ import Image from "next/image";
 import { Mail, Phone, MapPin, ArrowLeft, Instagram, Facebook, Linkedin, Music } from "lucide-react";
 import Link from "next/link";
 import FloatingWhatsApp from "../components/FloatingWhatsApp";
+import Header from "../components/Header";
 
 export default function ContactPage() {
     return (
         <main className="min-h-screen bg-black text-white flex flex-col relative overflow-hidden font-sans">
 
             {/* Header */}
-            <header className="relative z-20 w-full border-b border-white/5 bg-black/50 backdrop-blur-md sticky top-0">
-                <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-                    <Link href="/" className="font-bold text-xl tracking-tighter flex items-center gap-2">
-                        <Image src="/logo.png" alt="APCR Logo" width={48} height={48} className="w-12 h-12 object-contain invert" />
-                    </Link>
-                    <nav className="hidden md:flex gap-6 text-sm font-medium text-zinc-400">
-                        <a href="/" className="hover:text-white transition-colors">Inicio</a>
-                        <a href="/#sobre-nosotros" className="hover:text-white transition-colors">Sobre Nosotros</a>
-                        <a href="/register" className="hover:text-white transition-colors">Crear Cuenta</a>
-                        <a href="/contact" className="text-tropical font-bold hover:text-white transition-colors">Contacto</a>
-                        <a href="/login" className="hover:text-white transition-colors border border-zinc-700 px-4 py-1 rounded-full hover:bg-zinc-800">Área Clientes</a>
-                    </nav>
-                </div>
-            </header>
+            <Header />
 
             {/* Background Image */}
             <div className="absolute inset-0 pointer-events-none">

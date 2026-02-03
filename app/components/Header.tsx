@@ -64,10 +64,10 @@ export default function Header() {
 
                             {/* Menu Items */}
                             <nav
-                                className="flex flex-col gap-6"
+                                className="flex flex-col gap-6 p-6"
                                 style={{
-                                    backgroundColor: '#000000',
-                                    background: 'rgb(0, 0, 0)'
+                                    backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                                    background: 'rgba(0, 0, 0, 0.9)'
                                 }}
                             >
                                 <a href="/" onClick={() => setIsMenuOpen(false)} className="text-xl font-bold text-white hover:text-tropical transition-colors border-b border-white/5 pb-4">
