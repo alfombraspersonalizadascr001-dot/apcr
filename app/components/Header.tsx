@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
@@ -32,18 +34,51 @@ export default function Header() {
                     {isMenuOpen ? <X /> : <Menu />}
                 </button>
 
-                {/* Mobile Nav Overlay */}
+                {/* Mobile Nav Overlay (Backdrop + Drawer) */}
                 {isMenuOpen && (
-                    <div className="fixed inset-0 bg-black/95 backdrop-blur-xl z-40 flex flex-col items-center justify-center p-6 space-y-8 animate-in slide-in-from-top-10 duration-200">
-                        <nav className="flex flex-col items-center gap-8 text-xl font-medium text-zinc-400">
-                            <a href="/" onClick={() => setIsMenuOpen(false)} className="hover:text-white transition-colors border-b border-white/10 pb-2 w-full text-center">Inicio</a>
-                            <a href="/portfolio" onClick={() => setIsMenuOpen(false)} className="hover:text-white transition-colors border-b border-white/10 pb-2 w-full text-center">Nuestros Trabajos</a>
-                            <a href="/#sobre-nosotros" onClick={() => setIsMenuOpen(false)} className="hover:text-white transition-colors border-b border-white/10 pb-2 w-full text-center">Sobre Nosotros</a>
-                            <a href="/register" onClick={() => setIsMenuOpen(false)} className="text-tropical font-bold hover:text-white transition-colors border-b border-white/10 pb-2 w-full text-center">Crear Cuenta</a>
-                            <a href="/contact" onClick={() => setIsMenuOpen(false)} className="hover:text-white transition-colors border-b border-white/10 pb-2 w-full text-center">Contacto</a>
-                            <a href="/login" onClick={() => setIsMenuOpen(false)} className="hover:text-white transition-colors border border-zinc-700 px-6 py-2 rounded-full hover:bg-zinc-800 mt-4">Área Clientes</a>
-                        </nav>
-                    </div>
+                    <>
+                        {/* Dark Backdrop */}
+                        <div
+                            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
+                            onClick={() => setIsMenuOpen(false)}
+                        />
+
+                        {/* Right Side Drawer */}
+                        <div className="fixed top-0 right-0 h-full w-3/4 max-w-sm bg-zinc-950 border-l border-white/10 z-50 shadow-2xl p-6 animate-in slide-in-from-right duration-300">
+
+                            {/* Close Button Header */}
+                            <div className="flex justify-end mb-8">
+                                <button
+                                    onClick={() => setIsMenuOpen(false)}
+                                    className="p-2 text-white hover:bg-white/10 rounded-full transition-colors"
+                                >
+                                    <X className="w-8 h-8" />
+                                </button>
+                            </div>
+
+                            {/* Menu Items */}
+                            <nav className="flex flex-col gap-6">
+                                <a href="/" onClick={() => setIsMenuOpen(false)} className="text-xl font-bold text-white hover:text-tropical transition-colors border-b border-white/5 pb-4">
+                                    Inicio
+                                </a>
+                                <a href="/portfolio" onClick={() => setIsMenuOpen(false)} className="text-xl font-bold text-white hover:text-tropical transition-colors border-b border-white/5 pb-4">
+                                    Nuestros Trabajos
+                                </a>
+                                <a href="/#sobre-nosotros" onClick={() => setIsMenuOpen(false)} className="text-xl font-bold text-white hover:text-tropical transition-colors border-b border-white/5 pb-4">
+                                    Sobre Nosotros
+                                </a>
+                                <a href="/register" onClick={() => setIsMenuOpen(false)} className="text-xl font-bold text-tropical hover:text-white transition-colors border-b border-white/5 pb-4">
+                                    Crear Cuenta
+                                </a>
+                                <a href="/contact" onClick={() => setIsMenuOpen(false)} className="text-xl font-bold text-white hover:text-tropical transition-colors border-b border-white/5 pb-4">
+                                    Contacto
+                                </a>
+                                <a href="/login" onClick={() => setIsMenuOpen(false)} className="mt-4 text-center px-6 py-3 bg-white text-black font-bold rounded-lg hover:bg-zinc-200 transition-colors">
+                                    Área Clientes
+                                </a>
+                            </nav>
+                        </div>
+                    </>
                 )}
             </div>
         </header>
