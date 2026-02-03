@@ -45,8 +45,11 @@ export default function Header() {
 
                         {/* Right Side Drawer */}
                         <div
-                            className="fixed top-0 right-0 h-full w-3/4 max-w-sm shadow-2xl ring-1 ring-white/10 z-50 p-6 animate-in slide-in-from-right duration-300"
-                            style={{ backgroundColor: '#000000' }}
+                            className="fixed top-0 right-0 h-full w-3/4 max-w-sm z-50 p-6"
+                            style={{
+                                backgroundColor: '#000000',
+                                background: 'rgb(0, 0, 0)'
+                            }}
                         >
 
                             {/* Close Button Header */}
@@ -60,7 +63,13 @@ export default function Header() {
                             </div>
 
                             {/* Menu Items */}
-                            <nav className="flex flex-col gap-6">
+                            <nav
+                                className="flex flex-col gap-6"
+                                style={{
+                                    backgroundColor: '#000000',
+                                    background: 'rgb(0, 0, 0)'
+                                }}
+                            >
                                 <a href="/" onClick={() => setIsMenuOpen(false)} className="text-xl font-bold text-white hover:text-tropical transition-colors border-b border-white/5 pb-4">
                                     Inicio
                                 </a>
