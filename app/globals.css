@@ -1,0 +1,155 @@
+@import "tailwindcss";
+
+:root {
+  --background: #09090b;
+  --foreground: #fafafa;
+  --industrial-orange: #f97316;
+  --neon-pink: #ec4899;
+  --tropical-cyan: #06b6d4;
+  --tropical-yellow: #facc15;
+  --surface: #18181b;
+  --surface-highlight: #27272a;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-industrial-orange: var(--industrial-orange);
+  --color-neon-pink: var(--neon-pink);
+  --color-surface: var(--surface);
+  --color-surface-highlight: var(--surface-highlight);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* Custom UI Utilities */
+.panel-industrial {
+  background: var(--surface);
+  border: 1px solid #3f3f46;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+}
+
+.input-industrial {
+  background: var(--surface-highlight);
+  border: 1px solid #52525b;
+  color: white;
+  transition: all 0.2s;
+}
+
+.input-industrial:focus {
+  border-color: var(--industrial-orange);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.2);
+}
+
+.text-tropical {
+  background: linear-gradient(to right, #facc15, #f97316, #ec4899);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bg-tropical-gradient {
+  background: linear-gradient(to right, #facc15, #f97316, #ec4899);
+}
+
+.font-handwriting {
+  font-family: var(--font-caveat), 'Brush Script MT', cursive;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+@keyframes heartbeat {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  25% {
+    transform: scale(1.05);
+  }
+
+  50% {
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse-slow {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes ping-slow {
+  0% {
+    transform: scale(1);
+    opacity: 0.75;
+  }
+
+  100% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+
+@keyframes bounce-slow {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-heartbeat {
+  animation: heartbeat 2s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s ease-in-out infinite;
+}
+
+.animate-ping-slow {
+  animation: ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 2s ease-in-out infinite;
+}
+
+.bg-sunset-gradient {
+  background: linear-gradient(135deg, #ff6b6b 0%, #feca57 50%, #ee5a6f 100%);
+}
+
+@keyframes float-ghost {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.animate-float-ghost {
+  animation: float-ghost 3s ease-in-out infinite;
+}
