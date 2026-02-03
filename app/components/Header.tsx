@@ -44,7 +44,10 @@ export default function Header() {
                         />
 
                         {/* Right Side Drawer */}
-                        <div className="fixed top-0 right-0 h-full w-3/4 max-w-sm bg-zinc-950 border-l border-white/10 z-50 shadow-2xl p-6 animate-in slide-in-from-right duration-300">
+                        <div
+                            className="fixed top-0 right-0 h-full w-3/4 max-w-sm shadow-2xl ring-1 ring-white/10 z-50 p-6 animate-in slide-in-from-right duration-300"
+                            style={{ backgroundColor: '#000000' }}
+                        >
 
                             {/* Close Button Header */}
                             <div className="flex justify-end mb-8">
