@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from "../components/Header";
 import FloatingWhatsApp from "../components/FloatingWhatsApp";
 import {
@@ -51,51 +51,49 @@ const ORDER_STEPS = [
     { number: 6, label: "Entregado", icon: CheckCircle },
 ];
 
-// --- DATOS MOCK ---
-const MOCK_CLIENT = {
-    name: "Carlos Rodríguez",
-    company: "Hotel & Casino del Rey",
-    email: "gerencia@delrey.cr",
-    phone: "+506 8888-8888"
+// --- DATOS MOCK INITIAL ---
+const DEFAULT_CLIENT = {
+    firstName: "Invitado",
+    lastName: "",
+    company: "Empresa Demo",
+    email: "cliente@demo.com",
+    mobilePhone: "+506 8888-8888"
 };
 
 const MOCK_ORDERS: Order[] = [
     {
-        id: "ORD-2026-001",
-        date: "01 Feb 2026",
+        id: "ORD-DEMO-001",
+        date: "Hoy",
         status: "Producción",
-        step: 3, // Currently at "Armado"
-        total: "₡ 125,000",
-        items: ["Alfombra Entrada Principal (120x80cm)", "Alfombra VIP (200x150cm)"],
+        step: 2, // Corte
+        total: "₡ 85,000",
+        items: ["Alfombra Personalizada (100x80cm)"],
         images: {
             topView: "/mock-top.jpg",
             render: "/mock-render.jpg"
         },
         documents: {
-            proforma: "#PRO-001.pdf",
-            invoice: "#FAC-001.pdf"
-        }
-    },
-    {
-        id: "ORD-2025-089",
-        date: "15 Dic 2025",
-        status: "Entregado",
-        step: 6, // Completed
-        total: "₡ 45,000",
-        items: ["Alfombra Recepción (Pequeña)"],
-        images: {
-            topView: "/mock-top-2.jpg",
-            render: "/mock-render-2.jpg"
-        },
-        documents: {
-            proforma: "#PRO-089.pdf",
-            invoice: "#FAC-992.pdf"
+            proforma: "#PRO-2026.pdf",
+            invoice: null
         }
     }
 ];
 
 export default function DashboardPage() {
     const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+    const [clientData, setClientData] = useState(DEFAULT_CLIENT);
+
+    useEffect(() => {
+        // Cargar datos reales si el usuario se ha registrado
+        const storedUser = localStorage.getItem('apcr_user');
+        if (storedUser) {
+            try {
+                setClientData(JSON.parse(storedUser));
+            } catch (e) {
+                console.error("Error reading user data", e);
+            }
+        }
+    }, []);
 
     return (
         <div className="min-h-screen bg-black text-white font-sans bg-[grid-white/0.05]">
@@ -107,17 +105,17 @@ export default function DashboardPage() {
                 <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
                     <div>
                         <span className="text-tropical font-bold tracking-wider text-sm">BIENVENIDO DE NUEVO</span>
-                        <h1 className="text-4xl md:text-5xl font-bold mt-2">{MOCK_CLIENT.name}</h1>
+                        <h1 className="text-4xl md:text-5xl font-bold mt-2">{clientData.firstName} {clientData.lastName}</h1>
                         <p className="text-xl text-zinc-400 mt-2 flex items-center gap-2">
-                            <span className="bg-white/10 px-3 py-1 rounded-full text-sm text-white border border-white/10">{MOCK_CLIENT.company}</span>
+                            <span className="bg-white/10 px-3 py-1 rounded-full text-sm text-white border border-white/10">{clientData.company}</span>
                         </p>
                     </div>
 
                     <div className="flex gap-4">
                         <div className="text-right hidden md:block">
                             <p className="text-zinc-500 text-sm font-bold">CONTACTO REGISTRADO</p>
-                            <p className="text-zinc-300">{MOCK_CLIENT.email}</p>
-                            <p className="text-zinc-300">{MOCK_CLIENT.phone}</p>
+                            <p className="text-zinc-300">{clientData.email}</p>
+                            <p className="text-zinc-300">{clientData.mobilePhone}</p>
                         </div>
                     </div>
                 </div>
