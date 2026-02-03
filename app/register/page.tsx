@@ -18,8 +18,44 @@ export default function RegisterPage() {
         const formData = new FormData(e.currentTarget);
         const data = Object.fromEntries(formData.entries());
 
-        // Simulate API call and storage
-        // In a real app, this goes to a DB. Here we simulate it for the demo flow.
+        // 1. Guardar en Base de Datos Real (Supabase)
+        try {
+            // Dynamic import to avoid build errors if keys are missing initially
+            const { supabase } = await import('../../lib/supabase');
+
+            if (process.env.NEXT_PUBLIC_SUPABASE_URL) {
+                const { error } = await supabase
+                    .from('clients')
+                    .insert([
+                        {
+                            first_name: data.firstName,
+                            last_name: data.lastName,
+                            company: data.company,
+                            role: data.role,
+                            address: data.address,
+                            email: data.email,
+                            mobile_phone: data.mobilePhone,
+                            office_phone: data.officePhone,
+                            id_type: data.idType,
+                            id_number: data.idNumber,
+                            activity_code: data.activityCode,
+                            billing_email: data.billingEmail,
+                            created_at: new Date().toISOString(),
+                        }
+                    ]);
+
+                if (error) {
+                    console.error("Error guardando en Supabase:", error);
+                    // No bloqueamos el flujo, seguimos con LocalStorage para que el usuario no se trabe
+                } else {
+                    console.log("Cliente guardado exitosamente en la nube");
+                }
+            }
+        } catch (err) {
+            console.warn("Supabase no configurado aún o error de red", err);
+        }
+
+        // 2. Guardar en LocalStorage (Sesión del navegador)
         localStorage.setItem('apcr_user', JSON.stringify(data));
 
         setTimeout(() => {
