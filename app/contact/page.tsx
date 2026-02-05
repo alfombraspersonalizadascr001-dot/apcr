@@ -26,7 +26,7 @@ export default function ContactPage() {
                 <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80" />
             </div>
 
-            <div className="flex-1 flex items-center justify-center p-6">
+            <div className="flex-1 flex items-center justify-center p-6 pt-24">
                 <div className="relative z-10 w-full max-w-4xl">
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">

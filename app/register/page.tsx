@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { User, Building2, Briefcase, Mail, Phone, MapPin, Loader2, ArrowRight } from 'lucide-react';
+import { User, Building2, Briefcase, Mail, Phone, MapPin, Loader2, ArrowRight, Lock } from 'lucide-react';
 import Image from "next/image";
 import FloatingWhatsApp from "../components/FloatingWhatsApp";
 
@@ -17,17 +17,41 @@ export default function RegisterPage() {
 
         const formData = new FormData(e.currentTarget);
         const data = Object.fromEntries(formData.entries());
+        const email = formData.get('email') as string;
+        const password = formData.get('password') as string;
 
-        // 1. Guardar en Base de Datos Real (Supabase)
         try {
-            // Dynamic import to avoid build errors if keys are missing initially
+            // Dynamic import
             const { supabase } = await import('../../lib/supabase');
 
-            if (process.env.NEXT_PUBLIC_SUPABASE_URL) {
-                const { error } = await supabase
+            if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
+                throw new Error("Supabase no configurado");
+            }
+
+            // 1. Crear Usuario en Supabase Auth
+            const { data: authData, error: authError } = await supabase.auth.signUp({
+                email,
+                password,
+                options: {
+                    data: {
+                        first_name: data.firstName,
+                        last_name: data.lastName,
+                        company: data.company
+                    }
+                }
+            });
+
+            if (authError) {
+                throw authError;
+            }
+
+            // 2. Guardar en tabla 'clients' vinculado al usuario
+            if (authData.user) {
+                const { error: dbError } = await supabase
                     .from('clients')
                     .insert([
                         {
+                            // user_id: authData.user.id, // Habilitar si la tabla tiene user_id
                             first_name: data.firstName,
                             last_name: data.lastName,
                             company: data.company,
@@ -44,24 +68,28 @@ export default function RegisterPage() {
                         }
                     ]);
 
-                if (error) {
-                    console.error("Error guardando en Supabase:", error);
-                    // No bloqueamos el flujo, seguimos con LocalStorage para que el usuario no se trabe
+                if (dbError) {
+                    console.error("Error guardando perfil de cliente:", dbError);
+                    // No lanzamos error aquí para no confundir al usuario si el Auth ya pasó
                 } else {
-                    console.log("Cliente guardado exitosamente en la nube");
+                    console.log("Cliente y Usuario creados exitosamente");
                 }
             }
-        } catch (err) {
-            console.warn("Supabase no configurado aún o error de red", err);
-        }
 
-        // 2. Guardar en LocalStorage (Sesión del navegador)
-        localStorage.setItem('apcr_user', JSON.stringify(data));
+            // 3. Guardar sesión local de respaldo
+            localStorage.setItem('apcr_user', JSON.stringify(data));
 
-        setTimeout(() => {
+            // Éxito
+            setTimeout(() => {
+                setLoading(false);
+                router.push('/dashboard');
+            }, 1000);
+
+        } catch (error: any) {
+            console.error("Error en registro:", error);
+            alert("Error al crear cuenta: " + (error.message || "Intente nuevamente"));
             setLoading(false);
-            router.push('/dashboard');
-        }, 1500);
+        }
     };
 
     return (
@@ -157,11 +185,19 @@ export default function RegisterPage() {
                             <h3 className="text-sm font-bold text-orange-500 uppercase tracking-wider border-b border-white/5 pb-2">Contacto</h3>
                         </div>
 
-                        <div className="space-y-2 md:col-span-2">
+                        <div className="space-y-2">
                             <label className="text-xs text-zinc-500 font-medium ml-1">Correo Electrónico de Contacto</label>
                             <div className="relative">
                                 <Mail className="absolute left-3 top-3 w-5 h-5 text-zinc-600" />
                                 <input name="email" type="email" required className="w-full bg-black/50 border border-zinc-800 rounded-lg py-3 pl-10 pr-4 focus:border-cyan-500 transition-colors" placeholder="juan@empresa.com" />
+                            </div>
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="text-xs text-zinc-500 font-medium ml-1">Contraseña</label>
+                            <div className="relative">
+                                <Lock className="absolute left-3 top-3 w-5 h-5 text-zinc-600" />
+                                <input name="password" type="password" required minLength={6} className="w-full bg-black/50 border border-zinc-800 rounded-lg py-3 pl-10 pr-4 focus:border-cyan-500 transition-colors" placeholder="Mínimo 6 caracteres" />
                             </div>
                         </div>
 
