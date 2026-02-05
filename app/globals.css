@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #09090b;
-  --foreground: #fafafa;
+  --background: #ffffff;
+  --foreground: #0f172a;
   --industrial-orange: #f97316;
   --neon-pink: #ec4899;
   --tropical-cyan: #06b6d4;
   --tropical-yellow: #facc15;
-  --surface: #18181b;
-  --surface-highlight: #27272a;
+  --surface: #ffffff;
+  --surface-highlight: #f1f5f9;
 }
 
 @theme inline {
@@ -32,21 +32,22 @@ body {
 /* Custom UI Utilities */
 .panel-industrial {
   background: var(--surface);
-  border: 1px solid #3f3f46;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .input-industrial {
   background: var(--surface-highlight);
-  border: 1px solid #52525b;
-  color: white;
+  border: 1px solid #cbd5e1;
+  color: #0f172a;
   transition: all 0.2s;
 }
 
 .input-industrial:focus {
   border-color: var(--industrial-orange);
   outline: none;
-  box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.2);
+  background: #ffffff;
+  box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.1);
 }
 
 .text-tropical {

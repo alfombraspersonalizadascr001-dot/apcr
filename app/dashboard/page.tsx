@@ -96,7 +96,7 @@ export default function DashboardPage() {
     }, []);
 
     return (
-        <div className="min-h-screen bg-black text-white font-sans bg-[grid-white/0.05]">
+        <div className="min-h-screen bg-white text-slate-900 font-sans bg-[grid-slate-900/0.05]">
             <Header />
 
             <main className="pt-24 px-6 max-w-7xl mx-auto pb-20">
@@ -105,17 +105,17 @@ export default function DashboardPage() {
                 <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
                     <div>
                         <span className="text-tropical font-bold tracking-wider text-sm">BIENVENIDO DE NUEVO</span>
-                        <h1 className="text-4xl md:text-5xl font-bold mt-2">{clientData.firstName} {clientData.lastName}</h1>
-                        <p className="text-xl text-zinc-400 mt-2 flex items-center gap-2">
-                            <span className="bg-white/10 px-3 py-1 rounded-full text-sm text-white border border-white/10">{clientData.company}</span>
+                        <h1 className="text-4xl md:text-5xl font-bold mt-2 text-slate-900">{clientData.firstName} {clientData.lastName}</h1>
+                        <p className="text-xl text-slate-500 mt-2 flex items-center gap-2">
+                            <span className="bg-slate-100 px-3 py-1 rounded-full text-sm text-slate-700 border border-slate-200 shadow-sm">{clientData.company}</span>
                         </p>
                     </div>
 
                     <div className="flex gap-4">
                         <div className="text-right hidden md:block">
-                            <p className="text-zinc-500 text-sm font-bold">CONTACTO REGISTRADO</p>
-                            <p className="text-zinc-300">{clientData.email}</p>
-                            <p className="text-zinc-300">{clientData.mobilePhone}</p>
+                            <p className="text-slate-500 text-sm font-bold">CONTACTO REGISTRADO</p>
+                            <p className="text-slate-700">{clientData.email}</p>
+                            <p className="text-slate-700">{clientData.mobilePhone}</p>
                         </div>
                     </div>
                 </div>
@@ -130,7 +130,7 @@ export default function DashboardPage() {
                         <div
                             key={order.id}
                             onClick={() => setSelectedOrder(order)}
-                            className="group bg-surface hover:bg-zinc-900 border border-white/10 rounded-xl p-6 transition-all cursor-pointer hover:border-tropical-cyan/50 relative overflow-hidden"
+                            className="group bg-white hover:bg-slate-50 border border-slate-200 rounded-xl p-6 transition-all cursor-pointer hover:border-tropical-cyan/50 relative overflow-hidden shadow-sm hover:shadow-md"
                         >
                             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
 
@@ -140,8 +140,8 @@ export default function DashboardPage() {
                                         <Package className={`w-6 h-6 ${getStatusColor(order.status).text}`} />
                                     </div>
                                     <div>
-                                        <p className="font-bold text-lg group-hover:text-tropical-cyan transition-colors">{order.id}</p>
-                                        <p className="text-zinc-500 text-sm">{order.date}</p>
+                                        <p className="font-bold text-lg group-hover:text-tropical-cyan transition-colors text-slate-900">{order.id}</p>
+                                        <p className="text-slate-500 text-sm">{order.date}</p>
                                     </div>
                                 </div>
 
@@ -149,7 +149,7 @@ export default function DashboardPage() {
                                 <div className="flex-1 md:px-12">
                                     <div className="flex flex-col gap-1 mb-3">
                                         {order.items.map((item, i) => (
-                                            <span key={i} className="text-zinc-300 text-sm block">• {item}</span>
+                                            <span key={i} className="text-slate-600 text-sm block">• {item}</span>
                                         ))}
                                     </div>
 
@@ -168,7 +168,7 @@ export default function DashboardPage() {
                                     </span>
                                 </div>
 
-                                <ChevronRight className="text-zinc-600 group-hover:text-white group-hover:translate-x-1 transition-all" />
+                                <ChevronRight className="text-slate-400 group-hover:text-slate-900 group-hover:translate-x-1 transition-all" />
                             </div>
                         </div>
                     ))}
@@ -178,19 +178,19 @@ export default function DashboardPage() {
 
             {/* --- MODAL: DETALLES DEL PEDIDO --- */}
             {selectedOrder && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
-                    <div className="bg-[#121212] border border-white/10 w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl relative animate-in zoom-in-95 duration-200">
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200">
+                    <div className="bg-white border border-slate-200 w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl relative animate-in zoom-in-95 duration-200">
 
                         {/* Header del Modal */}
-                        <div className="sticky top-0 bg-[#121212]/95 backdrop-blur-md border-b border-white/5 p-6 flex justify-between items-center z-10">
+                        <div className="sticky top-0 bg-white/95 backdrop-blur-md border-b border-slate-200 p-6 flex justify-between items-center z-10">
                             <div>
-                                <h3 className="text-2xl font-bold flex items-center gap-2">
+                                <h3 className="text-2xl font-bold flex items-center gap-2 text-slate-900">
                                     Pedido {selectedOrder.id}
                                     <span className={`text-xs px-2 py-1 rounded-full ${getStatusColor(selectedOrder.status).badge}`}>{selectedOrder.status}</span>
                                 </h3>
-                                <p className="text-zinc-400 text-sm">Realizado el {selectedOrder.date}</p>
+                                <p className="text-slate-500 text-sm">Realizado el {selectedOrder.date}</p>
                             </div>
-                            <button onClick={() => setSelectedOrder(null)} className="p-2 hover:bg-white/10 rounded-full transition-colors">
+                            <button onClick={() => setSelectedOrder(null)} className="p-2 hover:bg-slate-100 rounded-full transition-colors text-slate-500">
                                 <X className="w-6 h-6" />
                             </button>
                         </div>
@@ -198,14 +198,14 @@ export default function DashboardPage() {
                         <div className="p-8 space-y-10">
 
                             {/* --- TRACKER DE PROGRESO --- */}
-                            <section className="bg-zinc-900/50 rounded-2xl p-6 border border-white/5 overflow-x-auto">
+                            <section className="bg-slate-50 rounded-2xl p-6 border border-slate-200 overflow-x-auto">
                                 <h4 className="text-lg font-bold mb-6 flex items-center gap-2 text-tropical-cyan">
                                     <Package className="w-5 h-5" /> Seguimiento de Producción
                                 </h4>
 
                                 <div className="flex items-center justify-between min-w-[600px] relative">
                                     {/* Linea conectora de fondo */}
-                                    <div className="absolute top-1/2 left-0 w-full h-1 bg-zinc-800 -translate-y-1/2 z-0"></div>
+                                    <div className="absolute top-1/2 left-0 w-full h-1 bg-slate-200 -translate-y-1/2 z-0"></div>
 
                                     {/* Linea de progreso activa */}
                                     <div
@@ -224,10 +224,10 @@ export default function DashboardPage() {
                                                     className={`
                                                         w-12 h-12 rounded-full flex items-center justify-center border-2 transition-all duration-300
                                                         ${isCurrent
-                                                            ? 'bg-black border-tropical-cyan text-tropical-cyan scale-125 shadow-[0_0_15px_rgba(6,182,212,0.6)]'
+                                                            ? 'bg-white border-tropical-cyan text-tropical-cyan scale-125 shadow-[0_0_15px_rgba(6,182,212,0.4)]'
                                                             : isCompleted
-                                                                ? 'bg-zinc-900 border-green-500 text-green-400 shadow-[0_0_10px_rgba(34,197,94,0.3)]'
-                                                                : 'bg-zinc-900 border-zinc-700 text-zinc-600'}
+                                                                ? 'bg-white border-green-500 text-green-500 shadow-sm'
+                                                                : 'bg-white border-slate-200 text-slate-300'}
                                                     `}
                                                 >
                                                     {isCompleted && !isCurrent ? (
@@ -239,7 +239,7 @@ export default function DashboardPage() {
                                                 <span
                                                     className={`
                                                         text-xs font-bold w-24 text-center transition-colors
-                                                        ${isCurrent ? 'text-white' : isCompleted ? 'text-green-400' : 'text-zinc-600'}
+                                                        ${isCurrent ? 'text-slate-900' : isCompleted ? 'text-green-600' : 'text-slate-400'}
                                                     `}
                                                 >
                                                     {step.label}
@@ -258,25 +258,25 @@ export default function DashboardPage() {
                                 <div className="grid md:grid-cols-2 gap-6">
                                     {/* Vista Superior (Diseño) */}
                                     <div className="space-y-2">
-                                        <p className="text-sm font-bold text-zinc-500 uppercase">Vista Superior (Diseño)</p>
-                                        <div className="aspect-square relative rounded-xl overflow-hidden border border-white/10 bg-zinc-900 group">
+                                        <p className="text-sm font-bold text-slate-500 uppercase">Vista Superior (Diseño)</p>
+                                        <div className="aspect-square relative rounded-xl overflow-hidden border border-slate-200 bg-slate-50 group">
                                             {/* Placeholder de imagen */}
-                                            <div className="absolute inset-0 flex flex-col items-center justify-center text-zinc-600">
-                                                <Image src="/logo.png" width={40} height={40} alt="placeholder" className="opacity-20 mb-2 invert" />
+                                            <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-400">
+                                                <Image src="/logo.png" width={40} height={40} alt="placeholder" className="opacity-20 mb-2" />
                                                 <span className="text-xs">Vista Previa Generada</span>
                                             </div>
-                                            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-                                                <button className="w-full bg-white text-black py-2 rounded-lg font-bold text-sm">Ampliar</button>
+                                            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <button className="w-full bg-white text-black py-2 rounded-lg font-bold text-sm shadow-lg">Ampliar</button>
                                             </div>
                                         </div>
                                     </div>
 
                                     {/* Render 3D */}
                                     <div className="space-y-2">
-                                        <p className="text-sm font-bold text-zinc-500 uppercase">Render Fotorealista</p>
-                                        <div className="aspect-square relative rounded-xl overflow-hidden border border-white/10 bg-zinc-900 group">
-                                            <div className="absolute inset-0 flex flex-col items-center justify-center text-zinc-600">
-                                                <Image src="/logo.png" width={40} height={40} alt="placeholder" className="opacity-20 mb-2 invert" />
+                                        <p className="text-sm font-bold text-slate-500 uppercase">Render Fotorealista</p>
+                                        <div className="aspect-square relative rounded-xl overflow-hidden border border-slate-200 bg-slate-50 group">
+                                            <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-400">
+                                                <Image src="/logo.png" width={40} height={40} alt="placeholder" className="opacity-20 mb-2" />
                                                 <span className="text-xs">Render 3D</span>
                                             </div>
                                             <div className="absolute bg-tropical-pink/20 text-tropical-pink text-xs font-bold px-3 py-1 rounded-full top-4 right-4 border border-tropical-pink/50">
@@ -295,34 +295,34 @@ export default function DashboardPage() {
                                 <div className="grid md:grid-cols-2 gap-4">
 
                                     {/* Proforma Card */}
-                                    <div className="p-4 bg-zinc-900 rounded-xl border border-white/5 flex items-center justify-between hover:border-tropical-yellow/30 transition-colors">
+                                    <div className="p-4 bg-white rounded-xl border border-slate-200 flex items-center justify-between hover:border-tropical-yellow/50 transition-colors shadow-sm">
                                         <div className="flex items-center gap-3">
-                                            <div className="p-2 bg-yellow-500/10 rounded-lg text-yellow-500">
+                                            <div className="p-2 bg-yellow-500/10 rounded-lg text-yellow-600">
                                                 <Clock className="w-5 h-5" />
                                             </div>
                                             <div>
-                                                <p className="font-bold text-sm">Proforma Aprobada</p>
-                                                <p className="text-xs text-zinc-500">{selectedOrder.documents.proforma}</p>
+                                                <p className="font-bold text-sm text-slate-900">Proforma Aprobada</p>
+                                                <p className="text-xs text-slate-500">{selectedOrder.documents.proforma}</p>
                                             </div>
                                         </div>
-                                        <button className="p-2 hover:bg-white/10 rounded-lg text-zinc-400 hover:text-white transition-colors">
+                                        <button className="p-2 hover:bg-slate-100 rounded-lg text-slate-400 hover:text-slate-900 transition-colors">
                                             <Download className="w-5 h-5" />
                                         </button>
                                     </div>
 
                                     {/* Factura Card */}
-                                    <div className={`p-4 rounded-xl border flex items-center justify-between transition-colors ${selectedOrder.documents.invoice ? 'bg-zinc-900 border-white/5 hover:border-green-500/30' : 'bg-black/40 border-dashed border-zinc-800 opacity-60'}`}>
+                                    <div className={`p-4 rounded-xl border flex items-center justify-between transition-colors shadow-sm ${selectedOrder.documents.invoice ? 'bg-white border-slate-200 hover:border-green-500/50' : 'bg-slate-50 border-dashed border-slate-300 opacity-60'}`}>
                                         <div className="flex items-center gap-3">
-                                            <div className={`p-2 rounded-lg ${selectedOrder.documents.invoice ? 'bg-green-500/10 text-green-500' : 'bg-zinc-800 text-zinc-600'}`}>
+                                            <div className={`p-2 rounded-lg ${selectedOrder.documents.invoice ? 'bg-green-500/10 text-green-600' : 'bg-slate-200 text-slate-500'}`}>
                                                 <CheckCircle className="w-5 h-5" />
                                             </div>
                                             <div>
-                                                <p className="font-bold text-sm">Factura Electrónica</p>
-                                                <p className="text-xs text-zinc-500">{selectedOrder.documents.invoice || 'Pendiente de emisión'}</p>
+                                                <p className="font-bold text-sm text-slate-900">Factura Electrónica</p>
+                                                <p className="text-xs text-slate-500">{selectedOrder.documents.invoice || 'Pendiente de emisión'}</p>
                                             </div>
                                         </div>
                                         {selectedOrder.documents.invoice && (
-                                            <button className="p-2 hover:bg-white/10 rounded-lg text-zinc-400 hover:text-white transition-colors">
+                                            <button className="p-2 hover:bg-slate-100 rounded-lg text-slate-400 hover:text-slate-900 transition-colors">
                                                 <Download className="w-5 h-5" />
                                             </button>
                                         )}
@@ -345,12 +345,12 @@ export default function DashboardPage() {
 function getStatusColor(status: OrderStatus) {
     switch (status) {
         case 'Producción':
-            return { bg: 'bg-blue-500/20', text: 'text-blue-400', badge: 'bg-blue-500/20 text-blue-300 border border-blue-500/20' };
+            return { bg: 'bg-blue-50', text: 'text-blue-600', badge: 'bg-blue-100 text-blue-700 border border-blue-200' };
         case 'Entregado':
-            return { bg: 'bg-green-500/20', text: 'text-green-400', badge: 'bg-green-500/20 text-green-300 border border-green-500/20' };
+            return { bg: 'bg-green-50', text: 'text-green-600', badge: 'bg-green-100 text-green-700 border border-green-200' };
         case 'Enviado':
-            return { bg: 'bg-indigo-500/20', text: 'text-indigo-400', badge: 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/20' };
+            return { bg: 'bg-indigo-50', text: 'text-indigo-600', badge: 'bg-indigo-100 text-indigo-700 border border-indigo-200' };
         default:
-            return { bg: 'bg-zinc-800', text: 'text-zinc-400', badge: 'bg-zinc-800 text-zinc-400 border border-zinc-700' };
+            return { bg: 'bg-slate-100', text: 'text-slate-600', badge: 'bg-slate-100 text-slate-600 border border-slate-200' };
     }
 }

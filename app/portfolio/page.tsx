@@ -42,7 +42,7 @@ const PORTFOLIO_ITEMS = BASE_IMAGES.map((image, i) => ({
 
 export default function PortfolioPage() {
     return (
-        <div className="min-h-screen bg-black text-white font-sans bg-[grid-white/0.05]">
+        <div className="min-h-screen bg-white text-slate-900 font-sans">
             <Header />
 
             <main className="pt-24 pb-20">
@@ -50,10 +50,10 @@ export default function PortfolioPage() {
                 {/* Header de la Página */}
                 <section className="px-6 max-w-7xl mx-auto mb-16 text-center">
                     <span className="text-tropical font-bold tracking-wider text-sm mb-4 block">MÁS DE 5,000 PROYECTOS ENTREGADOS</span>
-                    <h1 className="text-4xl md:text-6xl font-bold mb-6">
+                    <h1 className="text-4xl md:text-6xl font-bold mb-6 text-slate-900">
                         Galería de <span className="text-tropical">Excelencia</span>
                     </h1>
-                    <p className="text-xl text-zinc-400 max-w-2xl mx-auto">
+                    <p className="text-xl text-slate-600 max-w-2xl mx-auto">
                         No son solo alfombras. Son la imagen de miles de empresas exitosas.
                         Aquí una pequeña muestra de nuestro legado.
                     </p>
@@ -63,7 +63,7 @@ export default function PortfolioPage() {
                 <section className="px-6 max-w-[1920px] mx-auto">
                     <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-4 space-y-4">
                         {PORTFOLIO_ITEMS.map((item) => (
-                            <div key={item.id} className="relative rounded-xl overflow-hidden bg-zinc-900 border border-white/10 hover:border-tropical-cyan/50 transition-all duration-300 break-inside-avoid group">
+                            <div key={item.id} className="relative rounded-xl overflow-hidden bg-white border border-slate-200 shadow-sm hover:shadow-lg hover:border-tropical-cyan/50 transition-all duration-300 break-inside-avoid group">
                                 {/* Imagen */}
                                 <div className="relative w-full">
                                     <Image
@@ -83,13 +83,13 @@ export default function PortfolioPage() {
 
                 {/* CTA Final */}
                 <section className="mt-32 px-6">
-                    <div className="max-w-4xl mx-auto bg-gradient-to-r from-zinc-900 to-black border border-white/10 rounded-3xl p-12 text-center relative overflow-hidden">
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-tropical-pink/10 blur-[100px] rounded-full" />
-                        <div className="absolute bottom-0 left-0 w-64 h-64 bg-tropical-cyan/10 blur-[100px] rounded-full" />
+                    <div className="max-w-4xl mx-auto bg-slate-900 border border-slate-800 rounded-3xl p-12 text-center relative overflow-hidden shadow-2xl">
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-tropical-pink/20 blur-[100px] rounded-full" />
+                        <div className="absolute bottom-0 left-0 w-64 h-64 bg-tropical-cyan/20 blur-[100px] rounded-full" />
 
-                        <h2 className="text-3xl font-bold mb-6 relative z-10">¿Listo para unirte a nuestra lista de clientes felices?</h2>
+                        <h2 className="text-3xl font-bold mb-6 relative z-10 text-white">¿Listo para unirte a nuestra lista de clientes felices?</h2>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
-                            <a href="/register" className="px-8 py-4 bg-white text-black font-bold rounded-lg hover:bg-zinc-200 transition-colors flex items-center gap-2 justify-center">
+                            <a href="/register" className="px-8 py-4 bg-white text-black font-bold rounded-lg hover:bg-slate-200 transition-colors flex items-center gap-2 justify-center shadow-lg">
                                 Crear Cuenta Corporativa
                             </a>
                             <a href="/contact" className="px-8 py-4 bg-transparent border border-white/20 text-white font-bold rounded-lg hover:bg-white/10 transition-colors flex items-center gap-2 justify-center">

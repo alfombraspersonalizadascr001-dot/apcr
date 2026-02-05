@@ -1,0 +1,53 @@
+/* 
+   BACKUP DE CONFIGURACIÓN TEMA OSCURO (DARK THEME)
+   Guardado para referencia en caso de reversión.
+*/
+
+:root {
+    --background: #000000;
+    --foreground: #ffffff;
+    --industrial-orange: #f97316;
+    --neon-pink: #ec4899;
+    --tropical-cyan: #06b6d4;
+    --tropical-yellow: #facc15;
+    --surface: #18181b;
+    /* Zinc 900 */
+    --surface-highlight: #27272a;
+    /* Zinc 800 */
+}
+
+body {
+    background: var(--background);
+    color: var(--foreground);
+}
+
+/* Custom UI Utilities - DARK VERSIONS */
+.panel-industrial {
+    background: #18181b;
+    /* surface */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.input-industrial {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #27272a;
+    /* zinc-800 */
+    color: #ffffff;
+    transition: all 0.2s;
+}
+
+.input-industrial:focus {
+    border-color: var(--industrial-orange);
+    outline: none;
+    background: #000000;
+    box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.1);
+}
+
+/* Common Dark Theme Utility Replacements:
+   Light: bg-white         -> Dark: bg-black
+   Light: text-slate-900   -> Dark: text-white
+   Light: text-slate-500   -> Dark: text-zinc-400
+   Light: border-slate-200 -> Dark: border-white/10 or border-zinc-800
+   Light: bg-slate-50      -> Dark: bg-zinc-900
+*/

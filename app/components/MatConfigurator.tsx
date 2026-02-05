@@ -32,16 +32,16 @@ export default function MatConfigurator() {
             <motion.div
                 initial={{ x: -20, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
-                className="w-full lg:w-96 panel-industrial rounded-2xl p-8 flex flex-col gap-6"
+                className="w-full lg:w-96 bg-white border border-slate-200 shadow-lg rounded-2xl p-8 flex flex-col gap-6"
             >
                 <div className="flex items-center gap-3 mb-2">
                     <div className="w-10 h-10 bg-industrial-orange rounded flex items-center justify-center text-white font-bold">N</div>
-                    <h2 className="text-xl font-bold tracking-tight">Nomad Configurator</h2>
+                    <h2 className="text-xl font-bold tracking-tight text-slate-900">Nomad Configurator</h2>
                 </div>
 
                 <form action={handleSubmit} className="flex flex-col gap-6">
                     <div className="space-y-2">
-                        <label className="text-sm font-medium text-zinc-400 flex items-center gap-2">
+                        <label className="text-sm font-medium text-slate-500 flex items-center gap-2">
                             <Type className="w-4 h-4 text-industrial-orange" /> Texto del Logo
                         </label>
                         <input
@@ -54,7 +54,7 @@ export default function MatConfigurator() {
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-sm font-medium text-zinc-400 flex items-center gap-2">
+                        <label className="text-sm font-medium text-slate-500 flex items-center gap-2">
                             <Layers className="w-4 h-4 text-industrial-orange" /> Industria / Lugar
                         </label>
                         <select name="industry" className="w-full rounded-lg px-4 py-3 input-industrial appearance-none">
@@ -68,7 +68,7 @@ export default function MatConfigurator() {
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-sm font-medium text-zinc-400 flex items-center gap-2">
+                        <label className="text-sm font-medium text-slate-500 flex items-center gap-2">
                             <Palette className="w-4 h-4 text-industrial-orange" /> Color de Alfombra
                         </label>
                         <input
@@ -111,7 +111,7 @@ export default function MatConfigurator() {
                             key="result"
                             initial={{ scale: 0.9, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
-                            className="relative group rounded-2xl overflow-hidden shadow-2xl border border-white/10"
+                            className="relative group rounded-2xl overflow-hidden shadow-2xl border border-slate-200"
                         >
                             <img src={image} alt="Generated Mat" className="w-full h-auto max-w-2xl" />
                             <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4 backdrop-blur-sm">
@@ -125,9 +125,9 @@ export default function MatConfigurator() {
                             key="empty"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            className="text-zinc-700 flex flex-col items-center gap-4 border-2 border-dashed border-zinc-800 p-12 rounded-3xl"
+                            className="text-slate-700 flex flex-col items-center gap-4 border-2 border-dashed border-slate-300 p-12 rounded-3xl"
                         >
-                            <Layers className="w-16 h-16 opacity-20" />
+                            <Layers className="w-16 h-16 opacity-20 text-slate-900" />
                             <p>Configura los parámetros para ver el resultado.</p>
                         </motion.div>
                     )}

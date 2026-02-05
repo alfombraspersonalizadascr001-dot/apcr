@@ -44,9 +44,9 @@ export default function OrderTracker() {
         <div className="w-full max-w-4xl mx-auto p-6">
 
             {/* Search Box */}
-            <div className="bg-surface border border-white/10 rounded-2xl p-8 mb-12 text-center panel-industrial">
-                <h2 className="text-2xl font-bold mb-2">Rastrear Pedido</h2>
-                <p className="text-zinc-400 mb-6">Ingrese su número de orden para ver el estado de producción en tiempo real.</p>
+            <div className="bg-white border border-slate-200 shadow-md rounded-2xl p-8 mb-12 text-center">
+                <h2 className="text-2xl font-bold mb-2 text-slate-900">Rastrear Pedido</h2>
+                <p className="text-slate-500 mb-6">Ingrese su número de orden para ver el estado de producción en tiempo real.</p>
 
                 <form onSubmit={handleTrack} className="flex max-w-md mx-auto gap-2">
                     <input
@@ -54,7 +54,7 @@ export default function OrderTracker() {
                         value={orderId}
                         onChange={(e) => setOrderId(e.target.value)}
                         placeholder="# Orden (Ej: 12345)"
-                        className="flex-1 input-industrial rounded-lg px-4 py-3 text-center tracking-widest font-mono text-lg"
+                        className="flex-1 input-industrial rounded-lg px-4 py-3 text-center tracking-widest font-mono text-lg text-slate-900 border-slate-300 bg-slate-50"
                     />
                     <button
                         disabled={loading || !orderId}
@@ -73,7 +73,7 @@ export default function OrderTracker() {
                     animate={{ opacity: 1, y: 0 }}
                     className="relative"
                 >
-                    <div className="absolute top-1/2 left-0 w-full h-1 bg-zinc-800 -translate-y-1/2 z-0 hidden md:block" />
+                    <div className="absolute top-1/2 left-0 w-full h-1 bg-slate-200 -translate-y-1/2 z-0 hidden md:block" />
 
                     <div className="grid grid-cols-2 md:grid-cols-5 gap-8 relative z-10">
                         {ORDER_STEPS.map((step, index) => {
@@ -84,11 +84,11 @@ export default function OrderTracker() {
 
                             return (
                                 <div key={step.id} className="flex flex-col items-center gap-4 group">
-                                    <div className={`w-16 h-16 rounded-full flex items-center justify-center border-4 transition-all duration-500 ${isActive ? 'bg-zinc-900 border-cyan-500 text-cyan-400' : 'bg-surface border-zinc-800 text-zinc-700'} ${isCurrent ? 'shadow-[0_0_30px_rgba(6,182,212,0.4)] scale-110 border-tropical-yellow text-tropical-yellow' : ''}`}>
+                                    <div className={`w-16 h-16 rounded-full flex items-center justify-center border-4 transition-all duration-500 ${isActive ? 'bg-white border-cyan-500 text-cyan-500' : 'bg-white border-slate-200 text-slate-300'} ${isCurrent ? 'shadow-[0_0_30px_rgba(6,182,212,0.4)] scale-110 border-tropical-yellow text-tropical-yellow' : ''}`}>
                                         <step.icon className="w-8 h-8" />
                                     </div>
                                     <div className="text-center">
-                                        <p className={`font-bold text-sm uppercase tracking-wider ${isActive ? 'text-white' : 'text-zinc-600'}`}>{step.label}</p>
+                                        <p className={`font-bold text-sm uppercase tracking-wider ${isActive ? 'text-slate-900' : 'text-slate-400'}`}>{step.label}</p>
                                         {isCurrent && <span className="text-xs text-tropical-yellow animate-pulse font-bold">En Proceso</span>}
                                     </div>
                                 </div>
@@ -96,12 +96,12 @@ export default function OrderTracker() {
                         })}
                     </div>
 
-                    <div className="mt-12 p-6 bg-cyan-900/10 border border-cyan-500/20 rounded-xl flex items-center gap-4 max-w-2xl mx-auto">
-                        <CheckCircle className="text-cyan-400 w-8 h-8" />
+                    <div className="mt-12 p-6 bg-cyan-50 border border-cyan-200 rounded-xl flex items-center gap-4 max-w-2xl mx-auto shadow-sm">
+                        <CheckCircle className="text-cyan-500 w-8 h-8" />
                         <div>
-                            <h3 className="font-bold text-white text-lg">{orderData.client}</h3>
-                            <p className="text-sm text-zinc-400">
-                                Tu pedido de <span className="text-cyan-400">{orderData.product}</span> está en estado: <span className="text-tropical-yellow font-bold uppercase">{ORDER_STEPS.find(s => s.id === orderData.status)?.label}</span>.
+                            <h3 className="font-bold text-slate-900 text-lg">{orderData.client}</h3>
+                            <p className="text-sm text-slate-600">
+                                Tu pedido de <span className="text-cyan-600 font-medium">{orderData.product}</span> está en estado: <span className="text-tropical-yellow-dark font-bold uppercase">{ORDER_STEPS.find(s => s.id === orderData.status)?.label}</span>.
                                 <br />Estimado: {orderData.estimatedDelivery}.
                             </p>
                         </div>

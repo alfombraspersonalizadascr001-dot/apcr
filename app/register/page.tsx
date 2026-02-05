@@ -110,122 +110,122 @@ export default function RegisterPage() {
                 </div>
             </header>
 
-            <main className="min-h-screen bg-black text-white flex items-center justify-center p-6 pt-24 relative overflow-hidden">
+            <main className="min-h-screen bg-white text-slate-900 flex items-center justify-center p-6 pt-24 relative overflow-hidden">
                 {/* Background */}
                 <div className="absolute inset-0 pointer-events-none">
-                    <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-industrial-orange/5 blur-[100px]" />
+                    <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-industrial-orange/10 blur-[100px]" />
                 </div>
 
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="w-full max-w-2xl bg-surface border border-white/10 rounded-2xl p-8 md:p-12 shadow-2xl relative z-10"
+                    className="w-full max-w-2xl bg-white border border-slate-200 rounded-2xl p-8 md:p-12 shadow-2xl relative z-10"
                 >
                     <div className="text-center mb-10">
                         <div className="flex justify-center mb-6">
-                            <Image src="/logo.png" alt="APCR Logo" width={64} height={64} className="w-16 h-16 object-contain invert" />
+                            <Image src="/logo.png" alt="APCR Logo" width={64} height={64} className="w-16 h-16 object-contain" />
                         </div>
-                        <h1 className="text-3xl font-bold mb-2">Registro Corporativo</h1>
-                        <p className="text-zinc-400">Cree su cuenta para gestionar pedidos y facturación.</p>
+                        <h1 className="text-3xl font-bold mb-2 text-slate-900">Registro Corporativo</h1>
+                        <p className="text-slate-500">Cree su cuenta para gestionar pedidos y facturación.</p>
                     </div>
 
                     <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                         {/* Personal Info */}
                         <div className="space-y-4 md:col-span-2">
-                            <h3 className="text-sm font-bold text-orange-500 uppercase tracking-wider border-b border-white/5 pb-2">Información Personal</h3>
+                            <h3 className="text-sm font-bold text-orange-500 uppercase tracking-wider border-b border-slate-200 pb-2">Información Personal</h3>
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-xs text-zinc-500 font-medium ml-1">Nombre</label>
+                            <label className="text-xs text-slate-500 font-medium ml-1">Nombre</label>
                             <div className="relative">
-                                <User className="absolute left-3 top-3 w-5 h-5 text-zinc-600" />
-                                <input name="firstName" required className="w-full bg-black/50 border border-zinc-800 rounded-lg py-3 pl-10 pr-4 focus:border-cyan-500 transition-colors" placeholder="Juan" />
+                                <User className="absolute left-3 top-3 w-5 h-5 text-slate-400" />
+                                <input name="firstName" required className="w-full bg-slate-50 border border-slate-300 rounded-lg py-3 pl-10 pr-4 focus:border-cyan-500 transition-colors text-slate-900" placeholder="Juan" />
                             </div>
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-xs text-zinc-500 font-medium ml-1">Apellido</label>
+                            <label className="text-xs text-slate-500 font-medium ml-1">Apellido</label>
                             <div className="relative">
-                                <input name="lastName" required className="w-full bg-black/50 border border-zinc-800 rounded-lg py-3 px-4 focus:border-cyan-500 transition-colors" placeholder="Pérez" />
+                                <input name="lastName" required className="w-full bg-slate-50 border border-slate-300 rounded-lg py-3 px-4 focus:border-cyan-500 transition-colors text-slate-900" placeholder="Pérez" />
                             </div>
                         </div>
 
                         {/* Company Info */}
                         <div className="space-y-4 md:col-span-2 mt-4">
-                            <h3 className="text-sm font-bold text-orange-500 uppercase tracking-wider border-b border-white/5 pb-2">Datos de Empresa</h3>
+                            <h3 className="text-sm font-bold text-orange-500 uppercase tracking-wider border-b border-slate-200 pb-2">Datos de Empresa</h3>
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-xs text-zinc-500 font-medium ml-1">Empresa</label>
+                            <label className="text-xs text-slate-500 font-medium ml-1">Empresa</label>
                             <div className="relative">
-                                <Building2 className="absolute left-3 top-3 w-5 h-5 text-zinc-600" />
-                                <input name="company" required className="w-full bg-black/50 border border-zinc-800 rounded-lg py-3 pl-10 pr-4 focus:border-cyan-500 transition-colors" placeholder="Nombre Comercial S.A." />
+                                <Building2 className="absolute left-3 top-3 w-5 h-5 text-slate-400" />
+                                <input name="company" required className="w-full bg-slate-50 border border-slate-300 rounded-lg py-3 pl-10 pr-4 focus:border-cyan-500 transition-colors text-slate-900" placeholder="Nombre Comercial S.A." />
                             </div>
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-xs text-zinc-500 font-medium ml-1">Puesto / Cargo</label>
+                            <label className="text-xs text-slate-500 font-medium ml-1">Puesto / Cargo</label>
                             <div className="relative">
-                                <Briefcase className="absolute left-3 top-3 w-5 h-5 text-zinc-600" />
-                                <input name="role" required className="w-full bg-black/50 border border-zinc-800 rounded-lg py-3 pl-10 pr-4 focus:border-cyan-500 transition-colors" placeholder="Gerente de Operaciones" />
+                                <Briefcase className="absolute left-3 top-3 w-5 h-5 text-slate-400" />
+                                <input name="role" required className="w-full bg-slate-50 border border-slate-300 rounded-lg py-3 pl-10 pr-4 focus:border-cyan-500 transition-colors text-slate-900" placeholder="Gerente de Operaciones" />
                             </div>
                         </div>
 
                         <div className="space-y-2 md:col-span-2">
-                            <label className="text-xs text-zinc-500 font-medium ml-1">Dirección Física</label>
+                            <label className="text-xs text-slate-500 font-medium ml-1">Dirección Física</label>
                             <div className="relative">
-                                <MapPin className="absolute left-3 top-3 w-5 h-5 text-zinc-600" />
-                                <input name="address" required className="w-full bg-black/50 border border-zinc-800 rounded-lg py-3 pl-10 pr-4 focus:border-cyan-500 transition-colors" placeholder="Provincia, Cantón, Distrito, Señas exactas..." />
+                                <MapPin className="absolute left-3 top-3 w-5 h-5 text-slate-400" />
+                                <input name="address" required className="w-full bg-slate-50 border border-slate-300 rounded-lg py-3 pl-10 pr-4 focus:border-cyan-500 transition-colors text-slate-900" placeholder="Provincia, Cantón, Distrito, Señas exactas..." />
                             </div>
                         </div>
 
                         {/* Contact Info */}
                         <div className="space-y-4 md:col-span-2 mt-4">
-                            <h3 className="text-sm font-bold text-orange-500 uppercase tracking-wider border-b border-white/5 pb-2">Contacto</h3>
+                            <h3 className="text-sm font-bold text-orange-500 uppercase tracking-wider border-b border-slate-200 pb-2">Contacto</h3>
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-xs text-zinc-500 font-medium ml-1">Correo Electrónico de Contacto</label>
+                            <label className="text-xs text-slate-500 font-medium ml-1">Correo Electrónico de Contacto</label>
                             <div className="relative">
-                                <Mail className="absolute left-3 top-3 w-5 h-5 text-zinc-600" />
-                                <input name="email" type="email" required className="w-full bg-black/50 border border-zinc-800 rounded-lg py-3 pl-10 pr-4 focus:border-cyan-500 transition-colors" placeholder="juan@empresa.com" />
+                                <Mail className="absolute left-3 top-3 w-5 h-5 text-slate-400" />
+                                <input name="email" type="email" required className="w-full bg-slate-50 border border-slate-300 rounded-lg py-3 pl-10 pr-4 focus:border-cyan-500 transition-colors text-slate-900" placeholder="juan@empresa.com" />
                             </div>
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-xs text-zinc-500 font-medium ml-1">Contraseña</label>
+                            <label className="text-xs text-slate-500 font-medium ml-1">Contraseña</label>
                             <div className="relative">
-                                <Lock className="absolute left-3 top-3 w-5 h-5 text-zinc-600" />
-                                <input name="password" type="password" required minLength={6} className="w-full bg-black/50 border border-zinc-800 rounded-lg py-3 pl-10 pr-4 focus:border-cyan-500 transition-colors" placeholder="Mínimo 6 caracteres" />
+                                <Lock className="absolute left-3 top-3 w-5 h-5 text-slate-400" />
+                                <input name="password" type="password" required minLength={6} className="w-full bg-slate-50 border border-slate-300 rounded-lg py-3 pl-10 pr-4 focus:border-cyan-500 transition-colors text-slate-900" placeholder="Mínimo 6 caracteres" />
                             </div>
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-xs text-zinc-500 font-medium ml-1">Teléfono Móvil</label>
+                            <label className="text-xs text-slate-500 font-medium ml-1">Teléfono Móvil</label>
                             <div className="relative">
-                                <Phone className="absolute left-3 top-3 w-5 h-5 text-zinc-600" />
-                                <input name="mobilePhone" required className="w-full bg-black/50 border border-zinc-800 rounded-lg py-3 pl-10 pr-4 focus:border-cyan-500 transition-colors" placeholder="+506 8888-8888" />
+                                <Phone className="absolute left-3 top-3 w-5 h-5 text-slate-400" />
+                                <input name="mobilePhone" required className="w-full bg-slate-50 border border-slate-300 rounded-lg py-3 pl-10 pr-4 focus:border-cyan-500 transition-colors text-slate-900" placeholder="+506 8888-8888" />
                             </div>
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-xs text-zinc-500 font-medium ml-1">Teléfono Fijo / Oficina</label>
+                            <label className="text-xs text-slate-500 font-medium ml-1">Teléfono Fijo / Oficina</label>
                             <div className="relative">
-                                <Phone className="absolute left-3 top-3 w-5 h-5 text-zinc-600" />
-                                <input name="officePhone" className="w-full bg-black/50 border border-zinc-800 rounded-lg py-3 pl-10 pr-4 focus:border-cyan-500 transition-colors" placeholder="+506 2222-2222" />
+                                <Phone className="absolute left-3 top-3 w-5 h-5 text-slate-400" />
+                                <input name="officePhone" className="w-full bg-slate-50 border border-slate-300 rounded-lg py-3 pl-10 pr-4 focus:border-cyan-500 transition-colors text-slate-900" placeholder="+506 2222-2222" />
                             </div>
                         </div>
 
                         {/* Billing Info */}
                         <div className="space-y-4 md:col-span-2 mt-4">
-                            <h3 className="text-sm font-bold text-tropical uppercase tracking-wider border-b border-white/5 pb-2">Datos de Facturación</h3>
+                            <h3 className="text-sm font-bold text-tropical uppercase tracking-wider border-b border-slate-200 pb-2">Datos de Facturación</h3>
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-xs text-zinc-500 font-medium ml-1">Tipo de Identificación</label>
+                            <label className="text-xs text-slate-500 font-medium ml-1">Tipo de Identificación</label>
                             <div className="relative">
-                                <select name="idType" className="w-full bg-black/50 border border-zinc-800 rounded-lg py-3 px-4 focus:border-industrial-orange transition-colors appearance-none text-zinc-300">
+                                <select name="idType" className="w-full bg-slate-50 border border-slate-300 rounded-lg py-3 px-4 focus:border-industrial-orange transition-colors appearance-none text-slate-900">
                                     <option value="juridica">Cédula Jurídica</option>
                                     <option value="fisica">Cédula Física</option>
                                     <option value="dimex">DIMEX</option>
@@ -235,22 +235,22 @@ export default function RegisterPage() {
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-xs text-zinc-500 font-medium ml-1">Número de Identificación</label>
+                            <label className="text-xs text-slate-500 font-medium ml-1">Número de Identificación</label>
                             <div className="relative">
-                                <input name="idNumber" required className="w-full bg-black/50 border border-zinc-800 rounded-lg py-3 px-4 focus:border-industrial-orange transition-colors" placeholder="3-101-123456" />
+                                <input name="idNumber" required className="w-full bg-slate-50 border border-slate-300 rounded-lg py-3 px-4 focus:border-industrial-orange transition-colors text-slate-900" placeholder="3-101-123456" />
                             </div>
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-xs text-zinc-500 font-medium ml-1">Código Actividad Económica</label>
-                            <input name="activityCode" required className="w-full bg-black/50 border border-zinc-800 rounded-lg py-3 px-4 focus:border-industrial-orange transition-colors" placeholder="Ej: 722003" />
+                            <label className="text-xs text-slate-500 font-medium ml-1">Código Actividad Económica</label>
+                            <input name="activityCode" required className="w-full bg-slate-50 border border-slate-300 rounded-lg py-3 px-4 focus:border-industrial-orange transition-colors text-slate-900" placeholder="Ej: 722003" />
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-xs text-zinc-500 font-medium ml-1">Correo para Facturación Electrónica</label>
+                            <label className="text-xs text-slate-500 font-medium ml-1">Correo para Facturación Electrónica</label>
                             <div className="relative">
-                                <Mail className="absolute left-3 top-3 w-5 h-5 text-zinc-600" />
-                                <input name="billingEmail" type="email" required className="w-full bg-black/50 border border-zinc-800 rounded-lg py-3 pl-10 pr-4 focus:border-industrial-orange transition-colors" placeholder="factura@empresa.com" />
+                                <Mail className="absolute left-3 top-3 w-5 h-5 text-slate-400" />
+                                <input name="billingEmail" type="email" required className="w-full bg-slate-50 border border-slate-300 rounded-lg py-3 pl-10 pr-4 focus:border-industrial-orange transition-colors text-slate-900" placeholder="factura@empresa.com" />
                             </div>
                         </div>
 
@@ -261,8 +261,8 @@ export default function RegisterPage() {
                             >
                                 {loading ? <Loader2 className="animate-spin" /> : <>Crear Cuenta Corporativa <ArrowRight className="w-5 h-5" /></>}
                             </button>
-                            <p className="text-center mt-4 text-sm text-zinc-500">
-                                ¿Ya tiene cuenta? <a href="/login" className="text-white underline hover:text-cyan-400">Iniciar Sesión</a>
+                            <p className="text-center mt-4 text-sm text-slate-500">
+                                ¿Ya tiene cuenta? <a href="/login" className="text-slate-900 underline hover:text-cyan-600">Iniciar Sesión</a>
                             </p>
                         </div>
 
