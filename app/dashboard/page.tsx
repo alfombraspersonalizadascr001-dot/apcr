@@ -60,24 +60,8 @@ const DEFAULT_CLIENT = {
     mobilePhone: "+506 8888-8888"
 };
 
-const MOCK_ORDERS: Order[] = [
-    {
-        id: "ORD-DEMO-001",
-        date: "Hoy",
-        status: "Producción",
-        step: 2, // Corte
-        total: "₡ 85,000",
-        items: ["Alfombra Personalizada (100x80cm)"],
-        images: {
-            topView: "/mock-top.jpg",
-            render: "/mock-render.jpg"
-        },
-        documents: {
-            proforma: "#PRO-2026.pdf",
-            invoice: null
-        }
-    }
-];
+const MOCK_ORDERS: Order[] = [];
+// MOCK_ORDERS is now empty by default. Real orders would be fetched from database.
 
 export default function DashboardPage() {
     const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
@@ -126,52 +110,64 @@ export default function DashboardPage() {
                 </h2>
 
                 <div className="grid gap-4">
-                    {MOCK_ORDERS.map((order) => (
-                        <div
-                            key={order.id}
-                            onClick={() => setSelectedOrder(order)}
-                            className="group bg-white hover:bg-slate-50 border border-slate-200 rounded-xl p-6 transition-all cursor-pointer hover:border-tropical-cyan/50 relative overflow-hidden shadow-sm hover:shadow-md"
-                        >
-                            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
-
-                                {/* Info Principal */}
-                                <div className="flex items-start gap-4">
-                                    <div className={`p-3 rounded-lg ${getStatusColor(order.status).bg}`}>
-                                        <Package className={`w-6 h-6 ${getStatusColor(order.status).text}`} />
-                                    </div>
-                                    <div>
-                                        <p className="font-bold text-lg group-hover:text-tropical-cyan transition-colors text-slate-900">{order.id}</p>
-                                        <p className="text-slate-500 text-sm">{order.date}</p>
-                                    </div>
-                                </div>
-
-                                {/* Detalles Resumen */}
-                                <div className="flex-1 md:px-12">
-                                    <div className="flex flex-col gap-1 mb-3">
-                                        {order.items.map((item, i) => (
-                                            <span key={i} className="text-slate-600 text-sm block">• {item}</span>
-                                        ))}
-                                    </div>
-
-                                    {/* Botón Ver Estado */}
-                                    <div className="flex items-center text-xs font-bold text-tropical-cyan gap-2 opacity-80 group-hover:opacity-100 transition-opacity">
-                                        <Activity className="w-4 h-4" />
-                                        VER ESTADO DEL PEDIDO
-                                    </div>
-                                </div>
-
-                                {/* Status y Precio */}
-                                <div className="text-right">
-                                    <p className="font-bold text-xl">{order.total}</p>
-                                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold mt-1 ${getStatusColor(order.status).badge}`}>
-                                        {order.status}
-                                    </span>
-                                </div>
-
-                                <ChevronRight className="text-slate-400 group-hover:text-slate-900 group-hover:translate-x-1 transition-all" />
-                            </div>
+                    {MOCK_ORDERS.length === 0 ? (
+                        <div className="text-center py-16 bg-white border border-slate-200 rounded-xl border-dashed">
+                            <Package className="w-16 h-16 text-slate-300 mx-auto mb-4" />
+                            <h3 className="text-xl font-bold text-slate-900 mb-2">No tienes pedidos activos</h3>
+                            <p className="text-slate-500 mb-6 max-w-md mx-auto">
+                                Parece que aún no has realizado ninguna compra. ¡Personaliza tu primera alfombra hoy mismo!
+                            </p>
+                            <a href="/#contacto" className="inline-block px-6 py-3 bg-slate-900 text-white font-bold rounded-lg hover:bg-slate-800 transition-colors">
+                                Cotizar Ahora
+                            </a>
                         </div>
-                    ))}
+                    ) : (
+                        MOCK_ORDERS.map((order) => (
+                            <div
+                                key={order.id}
+                                onClick={() => setSelectedOrder(order)}
+                                className="group bg-white hover:bg-slate-50 border border-slate-200 rounded-xl p-6 transition-all cursor-pointer hover:border-tropical-cyan/50 relative overflow-hidden shadow-sm hover:shadow-md"
+                            >
+                                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
+
+                                    {/* Info Principal */}
+                                    <div className="flex items-start gap-4">
+                                        <div className={`p-3 rounded-lg ${getStatusColor(order.status).bg}`}>
+                                            <Package className={`w-6 h-6 ${getStatusColor(order.status).text}`} />
+                                        </div>
+                                        <div>
+                                            <p className="font-bold text-lg group-hover:text-tropical-cyan transition-colors text-slate-900">{order.id}</p>
+                                            <p className="text-slate-500 text-sm">{order.date}</p>
+                                        </div>
+                                    </div>
+
+                                    {/* Detalles Resumen */}
+                                    <div className="flex-1 md:px-12">
+                                        <div className="flex flex-col gap-1 mb-3">
+                                            {order.items.map((item, i) => (
+                                                <span key={i} className="text-slate-600 text-sm block">• {item}</span>
+                                            ))}
+                                        </div>
+
+                                        {/* Botón Ver Estado */}
+                                        <div className="flex items-center text-xs font-bold text-tropical-cyan gap-2 opacity-80 group-hover:opacity-100 transition-opacity">
+                                            <Activity className="w-4 h-4" />
+                                            VER ESTADO DEL PEDIDO
+                                        </div>
+                                    </div>
+
+                                    {/* Status y Precio */}
+                                    <div className="text-right">
+                                        <p className="font-bold text-xl">{order.total}</p>
+                                        <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold mt-1 ${getStatusColor(order.status).badge}`}>
+                                            {order.status}
+                                        </span>
+                                    </div>
+
+                                    <ChevronRight className="text-slate-400 group-hover:text-slate-900 group-hover:translate-x-1 transition-all" />
+                                </div>
+                            </div>
+                        )))}
                 </div>
 
             </main>
