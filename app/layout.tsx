@@ -21,6 +21,9 @@ const caveat = Caveat({
 export const metadata: Metadata = {
   title: "Alfombras Personalizadas de Costa Rica",
   description: "Las mejores alfombras personalizadas del mercado.",
+  icons: {
+    icon: '/icon.png',
+  },
 };
 
 export default function RootLayout({
