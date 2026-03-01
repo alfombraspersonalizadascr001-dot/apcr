@@ -145,8 +145,8 @@ export default function Home() {
             Sobre Nosotros
           </h2>
 
-          <div className="space-y-6 text-lg text-slate-700 leading-relaxed">
-            <p className="text-4xl md:text-5xl font-handwriting mb-8 leading-tight">
+          <div className="space-y-6 text-lg md:text-xl text-slate-900 font-bold leading-relaxed">
+            <p className="text-4xl md:text-5xl font-handwriting mb-8 leading-tight font-normal">
               <span className="text-slate-900">Hola, somos Alfombras </span><span className="text-tropical">Personalizadas</span><br /><span className="text-slate-900">de Costa Rica</span>
             </p>
 
