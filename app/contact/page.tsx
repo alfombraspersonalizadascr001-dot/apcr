@@ -45,7 +45,8 @@ export default function ContactPage() {
                                     </div>
                                     <div>
                                         <h3 className="font-bold text-lg text-slate-900">WhatsApp Oficial</h3>
-                                        <p className="text-slate-500">Respuesta rápida</p>
+                                        <p className="text-slate-500 font-medium">+506 7069-3708</p>
+                                        <p className="text-slate-500 text-xs">Respuesta rápida</p>
                                     </div>
                                 </div>
 

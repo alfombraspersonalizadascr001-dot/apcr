@@ -1,7 +1,7 @@
 "use client";
 
 export default function FloatingWhatsApp() {
-    const link = "https://wa.link/x5b44n";
+    const link = "https://wa.me/50670693708";
 
     return (
         <div className="fixed bottom-8 right-8 z-50">
