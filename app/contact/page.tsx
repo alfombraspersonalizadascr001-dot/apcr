@@ -35,7 +35,7 @@ export default function ContactPage() {
                         <div className="space-y-8">
                             <div>
                                 <h1 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900">Hablemos de tu <span className="text-tropical">Proyecto</span></h1>
-                                <p className="text-slate-600 text-lg">Estamos listos para personalizar la imagen de tu empresa. Escríbenos por WhatsApp o correo.</p>
+                                <p className="text-lg md:text-xl text-slate-900 font-bold">Estamos listos para personalizar la imagen de tu empresa. Escríbenos por WhatsApp o correo.</p>
                             </div>
 
                             <div className="space-y-6">
