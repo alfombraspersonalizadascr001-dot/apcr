@@ -157,18 +157,18 @@ export default function RegisterPage() {
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-xs text-slate-500 font-medium ml-1">Empresa</label>
+                            <label className="text-xs text-slate-500 font-medium ml-1">Empresa (Opcional)</label>
                             <div className="relative">
                                 <Building2 className="absolute left-3 top-3 w-5 h-5 text-slate-400" />
-                                <input name="company" required className="w-full bg-slate-50 border border-slate-300 rounded-lg py-3 pl-10 pr-4 focus:border-cyan-500 transition-colors text-slate-900" placeholder="Nombre Comercial S.A." />
+                                <input name="company" className="w-full bg-slate-50 border border-slate-300 rounded-lg py-3 pl-10 pr-4 focus:border-cyan-500 transition-colors text-slate-900" placeholder="Nombre Comercial S.A." />
                             </div>
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-xs text-slate-500 font-medium ml-1">Puesto / Cargo</label>
+                            <label className="text-xs text-slate-500 font-medium ml-1">Puesto / Cargo (Opcional)</label>
                             <div className="relative">
                                 <Briefcase className="absolute left-3 top-3 w-5 h-5 text-slate-400" />
-                                <input name="role" required className="w-full bg-slate-50 border border-slate-300 rounded-lg py-3 pl-10 pr-4 focus:border-cyan-500 transition-colors text-slate-900" placeholder="Gerente de Operaciones" />
+                                <input name="role" className="w-full bg-slate-50 border border-slate-300 rounded-lg py-3 pl-10 pr-4 focus:border-cyan-500 transition-colors text-slate-900" placeholder="Gerente de Operaciones" />
                             </div>
                         </div>
 
@@ -219,7 +219,7 @@ export default function RegisterPage() {
 
                         {/* Billing Info */}
                         <div className="space-y-4 md:col-span-2 mt-4">
-                            <h3 className="text-sm font-bold text-tropical uppercase tracking-wider border-b border-slate-200 pb-2">Datos de Facturación</h3>
+                            <h3 className="text-sm font-bold text-tropical uppercase tracking-wider border-b border-slate-200 pb-2">Datos de Facturación (Opcional)</h3>
                         </div>
 
                         <div className="space-y-2">
@@ -237,20 +237,20 @@ export default function RegisterPage() {
                         <div className="space-y-2">
                             <label className="text-xs text-slate-500 font-medium ml-1">Número de Identificación</label>
                             <div className="relative">
-                                <input name="idNumber" required className="w-full bg-slate-50 border border-slate-300 rounded-lg py-3 px-4 focus:border-industrial-orange transition-colors text-slate-900" placeholder="3-101-123456" />
+                                <input name="idNumber" className="w-full bg-slate-50 border border-slate-300 rounded-lg py-3 px-4 focus:border-industrial-orange transition-colors text-slate-900" placeholder="3-101-123456" />
                             </div>
                         </div>
 
                         <div className="space-y-2">
                             <label className="text-xs text-slate-500 font-medium ml-1">Código Actividad Económica</label>
-                            <input name="activityCode" required className="w-full bg-slate-50 border border-slate-300 rounded-lg py-3 px-4 focus:border-industrial-orange transition-colors text-slate-900" placeholder="Ej: 722003" />
+                            <input name="activityCode" className="w-full bg-slate-50 border border-slate-300 rounded-lg py-3 px-4 focus:border-industrial-orange transition-colors text-slate-900" placeholder="Ej: 722003" />
                         </div>
 
                         <div className="space-y-2">
                             <label className="text-xs text-slate-500 font-medium ml-1">Correo para Facturación Electrónica</label>
                             <div className="relative">
                                 <Mail className="absolute left-3 top-3 w-5 h-5 text-slate-400" />
-                                <input name="billingEmail" type="email" required className="w-full bg-slate-50 border border-slate-300 rounded-lg py-3 pl-10 pr-4 focus:border-industrial-orange transition-colors text-slate-900" placeholder="factura@empresa.com" />
+                                <input name="billingEmail" type="email" className="w-full bg-slate-50 border border-slate-300 rounded-lg py-3 pl-10 pr-4 focus:border-industrial-orange transition-colors text-slate-900" placeholder="factura@empresa.com" />
                             </div>
                         </div>
 
