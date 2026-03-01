@@ -19,12 +19,15 @@ const caveat = Caveat({
 });
 
 export const metadata: Metadata = {
-  title: "Alfombras Personalizadas de Costa Rica",
-  description: "Las mejores alfombras personalizadas del mercado.",
+  title: "APCR | Alfombras Personalizadas de Costa Rica",
+  description: "Especialistas en publicidad y fabricación de alfombras de vinilo personalizadas (tipo spaghetti) de alta calidad.",
   icons: {
-    icon: '/icon.png',
+    icon: '/favicon.svg',
   },
 };
+
+import { Suspense } from "react";
+import AnalyticsTracker from "./components/AnalyticsTracker";
 
 export default function RootLayout({
   children,
@@ -36,6 +39,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${caveat.variable} antialiased`}
       >
+        <Suspense fallback={null}>
+          <AnalyticsTracker />
+        </Suspense>
         {children}
       </body>
     </html>

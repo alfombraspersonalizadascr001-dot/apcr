@@ -181,6 +181,11 @@ export default function Home() {
           <div className="text-center md:text-left space-y-3">
             <p>© 2026 Alfombras Personalizadas CR.</p>
             <p>San José, Costa Rica. Todos los derechos reservados.</p>
+            <div className="flex gap-4 text-xs mt-1">
+              <a href="https://agency-crm-rose.vercel.app/login" target="_blank" className="text-slate-600 hover:text-green-600 flex items-center gap-1 transition-all font-medium hover:scale-110 hover:font-bold">
+                <ShieldCheck className="w-3 h-3" /> Acceso Corporativo
+              </a>
+            </div>
             <div className="flex gap-3 justify-center md:justify-start mt-3">
               <a href="https://www.instagram.com/alfombraspersonalizadas.cr/" target="_blank" rel="noopener noreferrer" className="p-3 bg-white rounded-lg border border-slate-200 hover:border-tropical-pink hover:bg-tropical-pink/10 transition-all group shadow-sm">
                 <Instagram className="w-6 h-6 text-slate-600 group-hover:text-tropical-pink transition-colors" />

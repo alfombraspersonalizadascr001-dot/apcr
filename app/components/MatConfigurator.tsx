@@ -114,10 +114,19 @@ export default function MatConfigurator() {
                             className="relative group rounded-2xl overflow-hidden shadow-2xl border border-slate-200"
                         >
                             <img src={image} alt="Generated Mat" className="w-full h-auto max-w-2xl" />
-                            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4 backdrop-blur-sm">
-                                <a href={image} download="nomad-mat.png" target="_blank" className="bg-white text-black px-6 py-3 rounded-full font-bold flex items-center gap-2 hover:scale-105 transition-transform">
+                            <div className="flex flex-col gap-2 mt-4">
+                                <a href={image} download="nomad-mat.png" target="_blank" className="bg-white text-black px-6 py-3 rounded-full font-bold flex items-center justify-center gap-2 hover:scale-105 transition-transform">
                                     <Download className="w-5 h-5" /> Descargar HD
                                 </a>
+                                <button
+                                    onClick={() => alert("✅ ¡Solicitud Enviada!\n\nTu cotización ha sido recibida. Un asesor revisará tu diseño para confirmar detalles técnicos y te contactará en breve con el precio final.")}
+                                    className="bg-industrial-orange text-white px-6 py-3 rounded-full font-bold flex items-center justify-center gap-2 hover:bg-orange-600 transition-colors shadow-lg"
+                                >
+                                    <FileText className="w-5 h-5" /> Solicitar Cotización
+                                </button>
+                                <p className="text-xs text-white/80 text-center max-w-xs mx-auto drop-shadow-md">
+                                    * Sujeto a revisión técnica. Te contactaremos para confirmar medidas.
+                                </p>
                             </div>
                         </motion.div>
                     ) : (
@@ -133,7 +142,8 @@ export default function MatConfigurator() {
                     )}
                 </AnimatePresence>
             </div>
-
         </div>
     );
 }
+
+import { FileText } from 'lucide-react';
