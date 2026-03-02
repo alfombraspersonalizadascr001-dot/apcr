@@ -3,6 +3,7 @@ import { ShieldCheck, Truck, Star, Instagram, Facebook, Music } from "lucide-rea
 import Image from "next/image";
 
 import Header from "./components/Header";
+import AICarousel from "./components/AICarousel";
 
 export default function Home() {
   return (
@@ -96,18 +97,8 @@ export default function Home() {
               </form>
             </div>
 
-            {/* Right: Image */}
-            <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-2xl">
-              <Image
-                src="/tracking-mat.jpg"
-                alt="Alfombra Hospital Central"
-                fill
-                className="object-cover brightness-75"
-                priority
-              />
-              {/* Dark overlay */}
-              <div className="absolute inset-0 bg-black/20" />
-            </div>
+            {/* Right: Image Carousel */}
+            <AICarousel />
 
           </div>
         </div>
