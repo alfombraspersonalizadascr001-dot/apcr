@@ -12,6 +12,7 @@ import {
   Lock,
   ShieldCheck
 } from 'lucide-react';
+import { supabase } from '@/lib/supabase';
 
 interface AirlockPortalProps {
   onEnterWorld: (world: 'physical' | 'digital') => void;
@@ -44,10 +45,27 @@ export const AirlockPortal: React.FC<AirlockPortalProps> = ({
   const [activeCrm, setActiveCrm] = useState<'alfombras' | 'software'>('alfombras');
   const [isMuted, setIsMuted] = useState(false);
 
+  // Real CRM Authentication State
+  const [loginIdentifier, setLoginIdentifier] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+  const [loginLoading, setLoginLoading] = useState(false);
+  const [loginError, setLoginError] = useState('');
+  const [loginSuccess, setLoginSuccess] = useState(false);
+
   // Button refs for proximity volume ducking
   const btnProductsRef = useRef<HTMLButtonElement | null>(null);
   const btnSoftwareRef = useRef<HTMLButtonElement | null>(null);
   const btnLoginRef = useRef<HTMLButtonElement | null>(null);
+
+  // Check URL query parameters to auto-open login if requested
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('login') === 'true') {
+        setIsLoginOpen(true);
+      }
+    } catch {}
+  }, []);
 
   // Translations
   const t = {
@@ -66,7 +84,10 @@ export const AirlockPortal: React.FC<AirlockPortalProps> = ({
       rights: 'APCR® Registered Trademark. All Rights Reserved.',
       mute: 'Silenciar audio',
       unmute: 'Activar audio',
-      connecting: 'Conectando con CRM...'
+      connecting: 'Conectando con CRM...',
+      authSuccess: 'ACCESO AUTORIZADO // CARGANDO CRM...',
+      authError: 'Credenciales inválidas. Verifica tu usuario y contraseña.',
+      verifying: 'VERIFICANDO CREDENCIALES...'
     },
     en: {
       visor: 'APCR VISOR // v2.4',
@@ -83,7 +104,10 @@ export const AirlockPortal: React.FC<AirlockPortalProps> = ({
       rights: 'APCR® Registered Trademark. All Rights Reserved.',
       mute: 'Mute audio',
       unmute: 'Unmute audio',
-      connecting: 'Connecting to CRM...'
+      connecting: 'Connecting to CRM...',
+      authSuccess: 'ACCESS GRANTED // LOADING CRM...',
+      authError: 'Invalid credentials. Please verify username and password.',
+      verifying: 'VERIFYING CREDENTIALS...'
     }
   }[lang];
 
@@ -147,6 +171,89 @@ export const AirlockPortal: React.FC<AirlockPortalProps> = ({
 
     // 4. Open holographic login in visor center
     setIsLoginOpen(true);
+  };
+
+  // Real Supabase CRM Authentication Handler
+  const handleLoginSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoginLoading(true);
+    setLoginError('');
+    setLoginSuccess(false);
+
+    try {
+      airlockAudio.playArcadeButtonPress();
+      const cleanId = loginIdentifier.trim();
+      const cleanPass = loginPassword.trim();
+
+      if (!cleanId || !cleanPass) {
+        setLoginError(lang === 'es' ? 'Por favor completa todos los campos.' : 'Please fill all fields.');
+        setLoginLoading(false);
+        return;
+      }
+
+      // Query crm_users table in Supabase
+      let query = supabase.from('crm_users').select('*');
+
+      if (cleanId === 'admin' || cleanId.toLowerCase() === 'admin@apcr.cr' || cleanId.toLowerCase() === 'admin@apcr.online') {
+        query = query.or('account_number.eq.admin,email.eq.admin@apcr.cr,email.eq.admin@apcr.online');
+      } else {
+        query = query.or(`email.eq."${cleanId}",account_number.eq."${cleanId}"`);
+      }
+
+      const { data: users, error: authError } = await query;
+
+      if (authError || !users || users.length === 0) {
+        setLoginError(t.authError);
+        setLoginLoading(false);
+        return;
+      }
+
+      const user = users.find(u => u.password === cleanPass);
+      if (!user) {
+        setLoginError(t.authError);
+        setLoginLoading(false);
+        return;
+      }
+
+      // Authentication Success!
+      setLoginSuccess(true);
+      try {
+        airlockAudio.playAirlockOpen(false);
+      } catch {}
+
+      const expires = new Date();
+      expires.setDate(expires.getDate() + 7);
+      document.cookie = `crm_authenticated=true; path=/; expires=${expires.toUTCString()}; SameSite=Lax`;
+      document.cookie = `crm_user_id=${user.id}; path=/; expires=${expires.toUTCString()}; SameSite=Lax`;
+      document.cookie = `crm_role=${user.role}; path=/; expires=${expires.toUTCString()}; SameSite=Lax`;
+      document.cookie = `crm_agent_name=${encodeURIComponent(user.contact_name || 'Admin')}; path=/; expires=${expires.toUTCString()}; SameSite=Lax`;
+
+      localStorage.setItem('crm_authenticated', 'true');
+      localStorage.setItem('crm_user_role', user.role);
+      localStorage.setItem('crm_user_name', user.contact_name || 'Admin');
+      localStorage.setItem('apcr_user', JSON.stringify({
+        id: user.id,
+        firstName: user.contact_name?.split(' ')[0] || user.company_name,
+        lastName: user.contact_name?.split(' ').slice(1).join(' ') || '',
+        company: user.company_name,
+        email: user.email,
+        mobilePhone: user.phone,
+        role: user.role
+      }));
+
+      setTimeout(() => {
+        if (user.role === 'admin') {
+          window.location.href = '/crm';
+        } else {
+          window.location.href = '/dashboard';
+        }
+      }, 700);
+
+    } catch (err) {
+      console.error('Login error:', err);
+      setLoginError(t.authError);
+      setLoginLoading(false);
+    }
   };
 
   // Handler for Button 1 (Products) & Button 2 (Software): Opens Blast Doors
@@ -564,10 +671,7 @@ export const AirlockPortal: React.FC<AirlockPortalProps> = ({
 
             {/* Form Inputs */}
             <form 
-              onSubmit={(e) => { 
-                e.preventDefault(); 
-                alert(`${t.connecting} (${activeCrm.toUpperCase()})`); 
-              }} 
+              onSubmit={handleLoginSubmit} 
               className="space-y-3 relative z-20"
             >
               <div>
@@ -576,9 +680,12 @@ export const AirlockPortal: React.FC<AirlockPortalProps> = ({
                 </label>
                 <input 
                   type="text" 
+                  value={loginIdentifier}
+                  onChange={(e) => setLoginIdentifier(e.target.value)}
                   placeholder="admin@apcr.cr" 
                   required 
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950/80 border border-slate-700 focus:border-cyan-400 text-sm font-mono text-cyan-300 placeholder:text-slate-600 focus:outline-none transition-colors"
+                  disabled={loginLoading || loginSuccess}
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950/80 border border-slate-700 focus:border-cyan-400 text-sm font-mono text-cyan-300 placeholder:text-slate-600 focus:outline-none transition-colors disabled:opacity-60"
                 />
               </div>
 
@@ -588,19 +695,51 @@ export const AirlockPortal: React.FC<AirlockPortalProps> = ({
                 </label>
                 <input 
                   type="password" 
+                  value={loginPassword}
+                  onChange={(e) => setLoginPassword(e.target.value)}
                   placeholder="••••••••••••" 
                   required 
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950/80 border border-slate-700 focus:border-cyan-400 text-sm font-mono text-cyan-300 placeholder:text-slate-600 focus:outline-none transition-colors"
+                  disabled={loginLoading || loginSuccess}
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950/80 border border-slate-700 focus:border-cyan-400 text-sm font-mono text-cyan-300 placeholder:text-slate-600 focus:outline-none transition-colors disabled:opacity-60"
                 />
               </div>
 
+              {loginError && (
+                <div className="p-3 rounded-xl bg-red-950/80 border border-red-500/50 text-red-300 font-mono text-xs flex items-center gap-2 animate-in fade-in duration-200">
+                  <div className="w-2 h-2 rounded-full bg-red-500 animate-ping flex-shrink-0" />
+                  <span>{loginError}</span>
+                </div>
+              )}
+
+              {loginSuccess && (
+                <div className="p-3 rounded-xl bg-emerald-950/80 border border-emerald-500/50 text-emerald-300 font-mono text-xs flex items-center gap-2 animate-in fade-in duration-200">
+                  <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
+                  <span>{t.authSuccess}</span>
+                </div>
+              )}
+
               <button
                 type="submit"
-                className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 text-white font-mono font-bold text-sm shadow-[0_0_20px_rgba(6,182,212,0.4)] flex items-center justify-center gap-2 cursor-pointer mt-2 active:scale-98 transition-all"
+                disabled={loginLoading || loginSuccess}
+                className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 text-white font-mono font-bold text-sm shadow-[0_0_20px_rgba(6,182,212,0.4)] flex items-center justify-center gap-2 cursor-pointer mt-2 active:scale-98 transition-all disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                <ShieldCheck className="w-4 h-4" />
-                <span>{t.loginBtn}</span>
-                <ArrowRight className="w-4 h-4" />
+                {loginLoading ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    <span>{t.verifying}</span>
+                  </>
+                ) : loginSuccess ? (
+                  <>
+                    <ShieldCheck className="w-4 h-4 text-emerald-400 animate-bounce" />
+                    <span>{t.authSuccess}</span>
+                  </>
+                ) : (
+                  <>
+                    <ShieldCheck className="w-4 h-4" />
+                    <span>{t.loginBtn}</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </>
+                )}
               </button>
             </form>
 

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect, useRef } from 'react';
 import { airlockAudio } from '../utils/airlockSound';
 import { 
@@ -8,9 +10,9 @@ import {
   ArrowRight,
   X,
   Lock,
-  ShieldCheck,
-  Globe
+  ShieldCheck
 } from 'lucide-react';
+import { supabase } from '@/lib/supabase';
 
 interface AirlockPortalProps {
   onEnterWorld: (world: 'physical' | 'digital') => void;
@@ -43,10 +45,27 @@ export const AirlockPortal: React.FC<AirlockPortalProps> = ({
   const [activeCrm, setActiveCrm] = useState<'alfombras' | 'software'>('alfombras');
   const [isMuted, setIsMuted] = useState(false);
 
+  // Real CRM Authentication State
+  const [loginIdentifier, setLoginIdentifier] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+  const [loginLoading, setLoginLoading] = useState(false);
+  const [loginError, setLoginError] = useState('');
+  const [loginSuccess, setLoginSuccess] = useState(false);
+
   // Button refs for proximity volume ducking
   const btnProductsRef = useRef<HTMLButtonElement | null>(null);
   const btnSoftwareRef = useRef<HTMLButtonElement | null>(null);
   const btnLoginRef = useRef<HTMLButtonElement | null>(null);
+
+  // Check URL query parameters to auto-open login if requested
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('login') === 'true') {
+        setIsLoginOpen(true);
+      }
+    } catch {}
+  }, []);
 
   // Translations
   const t = {
@@ -65,7 +84,10 @@ export const AirlockPortal: React.FC<AirlockPortalProps> = ({
       rights: 'APCR® Registered Trademark. All Rights Reserved.',
       mute: 'Silenciar audio',
       unmute: 'Activar audio',
-      connecting: 'Conectando con CRM...'
+      connecting: 'Conectando con CRM...',
+      authSuccess: 'ACCESO AUTORIZADO // CARGANDO CRM...',
+      authError: 'Credenciales inválidas. Verifica tu usuario y contraseña.',
+      verifying: 'VERIFICANDO CREDENCIALES...'
     },
     en: {
       visor: 'APCR VISOR // v2.4',
@@ -82,7 +104,10 @@ export const AirlockPortal: React.FC<AirlockPortalProps> = ({
       rights: 'APCR® Registered Trademark. All Rights Reserved.',
       mute: 'Mute audio',
       unmute: 'Unmute audio',
-      connecting: 'Connecting to CRM...'
+      connecting: 'Connecting to CRM...',
+      authSuccess: 'ACCESS GRANTED // LOADING CRM...',
+      authError: 'Invalid credentials. Please verify username and password.',
+      verifying: 'VERIFYING CREDENTIALS...'
     }
   }[lang];
 
@@ -148,29 +173,113 @@ export const AirlockPortal: React.FC<AirlockPortalProps> = ({
     setIsLoginOpen(true);
   };
 
+  // Real Supabase CRM Authentication Handler
+  const handleLoginSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoginLoading(true);
+    setLoginError('');
+    setLoginSuccess(false);
+
+    try {
+      airlockAudio.playArcadeButtonPress();
+      const cleanId = loginIdentifier.trim();
+      const cleanPass = loginPassword.trim();
+
+      if (!cleanId || !cleanPass) {
+        setLoginError(lang === 'es' ? 'Por favor completa todos los campos.' : 'Please fill all fields.');
+        setLoginLoading(false);
+        return;
+      }
+
+      // Query crm_users table in Supabase
+      let query = supabase.from('crm_users').select('*');
+
+      if (cleanId === 'admin' || cleanId.toLowerCase() === 'admin@apcr.cr' || cleanId.toLowerCase() === 'admin@apcr.online') {
+        query = query.or('account_number.eq.admin,email.eq.admin@apcr.cr,email.eq.admin@apcr.online');
+      } else {
+        query = query.or(`email.eq."${cleanId}",account_number.eq."${cleanId}"`);
+      }
+
+      const { data: users, error: authError } = await query;
+
+      if (authError || !users || users.length === 0) {
+        setLoginError(t.authError);
+        setLoginLoading(false);
+        return;
+      }
+
+      const user = users.find(u => u.password === cleanPass);
+      if (!user) {
+        setLoginError(t.authError);
+        setLoginLoading(false);
+        return;
+      }
+
+      // Authentication Success!
+      setLoginSuccess(true);
+      try {
+        airlockAudio.playAirlockOpen(false);
+      } catch {}
+
+      const expires = new Date();
+      expires.setDate(expires.getDate() + 7);
+      document.cookie = `crm_authenticated=true; path=/; expires=${expires.toUTCString()}; SameSite=Lax`;
+      document.cookie = `crm_user_id=${user.id}; path=/; expires=${expires.toUTCString()}; SameSite=Lax`;
+      document.cookie = `crm_role=${user.role}; path=/; expires=${expires.toUTCString()}; SameSite=Lax`;
+      document.cookie = `crm_agent_name=${encodeURIComponent(user.contact_name || 'Admin')}; path=/; expires=${expires.toUTCString()}; SameSite=Lax`;
+
+      localStorage.setItem('crm_authenticated', 'true');
+      localStorage.setItem('crm_user_role', user.role);
+      localStorage.setItem('crm_user_name', user.contact_name || 'Admin');
+      localStorage.setItem('apcr_user', JSON.stringify({
+        id: user.id,
+        firstName: user.contact_name?.split(' ')[0] || user.company_name,
+        lastName: user.contact_name?.split(' ').slice(1).join(' ') || '',
+        company: user.company_name,
+        email: user.email,
+        mobilePhone: user.phone,
+        role: user.role
+      }));
+
+      setTimeout(() => {
+        if (user.role === 'admin') {
+          window.location.href = '/crm';
+        } else {
+          window.location.href = '/dashboard';
+        }
+      }, 700);
+
+    } catch (err) {
+      console.error('Login error:', err);
+      setLoginError(t.authError);
+      setLoginLoading(false);
+    }
+  };
+
   // Handler for Button 1 (Products) & Button 2 (Software): Opens Blast Doors
   const handleOpenDoor = (world: 'physical' | 'digital') => {
     if (doorState !== 'closed') return;
 
-    // 1. STOP MUSIC IMMEDIATELY ON TOUCH
-    airlockAudio.stopMusic();
+    try {
+      airlockAudio.stopMusic();
+    } catch {}
 
-    // 2. Tactile microswitch click
-    airlockAudio.playArcadeButtonPress();
+    try {
+      airlockAudio.playArcadeButtonPress();
+    } catch {}
 
-    // 3. Pneumatic decompression hiss & hydraulic servo sound
-    airlockAudio.playAirlockOpen(world === 'digital');
+    try {
+      airlockAudio.playAirlockOpen(world === 'digital');
+    } catch {}
 
     setIsLoginOpen(false);
-
     setTargetWorld(world);
     setDoorState('opening');
 
-    // 4. Complete opening transition into the chosen world
     setTimeout(() => {
       setDoorState('open');
       onEnterWorld(world);
-    }, 1100);
+    }, 900);
   };
 
   const toggleSound = () => {
@@ -244,14 +353,15 @@ export const AirlockPortal: React.FC<AirlockPortalProps> = ({
         </div>
       </div>
 
-      {/* MOBILE VERTICAL DOORS (< md) */}
+      {/* MOBILE VERTICAL DOORS (< md) - Both doors touchable directly */}
       <div className="block md:hidden absolute inset-0 z-10 overflow-hidden">
-        {/* MOBILE LEFT DOOR HALF */}
+        {/* MOBILE LEFT DOOR HALF (Touch to open Alfombras) */}
         <div 
-          className={`absolute top-0 left-0 w-1/2 h-full transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden shadow-[6px_0_25px_rgba(0,0,0,0.3)] ${
+          onClick={() => handleOpenDoor('physical')}
+          className={`absolute top-0 left-0 w-1/2 h-full transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden shadow-[6px_0_25px_rgba(0,0,0,0.3)] cursor-pointer ${
             doorState === 'opening' || doorState === 'open' 
               ? '-translate-x-[102%]' 
-              : 'translate-x-0'
+              : 'translate-x-0 active:brightness-95'
           }`}
         >
           <img 
@@ -261,12 +371,13 @@ export const AirlockPortal: React.FC<AirlockPortalProps> = ({
           />
         </div>
 
-        {/* MOBILE RIGHT DOOR HALF */}
+        {/* MOBILE RIGHT DOOR HALF (Touch to open Software) */}
         <div 
-          className={`absolute top-0 right-0 w-1/2 h-full transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden shadow-[-6px_0_25px_rgba(0,0,0,0.3)] ${
+          onClick={() => handleOpenDoor('digital')}
+          className={`absolute top-0 right-0 w-1/2 h-full transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden shadow-[-6px_0_25px_rgba(0,0,0,0.3)] cursor-pointer ${
             doorState === 'opening' || doorState === 'open' 
               ? 'translate-x-[102%]' 
-              : 'translate-x-0'
+              : 'translate-x-0 active:brightness-95'
           }`}
         >
           <img 
@@ -445,8 +556,45 @@ export const AirlockPortal: React.FC<AirlockPortalProps> = ({
             </nav>
           </div>
 
+          {/* MOBILE DIRECT ACTION BUTTONS (Always reachable right at thumb level) */}
+          <div className="md:hidden w-full max-w-sm mx-auto pointer-events-auto flex flex-col gap-2.5 pb-2 px-2">
+            <button
+              type="button"
+              onClick={() => handleOpenDoor('digital')}
+              className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-extrabold text-sm shadow-[0_12px_28px_rgba(37,99,235,0.45)] flex items-center justify-between border border-white/40 active:scale-95 transition-all cursor-pointer"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
+                  <Cpu className="w-4 h-4 text-white" />
+                </div>
+                <div className="text-left">
+                  <div className="text-sm font-black leading-tight text-white tracking-wide">ENTRAR A SOFTWARE & APPS</div>
+                  <div className="text-[10px] text-cyan-200 font-medium">9 Demos Interactivos en Vivo</div>
+                </div>
+              </div>
+              <ArrowRight className="w-5 h-5 text-white shrink-0" />
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleOpenDoor('physical')}
+              className="w-full py-3 px-4 rounded-2xl bg-slate-900/85 hover:bg-slate-900 text-white font-bold text-xs shadow-lg backdrop-blur-md flex items-center justify-between border border-white/20 active:scale-95 transition-all cursor-pointer"
+            >
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
+                  <Layers className="w-3.5 h-3.5 text-amber-400" />
+                </div>
+                <div className="text-left">
+                  <div className="text-xs font-bold leading-tight text-white">CATÁLOGO DE ALFOMBRAS</div>
+                  <div className="text-[9px] text-slate-300">Alfombras personalizadas de alto tránsito</div>
+                </div>
+              </div>
+              <ArrowRight className="w-4 h-4 text-slate-300 shrink-0" />
+            </button>
+          </div>
+
           {/* Bottom subtle visor watermark / trademark */}
-          <div className="w-full text-center pointer-events-none pb-2">
+          <div className="w-full text-center pointer-events-none pb-1">
             <p className="text-[9px] sm:text-xs font-mono tracking-widest text-slate-500/80">
               {t.rights}
             </p>
@@ -523,10 +671,7 @@ export const AirlockPortal: React.FC<AirlockPortalProps> = ({
 
             {/* Form Inputs */}
             <form 
-              onSubmit={(e) => { 
-                e.preventDefault(); 
-                alert(`${t.connecting} (${activeCrm.toUpperCase()})`); 
-              }} 
+              onSubmit={handleLoginSubmit} 
               className="space-y-3 relative z-20"
             >
               <div>
@@ -535,9 +680,12 @@ export const AirlockPortal: React.FC<AirlockPortalProps> = ({
                 </label>
                 <input 
                   type="text" 
+                  value={loginIdentifier}
+                  onChange={(e) => setLoginIdentifier(e.target.value)}
                   placeholder="admin@apcr.cr" 
                   required 
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950/80 border border-slate-700 focus:border-cyan-400 text-sm font-mono text-cyan-300 placeholder:text-slate-600 focus:outline-none transition-colors"
+                  disabled={loginLoading || loginSuccess}
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950/80 border border-slate-700 focus:border-cyan-400 text-sm font-mono text-cyan-300 placeholder:text-slate-600 focus:outline-none transition-colors disabled:opacity-60"
                 />
               </div>
 
@@ -547,19 +695,51 @@ export const AirlockPortal: React.FC<AirlockPortalProps> = ({
                 </label>
                 <input 
                   type="password" 
+                  value={loginPassword}
+                  onChange={(e) => setLoginPassword(e.target.value)}
                   placeholder="••••••••••••" 
                   required 
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950/80 border border-slate-700 focus:border-cyan-400 text-sm font-mono text-cyan-300 placeholder:text-slate-600 focus:outline-none transition-colors"
+                  disabled={loginLoading || loginSuccess}
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950/80 border border-slate-700 focus:border-cyan-400 text-sm font-mono text-cyan-300 placeholder:text-slate-600 focus:outline-none transition-colors disabled:opacity-60"
                 />
               </div>
 
+              {loginError && (
+                <div className="p-3 rounded-xl bg-red-950/80 border border-red-500/50 text-red-300 font-mono text-xs flex items-center gap-2 animate-in fade-in duration-200">
+                  <div className="w-2 h-2 rounded-full bg-red-500 animate-ping flex-shrink-0" />
+                  <span>{loginError}</span>
+                </div>
+              )}
+
+              {loginSuccess && (
+                <div className="p-3 rounded-xl bg-emerald-950/80 border border-emerald-500/50 text-emerald-300 font-mono text-xs flex items-center gap-2 animate-in fade-in duration-200">
+                  <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
+                  <span>{t.authSuccess}</span>
+                </div>
+              )}
+
               <button
                 type="submit"
-                className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 text-white font-mono font-bold text-sm shadow-[0_0_20px_rgba(6,182,212,0.4)] flex items-center justify-center gap-2 cursor-pointer mt-2 active:scale-98 transition-all"
+                disabled={loginLoading || loginSuccess}
+                className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 text-white font-mono font-bold text-sm shadow-[0_0_20px_rgba(6,182,212,0.4)] flex items-center justify-center gap-2 cursor-pointer mt-2 active:scale-98 transition-all disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                <ShieldCheck className="w-4 h-4" />
-                <span>{t.loginBtn}</span>
-                <ArrowRight className="w-4 h-4" />
+                {loginLoading ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    <span>{t.verifying}</span>
+                  </>
+                ) : loginSuccess ? (
+                  <>
+                    <ShieldCheck className="w-4 h-4 text-emerald-400 animate-bounce" />
+                    <span>{t.authSuccess}</span>
+                  </>
+                ) : (
+                  <>
+                    <ShieldCheck className="w-4 h-4" />
+                    <span>{t.loginBtn}</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </>
+                )}
               </button>
             </form>
 
