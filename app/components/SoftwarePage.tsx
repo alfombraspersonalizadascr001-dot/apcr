@@ -242,7 +242,8 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
   const [monthlyClients, setMonthlyClients] = useState(80);
   const [avgTicket, setAvgTicket] = useState(35);
   const [lostAppointments, setLostAppointments] = useState(8);
-  const basePlanCost = 150;
+  const [pricingTier, setPricingTier] = useState<'1m' | '3m' | '6m' | '12m'>('12m');
+  const basePlanCost = pricingTier === '1m' ? 300 : pricingTier === '3m' ? 280 : pricingTier === '6m' ? 250 : 199;
 
   const lostRevenueRecovered = Math.round(lostAppointments * 0.75 * avgTicket);
   const timeSavedHours = 28;
@@ -285,7 +286,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
           </div>
           <div className="flex items-center gap-3 text-xs">
             <span className="bg-blue-950/80 px-2.5 py-0.5 rounded border border-blue-400/30 text-emerald-300 font-mono font-medium">
-              PLANES DESDE $150 EN ADELANTE
+              PLANES DESDE $199/MES EN ADELANTE
             </span>
             {onToggleLang && (
               <button
@@ -350,7 +351,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
               Stack Tecnológico
             </a>
             <a href="#modelo-inversion" className="hover:text-blue-600 transition-colors flex items-center gap-1.5">
-              <span>Planes (Desde $150)</span>
+              <span>Planes (Desde $199/mes)</span>
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
             </a>
             <a href="#demo" className="hover:text-blue-600 transition-colors">
@@ -364,7 +365,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
           {/* Right Action: Official WhatsApp CTA + Mobile Hamburger Menu */}
           <div className="flex items-center gap-2 sm:gap-3">
             <a
-              href={getWhatsAppLink('Hola equipo APCR, deseo cotizar el desarrollo de software o app móvil para mi empresa (Planes desde $150 en adelante).')}
+              href={getWhatsAppLink('Hola equipo APCR, deseo cotizar el desarrollo de software o app móvil para mi empresa (Planes desde $199/mes en adelante).')}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-3 sm:px-5 py-2 sm:py-2.5 rounded-lg bg-[#25D366] hover:bg-[#20bd5a] text-white font-semibold text-xs sm:text-sm transition-all shadow-sm hover:shadow-md cursor-pointer active:scale-98"
@@ -452,7 +453,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
               >
                 <div className="flex items-center gap-2.5">
                   <span>🏷️</span>
-                  <span>Planes (Desde $150 en adelante)</span>
+                  <span>Planes (Desde $199/mes)</span>
                 </div>
                 <ChevronRight className="w-4 h-4 text-slate-500" />
               </a>
@@ -512,7 +513,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
               Sistemas digitales con <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600">rigor de ingeniería</span>.
               <br />
               <span className="text-slate-800 font-bold text-3xl sm:text-4xl lg:text-5xl">
-                Accesible para tu negocio desde $150 en adelante.
+                Accesible para tu negocio desde $199/mes en adelante.
               </span>
             </h1>
 
@@ -556,7 +557,8 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
                 <div className="text-xs text-slate-500 font-medium">Despliegue a Producción</div>
               </div>
               <div>
-                <div className="font-extrabold text-2xl text-purple-600 font-mono">Desde $150</div>
+                <div className="font-extrabold text-2xl text-purple-600 font-mono">Desde $199/m</div>
+                <div className="text-xs text-slate-500 font-medium">Planes de 1 a 12 Meses</div>
                 <div className="text-xs text-slate-500 font-medium">En adelante según escala</div>
               </div>
             </div>
@@ -943,7 +945,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
                   </button>
 
                   <a
-                    href={getWhatsAppLink(`Hola APCR, me encantó el demo de "${app.name}" y deseo cotizar un sistema similar para mi negocio (Planes desde $150 en adelante).`)}
+                    href={getWhatsAppLink(`Hola APCR, me encantó el demo de "${app.name}" y deseo cotizar un sistema similar para mi negocio (Planes desde $199/mes en adelante).`)}
                     onClick={(e) => e.stopPropagation()}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -1103,13 +1105,13 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
               <div className="mt-4 w-[375px] flex items-center justify-between gap-3 bg-slate-800/80 p-3 rounded-xl border border-slate-700 text-xs">
                 <span className="text-slate-300">¿Te interesa este sistema?</span>
                 <a
-                  href={getWhatsAppLink(`Hola APCR, me interesa implementar la app de "${selectedApp.name}" para mi negocio (Planes desde $150 en adelante).`)}
+                  href={getWhatsAppLink(`Hola APCR, me interesa implementar la app de "${selectedApp.name}" para mi negocio (Planes desde $199/mes en adelante).`)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-3 py-1.5 rounded-lg bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold transition-colors flex items-center gap-1.5"
                 >
                   <MessageCircle className="w-3.5 h-3.5 fill-white" />
-                  <span>Cotizar desde $150</span>
+                  <span>Cotizar desde $199/mes</span>
                 </a>
               </div>
 
@@ -1146,7 +1148,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
 
             <div className="flex items-center gap-2">
               <a
-                href={getWhatsAppLink(`Hola APCR, estoy probando el demo completo de "${fullScreenApp.name}" y deseo una app para mi empresa (Planes desde $150 en adelante).`)}
+                href={getWhatsAppLink(`Hola APCR, estoy probando el demo completo de "${fullScreenApp.name}" y deseo una app para mi empresa (Planes desde $199/mes en adelante).`)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-3 sm:px-3.5 py-1.5 rounded-lg bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-xs flex items-center gap-1.5 transition-all shadow cursor-pointer active:scale-95"
@@ -1201,101 +1203,308 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
 
       {/* 5. PRICING & INVERSION MODEL SECTION (DESDE $150 EN ADELANTE) */}
       <section id="modelo-inversion" className="py-16 lg:py-24 bg-slate-900 text-white relative overflow-hidden">
+        {/* Subtle decorative glow */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           <div className="text-center max-w-3xl mx-auto mb-14">
             <span className="inline-block px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-bold uppercase tracking-wider mb-4">
-              MODELO FLEXIBLE & SIN SORPRESAS
+              OPCIONES DE COBRO TRANSPARENTES
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight mb-4">
-              ¿Por qué pagar $3,000 en un solo pago o lidiar con freelancers que desaparecen?
+              Planes de Cobro para Apps y Sistemas
             </h2>
             <p className="text-slate-400 text-base sm:text-lg leading-relaxed">
-              Con APCR tienes un <strong className="text-white font-semibold">departamento de ingeniería de software y apps dedicado</strong> para tu empresa con planes flexibles que inician <strong className="text-emerald-400 font-semibold">desde $150 en adelante</strong> según la escala de tu operación.
+              Elige el plazo que mejor se adapte al flujo de tu negocio. Sin costos ocultos, con mantenimiento, servidor y soporte directo por ingenieros.
             </p>
           </div>
 
-          <div className="max-w-4xl mx-auto bg-gradient-to-b from-slate-800 to-slate-850 rounded-2xl border border-slate-700 shadow-2xl overflow-hidden">
-            <div className="p-8 sm:p-10 lg:p-12">
-              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
-                
-                {/* Left side: What's included */}
-                <div className="flex-1">
-                  <div className="inline-block px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 text-xs font-bold uppercase tracking-wide mb-3">
-                    PLAN DIGITAL PARTNER PYME
-                  </div>
-                  <h3 className="text-2xl sm:text-3xl font-extrabold text-white mb-3">
-                    Planes de Ingeniería desde $150 en adelante
-                  </h3>
-                  <p className="text-slate-400 text-sm mb-6 leading-relaxed">
-                    Diseñado específicamente para clínicas, talleres, restaurantes, gimnasios y empresas de servicios que necesitan resultados operativos reales desde la primera semana.
-                  </p>
+          {/* 4 PRICING CARDS GRID (1 Mes, 3 Meses, 6 Meses, 12 Meses) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            
+            {/* TIER 1: 1 MES */}
+            <div 
+              onClick={() => setPricingTier('1m')}
+              className={`rounded-2xl p-6 border transition-all cursor-pointer flex flex-col justify-between relative ${
+                pricingTier === '1m'
+                  ? 'bg-slate-800/90 border-blue-500 shadow-2xl ring-2 ring-blue-500/50 scale-[1.02]'
+                  : 'bg-slate-850/60 border-slate-800 hover:border-slate-700 hover:bg-slate-800/60'
+              }`}
+            >
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-bold uppercase tracking-wider text-slate-400">PLAN MENSUAL</span>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">1 MES</span>
+                </div>
+                <h3 className="text-xl font-extrabold text-white">Flexibilidad Total</h3>
+                <p className="text-xs text-slate-400 mt-1 leading-relaxed">Ideal para validar tu app o sistema sin compromisos de permanencia.</p>
 
-                  <div className="space-y-3">
-                    {[
-                      'Desarrollo e implementación rápida de tu sistema o app móvil (Web, Citas, Menú o CRM)',
-                      'Alojamiento en Servidores Cloud de alta velocidad (AWS / Cloudflare)',
-                      'Dominio corporativo y certificado de seguridad SSL incluido',
-                      'Copias de respaldo automáticas diarias (Backups cifrados)',
-                      'Soporte técnico y ajustes continuos directo por WhatsApp con ingenieros',
-                      'Monitoreo 24/7 y 99.9% de tiempo de actividad garantizado',
-                      'Código limpio, modular y preparado para escalar sin reconstruir de cero'
-                    ].map((feature, idx) => (
-                      <div key={idx} className="flex items-start gap-3">
-                        <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
-                        <span className="text-sm text-slate-300">{feature}</span>
-                      </div>
-                    ))}
+                <div className="mt-5 pb-5 border-b border-slate-700/60">
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-3xl sm:text-4xl font-extrabold text-white font-mono">$300</span>
+                    <span className="text-slate-400 text-xs">USD / mes</span>
+                  </div>
+                  <div className="text-[11px] text-slate-400 mt-1">
+                    Facturado mes a mes (~₡156,000 colones)
                   </div>
                 </div>
 
-                {/* Right side: Pricing Display */}
-                <div className="lg:w-80 bg-slate-900/90 rounded-xl p-6 border border-slate-700 text-center flex flex-col justify-between">
-                  <div>
-                    <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                      INVERSIÓN MENSUAL
-                    </span>
-                    <div className="mt-3 flex items-baseline justify-center gap-1">
-                      <span className="text-slate-400 text-lg font-bold">Desde</span>
-                      <span className="text-4xl sm:text-5xl font-extrabold text-white font-mono">$150</span>
-                      <span className="text-slate-400 text-sm">USD/mes</span>
-                    </div>
-                    <div className="text-xs text-emerald-400 font-medium mt-1">
-                      en adelante según escala · (~₡78,000 colones)
-                    </div>
+                <ul className="mt-5 space-y-2.5 text-xs text-slate-300">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Tu App o Sistema 100% Operativo</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Alojamiento Cloud & SSL incluido</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Soporte técnico y ajustes continuos</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Renueva o cancela mes a mes</span>
+                  </li>
+                </ul>
+              </div>
 
-                    <div className="mt-6 pt-6 border-t border-slate-800 text-xs text-slate-400 space-y-2 text-left">
-                      <div className="flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                        <span>Sin contratos forzosos de permanencia</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                        <span>Tu solución operativa en 5 a 10 días hábiles</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                        <span>Paga con Transferencia Bancaria o SINPE Móvil</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mt-8">
-                    <a
-                      href={getWhatsAppLink('Hola APCR, deseo cotizar un plan para mi negocio desde $150 en adelante y coordinar los detalles de desarrollo.')}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-4 rounded-lg bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-sm transition-all shadow-lg shadow-emerald-900/30 active:scale-98 cursor-pointer"
-                    >
-                      <MessageCircle className="w-4 h-4 fill-white" />
-                      <span>Empezar con este Plan</span>
-                    </a>
-                  </div>
-
-                </div>
-
+              <div className="mt-8">
+                <a
+                  href={getWhatsAppLink('Hola APCR, deseo contratar el Plan de 1 Mes ($300/mes) para mi app/sistema y coordinar el desarrollo.')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`w-full py-3 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all ${
+                    pricingTier === '1m'
+                      ? 'bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/30'
+                      : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700'
+                  }`}
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  <span>Elegir 1 Mes ($300)</span>
+                </a>
               </div>
             </div>
+
+            {/* TIER 2: 3 MESES */}
+            <div 
+              onClick={() => setPricingTier('3m')}
+              className={`rounded-2xl p-6 border transition-all cursor-pointer flex flex-col justify-between relative ${
+                pricingTier === '3m'
+                  ? 'bg-slate-800/90 border-blue-500 shadow-2xl ring-2 ring-blue-500/50 scale-[1.02]'
+                  : 'bg-slate-850/60 border-slate-800 hover:border-slate-700 hover:bg-slate-800/60'
+              }`}
+            >
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-bold uppercase tracking-wider text-blue-400">TRIMESTRAL</span>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-900/60 text-blue-300 border border-blue-700/50">3 MESES</span>
+                </div>
+                <h3 className="text-xl font-extrabold text-white">Consolidación</h3>
+                <p className="text-xs text-slate-400 mt-1 leading-relaxed">Para negocios que buscan lanzar y madurar su canal digital con ahorro.</p>
+
+                <div className="mt-5 pb-5 border-b border-slate-700/60">
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-3xl sm:text-4xl font-extrabold text-white font-mono">$280</span>
+                    <span className="text-slate-400 text-xs">USD / mes</span>
+                  </div>
+                  <div className="text-[11px] text-emerald-400 font-medium mt-1">
+                    Ahorras $60 ($840 total trimestral)
+                  </div>
+                </div>
+
+                <ul className="mt-5 space-y-2.5 text-xs text-slate-300">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Todo lo del plan mensual</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Prioridad en mejoras y cambios</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Capacitación a tu equipo de trabajo</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Ahorro de $20 cada mes</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="mt-8">
+                <a
+                  href={getWhatsAppLink('Hola APCR, deseo contratar el Plan Trimestral de 3 Meses ($280/mes) para mi app/sistema.')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`w-full py-3 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all ${
+                    pricingTier === '3m'
+                      ? 'bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/30'
+                      : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700'
+                  }`}
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  <span>Elegir 3 Meses ($280)</span>
+                </a>
+              </div>
+            </div>
+
+            {/* TIER 3: 6 MESES */}
+            <div 
+              onClick={() => setPricingTier('6m')}
+              className={`rounded-2xl p-6 border transition-all cursor-pointer flex flex-col justify-between relative ${
+                pricingTier === '6m'
+                  ? 'bg-slate-800/90 border-emerald-500 shadow-2xl ring-2 ring-emerald-500/50 scale-[1.02]'
+                  : 'bg-slate-850/60 border-slate-800 hover:border-slate-700 hover:bg-slate-800/60'
+              }`}
+            >
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">SEMESTRAL</span>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-900/60 text-emerald-300 border border-emerald-700/50">6 MESES</span>
+                </div>
+                <h3 className="text-xl font-extrabold text-white">Crecimiento</h3>
+                <p className="text-xs text-slate-400 mt-1 leading-relaxed">Excelente balance entre ahorro significativo y soporte continuo asegurado.</p>
+
+                <div className="mt-5 pb-5 border-b border-slate-700/60">
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-3xl sm:text-4xl font-extrabold text-white font-mono">$250</span>
+                    <span className="text-slate-400 text-xs">USD / mes</span>
+                  </div>
+                  <div className="text-[11px] text-emerald-400 font-medium mt-1">
+                    Ahorras $300 ($1,500 total semestral)
+                  </div>
+                </div>
+
+                <ul className="mt-5 space-y-2.5 text-xs text-slate-300">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Todo lo del plan trimestral</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Optimización de velocidad y SEO continuo</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Backups diarios y monitoreo 24/7</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Ahorro de $50 cada mes</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="mt-8">
+                <a
+                  href={getWhatsAppLink('Hola APCR, deseo contratar el Plan Semestral de 6 Meses ($250/mes) para mi app/sistema.')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`w-full py-3 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all ${
+                    pricingTier === '6m'
+                      ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/30'
+                      : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700'
+                  }`}
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  <span>Elegir 6 Meses ($250)</span>
+                </a>
+              </div>
+            </div>
+
+            {/* TIER 4: 12 MESES (ANUAL) - LA MÁS BARATA & RECOMENDADA */}
+            <div 
+              onClick={() => setPricingTier('12m')}
+              className={`rounded-2xl p-6 border transition-all cursor-pointer flex flex-col justify-between relative ${
+                pricingTier === '12m'
+                  ? 'bg-gradient-to-b from-blue-950/90 via-slate-850 to-slate-900 border-emerald-400 shadow-2xl ring-2 ring-emerald-400/80 scale-[1.04]'
+                  : 'bg-slate-850/80 border-emerald-500/50 hover:border-emerald-400'
+              }`}
+            >
+              {/* Highlight Badge */}
+              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-400 text-slate-950 font-black text-[10px] uppercase tracking-wider px-3.5 py-1 rounded-full shadow-lg shadow-emerald-500/40 whitespace-nowrap">
+                ★ LA MÁS BARATA & POPULAR ★
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between mb-3 pt-2">
+                  <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">PLAN ANUAL</span>
+                  <span className="text-[10px] font-extrabold px-2 py-0.5 rounded bg-emerald-400/20 text-emerald-300 border border-emerald-400/40">12 MESES</span>
+                </div>
+                <h3 className="text-xl font-extrabold text-white">Máximo Rendimiento</h3>
+                <p className="text-xs text-slate-300 mt-1 leading-relaxed">El precio más económico por mes para tener tu departamento de tecnología todo el año.</p>
+
+                <div className="mt-5 pb-5 border-b border-slate-700/60">
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-4xl sm:text-5xl font-extrabold text-emerald-400 font-mono">$199</span>
+                    <span className="text-slate-400 text-xs">USD / mes</span>
+                  </div>
+                  <div className="text-[11px] text-cyan-300 font-semibold mt-1">
+                    ¡Ahorras $1,212 al año! (~₡103,000 colones/mes)
+                  </div>
+                </div>
+
+                <ul className="mt-5 space-y-2.5 text-xs text-slate-200">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span className="font-semibold">Tarifa mensual más baja ($199)</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Dominio corporativo .com o .cr incluido</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Soporte VIP prioritario 365 días</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Actualizaciones continuas y mejoras</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Backups diarios automatizados</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="mt-8">
+                <a
+                  href={getWhatsAppLink('Hola APCR, deseo contratar el Plan Anual de 12 Meses ($199/mes - La opción más económica) para la app/sistema de mi empresa.')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-3.5 px-4 rounded-xl font-extrabold text-xs flex items-center justify-center gap-2 transition-all bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 shadow-xl shadow-emerald-500/30 cursor-pointer active:scale-98"
+                >
+                  <MessageCircle className="w-4 h-4 fill-slate-950" />
+                  <span>Elegir 12 Meses ($199/m)</span>
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Guarantee & Payment details footer banner */}
+          <div className="max-w-4xl mx-auto bg-slate-800/80 rounded-2xl p-6 border border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-300">
+            <div className="flex items-center gap-3 text-center sm:text-left">
+              <div className="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center shrink-0">
+                <Sparkles className="w-5 h-5" />
+              </div>
+              <div>
+                <span className="font-bold text-white block">Implementación Ágil en 5 a 10 Días</span>
+                <span>Tu app entra en producción rápida sin demoras burocráticas. Pagos por SINPE Móvil o Transferencia.</span>
+              </div>
+            </div>
+            <a
+              href={getWhatsAppLink('Hola APCR, tengo dudas sobre los planes de 1, 3, 6 y 12 meses y me gustaría hablar con un ingeniero.')}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-5 py-2.5 rounded-xl bg-slate-700 hover:bg-slate-600 text-white font-bold whitespace-nowrap transition-colors"
+            >
+              Consultar con un Ingeniero
+            </a>
           </div>
 
         </div>
@@ -1375,9 +1584,9 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
               </div>
 
               <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span className="text-emerald-700 font-bold">Desde $150 en adelante</span>
+                <span className="text-emerald-700 font-bold">Desde $199/mes en adelante</span>
                 <a 
-                  href={getWhatsAppLink('Hola APCR, deseo cotizar un sitio web corporativo de alta velocidad (Planes desde $150 en adelante).')}
+                  href={getWhatsAppLink('Hola APCR, deseo cotizar un sitio web corporativo de alta velocidad (Planes desde $199/mes en adelante).')}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-600 font-bold flex items-center gap-1 group-hover:translate-x-0.5 transition-transform"
@@ -1423,9 +1632,9 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
               </div>
 
               <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span className="text-emerald-700 font-bold">Desde $150 en adelante</span>
+                <span className="text-emerald-700 font-bold">Desde $199/mes en adelante</span>
                 <a 
-                  href={getWhatsAppLink('Hola APCR, deseo cotizar el sistema de citas y recordatorios por WhatsApp (Planes desde $150 en adelante).')}
+                  href={getWhatsAppLink('Hola APCR, deseo cotizar el sistema de citas y recordatorios por WhatsApp (Planes desde $199/mes en adelante).')}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-emerald-600 font-bold flex items-center gap-1 group-hover:translate-x-0.5 transition-transform"
@@ -1471,9 +1680,9 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
               </div>
 
               <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span className="text-emerald-700 font-bold">Desde $150 en adelante</span>
+                <span className="text-emerald-700 font-bold">Desde $199/mes en adelante</span>
                 <a 
-                  href={getWhatsAppLink('Hola APCR, deseo cotizar el menú digital QR con pedidos a WhatsApp para mi restaurante/soda (Planes desde $150 en adelante).')}
+                  href={getWhatsAppLink('Hola APCR, deseo cotizar el menú digital QR con pedidos a WhatsApp para mi restaurante/soda (Planes desde $199/mes en adelante).')}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-amber-600 font-bold flex items-center gap-1 group-hover:translate-x-0.5 transition-transform"
@@ -1519,9 +1728,9 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
               </div>
 
               <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span className="text-emerald-700 font-bold">Desde $150 en adelante</span>
+                <span className="text-emerald-700 font-bold">Desde $199/mes en adelante</span>
                 <a 
-                  href={getWhatsAppLink('Hola APCR, deseo cotizar un CRM o sistema de control de órdenes/taller (Planes desde $150 en adelante).')}
+                  href={getWhatsAppLink('Hola APCR, deseo cotizar un CRM o sistema de control de órdenes/taller (Planes desde $199/mes en adelante).')}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-indigo-600 font-bold flex items-center gap-1 group-hover:translate-x-0.5 transition-transform"
@@ -1567,9 +1776,9 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
               </div>
 
               <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span className="text-emerald-700 font-bold">Desde $150 en adelante</span>
+                <span className="text-emerald-700 font-bold">Desde $199/mes en adelante</span>
                 <a 
-                  href={getWhatsAppLink('Hola APCR, deseo cotizar una App Móvil para iOS y Android (Planes desde $150 en adelante).')}
+                  href={getWhatsAppLink('Hola APCR, deseo cotizar una App Móvil para iOS y Android (Planes desde $199/mes en adelante).')}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-purple-600 font-bold flex items-center gap-1 group-hover:translate-x-0.5 transition-transform"
@@ -1615,9 +1824,9 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
               </div>
 
               <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span className="text-emerald-700 font-bold">Desde $150 en adelante</span>
+                <span className="text-emerald-700 font-bold">Desde $199/mes en adelante</span>
                 <a 
-                  href={getWhatsAppLink('Hola APCR, deseo cotizar un Agente o Chatbot con IA para automatizar atención en WhatsApp (Planes desde $150 en adelante).')}
+                  href={getWhatsAppLink('Hola APCR, deseo cotizar un Agente o Chatbot con IA para automatizar atención en WhatsApp (Planes desde $199/mes en adelante).')}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-cyan-600 font-bold flex items-center gap-1 group-hover:translate-x-0.5 transition-transform"
@@ -1750,7 +1959,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
               Prueba la experiencia que tus clientes van a tener
             </h2>
             <p className="text-slate-600 text-sm sm:text-base">
-              Haz clic en los simuladores en vivo para ver cómo funciona el sistema de citas, el menú digital o calcula el retorno financiero de tu inversión (Planes desde $150 en adelante).
+              Haz clic en los simuladores en vivo para ver cómo funciona el sistema de citas, el menú digital o calcula el retorno financiero de tu inversión (Planes desde $199/mes en adelante).
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mt-6">
@@ -1787,7 +1996,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
                 }`}
               >
                 <DollarSign className="w-4 h-4" />
-                <span>Calculadora ROI (Desde $150)</span>
+                <span>Calculadora ROI (Desde $199/mes)</span>
               </button>
             </div>
           </div>
@@ -2165,7 +2374,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
-              href={getWhatsAppLink('Hola APCR, deseo cotizar software para mi empresa (Planes desde $150 en adelante).')}
+              href={getWhatsAppLink('Hola APCR, deseo cotizar software para mi empresa (Planes desde $199/mes en adelante).')}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-base transition-all shadow-lg hover:shadow-xl cursor-pointer"
@@ -2239,7 +2448,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
                   </button>
                 </li>
                 <li><a href="#metodologia" className="hover:text-white transition-colors">Metodología de Entrega</a></li>
-                <li><a href="#modelo-inversion" className="hover:text-white transition-colors">Planes desde $150 en adelante</a></li>
+                <li><a href="#modelo-inversion" className="hover:text-white transition-colors">Planes desde $199/mes en adelante</a></li>
                 <li>San José, Costa Rica</li>
               </ul>
             </div>
@@ -2295,7 +2504,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
         </a>
 
         <a
-          href={getWhatsAppLink('Hola APCR, deseo cotizar software o app móvil para mi empresa (Planes desde $150 en adelante).')}
+          href={getWhatsAppLink('Hola APCR, deseo cotizar software o app móvil para mi empresa (Planes desde $199/mes en adelante).')}
           target="_blank"
           rel="noopener noreferrer"
           className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl bg-[#25D366] active:bg-[#20bd5a] text-white font-extrabold text-xs shadow-md shadow-emerald-600/30 text-center"
