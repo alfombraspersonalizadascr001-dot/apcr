@@ -1,0 +1,691 @@
+/* ==========================================================================
+   ESTILOS MAESTROS - CATÁLOGO DE MENÚS DE RESTAURANTES MEXICANOS DE AUTOR
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,900;1,600&family=Space+Grotesk:wght@600;700;800&display=swap');
+
+:root {
+  --bg-main: #0a0503;
+  --bg-card: rgba(24, 15, 12, 0.85);
+  --bg-card-hover: rgba(45, 26, 20, 0.95);
+
+  --accent-primary: #dc2626;
+  --accent-glow: rgba(220, 38, 38, 0.4);
+
+  --text-main: #fef2f2;
+  --text-sub: #fca5a5;
+  --text-muted: #991b1b;
+
+  --border-glass: rgba(255, 255, 255, 0.12);
+  --font-sans: 'Outfit', sans-serif;
+  --font-serif: 'Playfair Display', serif;
+  --font-heading: 'Space Grotesk', sans-serif;
+
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-sm: 8px;
+
+  --transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(circle at 15% 15%, rgba(220, 38, 38, 0.18) 0%, transparent 45%),
+    radial-gradient(circle at 85% 85%, rgba(234, 88, 12, 0.18) 0%, transparent 45%);
+  background-attachment: fixed;
+}
+
+/* ==========================================================================
+   HEADER DE MARCA AMPLIADO Y PROMINENTE (THICK BRAND HEADER)
+   ========================================================================== */
+.brand-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10, 5, 3, 0.94);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 2px solid rgba(220, 38, 38, 0.3);
+  padding: 1.25rem 2.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+}
+
+.brand-header-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand-logo-container {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.brand-logo-icon {
+  font-size: 2.8rem;
+  width: 65px;
+  height: 65px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--accent-primary);
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.brand-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-kanji-tag {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #f59e0b;
+  letter-spacing: 1px;
+}
+
+.brand-main-name {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.brand-sub-region {
+  font-size: 0.8rem;
+  color: var(--text-sub);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.header-action-btns {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.btn-catalog-switch {
+  padding: 0.75rem 1.4rem;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border: 1px solid var(--border-glass);
+  border-radius: 30px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-catalog-switch:hover {
+  background: rgba(255, 255, 255, 0.16);
+  transform: translateY(-2px);
+}
+
+.btn-print-accent {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #dc2626, #ea580c);
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  box-shadow: 0 0 20px var(--accent-glow);
+  transition: var(--transition);
+}
+
+.btn-print-accent:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.15);
+}
+
+/* ==========================================================================
+   VISTA DEL CATÁLOGO MAESTRO (GRID DE LOS RESTAURANTES MEXICANOS)
+   ========================================================================== */
+.catalog-view {
+  max-width: 1400px;
+  margin: 2.5rem auto 5rem auto;
+  padding: 0 2.5rem;
+}
+
+.catalog-hero {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.catalog-title {
+  font-family: var(--font-heading);
+  font-size: 3rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ffffff 30%, #fca5a5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.75rem;
+}
+
+.catalog-desc {
+  color: var(--text-sub);
+  font-size: 1.1rem;
+  max-width: 800px;
+  margin: 0 auto 2rem auto;
+}
+
+.restaurant-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 2.5rem;
+}
+
+.rest-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: blur(16px);
+  position: relative;
+}
+
+.rest-card:hover {
+  transform: translateY(-8px);
+  border-color: #ef4444;
+  box-shadow: 0 25px 50px -15px rgba(220, 38, 38, 0.4);
+  background: var(--bg-card-hover);
+}
+
+.rest-card-imgbox {
+  width: 100%;
+  height: 230px;
+  position: relative;
+  overflow: hidden;
+}
+
+.rest-card-imgbox img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.rest-card:hover .rest-card-imgbox img {
+  transform: scale(1.06);
+}
+
+.rest-card-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-size: 1.5rem;
+  padding: 0.3rem 0.7rem;
+  background: rgba(10, 5, 3, 0.85);
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+}
+
+.rest-card-body {
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.rest-kanji {
+  font-family: var(--font-serif);
+  font-size: 0.9rem;
+  color: #f59e0b;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+
+.rest-name {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.rest-tagline {
+  font-size: 0.88rem;
+  color: var(--text-sub);
+  margin-bottom: 1.25rem;
+  flex-grow: 1;
+}
+
+.btn-open-world {
+  padding: 0.85rem;
+  background: linear-gradient(135deg, #dc2626, #ea580c);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: var(--transition);
+  text-align: center;
+}
+
+.btn-open-world:hover {
+  filter: brightness(1.15);
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+/* ==========================================================================
+   VISTA DEL RESTAURANTE INDIVIDUAL (WORLD INMERSIVO)
+   ========================================================================== */
+.restaurant-view {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2.5rem 5rem 2.5rem;
+}
+
+.rest-hero-card {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  min-height: 400px;
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 2.5rem;
+  box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8);
+}
+
+.rest-hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.65;
+}
+
+.rest-hero-overlay {
+  position: relative;
+  z-index: 2;
+  padding: 3.5rem;
+  background: linear-gradient(0deg, rgba(10, 5, 3, 0.95) 15%, rgba(10, 5, 3, 0.3) 60%, transparent 100%);
+  width: 100%;
+}
+
+.rest-hero-title {
+  font-family: var(--font-heading);
+  font-size: 3rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+}
+
+/* Pestañas de Secciones en la Vista de Restaurante */
+.sections-tab-bar {
+  display: flex;
+  gap: 0.75rem;
+  background: rgba(24, 15, 12, 0.8);
+  padding: 0.6rem;
+  border-radius: 40px;
+  border: 1px solid var(--border-glass);
+  backdrop-filter: blur(16px);
+  margin-bottom: 2.5rem;
+  overflow-x: auto;
+}
+
+.tab-item {
+  flex: 1;
+  padding: 0.9rem 1.25rem;
+  background: transparent;
+  border: none;
+  color: var(--text-sub);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.92rem;
+  border-radius: 30px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: var(--transition);
+  text-align: center;
+}
+
+.tab-item.active {
+  background: linear-gradient(135deg, #dc2626, #ea580c);
+  color: #fff;
+  box-shadow: 0 0 20px var(--accent-glow);
+  font-weight: 700;
+}
+
+.dishes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 2rem;
+}
+
+.dish-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.dish-card:hover {
+  transform: translateY(-6px);
+  border-color: #ef4444;
+  box-shadow: 0 20px 40px -15px var(--accent-glow);
+}
+
+.dish-imgbox {
+  width: 100%;
+  height: 240px;
+  position: relative;
+}
+
+.dish-imgbox img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dish-price-tag {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.4rem 1rem;
+  background: rgba(10, 5, 3, 0.88);
+  border: 1px solid #f59e0b;
+  color: #f59e0b;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.1rem;
+  border-radius: 20px;
+}
+
+.dish-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+/* ==========================================================================
+   MODAL DE DETALLE DE PLATILLO
+   ========================================================================== */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(16px);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: var(--transition);
+}
+
+.modal-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ==========================================================================
+   MODO IMPRESO DUAL: ESTILO 1 (CARTA TRADICIONAL) Y ESTILO 2 (FLYER PLASTIFICADO HD FULL COLOR)
+   ========================================================================== */
+.print-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(10, 5, 3, 0.96);
+  backdrop-filter: blur(24px);
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  transition: var(--transition);
+}
+
+.print-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.print-topbar {
+  padding: 1.25rem 2.5rem;
+  background: #180f0c;
+  border-bottom: 1px solid var(--border-glass);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.print-format-toggle {
+  display: flex;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 4px;
+  border-radius: 30px;
+  border: 1px solid var(--border-glass);
+}
+
+.print-format-btn {
+  padding: 0.55rem 1.2rem;
+  background: transparent;
+  border: none;
+  color: var(--text-sub);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.85rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.print-format-btn.active {
+  background: linear-gradient(135deg, #dc2626, #ea580c);
+  color: #fff;
+  box-shadow: 0 0 15px rgba(220, 38, 38, 0.5);
+}
+
+.print-sheet-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  padding: 3rem 1.5rem;
+  display: block;
+  background: rgba(10, 5, 3, 0.95);
+}
+
+/* 📄 OPCIÓN 1: HOJA FÍSICA TRADICIONAL */
+.physical-menu-sheet {
+  background: #ffffff !important;
+  color: #111827 !important;
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto 4rem auto;
+  padding: 3.5rem 3rem;
+  border-radius: 8px;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8);
+  font-family: var(--font-serif);
+  position: relative;
+  box-sizing: border-box;
+  height: auto !important;
+  min-height: min-content;
+}
+
+.physical-menu-sheet::before {
+  content: '';
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  border: 3px double #dc2626;
+  pointer-events: none;
+}
+
+/* 🖼️ OPCIÓN 2: FLYER PLASTIFICADO HD EN ALTA DEFINICIÓN (FULL COLOR & FOTOS IA) */
+.printable-flyer-hd {
+  background: linear-gradient(180deg, #180f0c 0%, #0a0503 100%) !important;
+  color: #fef2f2 !important;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto 4rem auto;
+  padding: 2.5rem;
+  border-radius: 16px;
+  border: 2px solid #dc2626;
+  box-shadow: 0 30px 80px rgba(220, 38, 38, 0.35);
+  font-family: var(--font-sans);
+  position: relative;
+  box-sizing: border-box;
+  height: auto !important;
+}
+
+.flyer-header-banner {
+  position: relative;
+  height: 240px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.flyer-header-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.75);
+}
+
+.flyer-header-text {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 2rem;
+  background: linear-gradient(0deg, rgba(10, 5, 3, 0.95) 0%, transparent 100%);
+}
+
+.flyer-dish-row {
+  display: grid;
+  grid-template-columns: 95px 1fr;
+  gap: 1.25rem;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.85rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 0.9rem;
+  break-inside: avoid;
+}
+
+.flyer-dish-img {
+  width: 95px;
+  height: 95px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ==========================================================================
+   DRAWER DE LA BITÁCORA DE CAMBIOS
+   ========================================================================== */
+.drawer-backdrop {
+  position: fixed;
+  top: 0;
+  right: -550px;
+  width: 100%;
+  max-width: 550px;
+  height: 100vh;
+  background: #180f0c;
+  border-left: 1px solid var(--border-glass);
+  z-index: 3000;
+  transition: var(--transition);
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.drawer-backdrop.active {
+  right: 0;
+}
+
+/* ==========================================================================
+   REGLAS DE IMPRESIÓN DIRECTA (@media print)
+   ========================================================================== */
+@media print {
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  body > *:not(.print-overlay) {
+    display: none !important;
+  }
+
+  .print-overlay {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    background: #fff !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    z-index: 99999 !important;
+  }
+
+  .print-topbar {
+    display: none !important;
+  }
+
+  .print-sheet-wrapper {
+    padding: 0 !important;
+    overflow: visible !important;
+    background: #fff !important;
+  }
+
+  .physical-menu-sheet, .printable-flyer-hd {
+    box-shadow: none !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 1.5rem !important;
+    border: none !important;
+    margin-bottom: 0 !important;
+  }
+}

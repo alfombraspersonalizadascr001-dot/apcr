@@ -3,6 +3,9 @@ import {
   Globe, 
   Smartphone, 
   Calendar, 
+  Utensils,
+  ChefHat,
+  Store,
   QrCode, 
   Database,
   Bot, 
@@ -198,6 +201,51 @@ const DEMO_APPS: DemoApp[] = [
     accentBg: 'bg-indigo-500/10 border-indigo-500/30',
     accentText: 'text-indigo-400',
     icon: '👕'
+  },
+  {
+    id: 'menus-asiaticos',
+    slug: 'menus-asiaticos',
+    name: 'Colección 20 Menús Asiáticos de Autor',
+    category: 'gastro',
+    categoryLabel: 'Gastronomía & Menús QR',
+    badge: '20 Restaurantes de Autor',
+    tagline: 'Ramen, Sushi, Wok, Dim Sum & Carta Digital / Impresa HD',
+    description: 'Catálogo interactivo con 20 identidades gastronómicas completas (China, Japón, Corea). Incluye carta digital interactiva, selector de autor, modo impresión HD plastificada y optimización móvil sin descargas.',
+    features: ['20 restaurantes temáticos listos', 'Modo Carta Digital y Modo Impreso HD', 'Fotografías gastronómicas de alta definición', 'Menú de niños, coctelería y postres'],
+    color: '#ef4444',
+    accentBg: 'bg-red-500/10 border-red-500/30',
+    accentText: 'text-red-400',
+    icon: '🥢'
+  },
+  {
+    id: 'menus-mexicanos',
+    slug: 'menus-mexicanos',
+    name: 'Colección 12 Menús Mexicanos de Autor',
+    category: 'gastro',
+    categoryLabel: 'Gastronomía & Menús QR',
+    badge: '12 Conceptos con Paletas Únicas',
+    tagline: 'Taquería, Mole Oaxaca, Cantina, Marisquería & Cortes',
+    description: 'Colección de 12 conceptos gastronómicos mexicanos con paletas de color, tipografía e identidades 100% independientes. Vista interactiva en vivo, filtros por especialidad y modo flyer/menú físico.',
+    features: ['12 identidades visuales exclusivas', 'Paletas temáticas (Barro, Cobre, Talavera)', 'Visualizador interactivo móvil y escritorio', 'Exportación a formato impreso/PDF'],
+    color: '#f59e0b',
+    accentBg: 'bg-amber-500/10 border-amber-500/30',
+    accentText: 'text-amber-400',
+    icon: '🌮'
+  },
+  {
+    id: 'plataforma-menus',
+    slug: 'plataforma-menus',
+    name: 'GastroSaaS // Plataforma de Menús & Pedidos',
+    category: 'gastro',
+    categoryLabel: 'SaaS & Gastronomía',
+    badge: 'Plataforma Económica desde $15/mes',
+    tagline: 'Menú QR, Google My Business, Pedidos a WhatsApp & Cocina KDS',
+    description: 'Plataforma completa y económica para restaurantes: Menú QR ultrarrápido conectado a Google Maps, recepción de pedidos a WhatsApp sin comisiones abusivas y pantalla KDS de cocina para el dueño.',
+    features: ['Planes accesibles desde $15/mes', 'Conexión a Google My Business y Maps', 'Pedidos directos a WhatsApp (0% comisiones)', 'Calculadora de ROI y pantalla de cocina'],
+    color: '#10b981',
+    accentBg: 'bg-emerald-500/10 border-emerald-500/30',
+    accentText: 'text-emerald-400',
+    icon: '📱'
   },
   {
     id: 'crm-muebles',
@@ -445,11 +493,41 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
                 <div className="flex items-center gap-3">
                   <span className="text-xl">📱</span>
                   <div>
-                    <div className="font-extrabold text-blue-300">Demos de Apps en Vivo (9)</div>
+                    <div className="font-extrabold text-blue-300">Demos de Apps en Vivo (14)</div>
                     <div className="text-[11px] text-slate-300 font-normal">Pruébalas en tu celular en 1 toque</div>
                   </div>
                 </div>
                 <span className="text-[10px] bg-blue-500 text-white px-2 py-0.5 rounded-full font-bold">Probar</span>
+              </a>
+
+              <a
+                href="#seccion-restaurantes"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-between p-3.5 rounded-xl bg-amber-500/15 border border-amber-500/40 text-amber-200 hover:bg-amber-500/25 transition-all"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="text-xl">🍽️</span>
+                  <div>
+                    <div className="font-extrabold text-amber-300">Menús Restaurantes ($15/m)</div>
+                    <div className="text-[11px] text-slate-300 font-normal">Catálogo de 30+ menús QR y pedidos</div>
+                  </div>
+                </div>
+                <span className="text-[10px] bg-amber-500 text-slate-950 px-2 py-0.5 rounded-full font-bold">Económico</span>
+              </a>
+
+              <a
+                href="#seccion-crm-explicado"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-between p-3.5 rounded-xl bg-indigo-500/15 border border-indigo-500/40 text-indigo-200 hover:bg-indigo-500/25 transition-all"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="text-xl">🔨</span>
+                  <div>
+                    <div className="font-extrabold text-indigo-300">CRM Taller a lo Tico</div>
+                    <div className="text-[11px] text-slate-300 font-normal">Cotizaciones, Kanban y pedidos</div>
+                  </div>
+                </div>
+                <span className="text-[10px] bg-indigo-500 text-white px-2 py-0.5 rounded-full font-bold">Talleres</span>
               </a>
 
               <a
@@ -882,10 +960,10 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
             {/* Filter Pills */}
             <div className="flex flex-wrap items-center justify-center gap-2 mt-6">
               {[
-                { id: 'all', label: 'Todos (11 Demos)' },
+                { id: 'all', label: `Todos (${DEMO_APPS.length} Demos)` },
+                { id: 'gastro', label: '🍽️ Gastronomía & Menús (7)' },
                 { id: 'taller', label: '🔨 Talleres & Fabricación (CRM)' },
                 { id: 'fitness', label: '🏋️ Fitness & Deporte' },
-                { id: 'gastro', label: '🍔 Gastronomía & Sodas' },
                 { id: 'health', label: '🦷 Salud & Estética' }
               ].map((f) => (
                 <button
@@ -1894,6 +1972,502 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
               </div>
             </div>
 
+          </div>
+
+        </div>
+      </section>
+
+      {/* =========================================================================
+          6.4 SECTION: SOFTWARE MUY ECONÓMICO PARA RESTAURANTES & CATÁLOGO DE MENÚS QR
+          Pensado para sodas, cafeterías, taquerías, pizzerías y restaurantes en Costa Rica
+          ========================================================================= */}
+      <section id="seccion-restaurantes" className="py-16 lg:py-24 bg-gradient-to-b from-slate-950 via-[#111827] to-slate-900 text-white relative overflow-hidden border-t border-slate-800">
+
+        {/* Glow ambient effects */}
+        <div className="absolute top-1/4 -left-40 w-96 h-96 bg-amber-600/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-10 -right-40 w-96 h-96 bg-red-600/15 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+          {/* Header */}
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-semibold uppercase tracking-wider mb-4">
+              <Utensils className="w-3.5 h-3.5 text-amber-400" />
+              <span>SOFTWARE GASTRONÓMICO ACCESIBLE // PLANES DESDE $15/MES</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight mb-4">
+              Digitalice su restaurante o soda sin pagar comisiones abusivas
+            </h2>
+            <p className="text-slate-300 text-base sm:text-lg leading-relaxed">
+              Muchas aplicaciones de entrega le quitan hasta el <strong>30% de comisión</strong> en cada platillo, y mandar una foto borrosa de la carta o un PDF pesado de 20MB hace que los clientes se cansen y se vayan. Con nuestros menús digitales QR, el cliente abre la carta en <strong>1 segundo</strong>, pide directo a su <strong>WhatsApp</strong> y usted se deja el <strong>100% de la venta</strong>.
+            </p>
+          </div>
+
+          {/* 4 Critical Pillars for Restaurants in CR */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            <div className="bg-slate-900/90 rounded-2xl p-6 border border-slate-800 hover:border-amber-500/40 transition-all">
+              <div className="w-12 h-12 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-2xl mb-4">
+                ⚡
+              </div>
+              <h3 className="text-lg font-bold text-white mb-2">Carga en 1 Segundo</h3>
+              <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                El comensal apunta su celular al código QR en la mesa y entra al menú instantáneamente sin descargar aplicaciones pesadas ni registrarse.
+              </p>
+            </div>
+
+            <div className="bg-slate-900/90 rounded-2xl p-6 border border-slate-800 hover:border-emerald-500/40 transition-all">
+              <div className="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-2xl mb-4">
+                💬
+              </div>
+              <h3 className="text-lg font-bold text-white mb-2">Pedidos a WhatsApp (0% Comisión)</h3>
+              <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                El cliente arma su orden con extras, bebidas y notas. Al tocar un botón, la comanda le llega lista y desglosada a su WhatsApp o para pago por SINPE Móvil.
+              </p>
+            </div>
+
+            <div className="bg-slate-900/90 rounded-2xl p-6 border border-slate-800 hover:border-blue-500/40 transition-all">
+              <div className="w-12 h-12 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center text-2xl mb-4">
+                📍
+              </div>
+              <h3 className="text-lg font-bold text-white mb-2">Google Maps & Local SEO</h3>
+              <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                Conectamos el enlace oficial a su ficha de Google My Business para que los comensales que buscan comida en su zona lo encuentren primero.
+              </p>
+            </div>
+
+            <div className="bg-slate-900/90 rounded-2xl p-6 border border-slate-800 hover:border-red-500/40 transition-all">
+              <div className="w-12 h-12 rounded-xl bg-red-500/20 text-red-400 flex items-center justify-center text-2xl mb-4">
+                🎨
+              </div>
+              <h3 className="text-lg font-bold text-white mb-2">+30 Menús de Autor Listos</h3>
+              <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                ¿No tiene fotos profesionales ni diseñador? Ya tenemos colecciones temáticas listas con fotos de alta definición para adaptar a su negocio en horas.
+              </p>
+            </div>
+          </div>
+
+          {/* Interactive Demos Grid (Give shape to the menus) */}
+          <div className="mb-20">
+            <div className="text-center mb-8">
+              <span className="text-xs font-bold text-amber-400 uppercase tracking-widest block mb-2">
+                CATÁLOGO VIVO EN PRODUCCIÓN
+              </span>
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
+                Pruebe las Colecciones de Menús que Diseñamos
+              </h3>
+              <p className="text-slate-400 text-xs sm:text-sm max-w-2xl mx-auto mt-2">
+                Haga clic en cualquiera de las colecciones para probar el menú real en el simulador móvil interactivo o abrirlo en pantalla completa.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+              {/* Demo 1: Menús Asiáticos */}
+              <div className="bg-slate-900/95 rounded-2xl p-6 border border-red-500/30 hover:border-red-400/80 shadow-xl flex flex-col justify-between group transition-all">
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-3xl">🥢</span>
+                    <span className="text-[10px] font-extrabold px-2.5 py-1 rounded-full bg-red-500/20 text-red-300 border border-red-500/30">
+                      20 RESTAURANTES
+                    </span>
+                  </div>
+                  <h4 className="text-lg font-bold text-white mb-1 group-hover:text-red-400 transition-colors">
+                    Colección 20 Menús Asiáticos
+                  </h4>
+                  <p className="text-slate-400 text-xs leading-relaxed mb-4">
+                    China, Japón y Corea. Ramen, sushi, wok, dim sum y postres con fotografía gastronómica en alta resolución, modo carta virtual y versión para imprimir plastificada.
+                  </p>
+                  <ul className="space-y-1 text-[11px] text-slate-300 mb-6">
+                    <li className="flex items-center gap-1.5"><span className="text-red-400">✓</span> 20 Conceptos de Autor independientes</li>
+                    <li className="flex items-center gap-1.5"><span className="text-red-400">✓</span> Modo Carta Digital + Modo Impreso HD</li>
+                    <li className="flex items-center gap-1.5"><span className="text-red-400">✓</span> Menú de niños, cocteles y postres</li>
+                  </ul>
+                </div>
+                <button
+                  onClick={() => {
+                    const app = DEMO_APPS.find(a => a.id === 'menus-asiaticos');
+                    if (app) { setSelectedApp(app); setFullScreenApp(app); }
+                  }}
+                  className="w-full py-2.5 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-red-600/30 cursor-pointer active:scale-95 transition-all"
+                >
+                  <Play className="w-3.5 h-3.5 fill-white" />
+                  <span>Probar Menús Asiáticos</span>
+                </button>
+              </div>
+
+              {/* Demo 2: Menús Mexicanos */}
+              <div className="bg-slate-900/95 rounded-2xl p-6 border border-amber-500/30 hover:border-amber-400/80 shadow-xl flex flex-col justify-between group transition-all">
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-3xl">🌮</span>
+                    <span className="text-[10px] font-extrabold px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                      12 CONCEPTOS
+                    </span>
+                  </div>
+                  <h4 className="text-lg font-bold text-white mb-1 group-hover:text-amber-400 transition-colors">
+                    Colección 12 Menús Mexicanos
+                  </h4>
+                  <p className="text-slate-400 text-xs leading-relaxed mb-4">
+                    Oaxaca Mole, Taquería de Barrio, Cantina Real, Marisquería Pacífico. Cada restaurante cuenta con paleta de colores propia (Barro, Cobre, Talavera) e identidades únicas.
+                  </p>
+                  <ul className="space-y-1 text-[11px] text-slate-300 mb-6">
+                    <li className="flex items-center gap-1.5"><span className="text-amber-400">✓</span> Paletas visuales temáticas únicas</li>
+                    <li className="flex items-center gap-1.5"><span className="text-amber-400">✓</span> 15 fotografías de platos recortadas</li>
+                    <li className="flex items-center gap-1.5"><span className="text-amber-400">✓</span> Menú virtual interactivo y flyer</li>
+                  </ul>
+                </div>
+                <button
+                  onClick={() => {
+                    const app = DEMO_APPS.find(a => a.id === 'menus-mexicanos');
+                    if (app) { setSelectedApp(app); setFullScreenApp(app); }
+                  }}
+                  className="w-full py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-amber-600/30 cursor-pointer active:scale-95 transition-all"
+                >
+                  <Play className="w-3.5 h-3.5 fill-white" />
+                  <span>Probar Menús Mexicanos</span>
+                </button>
+              </div>
+
+              {/* Demo 3: Soda Típica Doña Rosa */}
+              <div className="bg-slate-900/95 rounded-2xl p-6 border border-emerald-500/30 hover:border-emerald-400/80 shadow-xl flex flex-col justify-between group transition-all">
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-3xl">🇨🇷</span>
+                    <span className="text-[10px] font-extrabold px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                      SODA COSTARRICENSE
+                    </span>
+                  </div>
+                  <h4 className="text-lg font-bold text-white mb-1 group-hover:text-emerald-400 transition-colors">
+                    Doña Rosa Soda Tradicional
+                  </h4>
+                  <p className="text-slate-400 text-xs leading-relaxed mb-4">
+                    App ligera para sodas de barrio y comidas típicas: casados con carnes en salsa, olla de carne, desayunos típicos con pinto y batidos naturales, con despacho directo por WhatsApp.
+                  </p>
+                  <ul className="space-y-1 text-[11px] text-slate-300 mb-6">
+                    <li className="flex items-center gap-1.5"><span className="text-emerald-400">✓</span> Casados del día configurables</li>
+                    <li className="flex items-center gap-1.5"><span className="text-emerald-400">✓</span> Envío formateado a WhatsApp</li>
+                    <li className="flex items-center gap-1.5"><span className="text-emerald-400">✓</span> Carga ultrarrápida en cualquier celular</li>
+                  </ul>
+                </div>
+                <button
+                  onClick={() => {
+                    const app = DEMO_APPS.find(a => a.id === 'soda-rosa');
+                    if (app) { setSelectedApp(app); setFullScreenApp(app); }
+                  }}
+                  className="w-full py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/30 cursor-pointer active:scale-95 transition-all"
+                >
+                  <Play className="w-3.5 h-3.5 fill-white" />
+                  <span>Probar Soda Doña Rosa</span>
+                </button>
+              </div>
+
+              {/* Demo 4: Plataforma GastroSaaS */}
+              <div className="bg-slate-900/95 rounded-2xl p-6 border border-blue-500/30 hover:border-blue-400/80 shadow-xl flex flex-col justify-between group transition-all">
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-3xl">📱</span>
+                    <span className="text-[10px] font-extrabold px-2.5 py-1 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30">
+                      PLATAFORMA SAAS
+                    </span>
+                  </div>
+                  <h4 className="text-lg font-bold text-white mb-1 group-hover:text-blue-400 transition-colors">
+                    Plataforma GastroSaaS Integral
+                  </h4>
+                  <p className="text-slate-400 text-xs leading-relaxed mb-4">
+                    La solución SaaS completa para restaurantes: menú QR con carrito, envío a WhatsApp, ficha en Google Maps, pantalla de cocina KDS y simulador de retorno de inversión.
+                  </p>
+                  <ul className="space-y-1 text-[11px] text-slate-300 mb-6">
+                    <li className="flex items-center gap-1.5"><span className="text-blue-400">✓</span> Menú QR + Carrito + Reservas</li>
+                    <li className="flex items-center gap-1.5"><span className="text-blue-400">✓</span> Pantalla de Cocina KDS en vivo</li>
+                    <li className="flex items-center gap-1.5"><span className="text-blue-400">✓</span> Calculadora de Ahorro de Comisiones</li>
+                  </ul>
+                </div>
+                <button
+                  onClick={() => {
+                    const app = DEMO_APPS.find(a => a.id === 'plataforma-menus');
+                    if (app) { setSelectedApp(app); setFullScreenApp(app); }
+                  }}
+                  className="w-full py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-blue-600/30 cursor-pointer active:scale-95 transition-all"
+                >
+                  <Play className="w-3.5 h-3.5 fill-white" />
+                  <span>Probar GastroSaaS</span>
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+          {/* Pricing Grid: Planes Muy Económicos para Restaurantes (1, 3, 6, 12 meses) */}
+          <div className="mb-12">
+            <div className="text-center max-w-2xl mx-auto mb-10">
+              <span className="text-xs font-bold text-emerald-400 uppercase tracking-widest block mb-1">
+                PRECIOS ULTRA ACCESIBLES SIN CONTRATOS FORZOSOS
+              </span>
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
+                Planes Diseñados para Sodas, Cafeterías y Restaurantes
+              </h3>
+              <p className="text-slate-400 text-xs sm:text-sm mt-2">
+                Menos de lo que gasta en una pizza al mes para tener presencia profesional en Google y pedidos sin comisiones.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+
+              {/* Plan Básico */}
+              <div className="bg-slate-900/90 rounded-2xl p-6 sm:p-7 border border-slate-700/80 hover:border-slate-500 transition-all flex flex-col justify-between">
+                <div>
+                  <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                    🚀 Lo Mínimo Indispensable
+                  </span>
+                  <h4 className="text-xl font-bold text-white mb-2">Plan Básico (Menú QR + Google)</h4>
+                  <p className="text-slate-400 text-xs leading-relaxed mb-6 min-h-[36px]">
+                    Menú QR ultrarrápido conectado a Google Maps y Google My Business para que los clientes locales lo encuentren.
+                  </p>
+
+                  <div className="p-4 rounded-xl bg-slate-800/80 border border-slate-700 mb-6">
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-3xl sm:text-4xl font-black text-white">$19</span>
+                      <span className="text-slate-400 text-xs">/ mes</span>
+                      <span className="text-[11px] font-bold text-emerald-400 ml-auto bg-emerald-500/10 px-2 py-0.5 rounded">
+                        $15/m en anual
+                      </span>
+                    </div>
+                    <div className="mt-3 pt-3 border-t border-slate-700/80 text-[11px] text-slate-300 space-y-1">
+                      <div className="flex justify-between">
+                        <span>• 1 Mes:</span>
+                        <span className="font-bold text-white">$19 / mes</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>• 3 Meses:</span>
+                        <span className="font-bold text-white">$18 / mes ($54 total)</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>• 6 Meses:</span>
+                        <span className="font-bold text-white">$17 / mes ($102 total)</span>
+                      </div>
+                      <div className="flex justify-between text-emerald-400 font-bold">
+                        <span>• 12 Meses:</span>
+                        <span>$15 / mes ($180 total)</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <ul className="space-y-2.5 text-xs text-slate-300 mb-6">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>Menú QR interactivo ultra-rápido en móviles</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>Enlace oficial verificado para Google Maps</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>Código QR en alta resolución listo para imprimir</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>Cambio de platos y precios ilimitados en 5 segundos</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>Filtros de alérgenos (Vegetariano, Gluten Free)</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <a
+                  href={getWhatsAppLink('Hola APCR, me interesa el Plan Básico para Restaurantes ($15 a $19/mes) con Menú QR y Google Maps.')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs flex items-center justify-center gap-2 border border-slate-600 transition-all cursor-pointer"
+                >
+                  <span>Elegir Plan Básico</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </a>
+              </div>
+
+              {/* Plan Pro (Más Popular) */}
+              <div className="bg-gradient-to-b from-slate-900 to-[#1e1b4b] rounded-2xl p-6 sm:p-7 border-2 border-amber-500 shadow-2xl shadow-amber-500/20 relative flex flex-col justify-between scale-[1.02] z-10">
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 text-[11px] font-black px-4 py-1 rounded-full uppercase tracking-wider shadow-lg">
+                  ★ MÁS POPULAR PARA RESTAURANTES
+                </div>
+
+                <div>
+                  <span className="text-xs font-bold text-amber-400 uppercase tracking-wider block mb-1 mt-1">
+                    ⭐ Pedidos Directos a su WhatsApp
+                  </span>
+                  <h4 className="text-xl font-bold text-white mb-2">Plan Pro (Menú + WhatsApp + Reservas)</h4>
+                  <p className="text-slate-300 text-xs leading-relaxed mb-6 min-h-[36px]">
+                    Convierte la carta en una máquina de ventas sin intermediarios con carrito, pedidos directos y reservas de mesa.
+                  </p>
+
+                  <div className="p-4 rounded-xl bg-slate-900/90 border border-amber-500/40 mb-6">
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-3xl sm:text-4xl font-black text-amber-400">$39</span>
+                      <span className="text-slate-400 text-xs">/ mes</span>
+                      <span className="text-[11px] font-bold text-emerald-400 ml-auto bg-emerald-500/20 px-2 py-0.5 rounded border border-emerald-500/30">
+                        $32/m en anual
+                      </span>
+                    </div>
+                    <div className="mt-3 pt-3 border-t border-slate-800 text-[11px] text-slate-300 space-y-1">
+                      <div className="flex justify-between">
+                        <span>• 1 Mes:</span>
+                        <span className="font-bold text-white">$39 / mes</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>• 3 Meses:</span>
+                        <span className="font-bold text-white">$36 / mes ($108 total)</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>• 6 Meses:</span>
+                        <span className="font-bold text-white">$34 / mes ($204 total)</span>
+                      </div>
+                      <div className="flex justify-between text-amber-300 font-bold">
+                        <span>• 12 Meses:</span>
+                        <span>$32 / mes ($384 total)</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <ul className="space-y-2.5 text-xs text-slate-200 mb-6">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                      <span className="font-semibold text-white">Todo lo incluido en el Plan Básico</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                      <span>Carrito de compras con cálculo automático de totales</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                      <span className="font-semibold text-amber-300">Envío directo de la orden al WhatsApp del local</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                      <span>Modalidad: En Mesa, Para Llevar o Delivery con SINPE</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                      <span>Formulario de reservas de mesas en línea</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                      <span>Personalización de platillos (términos, ingredientes extra)</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <a
+                  href={getWhatsAppLink('Hola APCR, deseo activar el Plan Pro para Restaurantes ($32 a $39/mes) con pedidos directos a WhatsApp y Carrito.')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-extrabold text-xs flex items-center justify-center gap-2 shadow-lg shadow-amber-500/30 transition-all cursor-pointer"
+                >
+                  <span>Elegir Plan Pro (Recomendado)</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-slate-950" />
+                </a>
+              </div>
+
+              {/* Plan Enterprise */}
+              <div className="bg-slate-900/90 rounded-2xl p-6 sm:p-7 border border-slate-700/80 hover:border-slate-500 transition-all flex flex-col justify-between">
+                <div>
+                  <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                    👑 Plataforma Completa
+                  </span>
+                  <h4 className="text-xl font-bold text-white mb-2">Plan Enterprise (Cocina KDS + Admin)</h4>
+                  <p className="text-slate-400 text-xs leading-relaxed mb-6 min-h-[36px]">
+                    Sistema integral con pantalla de cocina para despachar comandas y panel administrativo en vivo para el dueño.
+                  </p>
+
+                  <div className="p-4 rounded-xl bg-slate-800/80 border border-slate-700 mb-6">
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-3xl sm:text-4xl font-black text-white">$79</span>
+                      <span className="text-slate-400 text-xs">/ mes</span>
+                      <span className="text-[11px] font-bold text-emerald-400 ml-auto bg-emerald-500/10 px-2 py-0.5 rounded">
+                        $65/m en anual
+                      </span>
+                    </div>
+                    <div className="mt-3 pt-3 border-t border-slate-700/80 text-[11px] text-slate-300 space-y-1">
+                      <div className="flex justify-between">
+                        <span>• 1 Mes:</span>
+                        <span className="font-bold text-white">$79 / mes</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>• 3 Meses:</span>
+                        <span className="font-bold text-white">$74 / mes ($222 total)</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>• 6 Meses:</span>
+                        <span className="font-bold text-white">$69 / mes ($414 total)</span>
+                      </div>
+                      <div className="flex justify-between text-emerald-400 font-bold">
+                        <span>• 12 Meses:</span>
+                        <span>$65 / mes ($780 total)</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <ul className="space-y-2.5 text-xs text-slate-300 mb-6">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
+                      <span className="font-semibold text-white">Todo lo incluido en los Planes Básico y Pro</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
+                      <span>Pantalla de Cocina en Tiempo Real (KDS) con avisos sonoros</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
+                      <span>Modo Dueño: marque platos agotados con un solo toque</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
+                      <span>Reportes de platos más vendidos y horas pico de pedidos</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
+                      <span>Soporte prioritario y configuración personalizada para su local</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <a
+                  href={getWhatsAppLink('Hola APCR, deseo cotizar el Plan Enterprise para Restaurantes ($65 a $79/mes) con Pantalla KDS de Cocina y Panel Admin.')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs flex items-center justify-center gap-2 border border-slate-600 transition-all cursor-pointer"
+                >
+                  <span>Elegir Plan Enterprise</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </a>
+              </div>
+
+            </div>
+          </div>
+
+          {/* WhatsApp Direct Help Banner */}
+          <div className="bg-gradient-to-r from-emerald-950/80 via-slate-900 to-amber-950/80 rounded-2xl p-6 sm:p-8 border border-emerald-500/30 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div className="space-y-1 text-center sm:text-left">
+              <div className="text-emerald-400 font-extrabold text-sm uppercase tracking-wider flex items-center justify-center sm:justify-start gap-2">
+                <span>🇨🇷 Soporte y Configuración en Costa Rica</span>
+              </div>
+              <h4 className="text-xl sm:text-2xl font-bold text-white">
+                ¿Tiene un menú físico en papel o fotos y quiere digitalizarlo ya?
+              </h4>
+              <p className="text-slate-300 text-xs sm:text-sm">
+                Envíenos fotos de su menú actual por WhatsApp al <strong>+506 7069-3708</strong> y nosotros le armamos su demo personalizado sin costo.
+              </p>
+            </div>
+            <a
+              href={getWhatsAppLink('Hola APCR, tengo mi menú actual y deseo que me ayuden a digitalizarlo con código QR y pedidos a WhatsApp.')}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-6 py-3 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-extrabold text-sm flex items-center gap-2 shrink-0 shadow-lg shadow-emerald-600/30 transition-all cursor-pointer"
+            >
+              <MessageCircle className="w-4 h-4 fill-white" />
+              <span>Enviar mi Menú por WhatsApp</span>
+            </a>
           </div>
 
         </div>

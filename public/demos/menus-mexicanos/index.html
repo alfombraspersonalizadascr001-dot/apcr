@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Colección de Menús de Restaurantes Mexicanos de Autor - Agencia Digital</title>
+  <meta name="description" content="Catálogo maestro de menús de restaurantes mexicanos de autor (Oaxaca, Jalisco, Yucatán, Baja, CDMX, Norteño) con fotografías gastronómicas IA, formato impreso plastificado HD y respaldo en Disco D.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ENCABEZADO DE MARCA AMPLIADO Y PROMINENTE (HEADER DE AUTOR) -->
+  <header class="brand-header">
+    <div class="brand-header-inner">
+      <div class="brand-logo-container">
+        <span class="brand-logo-icon" id="brandLogoIcon">🇲🇽</span>
+        <div class="brand-info">
+          <span class="brand-kanji-tag" id="brandKanjiTag">MEXICAN GASTRONOMY</span>
+          <h1 class="brand-main-name" id="brandMainName">CATÁLOGO MAESTRO MEXICANO</h1>
+          <span class="brand-sub-region" id="brandSubRegion">12 MENÚS DE AUTOR • VIRTUAL E IMPRESO</span>
+        </div>
+      </div>
+
+      <div class="header-action-btns">
+        <button class="btn-catalog-switch" id="btnCatalogSwitch" style="display: none;">
+          🗂️ Ver Catálogo Maestro
+        </button>
+        <button class="btn-print-accent" id="openPrintBtn">
+          🖨️ Menú Impreso / PDF
+        </button>
+        <a href="https://wa.me/50670693708?text=Hola%20APCR,%20deseo%20activar%20un%20menú%20digital%20para%20mi%20restaurante" target="_blank" class="btn-print-accent" style="background: linear-gradient(135deg, #10b981, #059669); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-weight: bold; color: white;">
+          💬 Cotizar Menú (WhatsApp)
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- VISTA 1: CATÁLOGO MAESTRO DE LOS RESTAURANTES MEXICANOS -->
+  <main class="catalog-view" id="catalogView">
+    <div class="catalog-hero">
+      <h2 class="catalog-title">Colección de Menús Mexicanos de Autor</h2>
+      <p class="catalog-desc">
+        Explora los mundos visuales independientes de la gastronomía mexicana con fotografías de autor generadas por IA,
+        las 5 secciones obligatorias y versiones duales (Virtual e Impresa Plastificada HD / PDF).
+      </p>
+    </div>
+
+    <!-- GRID DE TARJETAS DEL CATÁLOGO MAESTRO -->
+    <div class="restaurant-cards-grid" id="catalogGrid">
+      <!-- Generado dinámicamente por app.js -->
+    </div>
+  </main>
+
+  <!-- VISTA 2: RESTAURANTE INDIVIDUAL (MUNDO DE AUTOR INMERSIVO) -->
+  <div class="restaurant-view" id="restaurantView" style="display: none;">
+    <!-- HERO BANNER CON FOTOGRAFÍA IA DE CADA RESTAURANTE -->
+    <div class="rest-hero-card" id="restHeroCard">
+      <img id="restHeroBg" src="" alt="Hero Image" class="rest-hero-bg">
+      <div class="rest-hero-overlay">
+        <div id="restHeroKanji" style="color: #f59e0b; font-family: var(--font-serif); font-weight: 700; font-size: 1.1rem; margin-bottom: 0.25rem;"></div>
+        <h2 class="rest-hero-title" id="restHeroTitle">Nombre del Restaurante</h2>
+        <p style="color: var(--text-sub); font-size: 1.1rem;" id="restHeroTagline">Tagline del restaurante</p>
+      </div>
+    </div>
+
+    <!-- PESTAÑAS DE NAVEGACIÓN DE LAS 5 SECCIONES OBLIGATORIAS -->
+    <div class="sections-tab-bar" id="sectionsTabBar">
+      <!-- Generado dinámicamente por app.js -->
+    </div>
+
+    <!-- GRID DE PLATILLOS CON FOTOS IA -->
+    <div class="dishes-grid" id="dishesGrid">
+      <!-- Generado dinámicamente por app.js -->
+    </div>
+  </div>
+
+  <!-- MODAL DE DETALLE DE PLATILLO -->
+  <div class="modal-backdrop" id="detailModal">
+    <div style="background: #180f0c; border: 1px solid var(--border-glass); border-radius: 24px; max-width: 700px; width: 100%; overflow: hidden;">
+      <div style="position: relative; height: 320px;">
+        <img id="modalImg" src="" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+        <button id="closeModalBtn" style="position: absolute; top: 1rem; right: 1rem; width: 36px; height: 36px; background: rgba(0,0,0,0.7); color: #fff; border: none; border-radius: 50%; font-size: 1.2rem; cursor: pointer;">&times;</button>
+      </div>
+      <div style="padding: 2rem;">
+        <div id="modalKanji" style="color: #f59e0b; font-weight: 700; font-size: 0.85rem;"></div>
+        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.75rem;">
+          <h2 id="modalTitle" style="font-family: var(--font-heading); font-size: 1.8rem; color: #fff;"></h2>
+          <span id="modalPrice" style="font-family: var(--font-heading); font-size: 1.6rem; font-weight: 800; color: #f59e0b;"></span>
+        </div>
+        <p id="modalDesc" style="color: var(--text-sub); font-size: 1rem; line-height: 1.6;"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE MENÚ IMPRESO FÍSICO / EXPORTACIÓN A PDF DUAL -->
+  <div class="print-overlay" id="printModal">
+    <div class="print-topbar">
+      <div>
+        <h3 style="color: #fff; font-size: 1.1rem; font-family: var(--font-heading);">🖨️ Vista Previa de Menú Físico e Impresión PDF</h3>
+        <p style="color: #fca5a5; font-size: 0.85rem;">Selecciona el estilo de impresión deseado para ofrecerle a tu cliente</p>
+      </div>
+
+      <!-- SELECTOR DUAL DE ESTILOS DE IMPRESIÓN -->
+      <div class="print-format-toggle">
+        <button class="print-format-btn active" data-format="flyer">🖼️ Flyer Plastificado HD (Fotos IA)</button>
+        <button class="print-format-btn" data-format="classic">📄 Carta Tradicional Papel</button>
+      </div>
+
+      <div style="display: flex; gap: 1rem;">
+        <button class="btn-print-accent" id="printNowBtn">🖨️ Imprimir / Guardar PDF</button>
+        <button class="btn-catalog-switch" id="closePrintBtn">Cerrar</button>
+      </div>
+    </div>
+
+    <div class="print-sheet-wrapper">
+      <div class="printable-flyer-hd" id="printSheetContent">
+        <!-- Renderizado dinámicamente por app.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- DRAWER DE BITÁCORA Y RESPALDO DISCO D -->
+  <aside class="drawer-backdrop" id="bitacoraDrawer">
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-glass); padding-bottom: 1rem; margin-bottom: 1.5rem;">
+      <h3 style="color: var(--accent-primary); font-family: var(--font-heading);">ℹ️ Menú Digital para Restaurantes</h3>
+      <button id="closeBitacoraBtn" style="background: transparent; border: none; color: #fff; font-size: 1.5rem; cursor: pointer;">&times;</button>
+    </div>
+
+    <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; padding: 1.25rem; border-radius: 16px; margin-bottom: 2rem;">
+      <h4 style="color: #10b981; margin-bottom: 0.5rem; font-size: 1rem;">⭐ Beneficios del Sistema</h4>
+      <p style="font-size: 0.88rem; color: #e2e8f0; line-height: 1.6;">
+        • <strong>Menú QR Ultrarrápido:</strong> Abre al instante sin instalar aplicaciones.<br>
+        • <strong>Cero Comisiones:</strong> 100% de la ganancia para el restaurante.<br>
+        • <strong>Edición Inmediata:</strong> Actualice platos y precios en segundos.<br>
+        • <strong>Planes Económicos:</strong> Desde $19/mes sin contratos forzosos.
+      </p>
+    </div>
+
+    <div style="text-align: center;">
+      <a href="https://wa.me/50670693708?text=Hola%20APCR,%20deseo%20activar%20este%20menú%20para%20mi%20restaurante" target="_blank" style="display: inline-block; background: #10b981; color: #fff; font-weight: bold; padding: 12px 24px; border-radius: 12px; text-decoration: none;">
+        Pedir este Menú para mi Restaurante
+      </a>
+    </div>
+  </aside>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
