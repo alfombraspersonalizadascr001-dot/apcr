@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="es" class="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>TEXTIL PRO CR | Sistema de Control de Taller y Cotizaciones</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col selection:bg-indigo-600 selection:text-white">
+
+  <!-- Top Demo Bar -->
+  <header class="bg-slate-950 border-b border-slate-800 px-4 py-2.5 flex items-center justify-between text-xs">
+    <div class="flex items-center gap-2">
+      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+      <span class="font-bold text-slate-300">DEMO EN VIVO: F�BRICA DE CAMISETAS & UNIFORMES</span>
+      <span class="hidden sm:inline-block px-2 py-0.5 rounded bg-indigo-900/60 text-indigo-300 border border-indigo-700/50 font-mono text-[10px]">TEXTIL PRO CR</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="text-slate-400 hidden sm:inline">Desarrollado por APCR</span>
+      <a href="https://wa.me/50670693708?text=Hola%20APCR,%20vi%20el%20demo%20de%20CRM%20de%20Camisetas%20y%20deseo%20uno%20para%20mi%20empresa" target="_blank" class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-lg transition-colors flex items-center gap-1 text-[11px]">
+        <span>Cotizar Sistema</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <nav class="bg-slate-900/90 border-b border-slate-800 px-4 py-2 flex items-center gap-2 overflow-x-auto">
+    <button onclick="switchTab('cotizador')" id="tab-cotizador" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 bg-indigo-600 text-white shadow-lg shadow-indigo-600/30">
+      <i data-lucide="calculator" class="w-4 h-4"></i>
+      <span>1. Cotizador de Camisetas</span>
+    </button>
+    <button onclick="switchTab('kanban')" id="tab-kanban" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 bg-slate-800 text-slate-400 hover:text-white">
+      <i data-lucide="kanban" class="w-4 h-4"></i>
+      <span>2. Pizarr�n de Taller (Kanban)</span>
+    </button>
+    <button onclick="switchTab('pedidos')" id="tab-pedidos" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 bg-slate-800 text-slate-400 hover:text-white">
+      <i data-lucide="users" class="w-4 h-4"></i>
+      <span>3. Clientes & Historial</span>
+    </button>
+  </nav>
+
+  <!-- Main Content Area -->
+  <main class="flex-1 p-4 max-w-6xl w-full mx-auto">
+
+    <!-- VIEW 1: COTIZADOR -->
+    <div id="view-cotizador" class="space-y-4">
+      <div class="bg-slate-800/60 border border-slate-700/70 rounded-2xl p-4 sm:p-6 shadow-xl">
+        <div class="flex items-start justify-between gap-4 mb-6">
+          <div>
+            <span class="text-[10px] font-mono uppercase tracking-wider text-indigo-400 font-bold">M�dulo de Ventas R�pidas</span>
+            <h2 class="text-2xl font-black text-white">Cotizador Inteligente de Prendas & Bordados</h2>
+            <p class="text-xs text-slate-400 mt-1">Cotice frente al cliente en 10 segundos con precios de confecci�n, telas, bordados y empaque.</p>
+          </div>
+          <div class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 text-right">
+            <div class="text-[10px] text-slate-400 font-mono">MONEDA</div>
+            <div class="text-xs font-bold text-emerald-400 font-mono">� COLONES (CRC)</div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <!-- Client Data -->
+          <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800 space-y-3">
+            <h3 class="text-xs font-bold text-slate-300 flex items-center gap-2">
+              <i data-lucide="user" class="w-3.5 h-3.5 text-indigo-400"></i>
+              <span>Datos del Cliente</span>
+            </h3>
+            <div>
+              <label class="block text-[10px] font-mono text-slate-400 mb-1">EMPRESA O CLIENTE</label>
+              <input id="client-name" type="text" value="Gimnasio Titanes Escaz�" class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white focus:border-indigo-500 outline-none">
+            </div>
+            <div>
+              <label class="block text-[10px] font-mono text-slate-400 mb-1">TEL�FONO WHATSAPP</label>
+              <input id="client-phone" type="text" value="+506 8712-3456" class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white focus:border-indigo-500 outline-none">
+            </div>
+            <div>
+              <label class="block text-[10px] font-mono text-slate-400 mb-1">C�DULA JUR�DICA / F�SICA</label>
+              <input id="client-id" type="text" value="3-101-892341" class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white focus:border-indigo-500 outline-none">
+            </div>
+          </div>
+
+          <!-- Garment Specs -->
+          <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800 space-y-3">
+            <h3 class="text-xs font-bold text-slate-300 flex items-center gap-2">
+              <i data-lucide="shirt" class="w-3.5 h-3.5 text-indigo-400"></i>
+              <span>Especificaci�n de la Prenda</span>
+            </h3>
+            <div>
+              <label class="block text-[10px] font-mono text-slate-400 mb-1">TIPO DE PRENDA</label>
+              <select id="shirt-type" onchange="calculateQuote()" class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white focus:border-indigo-500 outline-none">
+                <option value="4200">Camiseta Dry-Fit Deportiva (�4,200)</option>
+                <option value="5800" selected>Camiseta Polo Piqu� Institucional (�5,800)</option>
+                <option value="3500">Camiseta Cuello Redondo 100% Algod�n (�3,500)</option>
+                <option value="9500">Jacket Rompevientos Impermeable (�9,500)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[10px] font-mono text-slate-400 mb-1">TIPO DE PERSONALIZACI�N</label>
+              <select id="print-type" onchange="calculateQuote()" class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white focus:border-indigo-500 outline-none">
+                <option value="1200" selected>Bordado Digital en Pecho (�1,200)</option>
+                <option value="800">Serigraf�a Textil 1 Color (�800)</option>
+                <option value="1500">Serigraf�a Full Color Espalda (�1,500)</option>
+                <option value="1800">Sublimaci�n Total Frente y Espalda (�1,800)</option>
+                <option value="0">Sin personalizaci�n (Solo prenda lisa)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[10px] font-mono text-slate-400 mb-1">COLOR DE TELA</label>
+              <select id="fabric-color" class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white focus:border-indigo-500 outline-none">
+                <option>Azul Marino Oscuro</option>
+                <option>Negro Carb�n</option>
+                <option>Blanco �ptico</option>
+                <option>Rojo Escarlata</option>
+                <option>Gris Jaspe</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Quantity & Sizes Breakdown -->
+          <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800 space-y-3">
+            <h3 class="text-xs font-bold text-slate-300 flex items-center gap-2">
+              <i data-lucide="layers" class="w-3.5 h-3.5 text-indigo-400"></i>
+              <span>Cantidades por Talla</span>
+            </h3>
+            <div class="grid grid-cols-4 gap-2">
+              <div>
+                <span class="block text-[9px] font-mono text-slate-400 text-center">TALLA S</span>
+                <input id="size-s" type="number" min="0" value="8" oninput="calculateQuote()" class="w-full text-center py-1.5 bg-slate-950 border border-slate-700 rounded-lg text-xs font-bold text-white outline-none">
+              </div>
+              <div>
+                <span class="block text-[9px] font-mono text-slate-400 text-center">TALLA M</span>
+                <input id="size-m" type="number" min="0" value="15" oninput="calculateQuote()" class="w-full text-center py-1.5 bg-slate-950 border border-slate-700 rounded-lg text-xs font-bold text-white outline-none">
+              </div>
+              <div>
+                <span class="block text-[9px] font-mono text-slate-400 text-center">TALLA L</span>
+                <input id="size-l" type="number" min="0" value="12" oninput="calculateQuote()" class="w-full text-center py-1.5 bg-slate-950 border border-slate-700 rounded-lg text-xs font-bold text-white outline-none">
+              </div>
+              <div>
+                <span class="block text-[9px] font-mono text-slate-400 text-center">TALLA XL</span>
+                <input id="size-xl" type="number" min="0" value="5" oninput="calculateQuote()" class="w-full text-center py-1.5 bg-slate-950 border border-slate-700 rounded-lg text-xs font-bold text-white outline-none">
+              </div>
+            </div>
+            <div class="pt-2 border-t border-slate-800 flex items-center justify-between text-xs">
+              <span class="text-slate-400">Total de Unidades:</span>
+              <span id="total-units-badge" class="px-2 py-0.5 rounded bg-indigo-950 border border-indigo-700 text-indigo-300 font-mono font-bold">40 uds</span>
+            </div>
+            <div class="text-[11px] text-amber-400 bg-amber-950/30 border border-amber-800/40 p-2 rounded-lg">
+              ?? <em>M�s de 24 unidades aplica precio de f�brica mayorista.</em>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quote Summary Box -->
+        <div class="bg-gradient-to-br from-slate-900 to-indigo-950 border border-indigo-500/30 rounded-2xl p-5 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6">
+          <div class="space-y-1 text-center md:text-left">
+            <div class="text-xs font-mono text-slate-400 uppercase tracking-wider">RESUMEN DE PROFORMA AUTOM�TICA</div>
+            <div class="flex items-baseline gap-2">
+              <span class="text-3xl sm:text-4xl font-black text-white font-mono" id="display-total">�316,400</span>
+              <span class="text-xs text-slate-400">IVA incluido</span>
+            </div>
+            <div class="text-xs text-indigo-300 font-mono" id="display-letras">SON: TRESCIENTOS DIECIS�IS MIL CUATROCIENTOS COLONES</div>
+            <div class="text-[11px] text-slate-400 pt-1">
+              Adelanto para iniciar (50%): <strong class="text-emerald-400 font-mono" id="display-adelanto">�158,200</strong> � Saldo contra entrega: <strong class="text-slate-300 font-mono" id="display-saldo">�158,200</strong>
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+            <button onclick="shareWhatsApp()" class="px-5 py-3 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-900/30 cursor-pointer active:scale-95 transition-all">
+              <i data-lucide="message-circle" class="w-4 h-4"></i>
+              <span>Enviar a WhatsApp del Cliente</span>
+            </button>
+            <button onclick="sendToWorkshop()" class="px-5 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/30 cursor-pointer active:scale-95 transition-all">
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              <span>Pasar Orden al Taller</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 2: KANBAN WORKSHOP -->
+    <div id="view-kanban" class="hidden space-y-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <span class="text-[10px] font-mono uppercase tracking-wider text-indigo-400 font-bold">Control de Producci�n en Vivo</span>
+          <h2 class="text-xl font-black text-white">Tablero de Taller: Desde el Rollo de Tela hasta el Empaque</h2>
+        </div>
+        <button onclick="resetKanbanDemo()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-mono flex items-center gap-1.5">
+          <i data-lucide="rotate-ccw" class="w-3 h-3"></i>
+          <span>Reiniciar Tablero</span>
+        </button>
+      </div>
+
+      <!-- 5 Kanban Columns -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+        <!-- Col 1 -->
+        <div class="bg-slate-950/80 rounded-xl p-3 border border-slate-800 flex flex-col min-h-[420px]">
+          <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-800">
+            <span class="text-xs font-bold text-slate-300">1. Pedido & Dise�o</span>
+            <span id="badge-col-1" class="px-1.5 py-0.5 rounded bg-slate-800 text-[10px] font-mono text-slate-400">2</span>
+          </div>
+          <div id="col-1" class="space-y-2 flex-1"></div>
+        </div>
+
+        <!-- Col 2 -->
+        <div class="bg-slate-950/80 rounded-xl p-3 border border-slate-800 flex flex-col min-h-[420px]">
+          <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-800">
+            <span class="text-xs font-bold text-amber-400">2. Corte de Tela</span>
+            <span id="badge-col-2" class="px-1.5 py-0.5 rounded bg-slate-800 text-[10px] font-mono text-slate-400">1</span>
+          </div>
+          <div id="col-2" class="space-y-2 flex-1"></div>
+        </div>
+
+        <!-- Col 3 -->
+        <div class="bg-slate-950/80 rounded-xl p-3 border border-slate-800 flex flex-col min-h-[420px]">
+          <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-800">
+            <span class="text-xs font-bold text-blue-400">3. Bordado / Estampado</span>
+            <span id="badge-col-3" class="px-1.5 py-0.5 rounded bg-slate-800 text-[10px] font-mono text-slate-400">2</span>
+          </div>
+          <div id="col-3" class="space-y-2 flex-1"></div>
+        </div>
+
+        <!-- Col 4 -->
+        <div class="bg-slate-950/80 rounded-xl p-3 border border-slate-800 flex flex-col min-h-[420px]">
+          <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-800">
+            <span class="text-xs font-bold text-purple-400">4. Costura & Acabado</span>
+            <span id="badge-col-4" class="px-1.5 py-0.5 rounded bg-slate-800 text-[10px] font-mono text-slate-400">1</span>
+          </div>
+          <div id="col-4" class="space-y-2 flex-1"></div>
+        </div>
+
+        <!-- Col 5 -->
+        <div class="bg-slate-950/80 rounded-xl p-3 border border-slate-800 flex flex-col min-h-[420px]">
+          <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-800">
+            <span class="text-xs font-bold text-emerald-400">5. Listo para Entrega</span>
+            <span id="badge-col-5" class="px-1.5 py-0.5 rounded bg-slate-800 text-[10px] font-mono text-slate-400">2</span>
+          </div>
+          <div id="col-5" class="space-y-2 flex-1"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 3: CLIENT DIRECTORY -->
+    <div id="view-pedidos" class="hidden space-y-4">
+      <div class="bg-slate-800/60 border border-slate-700/70 rounded-2xl p-5 shadow-xl">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4">
+          <div>
+            <h2 class="text-xl font-black text-white">Directorio de Clientes & Cuentas por Cobrar</h2>
+            <p class="text-xs text-slate-400">Historial completo de clientes, tel�fono, pedidos anteriores y saldos.</p>
+          </div>
+          <div class="text-xs font-mono px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 text-slate-300">
+            Total en Taller: <strong class="text-emerald-400">�1,845,000 CRC</strong>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs text-slate-300 font-mono">
+            <thead class="bg-slate-950 text-slate-400 uppercase text-[10px] border-b border-slate-800">
+              <tr>
+                <th class="p-3">Proforma</th>
+                <th class="p-3">Cliente / Empresa</th>
+                <th class="p-3">Prenda & Cantidad</th>
+                <th class="p-3">Monto Total</th>
+                <th class="p-3">Estado Taller</th>
+                <th class="p-3">Saldo Pendiente</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800 bg-slate-900/50">
+              <tr>
+                <td class="p-3 font-bold text-indigo-400">#TEX-2041</td>
+                <td class="p-3 text-white font-sans font-bold">Constructora MECO</td>
+                <td class="p-3">50x Chalecos Reflectivos</td>
+                <td class="p-3 font-bold">�425,000</td>
+                <td class="p-3"><span class="px-2 py-0.5 rounded-full bg-purple-950 text-purple-300 border border-purple-800 text-[10px]">Costura</span></td>
+                <td class="p-3 text-emerald-400">�212,500 (50%)</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-indigo-400">#TEX-2042</td>
+                <td class="p-3 text-white font-sans font-bold">Gimnasio Titanes Escaz�</td>
+                <td class="p-3">40x Polos Bordadas</td>
+                <td class="p-3 font-bold">�316,400</td>
+                <td class="p-3"><span class="px-2 py-0.5 rounded-full bg-blue-950 text-blue-300 border border-blue-800 text-[10px]">Bordado</span></td>
+                <td class="p-3 text-emerald-400">�158,200 (50%)</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-indigo-400">#TEX-2039</td>
+                <td class="p-3 text-white font-sans font-bold">Restaurante El Fog�n</td>
+                <td class="p-3">25x Gabachas Negras</td>
+                <td class="p-3 font-bold">�185,000</td>
+                <td class="p-3"><span class="px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 text-[10px]">Listo Entrega</span></td>
+                <td class="p-3 text-amber-400">�92,500 (Cobrar hoy)</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-indigo-400">#TEX-2038</td>
+                <td class="p-3 text-white font-sans font-bold">Colegio San Agust�n</td>
+                <td class="p-3">120x Camisetas Deporte</td>
+                <td class="p-3 font-bold">�620,000</td>
+                <td class="p-3"><span class="px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 text-[10px]">Entregado</span></td>
+                <td class="p-3 text-slate-500">�0 (Cancelado)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    function switchTab(tab) {
+      ['cotizador', 'kanban', 'pedidos'].forEach(t => {
+        document.getElementById('view-' + t).classList.add('hidden');
+        document.getElementById('tab-' + t).className = 'px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 bg-slate-800 text-slate-400 hover:text-white';
+      });
+      document.getElementById('view-' + tab).classList.remove('hidden');
+      document.getElementById('tab-' + tab).className = 'px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 bg-indigo-600 text-white shadow-lg shadow-indigo-600/30';
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function calculateQuote() {
+      const shirtPrice = parseInt(document.getElementById('shirt-type').value) || 0;
+      const printPrice = parseInt(document.getElementById('print-type').value) || 0;
+      const s = parseInt(document.getElementById('size-s').value) || 0;
+      const m = parseInt(document.getElementById('size-m').value) || 0;
+      const l = parseInt(document.getElementById('size-l').value) || 0;
+      const xl = parseInt(document.getElementById('size-xl').value) || 0;
+      const totalUnits = s + m + l + xl;
+
+      document.getElementById('total-units-badge').innerText = totalUnits + ' uds';
+
+      const unitCost = shirtPrice + printPrice;
+      const subtotal = unitCost * totalUnits;
+      const iva = subtotal * 0.13;
+      const total = subtotal + iva;
+
+      const formatCR = (num) => '�' + Math.round(num).toLocaleString('es-CR');
+
+      document.getElementById('display-total').innerText = formatCR(total);
+      document.getElementById('display-adelanto').innerText = formatCR(total * 0.5);
+      document.getElementById('display-saldo').innerText = formatCR(total * 0.5);
+    }
+
+    function shareWhatsApp() {
+      const client = document.getElementById('client-name').value || 'Cliente';
+      const total = document.getElementById('display-total').innerText;
+      const units = document.getElementById('total-units-badge').innerText;
+      const shirtSelect = document.getElementById('shirt-type');
+      const shirtText = shirtSelect.options[shirtSelect.selectedIndex].text.split('(')[0].trim();
+      const printSelect = document.getElementById('print-type');
+      const printText = printSelect.options[printSelect.selectedIndex].text.split('(')[0].trim();
+
+      const msg = encodeURIComponent(
+        '�Hola ' + client + '! ?? Adjuntamos la cotizaci�n de confecci�n formal de TEXTIL PRO CR:
+
+' +
+        '?? Prenda: ' + shirtText + '
+' +
+        '?? Acabado: ' + printText + '
+' +
+        '?? Cantidad: ' + units + '
+' +
+        '?? Inversi�n Total (IVA inc): ' + total + '
+' +
+        '?? Adelanto de Inicio (50%): ' + document.getElementById('display-adelanto').innerText + '
+' +
+        '?? Saldo contra entrega: ' + document.getElementById('display-saldo').innerText + '
+
+' +
+        '�Desea que programemos la compra de tela e ingreso al taller hoy mismo?'
+      );
+
+      window.open('https://wa.me/?text=' + msg, '_blank');
+    }
+
+    const KANBAN_ITEMS = [
+      { id: 'k1', client: 'Gimnasio Titanes Escaz�', item: '40x Polos Bordadas', time: 'Hoy 10:00 AM', col: 1 },
+      { id: 'k2', client: 'Liceo San Rafael', item: '75x Camisetas Algod�n', time: 'Ayer', col: 1 },
+      { id: 'k3', client: 'Soda Don Beto', item: '15x Delantales con Logo', time: 'En corte', col: 2 },
+      { id: 'k4', client: 'Cl�nica Dental Sonrisas', item: '30x Filipinas M�dicas', time: 'En bordado', col: 3 },
+      { id: 'k5', client: 'Club de Ciclismo Cartago', item: '55x Jerseys Dry-Fit', time: 'En sublimaci�n', col: 3 },
+      { id: 'k6', client: 'Constructora MECO', item: '50x Chalecos Seguridad', time: 'En costura', col: 4 },
+      { id: 'k7', client: 'Restaurante El Fog�n', item: '25x Gabachas Negras', time: 'Listo p/ entregar', col: 5 },
+      { id: 'k8', client: 'Taller Mec�nico Hermanos Sol�s', item: '20x Overoles Mec�nico', time: 'Listo p/ enviar', col: 5 },
+    ];
+
+    let items = [...KANBAN_ITEMS];
+
+    function renderKanban() {
+      for (let c = 1; c <= 5; c++) {
+        const colDiv = document.getElementById('col-' + c);
+        colDiv.innerHTML = '';
+        const colItems = items.filter(i => i.col === c);
+        document.getElementById('badge-col-' + c).innerText = colItems.length;
+
+        colItems.forEach(item => {
+          const card = document.createElement('div');
+          card.className = 'bg-slate-900 border border-slate-800 hover:border-indigo-500/50 p-3 rounded-xl shadow space-y-2 transition-all group';
+          card.innerHTML = 
+            '<div class="flex justify-between items-start">' +
+              '<span class="font-bold text-xs text-white leading-tight">' + item.client + '</span>' +
+            '</div>' +
+            '<div class="text-[11px] text-indigo-300 font-mono">' + item.item + '</div>' +
+            '<div class="text-[10px] text-slate-500">' + item.time + '</div>' +
+            '<div class="pt-2 border-t border-slate-800/80 flex justify-between items-center">' +
+              (c > 1 ? '<button onclick="moveItem('' + item.id + '', -1)" class="p-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white text-[10px]">? Atr�s</button>' : '<div></div>') +
+              (c < 5 ? '<button onclick="moveItem('' + item.id + '', 1)" class="px-2 py-1 rounded bg-indigo-600/80 hover:bg-indigo-600 text-white font-bold text-[10px] flex items-center gap-1"><span>Avanzar</span> ?</button>' : '<span class="text-[10px] text-emerald-400 font-bold font-mono">? LISTO</span>') +
+            '</div>';
+          colDiv.appendChild(card);
+        });
+      }
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function moveItem(id, step) {
+      const target = items.find(i => i.id === id);
+      if (target) {
+        target.col = Math.max(1, Math.min(5, target.col + step));
+        renderKanban();
+      }
+    }
+
+    function sendToWorkshop() {
+      const client = document.getElementById('client-name').value || 'Cliente Nuevo';
+      const units = document.getElementById('total-units-badge').innerText;
+      const shirtSelect = document.getElementById('shirt-type');
+      const shirtText = shirtSelect.options[shirtSelect.selectedIndex].text.split('(')[0].trim();
+
+      items.unshift({
+        id: 'k-' + Date.now(),
+        client: client,
+        item: units + ' ' + shirtText,
+        time: 'Reci�n ingresado',
+        col: 1
+      });
+
+      switchTab('kanban');
+      renderKanban();
+      alert('�Orden enviada exitosamente al Pizarr�n del Taller (Columna 1: Pedido & Dise�o)!');
+    }
+
+    function resetKanbanDemo() {
+      items = [...KANBAN_ITEMS];
+      renderKanban();
+    }
+
+    calculateQuote();
+    renderKanban();
+  </script>
+</body>
+</html>

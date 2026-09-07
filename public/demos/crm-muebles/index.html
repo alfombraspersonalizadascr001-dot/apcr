@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="es" class="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>COCINAS & MUEBLES MODERNOS CR | Sistema de Fabricaci�n & Cotizador</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+  </style>
+</head>
+<body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col selection:bg-amber-600 selection:text-white">
+
+  <!-- Top Demo Bar -->
+  <header class="bg-black border-b border-zinc-800 px-4 py-2.5 flex items-center justify-between text-xs">
+    <div class="flex items-center gap-2">
+      <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+      <span class="font-bold text-zinc-300">DEMO EN VIVO: MUEBLER�A DE COCINA & CARPINTER�A</span>
+      <span class="hidden sm:inline-block px-2 py-0.5 rounded bg-amber-950/60 text-amber-300 border border-amber-800/50 font-mono text-[10px]">COCINAS & MUEBLES CR</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="text-zinc-400 hidden sm:inline">Desarrollado por APCR</span>
+      <a href="https://wa.me/50670693708?text=Hola%20APCR,%20vi%20el%20demo%20de%20CRM%20de%20Muebler�a%20y%20deseo%20uno%20para%20mi%20taller" target="_blank" class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-lg transition-colors flex items-center gap-1 text-[11px]">
+        <span>Cotizar Sistema</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <nav class="bg-zinc-900/90 border-b border-zinc-800 px-4 py-2 flex items-center gap-2 overflow-x-auto">
+    <button onclick="switchTab('cotizador')" id="tab-cotizador" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 bg-amber-600 text-white shadow-lg shadow-amber-600/30">
+      <i data-lucide="calculator" class="w-4 h-4"></i>
+      <span>1. Cotizador de Muebles & Sobres</span>
+    </button>
+    <button onclick="switchTab('kanban')" id="tab-kanban" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 bg-zinc-800 text-zinc-400 hover:text-white">
+      <i data-lucide="kanban" class="w-4 h-4"></i>
+      <span>2. Pizarr�n de Fabricaci�n (Kanban)</span>
+    </button>
+    <button onclick="switchTab('proyectos')" id="tab-proyectos" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 bg-zinc-800 text-zinc-400 hover:text-white">
+      <i data-lucide="folder-check" class="w-4 h-4"></i>
+      <span>3. Obras & Saldos por Cobrar</span>
+    </button>
+  </nav>
+
+  <!-- Main Content Area -->
+  <main class="flex-1 p-4 max-w-6xl w-full mx-auto">
+
+    <!-- VIEW 1: COTIZADOR MUEBLES -->
+    <div id="view-cotizador" class="space-y-4">
+      <div class="bg-zinc-900/60 border border-zinc-800 rounded-2xl p-4 sm:p-6 shadow-xl">
+        <div class="flex items-start justify-between gap-4 mb-6">
+          <div>
+            <span class="text-[10px] font-mono uppercase tracking-wider text-amber-400 font-bold">M�dulo de Cotizaci�n en Sitio</span>
+            <h2 class="text-2xl font-black text-white">Cotizador R�pido por Metro Lineal</h2>
+            <p class="text-xs text-zinc-400 mt-1">Calcule frente al cliente en su casa u oficina el costo de muebles a�reos, bajos, sobres de cuarzo o granito y herrajes.</p>
+          </div>
+          <div class="px-3 py-1.5 rounded-xl bg-black border border-zinc-800 text-right">
+            <div class="text-[10px] text-zinc-400 font-mono">MONEDA</div>
+            <div class="text-xs font-bold text-amber-400 font-mono">� COLONES (CRC)</div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <!-- Client & Project Info -->
+          <div class="bg-zinc-950/80 p-4 rounded-xl border border-zinc-800 space-y-3">
+            <h3 class="text-xs font-bold text-zinc-300 flex items-center gap-2">
+              <i data-lucide="map-pin" class="w-3.5 h-3.5 text-amber-400"></i>
+              <span>Proyecto & Cliente</span>
+            </h3>
+            <div>
+              <label class="block text-[10px] font-mono text-zinc-400 mb-1">CLIENTE O ARQUITECTO</label>
+              <input id="client-name" type="text" value="Arq. Valeria Cordero (Casa Curridabat)" class="w-full px-3 py-2 bg-zinc-900 border border-zinc-700 rounded-lg text-xs text-white focus:border-amber-500 outline-none">
+            </div>
+            <div>
+              <label class="block text-[10px] font-mono text-zinc-400 mb-1">TEL�FONO WHATSAPP</label>
+              <input id="client-phone" type="text" value="+506 8899-4411" class="w-full px-3 py-2 bg-zinc-900 border border-zinc-700 rounded-lg text-xs text-white focus:border-amber-500 outline-none">
+            </div>
+            <div>
+              <label class="block text-[10px] font-mono text-zinc-400 mb-1">UBICACI�N DE INSTALACI�N</label>
+              <input id="client-location" type="text" value="Condominio Monter�n, Curridabat" class="w-full px-3 py-2 bg-zinc-900 border border-zinc-700 rounded-lg text-xs text-white focus:border-amber-500 outline-none">
+            </div>
+          </div>
+
+          <!-- Wood & Cabinet Config -->
+          <div class="bg-zinc-950/80 p-4 rounded-xl border border-zinc-800 space-y-3">
+            <h3 class="text-xs font-bold text-zinc-300 flex items-center gap-2">
+              <i data-lucide="hammer" class="w-3.5 h-3.5 text-amber-400"></i>
+              <span>Configuraci�n de Gabinetes</span>
+            </h3>
+            <div>
+              <label class="block text-[10px] font-mono text-zinc-400 mb-1">TIPO DE MUEBLE</label>
+              <select id="cabinet-type" onchange="calculateQuote()" class="w-full px-3 py-2 bg-zinc-900 border border-zinc-700 rounded-lg text-xs text-white focus:border-amber-500 outline-none">
+                <option value="185000">Mueble Bajo de Cocina + Cajoneras (�185,000 / m)</option>
+                <option value="145000">Mueble A�reo Doble Puerta (�145,000 / m)</option>
+                <option value="320000" selected>Juego Completo Cocina (Bajo + A�reo) (�320,000 / m)</option>
+                <option value="260000">Isla de Cocina con Desayunador (�260,000 / m)</option>
+                <option value="290000">Torre de Hornos & Despensa Vertical (�290,000 / m)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[10px] font-mono text-zinc-400 mb-1">MATERIAL DE ESTRUCTURA</label>
+              <select id="wood-material" onchange="calculateQuote()" class="w-full px-3 py-2 bg-zinc-900 border border-zinc-700 rounded-lg text-xs text-white focus:border-amber-500 outline-none">
+                <option value="0" selected>Melamina Hidr�fuga RH 18mm Antihumedad (Est�ndar)</option>
+                <option value="45000">Melamina Texturizada Roble Termoformado (+�45,000 / m)</option>
+                <option value="95000">MDF Termolaminado Acabado Matte (+�95,000 / m)</option>
+                <option value="160000">Madera S�lida de Cedro Amargo (+�160,000 / m)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[10px] font-mono text-zinc-400 mb-1">HERRAJES & RIELES</label>
+              <select id="hardware-type" onchange="calculateQuote()" class="w-full px-3 py-2 bg-zinc-900 border border-zinc-700 rounded-lg text-xs text-white focus:border-amber-500 outline-none">
+                <option value="25000" selected>Rieles Telesc�picos Cierre Suave Blum (+�25,000 / m)</option>
+                <option value="0">Herrajes Est�ndar de Alta Resistencia (Incluido)</option>
+                <option value="45000">Sistema Push to Open sin Jaladeras (+�45,000 / m)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Countertop & Measurement -->
+          <div class="bg-zinc-950/80 p-4 rounded-xl border border-zinc-800 space-y-3">
+            <h3 class="text-xs font-bold text-zinc-300 flex items-center gap-2">
+              <i data-lucide="ruler" class="w-3.5 h-3.5 text-amber-400"></i>
+              <span>Sobre & Metros Lineales</span>
+            </h3>
+            <div>
+              <label class="block text-[10px] font-mono text-zinc-400 mb-1">SOBRE DE COCINA</label>
+              <select id="countertop-type" onchange="calculateQuote()" class="w-full px-3 py-2 bg-zinc-900 border border-zinc-700 rounded-lg text-xs text-white focus:border-amber-500 outline-none">
+                <option value="115000" selected>Cuarzo Blanco Calacatta (+�115,000 / m)</option>
+                <option value="85000">Granito Natural San Gabriel (+�85,000 / m)</option>
+                <option value="45000">Postformado Hidr�fugo Alta Densidad (+�45,000 / m)</option>
+                <option value="0">Sin sobre (El cliente compra el sobre aparte)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[10px] font-mono text-zinc-400 mb-1">METROS LINEALES DE MUEBLE</label>
+              <div class="flex items-center gap-3">
+                <input id="linear-meters" type="number" step="0.1" min="1" max="25" value="4.2" oninput="calculateQuote()" class="w-24 px-3 py-2 bg-zinc-900 border border-zinc-700 rounded-lg text-xs font-bold text-white font-mono text-center outline-none">
+                <span class="text-xs text-zinc-400">Metros lineales (m)</span>
+              </div>
+            </div>
+            <div class="pt-2 border-t border-zinc-800 text-[11px] text-emerald-400 bg-emerald-950/30 border border-emerald-800/40 p-2.5 rounded-lg">
+              ? <em>Incluye transporte en el GAM, instalaci�n profesional y anclajes reforzados.</em>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quote Summary Box -->
+        <div class="bg-gradient-to-br from-zinc-900 to-amber-950/60 border border-amber-500/30 rounded-2xl p-5 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6">
+          <div class="space-y-1 text-center md:text-left">
+            <div class="text-xs font-mono text-zinc-400 uppercase tracking-wider">COTIZACI�N FORMAL DE CARPINTER�A</div>
+            <div class="flex items-baseline gap-2">
+              <span class="text-3xl sm:text-4xl font-black text-white font-mono" id="display-total">�2,226,000</span>
+              <span class="text-xs text-zinc-400">IVA incluido</span>
+            </div>
+            <div class="text-xs text-amber-300 font-mono" id="display-letras">SON: DOS MILLONES DOSCIENTOS VEINTIS�IS MIL COLONES</div>
+            <div class="text-[11px] text-zinc-400 pt-1">
+              Adelanto para materiales (50%): <strong class="text-emerald-400 font-mono" id="display-adelanto">�1,113,000</strong> � Saldo al instalar (50%): <strong class="text-zinc-300 font-mono" id="display-saldo">�1,113,000</strong>
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+            <button onclick="shareWhatsApp()" class="px-5 py-3 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-900/30 cursor-pointer active:scale-95 transition-all">
+              <i data-lucide="message-circle" class="w-4 h-4"></i>
+              <span>Enviar Proforma a WhatsApp</span>
+            </button>
+            <button onclick="sendToWorkshop()" class="px-5 py-3 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-amber-600/30 cursor-pointer active:scale-95 transition-all">
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              <span>Ingresar Obra al Taller</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 2: KANBAN FABRICACI�N -->
+    <div id="view-kanban" class="hidden space-y-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <span class="text-[10px] font-mono uppercase tracking-wider text-amber-400 font-bold">Control de Obras & Taller</span>
+          <h2 class="text-xl font-black text-white">Pizarr�n de Fabricaci�n: Desde el Plano hasta la Casa del Cliente</h2>
+        </div>
+        <button onclick="resetKanbanDemo()" class="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-mono flex items-center gap-1.5">
+          <i data-lucide="rotate-ccw" class="w-3 h-3"></i>
+          <span>Reiniciar Tablero</span>
+        </button>
+      </div>
+
+      <!-- 5 Kanban Columns -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+        <!-- Col 1 -->
+        <div class="bg-zinc-950/80 rounded-xl p-3 border border-zinc-800 flex flex-col min-h-[420px]">
+          <div class="flex items-center justify-between pb-2 mb-2 border-b border-zinc-800">
+            <span class="text-xs font-bold text-zinc-300">1. Medici�n & Planos</span>
+            <span id="badge-col-1" class="px-1.5 py-0.5 rounded bg-zinc-800 text-[10px] font-mono text-zinc-400">2</span>
+          </div>
+          <div id="col-1" class="space-y-2 flex-1"></div>
+        </div>
+
+        <!-- Col 2 -->
+        <div class="bg-zinc-950/80 rounded-xl p-3 border border-zinc-800 flex flex-col min-h-[420px]">
+          <div class="flex items-center justify-between pb-2 mb-2 border-b border-zinc-800">
+            <span class="text-xs font-bold text-amber-400">2. Despiece & Corte</span>
+            <span id="badge-col-2" class="px-1.5 py-0.5 rounded bg-zinc-800 text-[10px] font-mono text-zinc-400">1</span>
+          </div>
+          <div id="col-2" class="space-y-2 flex-1"></div>
+        </div>
+
+        <!-- Col 3 -->
+        <div class="bg-zinc-950/80 rounded-xl p-3 border border-zinc-800 flex flex-col min-h-[420px]">
+          <div class="flex items-center justify-between pb-2 mb-2 border-b border-zinc-800">
+            <span class="text-xs font-bold text-blue-400">3. Enchapado Cantos</span>
+            <span id="badge-col-3" class="px-1.5 py-0.5 rounded bg-zinc-800 text-[10px] font-mono text-zinc-400">2</span>
+          </div>
+          <div id="col-3" class="space-y-2 flex-1"></div>
+        </div>
+
+        <!-- Col 4 -->
+        <div class="bg-zinc-950/80 rounded-xl p-3 border border-zinc-800 flex flex-col min-h-[420px]">
+          <div class="flex items-center justify-between pb-2 mb-2 border-b border-zinc-800">
+            <span class="text-xs font-bold text-purple-400">4. Armado en Taller</span>
+            <span id="badge-col-4" class="px-1.5 py-0.5 rounded bg-zinc-800 text-[10px] font-mono text-zinc-400">1</span>
+          </div>
+          <div id="col-4" class="space-y-2 flex-1"></div>
+        </div>
+
+        <!-- Col 5 -->
+        <div class="bg-zinc-950/80 rounded-xl p-3 border border-zinc-800 flex flex-col min-h-[420px]">
+          <div class="flex items-center justify-between pb-2 mb-2 border-b border-zinc-800">
+            <span class="text-xs font-bold text-emerald-400">5. Instalado en Casa</span>
+            <span id="badge-col-5" class="px-1.5 py-0.5 rounded bg-zinc-800 text-[10px] font-mono text-zinc-400">2</span>
+          </div>
+          <div id="col-5" class="space-y-2 flex-1"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 3: OBRAS & SALDOS -->
+    <div id="view-proyectos" class="hidden space-y-4">
+      <div class="bg-zinc-900/60 border border-zinc-800 rounded-2xl p-5 shadow-xl">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4">
+          <div>
+            <h2 class="text-xl font-black text-white">Estado Financiero de Obras & Saldos por Cobrar</h2>
+            <p class="text-xs text-zinc-400">Control estricto del 50% de adelanto para materiales y saldo al instalar en sitio.</p>
+          </div>
+          <div class="text-xs font-mono px-3 py-1.5 rounded-xl bg-black border border-zinc-800 text-zinc-300">
+            Por Cobrar en Sitio: <strong class="text-amber-400">�4,785,000 CRC</strong>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs text-zinc-300 font-mono">
+            <thead class="bg-black text-zinc-400 uppercase text-[10px] border-b border-zinc-800">
+              <tr>
+                <th class="p-3">Contrato</th>
+                <th class="p-3">Cliente / Ubicaci�n</th>
+                <th class="p-3">Descripci�n de Obra</th>
+                <th class="p-3">Total Obra</th>
+                <th class="p-3">Fase Actual</th>
+                <th class="p-3">Saldo a Cobrar</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-zinc-800 bg-zinc-950/50">
+              <tr>
+                <td class="p-3 font-bold text-amber-400">#COC-801</td>
+                <td class="p-3 text-white font-sans font-bold">Arq. Valeria Cordero � Curridabat</td>
+                <td class="p-3">4.2m Cocina RH + Cuarzo Blanco</td>
+                <td class="p-3 font-bold">�2,226,000</td>
+                <td class="p-3"><span class="px-2 py-0.5 rounded-full bg-blue-950 text-blue-300 border border-blue-800 text-[10px]">Enchapado</span></td>
+                <td class="p-3 text-amber-400 font-bold">�1,113,000 (50%)</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-amber-400">#COC-798</td>
+                <td class="p-3 text-white font-sans font-bold">Dr. Carlos Montero � Escaz�</td>
+                <td class="p-3">5.5m Cocina Roble + Isla Desayunador</td>
+                <td class="p-3 font-bold">�3,450,000</td>
+                <td class="p-3"><span class="px-2 py-0.5 rounded-full bg-purple-950 text-purple-300 border border-purple-800 text-[10px]">Armado Taller</span></td>
+                <td class="p-3 text-amber-400 font-bold">�1,725,000 (50%)</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-amber-400">#COC-795</td>
+                <td class="p-3 text-white font-sans font-bold">Ing. Fernando Solano � Santa Ana</td>
+                <td class="p-3">3.0m Muebles A�reos + Sobre Granito</td>
+                <td class="p-3 font-bold">�1,580,000</td>
+                <td class="p-3"><span class="px-2 py-0.5 rounded-full bg-amber-950 text-amber-300 border border-amber-800 text-[10px]">Instalando hoy</span></td>
+                <td class="p-3 text-emerald-400 font-bold">�790,000 (Cobro en sitio)</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-amber-400">#COC-790</td>
+                <td class="p-3 text-white font-sans font-bold">Licda. Marcela Mora � Heredia</td>
+                <td class="p-3">Torre de Hornos + Mueble Bajo</td>
+                <td class="p-3 font-bold">�1,157,000</td>
+                <td class="p-3"><span class="px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 text-[10px]">Entregado 100%</span></td>
+                <td class="p-3 text-zinc-500">�0 (Cancelado)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    function switchTab(tab) {
+      ['cotizador', 'kanban', 'proyectos'].forEach(t => {
+        document.getElementById('view-' + t).classList.add('hidden');
+        document.getElementById('tab-' + t).className = 'px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 bg-zinc-800 text-zinc-400 hover:text-white';
+      });
+      document.getElementById('view-' + tab).classList.remove('hidden');
+      document.getElementById('tab-' + tab).className = 'px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 bg-amber-600 text-white shadow-lg shadow-amber-600/30';
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function calculateQuote() {
+      const cabinetPrice = parseInt(document.getElementById('cabinet-type').value) || 0;
+      const woodExtra = parseInt(document.getElementById('wood-material').value) || 0;
+      const hardwareExtra = parseInt(document.getElementById('hardware-type').value) || 0;
+      const countertopPrice = parseInt(document.getElementById('countertop-type').value) || 0;
+      const linearMeters = parseFloat(document.getElementById('linear-meters').value) || 1;
+
+      const meterCost = cabinetPrice + woodExtra + hardwareExtra + countertopPrice;
+      const subtotal = meterCost * linearMeters;
+      const iva = subtotal * 0.13;
+      const total = subtotal + iva;
+
+      const formatCR = (num) => '�' + Math.round(num).toLocaleString('es-CR');
+
+      document.getElementById('display-total').innerText = formatCR(total);
+      document.getElementById('display-adelanto').innerText = formatCR(total * 0.5);
+      document.getElementById('display-saldo').innerText = formatCR(total * 0.5);
+    }
+
+    function shareWhatsApp() {
+      const client = document.getElementById('client-name').value || 'Cliente';
+      const total = document.getElementById('display-total').innerText;
+      const meters = document.getElementById('linear-meters').value + ' metros lineales';
+      const cabinetSelect = document.getElementById('cabinet-type');
+      const cabinetText = cabinetSelect.options[cabinetSelect.selectedIndex].text.split('(')[0].trim();
+      const countertopSelect = document.getElementById('countertop-type');
+      const countertopText = countertopSelect.options[countertopSelect.selectedIndex].text.split('(')[0].trim();
+
+      const msg = encodeURIComponent(
+        '�Hola ' + client + '! ?? Adjuntamos la cotizaci�n de carpinter�a a medida de COCINAS & MUEBLES CR:
+
+' +
+        '?? Dimensi�n: ' + meters + '
+' +
+        '??? Gabinetes: ' + cabinetText + '
+' +
+        '? Sobre: ' + countertopText + '
+' +
+        '?? Inversi�n Total (IVA inc): ' + total + '
+' +
+        '?? Adelanto de Inicio (50% para materiales): ' + document.getElementById('display-adelanto').innerText + '
+' +
+        '?? Saldo al finalizar instalaci�n (50%): ' + document.getElementById('display-saldo').innerText + '
+
+' +
+        'Incluye transporte e instalaci�n profesional. �Gusta que agendemos la toma final de medidas en el sitio?'
+      );
+
+      window.open('https://wa.me/?text=' + msg, '_blank');
+    }
+
+    const KANBAN_ITEMS = [
+      { id: 'm1', client: 'Arq. Valeria Cordero', item: '4.2m Cocina RH + Cuarzo', time: 'Hoy 09:00 AM', col: 1 },
+      { id: 'm2', client: 'Condominio La Floresta', item: 'Mueble de Ba�o Flotante', time: 'Ayer', col: 1 },
+      { id: 'm3', client: 'Dr. Carlos Montero', item: '5.5m Cocina Roble + Isla', time: 'En despiece', col: 2 },
+      { id: 'm4', client: 'Residencial Los Arcos', item: 'Puertas de Despensa RH', time: 'En enchapado', col: 3 },
+      { id: 'm5', client: 'Casa Don Rodrigo (Curridabat)', item: '3.8m Sobre Granito', time: 'En enchapado', col: 3 },
+      { id: 'm6', client: 'Restaurante Bistro San Jos�', item: 'Barra Desayunador', time: 'En ensamble', col: 4 },
+      { id: 'm7', client: 'Ing. Fernando Solano', item: 'Cocina Melamina Blanca', time: 'Instalando hoy', col: 5 },
+      { id: 'm8', client: 'Licda. Marcela Mora', item: 'Torre de Hornos', time: 'Instalado listo', col: 5 },
+    ];
+
+    let items = [...KANBAN_ITEMS];
+
+    function renderKanban() {
+      for (let c = 1; c <= 5; c++) {
+        const colDiv = document.getElementById('col-' + c);
+        colDiv.innerHTML = '';
+        const colItems = items.filter(i => i.col === c);
+        document.getElementById('badge-col-' + c).innerText = colItems.length;
+
+        colItems.forEach(item => {
+          const card = document.createElement('div');
+          card.className = 'bg-zinc-900 border border-zinc-800 hover:border-amber-500/50 p-3 rounded-xl shadow space-y-2 transition-all group';
+          card.innerHTML = 
+            '<div class="flex justify-between items-start">' +
+              '<span class="font-bold text-xs text-white leading-tight">' + item.client + '</span>' +
+            '</div>' +
+            '<div class="text-[11px] text-amber-300 font-mono">' + item.item + '</div>' +
+            '<div class="text-[10px] text-zinc-500">' + item.time + '</div>' +
+            '<div class="pt-2 border-t border-zinc-800/80 flex justify-between items-center">' +
+              (c > 1 ? '<button onclick="moveItem('' + item.id + '', -1)" class="p-1 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-white text-[10px]">? Atr�s</button>' : '<div></div>') +
+              (c < 5 ? '<button onclick="moveItem('' + item.id + '', 1)" class="px-2 py-1 rounded bg-amber-600/80 hover:bg-amber-600 text-white font-bold text-[10px] flex items-center gap-1"><span>Avanzar</span> ?</button>' : '<span class="text-[10px] text-emerald-400 font-bold font-mono">? INSTALADO</span>') +
+            '</div>';
+          colDiv.appendChild(card);
+        });
+      }
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function moveItem(id, step) {
+      const target = items.find(i => i.id === id);
+      if (target) {
+        target.col = Math.max(1, Math.min(5, target.col + step));
+        renderKanban();
+      }
+    }
+
+    function sendToWorkshop() {
+      const client = document.getElementById('client-name').value || 'Cliente Nuevo';
+      const meters = document.getElementById('linear-meters').value + 'm';
+      const cabinetSelect = document.getElementById('cabinet-type');
+      const cabinetText = cabinetSelect.options[cabinetSelect.selectedIndex].text.split('(')[0].trim();
+
+      items.unshift({
+        id: 'm-' + Date.now(),
+        client: client,
+        item: meters + ' ' + cabinetText,
+        time: 'Reci�n ingresado',
+        col: 1
+      });
+
+      switchTab('kanban');
+      renderKanban();
+      alert('�Proyecto ingresado al Pizarr�n del Taller (Columna 1: Medici�n & Planos)!');
+    }
+
+    function resetKanbanDemo() {
+      items = [...KANBAN_ITEMS];
+      renderKanban();
+    }
+
+    calculateQuote();
+    renderKanban();
+  </script>
+</body>
+</html>

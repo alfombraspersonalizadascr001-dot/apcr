@@ -36,7 +36,7 @@ interface DemoApp {
   id: string;
   slug: string;
   name: string;
-  category: 'fitness' | 'gastro' | 'health';
+  category: 'fitness' | 'gastro' | 'health' | 'taller';
   categoryLabel: string;
   badge: string;
   tagline: string;
@@ -183,6 +183,36 @@ const DEMO_APPS: DemoApp[] = [
     accentBg: 'bg-purple-500/10 border-purple-500/30',
     accentText: 'text-purple-400',
     icon: '✨'
+  },
+  {
+    id: 'crm-textil',
+    slug: 'crm-textil',
+    name: 'Textil Pro CR // Fábrica de Camisetas',
+    category: 'taller',
+    categoryLabel: 'Producción & Confección',
+    badge: 'Taller Textil & Uniformes',
+    tagline: 'Cotizador de Prendas, Telas, Bordados & Pizarrón de Taller',
+    description: 'Sistema integral para talleres de confección y serigrafía: cotice frente al cliente en 10 segundos según tela, bordados y tallas. Pasa la orden al pizarrón de producción (corte, estampado, costura) y genera proformas listas para WhatsApp.',
+    features: ['Cotizador automático por tallas y telas', 'Pizarrón Kanban de taller (5 etapas)', 'Proforma formal en Colones con IVA', 'Control de adelantos 50% y saldos'],
+    color: '#6366f1',
+    accentBg: 'bg-indigo-500/10 border-indigo-500/30',
+    accentText: 'text-indigo-400',
+    icon: '👕'
+  },
+  {
+    id: 'crm-muebles',
+    slug: 'crm-muebles',
+    name: 'Cocinas & Muebles Modernos CR',
+    category: 'taller',
+    categoryLabel: 'Carpintería & Mueblería',
+    badge: 'Carpintería a Medida',
+    tagline: 'Cotizador por Metro Lineal, Sobres de Cuarzo & Control de Obras',
+    description: 'Control total para mueblerías y talleres de carpintería: cotice en sitio por metro lineal según melamina hidrófuga, herrajes Blum y sobres de granito o cuarzo. Seguimiento de fabricación desde el despiece hasta la instalación en casa.',
+    features: ['Cotizador por metro lineal de cocina', 'Seguimiento de obra (corte a instalación)', 'Control de adelanto 50% para materiales', 'Presupuesto formal en colones en letras'],
+    color: '#d97706',
+    accentBg: 'bg-amber-500/10 border-amber-500/30',
+    accentText: 'text-amber-400',
+    icon: '🪚'
   }
 ];
 
@@ -220,7 +250,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
     setFullScreenApp(DEMO_APPS[nextIndex]);
     setSelectedApp(DEMO_APPS[nextIndex]);
   };
-  const [appFilter, setAppFilter] = useState<'all' | 'fitness' | 'gastro' | 'health'>('all');
+  const [appFilter, setAppFilter] = useState<'all' | 'fitness' | 'gastro' | 'health' | 'taller'>('all');
   const [fullScreenApp, setFullScreenApp] = useState<DemoApp | null>(null);
   const [iframeKey, setIframeKey] = useState<number>(0);
   
@@ -852,7 +882,8 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
             {/* Filter Pills */}
             <div className="flex flex-wrap items-center justify-center gap-2 mt-6">
               {[
-                { id: 'all', label: 'Todos (9 Demos)' },
+                { id: 'all', label: 'Todos (11 Demos)' },
+                { id: 'taller', label: '🔨 Talleres & Fabricación (CRM)' },
                 { id: 'fitness', label: '🏋️ Fitness & Deporte' },
                 { id: 'gastro', label: '🍔 Gastronomía & Sodas' },
                 { id: 'health', label: '🦷 Salud & Estética' }
@@ -1727,17 +1758,43 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span className="text-emerald-700 font-bold">Desde $199/mes en adelante</span>
-                <a 
-                  href={getWhatsAppLink('Hola APCR, deseo cotizar un CRM o sistema de control de órdenes/taller (Planes desde $199/mes en adelante).')}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-indigo-600 font-bold flex items-center gap-1 group-hover:translate-x-0.5 transition-transform"
-                >
-                  <span>Cotizar</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </a>
+              <div className="pt-4 border-t border-slate-100 flex flex-col gap-2.5 text-xs">
+                <div className="flex items-center justify-between">
+                  <span className="text-emerald-700 font-bold">1m $300 · 3m $280 · 6m $250 · 12m $199</span>
+                  <a 
+                    href="#seccion-crm-explicado"
+                    className="text-indigo-600 hover:text-indigo-700 font-bold flex items-center gap-1 group-hover:translate-x-0.5 transition-transform"
+                  >
+                    <span>Ver Explicación & Demos</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </a>
+                </div>
+                <div className="grid grid-cols-2 gap-2 pt-1">
+                  <button
+                    onClick={() => {
+                      const app = DEMO_APPS.find(a => a.id === 'crm-textil');
+                      if (app) {
+                        setSelectedApp(app);
+                        setFullScreenApp(app);
+                      }
+                    }}
+                    className="py-1.5 px-2.5 rounded-lg bg-indigo-50 hover:bg-indigo-600 text-indigo-700 hover:text-white font-bold text-[11px] text-center transition-colors flex items-center justify-center gap-1 cursor-pointer"
+                  >
+                    <span>👕 Demo Camisetas</span>
+                  </button>
+                  <button
+                    onClick={() => {
+                      const app = DEMO_APPS.find(a => a.id === 'crm-muebles');
+                      if (app) {
+                        setSelectedApp(app);
+                        setFullScreenApp(app);
+                      }
+                    }}
+                    className="py-1.5 px-2.5 rounded-lg bg-amber-50 hover:bg-amber-600 text-amber-700 hover:text-white font-bold text-[11px] text-center transition-colors flex items-center justify-center gap-1 cursor-pointer"
+                  >
+                    <span>🪚 Demo Mueblería</span>
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -1837,6 +1894,361 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
               </div>
             </div>
 
+          </div>
+
+        </div>
+      </section>
+
+      {/* =========================================================================
+          6.5 SECTION: CRM & CONTROL DE TALLER "A LO TICO" (EXPLICACIÓN CLARA & DEMOS)
+          Diseñado para que cualquier dueño de taller, carpintería o fábrica lo entienda
+          ========================================================================= */}
+      <section id="seccion-crm-explicado" className="py-16 lg:py-24 bg-gradient-to-b from-slate-900 via-[#0a1128] to-slate-950 text-white relative overflow-hidden border-t border-slate-800">
+        
+        {/* Glow ambient effects */}
+        <div className="absolute top-1/4 -right-40 w-96 h-96 bg-indigo-600/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-10 -left-40 w-96 h-96 bg-amber-600/15 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          
+          {/* Header */}
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-400/40 text-indigo-300 text-xs font-semibold uppercase tracking-wider mb-4">
+              <Database className="w-3.5 h-3.5 text-indigo-400" />
+              <span>SISTEMAS PARA NEGOCIOS REALES DE COSTA RICA</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight mb-4">
+              ¿Qué es un CRM y por qué su taller o fábrica lo necesita?
+            </h2>
+            <p className="text-slate-300 text-base sm:text-lg leading-relaxed">
+              Muchos dueños de negocio en el país no son técnicos en computación y nunca han usado un "CRM". Aquí se lo explicamos sin rodeos ni palabras raras: es su <strong>Secretario Digital y Gerente de Taller en el Celular</strong> las 24 horas del día.
+            </p>
+          </div>
+
+          {/* Comparativa: Antes vs Con el Sistema */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+            
+            {/* Columna 1: El Dolor de Cabeza Tradicional */}
+            <div className="bg-red-950/20 border border-red-900/40 rounded-3xl p-6 sm:p-8 shadow-xl">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-2xl bg-red-900/40 text-red-400 flex items-center justify-center font-bold text-lg">
+                  ❌
+                </div>
+                <div>
+                  <h3 className="text-xl font-black text-white">Como trabajan muchos talleres hoy en día:</h3>
+                  <span className="text-xs text-red-400 font-mono">Pérdida de tiempo, clientes enojados y plata en el aire</span>
+                </div>
+              </div>
+
+              <div className="space-y-4 text-sm text-slate-300">
+                <div className="flex items-start gap-3 p-3.5 rounded-xl bg-slate-900/60 border border-red-900/30">
+                  <span className="text-red-400 font-bold shrink-0 mt-0.5">•</span>
+                  <p><strong>Cotizaciones perdidas en WhatsApp:</strong> El cliente pide precio de 30 camisetas o un mueble de cocina, y a los 3 días el chat se hundió entre 200 mensajes más y se perdió la venta.</p>
+                </div>
+                <div className="flex items-start gap-3 p-3.5 rounded-xl bg-slate-900/60 border border-red-900/30">
+                  <span className="text-red-400 font-bold shrink-0 mt-0.5">•</span>
+                  <p><strong>Desorden en el taller:</strong> El cliente llama a preguntar <em>"¿cómo va mi trabajo?"</em> y hay que ponerlo a esperar mientras se va al taller a preguntarle al operario si ya se cortó o se armó.</p>
+                </div>
+                <div className="flex items-start gap-3 p-3.5 rounded-xl bg-slate-900/60 border border-red-900/30">
+                  <span className="text-red-400 font-bold shrink-0 mt-0.5">•</span>
+                  <p><strong>Cálculos a mano en papelitos:</strong> Errores cobrando menos de lo que costó el material o calculando mal el IVA y el transporte.</p>
+                </div>
+                <div className="flex items-start gap-3 p-3.5 rounded-xl bg-slate-900/60 border border-red-900/30">
+                  <span className="text-red-400 font-bold shrink-0 mt-0.5">•</span>
+                  <p><strong>Plata en la calle sin cobrar:</strong> Entregaron el producto y nadie apuntó si pagaron el 50% de saldo o si quedó debiendo.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Columna 2: La Solución con su Sistema Personalizado */}
+            <div className="bg-emerald-950/20 border border-emerald-500/40 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 px-4 py-1.5 rounded-bl-2xl bg-emerald-600 text-white font-mono text-[11px] font-bold">
+                CONTROL TOTAL DESDE EL CELULAR
+              </div>
+
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-2xl bg-emerald-900/40 text-emerald-400 flex items-center justify-center font-bold text-lg">
+                  ✅
+                </div>
+                <div>
+                  <h3 className="text-xl font-black text-white">Con su Sistema Personalizado APCR:</h3>
+                  <span className="text-xs text-emerald-400 font-mono">Tranquilidad, rapidez y cuentas claras al centavo</span>
+                </div>
+              </div>
+
+              <div className="space-y-4 text-sm text-slate-300">
+                <div className="flex items-start gap-3 p-3.5 rounded-xl bg-slate-900/60 border border-emerald-900/30">
+                  <span className="text-emerald-400 font-bold shrink-0 mt-0.5">•</span>
+                  <p><strong>Cotizador Rápido en 10 Segundos:</strong> Usted o sus vendedores ingresan las medidas o cantidades desde el celular y el sistema genera la proforma formal con desglose de IVA y monto en letras para enviarla directo a WhatsApp.</p>
+                </div>
+                <div className="flex items-start gap-3 p-3.5 rounded-xl bg-slate-900/60 border border-emerald-900/30">
+                  <span className="text-emerald-400 font-bold shrink-0 mt-0.5">•</span>
+                  <p><strong>Pizarrón Digital del Taller (Kanban):</strong> Todo su equipo ve qué trabajos están en diseño, cuáles en corte, cuáles en costura/armado y cuáles listos para entrega. Cero gritos en el taller.</p>
+                </div>
+                <div className="flex items-start gap-3 p-3.5 rounded-xl bg-slate-900/60 border border-emerald-900/30">
+                  <span className="text-emerald-400 font-bold shrink-0 mt-0.5">•</span>
+                  <p><strong>Control de Anticipos y Saldos:</strong> El sistema registra el 50% de adelanto para compra de insumos y le avisa cuánto tiene pendiente de cobrar al entregar.</p>
+                </div>
+                <div className="flex items-start gap-3 p-3.5 rounded-xl bg-slate-900/60 border border-emerald-900/30">
+                  <span className="text-emerald-400 font-bold shrink-0 mt-0.5">•</span>
+                  <p><strong>Historial Completo de Clientes:</strong> Con un solo toque ve todo lo que ese cliente le ha comprado en los últimos años, con teléfonos y facturas.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Demos Interactivos en Vivo */}
+          <div className="bg-slate-950/80 border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl mb-16">
+            <div className="text-center max-w-2xl mx-auto mb-8">
+              <span className="text-xs font-mono uppercase tracking-wider text-amber-400 font-bold">PRUÉBELO USTED MISMO EN VIVO</span>
+              <h3 className="text-2xl sm:text-3xl font-black text-white mt-1">
+                Demos reales configurados para talleres costarricenses
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-400 mt-2">
+                Haga clic en cualquiera de los dos demos para probar el cotizador automático en Colones y mover los pedidos en el tablero del taller en tiempo real:
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              
+              {/* DEMO 1: TEXTIL */}
+              <div className="bg-slate-900 rounded-2xl p-6 border border-indigo-500/40 hover:border-indigo-400 transition-all flex flex-col justify-between group">
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 rounded-2xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-2xl">
+                      👕
+                    </div>
+                    <span className="px-2.5 py-1 rounded-full bg-indigo-950 text-indigo-300 border border-indigo-700 font-mono text-[10px] font-bold uppercase">
+                      CONFECCIÓN & UNIFORMES
+                    </span>
+                  </div>
+                  <h4 className="text-lg font-black text-white mb-2 group-hover:text-indigo-400 transition-colors">
+                    Fábrica de Camisetas & Uniformes (Textil Pro CR)
+                  </h4>
+                  <p className="text-xs text-slate-300 leading-relaxed mb-4">
+                    Cotizador de camisetas Polo, Dry-Fit, algodón, bordados y serigrafía con desglose por tallas (S, M, L, XL), cálculo de adelanto del 50% y pizarrón de taller de 5 etapas (Corte, Bordado, Costura, Entrega).
+                  </p>
+                  <div className="space-y-1.5 text-xs text-slate-400 font-mono mb-6">
+                    <div>✓ Cotiza por volumen mayorista en segundos</div>
+                    <div>✓ Pizarrón interactivo de rollos a empaque</div>
+                    <div>✓ Formato listo para enviar a WhatsApp</div>
+                  </div>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-slate-800">
+                  <button
+                    onClick={() => {
+                      const app = DEMO_APPS.find(a => a.id === 'crm-textil');
+                      if (app) {
+                        setSelectedApp(app);
+                        setFullScreenApp(app);
+                      }
+                    }}
+                    className="flex-1 py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/30 active:scale-95 transition-all cursor-pointer"
+                  >
+                    <Play className="w-4 h-4 fill-white" />
+                    <span>Probar Demo Camisetas</span>
+                  </button>
+                  <a
+                    href={getWhatsAppLink('Hola APCR, vi el demo de CRM de Fábrica de Camisetas y deseo cotizar uno para mi empresa.')}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs flex items-center justify-center gap-1.5 border border-slate-700 transition-colors"
+                  >
+                    <MessageCircle className="w-4 h-4 text-[#25D366]" />
+                    <span>Cotizar</span>
+                  </a>
+                </div>
+              </div>
+
+              {/* DEMO 2: MUEBLERÍA */}
+              <div className="bg-slate-900 rounded-2xl p-6 border border-amber-500/40 hover:border-amber-400 transition-all flex flex-col justify-between group">
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-2xl">
+                      🪚
+                    </div>
+                    <span className="px-2.5 py-1 rounded-full bg-amber-950 text-amber-300 border border-amber-700 font-mono text-[10px] font-bold uppercase">
+                      CARPINTERÍA & MUEBLERÍA
+                    </span>
+                  </div>
+                  <h4 className="text-lg font-black text-white mb-2 group-hover:text-amber-400 transition-colors">
+                    Mueblería de Cocina & Carpintería a Medida
+                  </h4>
+                  <p className="text-xs text-slate-300 leading-relaxed mb-4">
+                    Cotizador por metro lineal de muebles aéreos y bajos, melamina hidrófuga RH 18mm, sobres de cuarzo o granito y herrajes Blum. Seguimiento de fabricación desde la medición hasta la instalación en casa.
+                  </p>
+                  <div className="space-y-1.5 text-xs text-slate-400 font-mono mb-6">
+                    <div>✓ Cotización precisa por metros lineales</div>
+                    <div>✓ Control de 50% de materiales y saldo en sitio</div>
+                    <div>✓ Pizarrón de obra: Planos, Corte, Enchapado, Casa</div>
+                  </div>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-slate-800">
+                  <button
+                    onClick={() => {
+                      const app = DEMO_APPS.find(a => a.id === 'crm-muebles');
+                      if (app) {
+                        setSelectedApp(app);
+                        setFullScreenApp(app);
+                      }
+                    }}
+                    className="flex-1 py-3 px-4 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-amber-600/30 active:scale-95 transition-all cursor-pointer"
+                  >
+                    <Play className="w-4 h-4 fill-white" />
+                    <span>Probar Demo Mueblería</span>
+                  </button>
+                  <a
+                    href={getWhatsAppLink('Hola APCR, vi el demo de CRM de Mueblería y Carpintería y deseo cotizar uno para mi taller.')}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs flex items-center justify-center gap-1.5 border border-slate-700 transition-colors"
+                  >
+                    <MessageCircle className="w-4 h-4 text-[#25D366]" />
+                    <span>Cotizar</span>
+                  </a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          {/* TABLA DE PRECIOS CLARA DE 4 OPCIONES PARA EL CRM */}
+          <div className="bg-gradient-to-br from-slate-900 via-[#071329] to-slate-950 border border-blue-500/40 rounded-3xl p-6 sm:p-10 shadow-2xl">
+            <div className="text-center max-w-3xl mx-auto mb-10">
+              <span className="text-xs font-mono uppercase tracking-wider text-emerald-400 font-bold">OPCIONES DE COBRO & PLANES ACCESIBLES</span>
+              <h3 className="text-2xl sm:text-3xl font-black text-white mt-1">
+                Planes transparentes para implementar el CRM en su empresa
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-400 mt-2">
+                Sin cobros sorpresa ni letras pequeñas. Incluye montaje de su logotipo, adaptación del cotizador a sus productos, base de datos en la nube y soporte continuo.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              
+              {/* PLAN 1 MES */}
+              <div className="bg-slate-900/90 rounded-2xl p-5 border border-slate-800 flex flex-col justify-between hover:border-slate-600 transition-all">
+                <div>
+                  <div className="text-xs font-mono text-slate-400 uppercase tracking-wider mb-1">PLAN MENSUAL</div>
+                  <div className="text-xl font-bold text-white mb-2">1 Mes</div>
+                  <div className="flex items-baseline gap-1 mb-3">
+                    <span className="text-3xl font-black text-white font-mono">$300</span>
+                    <span className="text-xs text-slate-400">/ mes</span>
+                  </div>
+                  <p className="text-xs text-slate-400 mb-4 leading-relaxed">
+                    Total: <strong className="text-white font-mono">$300 USD</strong>. La opción ideal para probar el sistema en su taller sin contratos a largo plazo.
+                  </p>
+                  <div className="space-y-1.5 text-[11px] text-slate-400 border-t border-slate-800 pt-3">
+                    <div>✓ Cotizador a la medida</div>
+                    <div>✓ Pizarrón Kanban de taller</div>
+                    <div>✓ Acceso desde celular y PC</div>
+                    <div>✓ Renovación mes a mes</div>
+                  </div>
+                </div>
+                <a
+                  href={getWhatsAppLink('Hola APCR, deseo contratar el Plan de 1 Mes ($300/mes) para el CRM de mi empresa.')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-6 w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs text-center transition-colors block"
+                >
+                  Elegir 1 Mes ($300)
+                </a>
+              </div>
+
+              {/* PLAN 3 MESES */}
+              <div className="bg-slate-900/90 rounded-2xl p-5 border border-slate-800 flex flex-col justify-between hover:border-slate-600 transition-all">
+                <div>
+                  <div className="text-xs font-mono text-blue-400 uppercase tracking-wider mb-1">TRIMESTRAL</div>
+                  <div className="text-xl font-bold text-white mb-2">3 Meses</div>
+                  <div className="flex items-baseline gap-1 mb-3">
+                    <span className="text-3xl font-black text-white font-mono">$280</span>
+                    <span className="text-xs text-slate-400">/ mes</span>
+                  </div>
+                  <p className="text-xs text-slate-400 mb-4 leading-relaxed">
+                    Total: <strong className="text-white font-mono">$840 USD</strong>. Ahorra $60 en comparación al pago mensual.
+                  </p>
+                  <div className="space-y-1.5 text-[11px] text-slate-400 border-t border-slate-800 pt-3">
+                    <div>✓ Todo lo del plan mensual</div>
+                    <div>✓ Capacitación para su personal</div>
+                    <div>✓ Soporte prioritario</div>
+                    <div>✓ Ahorro de $60 garantizado</div>
+                  </div>
+                </div>
+                <a
+                  href={getWhatsAppLink('Hola APCR, deseo contratar el Plan de 3 Meses ($280/mes - Total $840) para el CRM de mi empresa.')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-6 w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs text-center transition-colors block"
+                >
+                  Elegir 3 Meses ($280/m)
+                </a>
+              </div>
+
+              {/* PLAN 6 MESES */}
+              <div className="bg-slate-900/90 rounded-2xl p-5 border border-slate-800 flex flex-col justify-between hover:border-slate-600 transition-all">
+                <div>
+                  <div className="text-xs font-mono text-indigo-400 uppercase tracking-wider mb-1">SEMESTRAL</div>
+                  <div className="text-xl font-bold text-white mb-2">6 Meses</div>
+                  <div className="flex items-baseline gap-1 mb-3">
+                    <span className="text-3xl font-black text-white font-mono">$250</span>
+                    <span className="text-xs text-slate-400">/ mes</span>
+                  </div>
+                  <p className="text-xs text-slate-400 mb-4 leading-relaxed">
+                    Total: <strong className="text-white font-mono">$1,500 USD</strong>. Ahorra $300, excelente para consolidar operaciones.
+                  </p>
+                  <div className="space-y-1.5 text-[11px] text-slate-400 border-t border-slate-800 pt-3">
+                    <div>✓ Todo lo del plan trimestral</div>
+                    <div>✓ Reportes mensuales de ventas</div>
+                    <div>✓ Ajustes de fórmulas de cotización</div>
+                    <div>✓ Ahorro de $300 garantizado</div>
+                  </div>
+                </div>
+                <a
+                  href={getWhatsAppLink('Hola APCR, deseo contratar el Plan Semestral de 6 Meses ($250/mes - Total $1,500) para el CRM de mi empresa.')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-6 w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs text-center transition-colors block"
+                >
+                  Elegir 6 Meses ($250/m)
+                </a>
+              </div>
+
+              {/* PLAN 12 MESES (ANUAL) - ESTRELLA */}
+              <div className="bg-gradient-to-b from-indigo-950 via-slate-900 to-slate-950 rounded-2xl p-5 border-2 border-emerald-500 flex flex-col justify-between relative shadow-2xl scale-[1.02]">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-emerald-500 text-slate-950 text-[10px] font-black uppercase tracking-wider shadow">
+                  ★ LA MÁS BARATA & POPULAR ★
+                </div>
+                <div>
+                  <div className="text-xs font-mono text-emerald-400 uppercase tracking-wider mb-1 pt-1">PLAN ANUAL</div>
+                  <div className="text-xl font-bold text-white mb-2">12 Meses</div>
+                  <div className="flex items-baseline gap-1 mb-3">
+                    <span className="text-4xl font-black text-emerald-400 font-mono">$199</span>
+                    <span className="text-xs text-slate-300">/ mes</span>
+                  </div>
+                  <p className="text-xs text-slate-300 mb-4 leading-relaxed">
+                    Total: <strong className="text-white font-mono">$2,388 USD</strong>. ¡Ahorras <span className="text-emerald-400 font-bold">$1,212 al año</span>! La tarifa mensual más baja disponible.
+                  </p>
+                  <div className="space-y-1.5 text-[11px] text-slate-300 border-t border-slate-800 pt-3">
+                    <div>✓ Mantenimiento y hosting cloud 100% incluido</div>
+                    <div>✓ Soporte VIP continuo</div>
+                    <div>✓ Base de datos ilimitada de clientes</div>
+                    <div>✓ La opción de mayor rentabilidad para su taller</div>
+                  </div>
+                </div>
+                <a
+                  href={getWhatsAppLink('Hola APCR, deseo contratar el Plan Anual de 12 Meses ($199/mes - La opción más económica) para el CRM de mi empresa.')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-6 w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs text-center transition-all shadow-lg shadow-emerald-500/30 block active:scale-95"
+                >
+                  Elegir 12 Meses ($199/m)
+                </a>
+              </div>
+
+            </div>
           </div>
 
         </div>
