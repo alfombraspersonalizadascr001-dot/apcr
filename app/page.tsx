@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AirlockPortal } from './components/AirlockPortal';
 import { ProductsPage } from './components/ProductsPage';
 import { SoftwarePage } from './components/SoftwarePage';
@@ -9,25 +9,49 @@ import { airlockAudio } from './utils/airlockSound';
 import type { ViewMode } from './types';
 
 export default function App() {
-  const [viewMode, setViewMode] = useState<ViewMode>(() => {
-    if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      if (params.get('view') === 'logos' || params.get('page') === 'logos' || window.location.hash.includes('logo')) {
-        return 'logos';
-      }
-      if (params.get('view') === 'productos' || params.get('page') === 'productos' || window.location.hash.includes('producto')) {
-        return 'physical';
-      }
-      if (params.get('view') === 'software' || params.get('page') === 'software' || window.location.hash.includes('software')) {
-        return 'digital';
-      }
-    }
-    return 'portal';
-  });
+  const [viewMode, setViewMode] = useState<ViewMode>('portal');
   const [lang, setLang] = useState<'es' | 'en'>('es');
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const page = params.get('page') || params.get('view');
+      if (page === 'software' || page === 'digital' || window.location.hash.includes('software')) {
+        setViewMode('digital');
+      } else if (page === 'productos' || page === 'physical' || window.location.hash.includes('producto')) {
+        setViewMode('physical');
+      } else if (page === 'logos' || window.location.hash.includes('logo')) {
+        setViewMode('logos');
+      }
+    } catch {}
+  }, []);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const page = params.get('page') || params.get('view');
+        if (page === 'software' || page === 'digital') {
+          setViewMode('digital');
+        } else if (page === 'productos' || page === 'physical') {
+          setViewMode('physical');
+        } else if (page === 'logos') {
+          setViewMode('logos');
+        } else {
+          setViewMode('portal');
+        }
+      } catch {}
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   const handleReturnToPortal = () => {
-    airlockAudio.playAirlockClose();
+    try {
+      airlockAudio.playAirlockClose();
+    } catch {}
     setViewMode('portal');
     if (typeof window !== 'undefined' && window.history.pushState) {
       window.history.pushState(null, '', window.location.pathname);
@@ -82,4 +106,3 @@ export default function App() {
     </div>
   );
 }
-

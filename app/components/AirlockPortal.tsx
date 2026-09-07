@@ -153,25 +153,26 @@ export const AirlockPortal: React.FC<AirlockPortalProps> = ({
   const handleOpenDoor = (world: 'physical' | 'digital') => {
     if (doorState !== 'closed') return;
 
-    // 1. STOP MUSIC IMMEDIATELY ON TOUCH
-    airlockAudio.stopMusic();
+    try {
+      airlockAudio.stopMusic();
+    } catch {}
 
-    // 2. Tactile microswitch click
-    airlockAudio.playArcadeButtonPress();
+    try {
+      airlockAudio.playArcadeButtonPress();
+    } catch {}
 
-    // 3. Pneumatic decompression hiss & hydraulic servo sound
-    airlockAudio.playAirlockOpen(world === 'digital');
+    try {
+      airlockAudio.playAirlockOpen(world === 'digital');
+    } catch {}
 
     setIsLoginOpen(false);
-
     setTargetWorld(world);
     setDoorState('opening');
 
-    // 4. Complete opening transition into the chosen world
     setTimeout(() => {
       setDoorState('open');
       onEnterWorld(world);
-    }, 1100);
+    }, 900);
   };
 
   const toggleSound = () => {
@@ -245,14 +246,15 @@ export const AirlockPortal: React.FC<AirlockPortalProps> = ({
         </div>
       </div>
 
-      {/* MOBILE VERTICAL DOORS (< md) */}
+      {/* MOBILE VERTICAL DOORS (< md) - Both doors touchable directly */}
       <div className="block md:hidden absolute inset-0 z-10 overflow-hidden">
-        {/* MOBILE LEFT DOOR HALF */}
+        {/* MOBILE LEFT DOOR HALF (Touch to open Alfombras) */}
         <div 
-          className={`absolute top-0 left-0 w-1/2 h-full transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden shadow-[6px_0_25px_rgba(0,0,0,0.3)] ${
+          onClick={() => handleOpenDoor('physical')}
+          className={`absolute top-0 left-0 w-1/2 h-full transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden shadow-[6px_0_25px_rgba(0,0,0,0.3)] cursor-pointer ${
             doorState === 'opening' || doorState === 'open' 
               ? '-translate-x-[102%]' 
-              : 'translate-x-0'
+              : 'translate-x-0 active:brightness-95'
           }`}
         >
           <img 
@@ -262,12 +264,13 @@ export const AirlockPortal: React.FC<AirlockPortalProps> = ({
           />
         </div>
 
-        {/* MOBILE RIGHT DOOR HALF */}
+        {/* MOBILE RIGHT DOOR HALF (Touch to open Software) */}
         <div 
-          className={`absolute top-0 right-0 w-1/2 h-full transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden shadow-[-6px_0_25px_rgba(0,0,0,0.3)] ${
+          onClick={() => handleOpenDoor('digital')}
+          className={`absolute top-0 right-0 w-1/2 h-full transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden shadow-[-6px_0_25px_rgba(0,0,0,0.3)] cursor-pointer ${
             doorState === 'opening' || doorState === 'open' 
               ? 'translate-x-[102%]' 
-              : 'translate-x-0'
+              : 'translate-x-0 active:brightness-95'
           }`}
         >
           <img 
@@ -446,8 +449,45 @@ export const AirlockPortal: React.FC<AirlockPortalProps> = ({
             </nav>
           </div>
 
+          {/* MOBILE DIRECT ACTION BUTTONS (Always reachable right at thumb level) */}
+          <div className="md:hidden w-full max-w-sm mx-auto pointer-events-auto flex flex-col gap-2.5 pb-2 px-2">
+            <button
+              type="button"
+              onClick={() => handleOpenDoor('digital')}
+              className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-extrabold text-sm shadow-[0_12px_28px_rgba(37,99,235,0.45)] flex items-center justify-between border border-white/40 active:scale-95 transition-all cursor-pointer"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
+                  <Cpu className="w-4 h-4 text-white" />
+                </div>
+                <div className="text-left">
+                  <div className="text-sm font-black leading-tight text-white tracking-wide">ENTRAR A SOFTWARE & APPS</div>
+                  <div className="text-[10px] text-cyan-200 font-medium">9 Demos Interactivos en Vivo</div>
+                </div>
+              </div>
+              <ArrowRight className="w-5 h-5 text-white shrink-0" />
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleOpenDoor('physical')}
+              className="w-full py-3 px-4 rounded-2xl bg-slate-900/85 hover:bg-slate-900 text-white font-bold text-xs shadow-lg backdrop-blur-md flex items-center justify-between border border-white/20 active:scale-95 transition-all cursor-pointer"
+            >
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
+                  <Layers className="w-3.5 h-3.5 text-amber-400" />
+                </div>
+                <div className="text-left">
+                  <div className="text-xs font-bold leading-tight text-white">CATÁLOGO DE ALFOMBRAS</div>
+                  <div className="text-[9px] text-slate-300">Alfombras personalizadas de alto tránsito</div>
+                </div>
+              </div>
+              <ArrowRight className="w-4 h-4 text-slate-300 shrink-0" />
+            </button>
+          </div>
+
           {/* Bottom subtle visor watermark / trademark */}
-          <div className="w-full text-center pointer-events-none pb-2">
+          <div className="w-full text-center pointer-events-none pb-1">
             <p className="text-[9px] sm:text-xs font-mono tracking-widest text-slate-500/80">
               {t.rights}
             </p>
