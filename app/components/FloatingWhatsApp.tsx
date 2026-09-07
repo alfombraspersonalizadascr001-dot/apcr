@@ -1,7 +1,7 @@
 "use client";
 
 export default function FloatingWhatsApp() {
-    const link = "https://wa.me/50670693708";
+    const link = "https://wa.me/50660638062?text=Hola%20APCR%2C%20quisiera%20cotizar%20productos%20y%20alfombras";
 
     return (
         <div className="fixed bottom-8 right-8 z-50">

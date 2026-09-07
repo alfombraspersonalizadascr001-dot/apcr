@@ -1,26 +1,22 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Caveat } from "next/font/google";
+import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const googleSans = Plus_Jakarta_Sans({
+  variable: "--font-google-sans",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-mono",
   subsets: ["latin"],
-});
-
-const caveat = Caveat({
-  variable: "--font-caveat",
-  subsets: ["latin"],
-  weight: ["400", "700"],
+  weight: ["400", "600", "700"],
 });
 
 export const metadata: Metadata = {
-  title: "APCR | Alfombras Personalizadas de Costa Rica",
-  description: "Especialistas en publicidad y fabricación de alfombras de vinilo personalizadas (tipo spaghetti) de alta calidad.",
+  title: "APCR | Dualidad Físico & Virtual — Alfombras Personalizadas & Software Costa Rica",
+  description: "Alfombras personalizadas tipo spaghetti de alto tránsito y soluciones de software: Apps iOS/Android, CRM empresarial y websites.",
   icons: {
     icon: '/favicon.svg',
   },
@@ -35,9 +31,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="es" className="light">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${caveat.variable} antialiased`}
+        className={`${googleSans.variable} ${jetbrainsMono.variable} antialiased bg-[#f8fafc] text-slate-800 font-sans`}
       >
         <Suspense fallback={null}>
           <AnalyticsTracker />
