@@ -39,7 +39,7 @@ interface DemoApp {
   id: string;
   slug: string;
   name: string;
-  category: 'fitness' | 'gastro' | 'health' | 'taller';
+  category: 'fitness' | 'gastro' | 'health' | 'taller' | 'auto';
   categoryLabel: string;
   badge: string;
   tagline: string;
@@ -52,6 +52,21 @@ interface DemoApp {
 }
 
 const DEMO_APPS: DemoApp[] = [
+  {
+    id: 'auto-app',
+    slug: 'auto-app',
+    name: 'APEX Auto // Taller & Servicio Automotriz',
+    category: 'auto',
+    categoryLabel: 'Automotriz & Taller (App Móvil)',
+    badge: 'App Android & iOS para Clientes',
+    tagline: 'Garaje Digital, Citas en Línea, Bahía en Vivo & Auxilio SOS',
+    description: 'Aplicación móvil nativa (Android & iOS) con diseño premium y minimalista en fondo claro con negro, gris y rojo: el cliente consulta la telemetría de su auto, agenda citas de taller, ve fotos y progreso de su vehículo en bahía en tiempo real y solicita grúa SOS.',
+    features: ['Diseño premium minimalista en blanco, negro y rojo', 'Seguimiento de bahía en taller con fotos en vivo', 'Agendamiento de citas con Servicio Valet', 'Bitácora digital de mantenimiento y auxilio SOS 24/7'],
+    color: '#dc2626',
+    accentBg: 'bg-red-500/10 border-red-500/30',
+    accentText: 'text-red-500',
+    icon: '🏎️'
+  },
   {
     id: 'aura-club',
     slug: 'aura-club',
@@ -298,7 +313,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
     setFullScreenApp(DEMO_APPS[nextIndex]);
     setSelectedApp(DEMO_APPS[nextIndex]);
   };
-  const [appFilter, setAppFilter] = useState<'all' | 'fitness' | 'gastro' | 'health' | 'taller'>('all');
+  const [appFilter, setAppFilter] = useState<'all' | 'fitness' | 'gastro' | 'health' | 'taller' | 'auto'>('all');
   const [fullScreenApp, setFullScreenApp] = useState<DemoApp | null>(null);
   const [iframeKey, setIframeKey] = useState<number>(0);
   
@@ -961,8 +976,9 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
             <div className="flex flex-wrap items-center justify-center gap-2 mt-6">
               {[
                 { id: 'all', label: `Todos (${DEMO_APPS.length} Demos)` },
+                { id: 'auto', label: '🏎️ Automotriz & Taller (App)' },
                 { id: 'gastro', label: '🍽️ Gastronomía & Menús (7)' },
-                { id: 'taller', label: '🔨 Talleres & Fabricación (CRM)' },
+                { id: 'taller', label: '🔨 Fabricación & CRM' },
                 { id: 'fitness', label: '🏋️ Fitness & Deporte' },
                 { id: 'health', label: '🦷 Salud & Estética' }
               ].map((f) => (

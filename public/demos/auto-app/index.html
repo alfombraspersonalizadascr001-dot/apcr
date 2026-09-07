@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>APEX Auto // App Móvil para Clientes de Taller (iOS & Android)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #f4f5f7;
+      color: #09090b;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    .font-brand {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    /* Hide scrollbars for clean app look */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-0 sm:p-4 bg-zinc-100 antialiased">
+
+  <!-- Mobile Device Shell Wrapper -->
+  <div class="w-full max-w-md h-screen sm:h-[844px] bg-white sm:rounded-[44px] sm:border-[8px] sm:border-zinc-900 shadow-2xl flex flex-col relative overflow-hidden">
+
+    <!-- Mobile Top Status Bar (iOS / Android Native Feel) -->
+    <div class="pt-3 px-6 pb-2 flex items-center justify-between bg-white text-zinc-900 text-xs font-semibold select-none z-20 shrink-0">
+      <span class="font-mono text-[13px] font-bold">9:41</span>
+      <!-- Dynamic Island / Notch Indicator -->
+      <div class="w-24 h-4 rounded-full bg-zinc-950 flex items-center justify-center">
+        <div class="w-2.5 h-2.5 rounded-full bg-zinc-800 mr-2"></div>
+        <div class="w-2 h-2 rounded-full bg-red-600/80 animate-pulse"></div>
+      </div>
+      <div class="flex items-center gap-1.5 text-zinc-800">
+        <i data-lucide="signal" class="w-3.5 h-3.5"></i>
+        <i data-lucide="wifi" class="w-3.5 h-3.5"></i>
+        <i data-lucide="battery" class="w-4 h-4"></i>
+      </div>
+    </div>
+
+    <!-- App Top Navigation / Header -->
+    <header class="px-5 py-3 border-b border-zinc-100 flex items-center justify-between bg-white/90 backdrop-blur-md sticky top-0 z-10 shrink-0">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-lg bg-zinc-950 flex items-center justify-center text-white font-black text-xs font-brand tracking-tighter">
+          <span class="text-red-600">A</span>P
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <span class="font-brand font-black text-sm tracking-tight text-zinc-950">APEX AUTO</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-red-600"></span>
+          </div>
+          <div class="text-[10px] text-zinc-400 font-semibold tracking-wider uppercase font-mono">Taller & Servicio</div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <!-- Live Workshop Active Pill -->
+        <div class="px-2 py-1 rounded-full bg-red-50 text-red-700 border border-red-200/80 flex items-center gap-1.5 text-[10px] font-bold">
+          <span class="w-1.5 h-1.5 rounded-full bg-red-600 animate-ping"></span>
+          <span>Bahía 2 Activa</span>
+        </div>
+
+        <!-- Notification Bell with Red Badge -->
+        <button onclick="toggleModal('notifModal')" class="relative p-2 rounded-full hover:bg-zinc-100 text-zinc-700 cursor-pointer transition-colors">
+          <i data-lucide="bell" class="w-4 h-4"></i>
+          <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-red-600 border border-white"></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Scrollable Screen Content Container -->
+    <div class="flex-1 overflow-y-auto no-scrollbar pb-24 bg-[#fafbfc]">
+
+      <!-- ============================================================== -->
+      <!-- SCREEN 1: MI GARAJE (HOME) -->
+      <!-- ============================================================== -->
+      <section id="screen-garaje" class="p-5 space-y-5">
+
+        <!-- User Welcome -->
+        <div class="flex items-center justify-between">
+          <div>
+            <span class="text-xs font-semibold text-zinc-400 block">Bienvenido de vuelta,</span>
+            <h1 class="text-xl font-extrabold text-zinc-950 tracking-tight">Mauricio Chinchilla</h1>
+          </div>
+          <div class="w-10 h-10 rounded-full bg-zinc-100 border border-zinc-200 flex items-center justify-center font-bold text-xs text-zinc-800">
+            MC
+          </div>
+        </div>
+
+        <!-- Main Vehicle Card (Minimalist Luxury) -->
+        <div class="bg-zinc-950 rounded-3xl p-5 text-white shadow-xl relative overflow-hidden">
+          <!-- Ambient Red Radial Glow -->
+          <div class="absolute -top-12 -right-12 w-40 h-40 bg-red-600/20 rounded-full blur-2xl pointer-events-none"></div>
+
+          <div class="flex items-start justify-between relative z-10 mb-4">
+            <div>
+              <span class="text-[10px] font-bold font-mono tracking-widest text-red-500 uppercase">VEHÍCULO PRINCIPAL</span>
+              <h2 class="text-lg font-bold text-white tracking-tight mt-0.5" id="garage-car-name">Toyota Hilux 2.8 D-4D</h2>
+              <p class="text-xs text-zinc-400">Edición 4x4 • 2024</p>
+            </div>
+            <div class="px-2.5 py-1 rounded-lg bg-zinc-900 border border-zinc-800 text-red-500 font-mono font-black text-xs">
+              BHM-782
+            </div>
+          </div>
+
+          <!-- Vehicle Stats Grid -->
+          <div class="grid grid-cols-3 gap-2 py-3 border-y border-zinc-800/80 text-center relative z-10">
+            <div>
+              <span class="text-[10px] text-zinc-400 block font-medium">Odómetro</span>
+              <strong class="text-xs font-mono font-bold text-white">84,500 km</strong>
+            </div>
+            <div class="border-x border-zinc-800/80">
+              <span class="text-[10px] text-zinc-400 block font-medium">Próx. Servicio</span>
+              <strong class="text-xs font-mono font-bold text-red-400">En 1,500 km</strong>
+            </div>
+            <div>
+              <span class="text-[10px] text-zinc-400 block font-medium">Salud General</span>
+              <strong class="text-xs font-mono font-bold text-emerald-400">96% Óptimo</strong>
+            </div>
+          </div>
+
+          <div class="mt-4 flex items-center justify-between text-xs relative z-10">
+            <span class="text-zinc-400 text-[11px] flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              Inspección DEKRA al día
+            </span>
+            <button onclick="switchScreen('citas')" class="text-xs font-bold text-white hover:text-red-400 flex items-center gap-1 transition-colors cursor-pointer">
+              <span>Agendar Cita</span>
+              <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-red-500"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Live Workshop Status Card (En Taller) -->
+        <div class="bg-white rounded-2xl border border-zinc-200 p-4 shadow-xs space-y-3">
+          <div class="flex items-center justify-between pb-3 border-b border-zinc-100">
+            <div class="flex items-center gap-2">
+              <div class="w-2.5 h-2.5 rounded-full bg-red-600 animate-ping"></div>
+              <span class="text-xs font-extrabold text-zinc-900 uppercase tracking-wider">Estado en Taller • En Vivo</span>
+            </div>
+            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-zinc-100 text-zinc-700">ORDEN #OT-782</span>
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between text-xs font-bold text-zinc-900 mb-1">
+              <span>Mantenimiento 80k km & Frenos</span>
+              <span class="text-red-600 font-mono">60%</span>
+            </div>
+            <p class="text-[11px] text-zinc-500 mb-3">Técnico asignado: <strong>Carlos Vega</strong> (Bahía 2)</p>
+
+            <!-- Progress Bar -->
+            <div class="w-full bg-zinc-100 rounded-full h-2 overflow-hidden">
+              <div class="bg-red-600 h-2 rounded-full transition-all duration-500" style="width: 60%"></div>
+            </div>
+
+            <!-- Steps -->
+            <div class="grid grid-cols-4 text-center mt-2 text-[9px] font-bold text-zinc-400 font-mono">
+              <span class="text-zinc-900">1. INGRESO ✓</span>
+              <span class="text-zinc-900">2. DESARME ✓</span>
+              <span class="text-red-600">3. MECÁNICA ⚡</span>
+              <span>4. LISTO</span>
+            </div>
+          </div>
+
+          <div class="pt-2 flex items-center justify-between gap-2">
+            <button onclick="switchScreen('envivo')" class="flex-1 py-2 px-3 rounded-xl bg-zinc-950 hover:bg-zinc-800 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
+              <i data-lucide="eye" class="w-3.5 h-3.5 text-red-500"></i>
+              <span>Ver Fotos de Inspección</span>
+            </button>
+            <button onclick="contactMechanicWhatsApp()" class="p-2 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-800 text-xs transition-colors cursor-pointer" title="Chatear con el mecánico">
+              <i data-lucide="message-square" class="w-4 h-4 text-emerald-600"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Telemetry & Health Quick Grid (4 Cards) -->
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-zinc-400">Telemetría del Vehículo</h3>
+            <span class="text-[10px] text-zinc-400">Actualizado hace 15 min</span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div class="bg-white p-3.5 rounded-2xl border border-zinc-200 shadow-xs space-y-1">
+              <div class="flex items-center justify-between text-zinc-400">
+                <span class="text-[11px] font-semibold text-zinc-600">Aceite Motor</span>
+                <i data-lucide="droplet" class="w-4 h-4 text-amber-500"></i>
+              </div>
+              <div class="text-sm font-bold text-zinc-950">Motul 5W-30</div>
+              <div class="text-[10px] text-emerald-600 font-semibold font-mono">82% Vida Útil</div>
+            </div>
+
+            <div class="bg-white p-3.5 rounded-2xl border border-zinc-200 shadow-xs space-y-1">
+              <div class="flex items-center justify-between text-zinc-400">
+                <span class="text-[11px] font-semibold text-zinc-600">Batería</span>
+                <i data-lucide="zap" class="w-4 h-4 text-emerald-500"></i>
+              </div>
+              <div class="text-sm font-bold text-zinc-950">12.6 Volts</div>
+              <div class="text-[10px] text-emerald-600 font-semibold font-mono">Estado Óptimo</div>
+            </div>
+
+            <div class="bg-white p-3.5 rounded-2xl border border-zinc-200 shadow-xs space-y-1">
+              <div class="flex items-center justify-between text-zinc-400">
+                <span class="text-[11px] font-semibold text-zinc-600">Frenos Cerámicos</span>
+                <i data-lucide="disc" class="w-4 h-4 text-red-500"></i>
+              </div>
+              <div class="text-sm font-bold text-zinc-950">3.8 mm</div>
+              <div class="text-[10px] text-red-600 font-semibold font-mono">Cambio Recomendado</div>
+            </div>
+
+            <div class="bg-white p-3.5 rounded-2xl border border-zinc-200 shadow-xs space-y-1">
+              <div class="flex items-center justify-between text-zinc-400">
+                <span class="text-[11px] font-semibold text-zinc-600">Neumáticos</span>
+                <i data-lucide="circle-dot" class="w-4 h-4 text-zinc-500"></i>
+              </div>
+              <div class="text-sm font-bold text-zinc-950">32 PSI / 5.2mm</div>
+              <div class="text-[10px] text-emerald-600 font-semibold font-mono">Desgaste Parejo</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Emergency Assist Banner -->
+        <div class="p-4 rounded-2xl bg-zinc-100 border border-zinc-200 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-red-600 text-white flex items-center justify-center text-sm font-black shadow-xs">
+              SOS
+            </div>
+            <div>
+              <h4 class="text-xs font-bold text-zinc-950">¿Varado en carretera?</h4>
+              <p class="text-[11px] text-zinc-500">Grúa 24/7 y auxilio mecánico rápido</p>
+            </div>
+          </div>
+          <button onclick="switchScreen('sos')" class="px-3 py-1.5 rounded-lg bg-zinc-950 hover:bg-zinc-800 text-white text-xs font-bold transition-colors cursor-pointer">
+            Pedir Grúa
+          </button>
+        </div>
+
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- SCREEN 2: AGENDAR CITA EN TALLER -->
+      <!-- ============================================================== -->
+      <section id="screen-citas" class="p-5 space-y-5 hidden">
+        
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-red-600 font-mono">RESERVAS ONLINE</span>
+          <h2 class="text-xl font-extrabold text-zinc-950">Agendar Cita en Taller</h2>
+          <p class="text-xs text-zinc-500 mt-0.5">Selecciona el paquete de servicio y la fecha más conveniente.</p>
+        </div>
+
+        <!-- Service Package Selection -->
+        <div class="space-y-2.5">
+          <label class="block text-xs font-bold text-zinc-700 uppercase tracking-wider">1. Selecciona el Servicio:</label>
+
+          <div onclick="selectPackage('mantenimiento', 58000)" id="pkg-mantenimiento" class="p-3.5 rounded-2xl border-2 border-red-600 bg-red-50/20 flex items-center justify-between cursor-pointer transition-all">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-lg bg-red-600 text-white flex items-center justify-center">
+                <i data-lucide="wrench" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <div class="text-xs font-bold text-zinc-950">Mantenimiento Preventivo 80k km</div>
+                <div class="text-[11px] text-zinc-500">Aceite Sintético + Filtros + 25 Puntos</div>
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="font-mono font-bold text-xs text-zinc-950">₡58,000</span>
+              <span class="block text-[9px] text-zinc-400">~2 horas</span>
+            </div>
+          </div>
+
+          <div onclick="selectPackage('frenos', 65000)" id="pkg-frenos" class="p-3.5 rounded-2xl border border-zinc-200 bg-white hover:border-zinc-300 flex items-center justify-between cursor-pointer transition-all">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-lg bg-zinc-100 text-zinc-800 flex items-center justify-center">
+                <i data-lucide="disc" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <div class="text-xs font-bold text-zinc-950">Pastillas & Rectificación de Discos</div>
+                <div class="text-[11px] text-zinc-500">Pastillas cerámicas + purga de líquido DOT4</div>
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="font-mono font-bold text-xs text-zinc-950">₡65,000</span>
+              <span class="block text-[9px] text-zinc-400">~1.5 horas</span>
+            </div>
+          </div>
+
+          <div onclick="selectPackage('alineacion', 26000)" id="pkg-alineacion" class="p-3.5 rounded-2xl border border-zinc-200 bg-white hover:border-zinc-300 flex items-center justify-between cursor-pointer transition-all">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-lg bg-zinc-100 text-zinc-800 flex items-center justify-center">
+                <i data-lucide="crosshair" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <div class="text-xs font-bold text-zinc-950">Alineación 3D Láser & Balanceo</div>
+                <div class="text-[11px] text-zinc-500">Alineación en las 4 ruedas + plomos de precisión</div>
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="font-mono font-bold text-xs text-zinc-950">₡26,000</span>
+              <span class="block text-[9px] text-zinc-400">~45 min</span>
+            </div>
+          </div>
+
+          <div onclick="selectPackage('escaneo', 20000)" id="pkg-escaneo" class="p-3.5 rounded-2xl border border-zinc-200 bg-white hover:border-zinc-300 flex items-center justify-between cursor-pointer transition-all">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-lg bg-zinc-100 text-zinc-800 flex items-center justify-center">
+                <i data-lucide="cpu" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <div class="text-xs font-bold text-zinc-950">Diagnóstico Electrónico & Escáner OBD2</div>
+                <div class="text-[11px] text-zinc-500">Lectura de sensores, borrado de Check Engine</div>
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="font-mono font-bold text-xs text-zinc-950">₡20,000</span>
+              <span class="block text-[9px] text-zinc-400">~30 min</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Date Picker (Horizontal Days) -->
+        <div class="space-y-2">
+          <label class="block text-xs font-bold text-zinc-700 uppercase tracking-wider">2. Selecciona el Día:</label>
+          <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
+            <button onclick="selectDate(this, 'Hoy')" class="px-3.5 py-3 rounded-2xl bg-zinc-950 text-white font-bold text-xs text-center shrink-0 shadow-xs border border-zinc-900 date-btn">
+              <span class="block text-[10px] text-red-500 font-mono">HOY</span>
+              <span class="text-sm">7 Sep</span>
+            </button>
+            <button onclick="selectDate(this, 'Mañana')" class="px-3.5 py-3 rounded-2xl bg-white text-zinc-800 hover:bg-zinc-50 font-bold text-xs text-center shrink-0 border border-zinc-200 date-btn">
+              <span class="block text-[10px] text-zinc-400 font-mono">MAR</span>
+              <span class="text-sm">8 Sep</span>
+            </button>
+            <button onclick="selectDate(this, 'Miércoles')" class="px-3.5 py-3 rounded-2xl bg-white text-zinc-800 hover:bg-zinc-50 font-bold text-xs text-center shrink-0 border border-zinc-200 date-btn">
+              <span class="block text-[10px] text-zinc-400 font-mono">MIÉ</span>
+              <span class="text-sm">9 Sep</span>
+            </button>
+            <button onclick="selectDate(this, 'Jueves')" class="px-3.5 py-3 rounded-2xl bg-white text-zinc-800 hover:bg-zinc-50 font-bold text-xs text-center shrink-0 border border-zinc-200 date-btn">
+              <span class="block text-[10px] text-zinc-400 font-mono">JUE</span>
+              <span class="text-sm">10 Sep</span>
+            </button>
+            <button onclick="selectDate(this, 'Viernes')" class="px-3.5 py-3 rounded-2xl bg-white text-zinc-800 hover:bg-zinc-50 font-bold text-xs text-center shrink-0 border border-zinc-200 date-btn">
+              <span class="block text-[10px] text-zinc-400 font-mono">VIE</span>
+              <span class="text-sm">11 Sep</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Time Picker Grid -->
+        <div class="space-y-2">
+          <label class="block text-xs font-bold text-zinc-700 uppercase tracking-wider">3. Horario Disponible:</label>
+          <div class="grid grid-cols-3 gap-2">
+            <button onclick="selectTime(this, '8:00 AM')" class="py-2.5 rounded-xl border border-red-600 bg-red-50 text-red-700 font-mono font-bold text-xs text-center time-btn">
+              8:00 AM
+            </button>
+            <button onclick="selectTime(this, '10:30 AM')" class="py-2.5 rounded-xl border border-zinc-200 bg-white hover:bg-zinc-50 text-zinc-800 font-mono font-bold text-xs text-center time-btn">
+              10:30 AM
+            </button>
+            <button onclick="selectTime(this, '2:00 PM')" class="py-2.5 rounded-xl border border-zinc-200 bg-white hover:bg-zinc-50 text-zinc-800 font-mono font-bold text-xs text-center time-btn">
+              2:00 PM
+            </button>
+          </div>
+        </div>
+
+        <!-- Valet Toggle Option -->
+        <div class="p-3.5 rounded-2xl bg-white border border-zinc-200 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <i data-lucide="truck" class="w-4 h-4 text-red-600"></i>
+            <div>
+              <div class="text-xs font-bold text-zinc-900">Servicio Valet VIP (Recoger en casa)</div>
+              <div class="text-[10px] text-zinc-500">Un chofer certificado recoge su auto (+₡10,000)</div>
+            </div>
+          </div>
+          <input type="checkbox" id="valet-toggle" class="w-4 h-4 accent-red-600 cursor-pointer">
+        </div>
+
+        <!-- Book Action Button -->
+        <button onclick="confirmBooking()" class="w-full py-3.5 rounded-2xl bg-zinc-950 hover:bg-zinc-800 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer">
+          <i data-lucide="calendar-check" class="w-4 h-4 text-red-500"></i>
+          <span>Confirmar Cita & Notificar por WhatsApp</span>
+        </button>
+
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- SCREEN 3: ESTADO EN VIVO & FOTOS DE BAHÍA -->
+      <!-- ============================================================== -->
+      <section id="screen-envivo" class="p-5 space-y-5 hidden">
+        
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-red-600 font-mono">BAHÍA EN VIVO</span>
+          <h2 class="text-xl font-extrabold text-zinc-950">Inspección & Fotos de Taller</h2>
+          <p class="text-xs text-zinc-500 mt-0.5">Registro fotográfico del técnico a cargo de su vehículo.</p>
+        </div>
+
+        <!-- Live Status Card -->
+        <div class="bg-white rounded-2xl border border-zinc-200 p-4 shadow-xs space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-red-600"></span>
+              <span class="text-xs font-extrabold text-zinc-950">Bahía 2: Elevador Hidráulico #2</span>
+            </div>
+            <span class="text-[10px] text-zinc-400 font-mono">14:20 PM</span>
+          </div>
+
+          <!-- Inspection Photo 1 -->
+          <div class="rounded-xl overflow-hidden border border-zinc-200 bg-zinc-100 relative">
+            <div class="h-44 bg-zinc-900 flex items-center justify-center relative">
+              <!-- Visual Mockup for Brakes Inspection -->
+              <div class="text-center p-4">
+                <div class="text-3xl mb-1">🛑</div>
+                <div class="text-xs font-mono font-bold text-white">Inspección de Pastillas Delanteras</div>
+                <div class="text-[11px] text-red-400 font-mono mt-1">Grosor actual: 3.8 mm (Desgaste 70%)</div>
+                <span class="inline-block mt-2 px-2.5 py-0.5 rounded-full bg-red-500/20 text-red-300 text-[10px] font-bold border border-red-500/30">
+                  REEMPLAZO RECOMENDADO
+                </span>
+              </div>
+            </div>
+            <div class="p-3 bg-white text-xs space-y-1">
+              <div class="font-bold text-zinc-900">Foto subida por Técnico Carlos Vega</div>
+              <p class="text-zinc-500 text-[11px]">"Las pastillas de freno presentan cristalización y poco material. Se recomienda cambio por cerámicas para evitar dañar el disco."</p>
+            </div>
+          </div>
+
+          <!-- Authorization Box -->
+          <div class="p-3.5 rounded-xl bg-red-50 border border-red-200 flex items-center justify-between gap-3">
+            <div>
+              <div class="text-xs font-bold text-red-900">Autorizar Repuesto Original</div>
+              <div class="text-[11px] text-red-700">Pastillas Akebono Cerámicas: ₡34,000</div>
+            </div>
+            <button onclick="authorizePart()" id="btn-auth-part" class="px-3.5 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 text-white font-bold text-xs transition-colors cursor-pointer shrink-0">
+              Autorizar ✓
+            </button>
+          </div>
+
+          <!-- Inspection Photo 2 -->
+          <div class="rounded-xl overflow-hidden border border-zinc-200 bg-zinc-100">
+            <div class="h-32 bg-zinc-900 flex items-center justify-center text-center p-4">
+              <div>
+                <div class="text-2xl mb-1">🔍</div>
+                <div class="text-xs font-mono font-bold text-white">Escaneo OBD2 / Computarizado</div>
+                <div class="text-[11px] text-emerald-400 font-mono mt-0.5">0 Códigos de Falla Activos en ECU</div>
+              </div>
+            </div>
+            <div class="p-3 bg-white text-xs">
+              <div class="font-bold text-zinc-900">Sensores de Inyección & ABS OK</div>
+              <p class="text-zinc-500 text-[11px]">Se realizó reseteo de intervalo de mantenimiento a 10,000 km.</p>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- SCREEN 4: HISTORIAL & FACTURAS -->
+      <!-- ============================================================== -->
+      <section id="screen-historial" class="p-5 space-y-5 hidden">
+        
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-red-600 font-mono">BITÁCORA DIGITAL</span>
+          <h2 class="text-xl font-extrabold text-zinc-950">Historial de Mantenimientos</h2>
+          <p class="text-xs text-zinc-500 mt-0.5">Sellos de garantía digitales para mantener el valor de reventa.</p>
+        </div>
+
+        <div class="space-y-3">
+          <!-- Item 1 (Today) -->
+          <div class="bg-white p-4 rounded-2xl border border-zinc-200 shadow-xs space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="px-2 py-0.5 rounded bg-red-50 text-red-700 border border-red-200 font-mono text-[10px] font-bold">EN TALLER</span>
+              <span class="text-xs font-mono text-zinc-400">07 Sep 2026</span>
+            </div>
+            <h3 class="text-sm font-bold text-zinc-900">Mantenimiento 80,000 km & Frenos</h3>
+            <p class="text-xs text-zinc-500">Aceite Motul 5W-30, filtro de aceite OEM, pastillas cerámicas y alineación 3D.</p>
+            <div class="pt-2 border-t border-zinc-100 flex items-center justify-between text-xs font-mono">
+              <span class="font-bold text-zinc-950">₡150,290</span>
+              <span class="text-zinc-500">84,500 km</span>
+            </div>
+          </div>
+
+          <!-- Item 2 (Past) -->
+          <div class="bg-white p-4 rounded-2xl border border-zinc-200 shadow-xs space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-mono text-[10px] font-bold">COMPLETADO</span>
+              <span class="text-xs font-mono text-zinc-400">14 Mar 2026</span>
+            </div>
+            <h3 class="text-sm font-bold text-zinc-900">Cambio de Aceite & Filtros</h3>
+            <p class="text-xs text-zinc-500">Aceite sintético, filtro de aire motor y rotación de llantas.</p>
+            <div class="pt-2 border-t border-zinc-100 flex items-center justify-between text-xs font-mono">
+              <span class="font-bold text-zinc-950">₡58,000</span>
+              <span class="text-zinc-500">74,200 km</span>
+            </div>
+          </div>
+
+          <!-- Item 3 (Past) -->
+          <div class="bg-white p-4 rounded-2xl border border-zinc-200 shadow-xs space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-mono text-[10px] font-bold">COMPLETADO</span>
+              <span class="text-xs font-mono text-zinc-400">20 Oct 2025</span>
+            </div>
+            <h3 class="text-sm font-bold text-zinc-900">Revisión DEKRA & Suspensión</h3>
+            <p class="text-xs text-zinc-500">Terminales de dirección, alineación y pre-chequeo aprobado en DEKRA.</p>
+            <div class="pt-2 border-t border-zinc-100 flex items-center justify-between text-xs font-mono">
+              <span class="font-bold text-zinc-950">₡94,000</span>
+              <span class="text-zinc-500">65,000 km</span>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- SCREEN 5: SOS & ASISTENCIA EN CARRETERA -->
+      <!-- ============================================================== -->
+      <section id="screen-sos" class="p-5 space-y-6 hidden text-center">
+        
+        <div class="pt-4">
+          <div class="w-16 h-16 rounded-full bg-red-600 text-white flex items-center justify-center text-2xl font-black mx-auto shadow-lg shadow-red-600/30 animate-pulse mb-3">
+            <i data-lucide="phone-call" class="w-7 h-7"></i>
+          </div>
+          <span class="text-xs font-bold uppercase tracking-wider text-red-600 font-mono">ASISTENCIA VIAL 24/7</span>
+          <h2 class="text-2xl font-extrabold text-zinc-950 mt-1">Auxilio Mecánico Inmediato</h2>
+          <p class="text-xs text-zinc-500 max-w-xs mx-auto mt-1">
+            Grúa plataforma y técnicos de emergencia disponibles en toda el Área Metropolitana de Costa Rica.
+          </p>
+        </div>
+
+        <div class="space-y-3 max-w-sm mx-auto text-left">
+          <button onclick="callEmergency('grua')" class="w-full p-4 rounded-2xl bg-zinc-950 hover:bg-zinc-800 text-white flex items-center justify-between transition-colors cursor-pointer shadow-md">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-zinc-800 flex items-center justify-center text-red-500">
+                <i data-lucide="truck" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <div class="text-xs font-bold">Solicitar Grúa Plataforma</div>
+                <div class="text-[10px] text-zinc-400">Llega en ~25 minutos con GPS</div>
+              </div>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-zinc-400"></i>
+          </button>
+
+          <button onclick="callEmergency('bateria')" class="w-full p-4 rounded-2xl bg-white hover:bg-zinc-50 border border-zinc-200 text-zinc-900 flex items-center justify-between transition-colors cursor-pointer shadow-xs">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-zinc-100 flex items-center justify-center text-amber-600">
+                <i data-lucide="battery-charging" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <div class="text-xs font-bold">Paso de Corriente / Batería</div>
+                <div class="text-[10px] text-zinc-500">Unidad móvil con arrancador booster</div>
+              </div>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-zinc-400"></i>
+          </button>
+
+          <button onclick="callEmergency('llanta')" class="w-full p-4 rounded-2xl bg-white hover:bg-zinc-50 border border-zinc-200 text-zinc-900 flex items-center justify-between transition-colors cursor-pointer shadow-xs">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-zinc-100 flex items-center justify-center text-zinc-700">
+                <i data-lucide="disc" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <div class="text-xs font-bold">Cambio de Llanta Pinchada</div>
+                <div class="text-[10px] text-zinc-500">Apoyo para repuesto y compresor de aire</div>
+              </div>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-zinc-400"></i>
+          </button>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-zinc-100 border border-zinc-200 text-[11px] text-zinc-500 max-w-sm mx-auto">
+          Central Telefónica Directa: <strong class="text-zinc-900 font-mono font-bold">+506 7069-3708</strong>
+        </div>
+
+      </section>
+
+    </div>
+
+    <!-- Mobile Fixed Bottom Navigation Bar -->
+    <nav class="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-zinc-200 px-3 py-2 flex items-center justify-around z-30 shrink-0">
+      
+      <button onclick="switchScreen('garaje')" id="nav-garaje" class="flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl text-zinc-950 font-bold cursor-pointer transition-colors nav-btn">
+        <i data-lucide="car" class="w-5 h-5 text-red-600"></i>
+        <span class="text-[10px]">Garaje</span>
+        <span class="w-1 h-1 rounded-full bg-red-600 -mt-0.5"></span>
+      </button>
+
+      <button onclick="switchScreen('citas')" id="nav-citas" class="flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl text-zinc-400 hover:text-zinc-700 cursor-pointer transition-colors nav-btn">
+        <i data-lucide="calendar" class="w-5 h-5"></i>
+        <span class="text-[10px]">Citas</span>
+        <span class="w-1 h-1 rounded-full bg-transparent -mt-0.5"></span>
+      </button>
+
+      <button onclick="switchScreen('envivo')" id="nav-envivo" class="flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl text-zinc-400 hover:text-zinc-700 cursor-pointer transition-colors nav-btn relative">
+        <span class="absolute top-1 right-2 w-1.5 h-1.5 rounded-full bg-red-600 animate-ping"></span>
+        <i data-lucide="activity" class="w-5 h-5"></i>
+        <span class="text-[10px]">En Vivo</span>
+        <span class="w-1 h-1 rounded-full bg-transparent -mt-0.5"></span>
+      </button>
+
+      <button onclick="switchScreen('historial')" id="nav-historial" class="flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl text-zinc-400 hover:text-zinc-700 cursor-pointer transition-colors nav-btn">
+        <i data-lucide="file-text" class="w-5 h-5"></i>
+        <span class="text-[10px]">Historial</span>
+        <span class="w-1 h-1 rounded-full bg-transparent -mt-0.5"></span>
+      </button>
+
+      <button onclick="switchScreen('sos')" id="nav-sos" class="flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl text-zinc-400 hover:text-red-600 cursor-pointer transition-colors nav-btn">
+        <i data-lucide="life-buoy" class="w-5 h-5 text-red-500"></i>
+        <span class="text-[10px]">SOS</span>
+        <span class="w-1 h-1 rounded-full bg-transparent -mt-0.5"></span>
+      </button>
+
+    </nav>
+
+    <!-- Notification Modal -->
+    <div id="notifModal" class="hidden absolute inset-0 bg-black/50 backdrop-blur-xs z-50 flex items-end sm:items-center justify-center p-4">
+      <div class="bg-white rounded-3xl p-5 max-w-sm w-full space-y-4 shadow-2xl border border-zinc-200">
+        <div class="flex items-center justify-between pb-3 border-b border-zinc-100">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-red-600"></span>
+            <span class="font-bold text-xs text-zinc-900">Notificaciones del Taller</span>
+          </div>
+          <button onclick="toggleModal('notifModal')" class="text-zinc-400 hover:text-zinc-700 p-1 cursor-pointer">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+        <div class="space-y-3">
+          <div class="p-3 rounded-xl bg-red-50/60 border border-red-200/80 text-xs space-y-1">
+            <div class="flex justify-between font-bold text-red-900">
+              <span>🚗 Su vehículo está en Bahía 2</span>
+              <span class="text-[10px] text-red-600 font-mono">14:10</span>
+            </div>
+            <p class="text-zinc-600 text-[11px]">El técnico Carlos Vega ha iniciado el cambio de pastillas cerámicas y aceite de motor.</p>
+          </div>
+        </div>
+        <button onclick="toggleModal('notifModal')" class="w-full py-2.5 rounded-xl bg-zinc-950 text-white font-bold text-xs">
+          Entendido
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    let currentScreen = 'garaje';
+    let selectedPackage = { id: 'mantenimiento', price: 58000 };
+    let selectedDate = 'Hoy';
+    let selectedTime = '8:00 AM';
+
+    function switchScreen(screenId) {
+      currentScreen = screenId;
+      const screens = ['garaje', 'citas', 'envivo', 'historial', 'sos'];
+      
+      screens.forEach(s => {
+        const el = document.getElementById('screen-' + s);
+        const btn = document.getElementById('nav-' + s);
+        if (s === screenId) {
+          el.classList.remove('hidden');
+          btn.className = 'flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl text-zinc-950 font-bold cursor-pointer transition-colors nav-btn';
+          const icon = btn.querySelector('svg') || btn.querySelector('i');
+          if (icon) icon.className = 'w-5 h-5 text-red-600';
+          const dot = btn.querySelectorAll('span')[1];
+          if (dot) dot.className = 'w-1 h-1 rounded-full bg-red-600 -mt-0.5';
+        } else {
+          el.classList.add('hidden');
+          btn.className = 'flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl text-zinc-400 hover:text-zinc-700 cursor-pointer transition-colors nav-btn';
+          const icon = btn.querySelector('svg') || btn.querySelector('i');
+          if (icon && s !== 'sos') icon.className = 'w-5 h-5';
+          const dot = btn.querySelectorAll('span')[1];
+          if (dot) dot.className = 'w-1 h-1 rounded-full bg-transparent -mt-0.5';
+        }
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      lucide.createIcons();
+    }
+
+    function selectPackage(pkgId, price) {
+      selectedPackage = { id: pkgId, price: price };
+      const pkgs = ['mantenimiento', 'frenos', 'alineacion', 'escaneo'];
+      pkgs.forEach(p => {
+        const el = document.getElementById('pkg-' + p);
+        if (p === pkgId) {
+          el.className = 'p-3.5 rounded-2xl border-2 border-red-600 bg-red-50/20 flex items-center justify-between cursor-pointer transition-all';
+          const iconDiv = el.querySelector('div > div');
+          if (iconDiv) iconDiv.className = 'w-8 h-8 rounded-lg bg-red-600 text-white flex items-center justify-center';
+        } else {
+          el.className = 'p-3.5 rounded-2xl border border-zinc-200 bg-white hover:border-zinc-300 flex items-center justify-between cursor-pointer transition-all';
+          const iconDiv = el.querySelector('div > div');
+          if (iconDiv) iconDiv.className = 'w-8 h-8 rounded-lg bg-zinc-100 text-zinc-800 flex items-center justify-center';
+        }
+      });
+    }
+
+    function selectDate(btn, day) {
+      selectedDate = day;
+      document.querySelectorAll('.date-btn').forEach(b => {
+        b.className = 'px-3.5 py-3 rounded-2xl bg-white text-zinc-800 hover:bg-zinc-50 font-bold text-xs text-center shrink-0 border border-zinc-200 date-btn';
+        const span = b.querySelector('span');
+        if (span) span.className = 'block text-[10px] text-zinc-400 font-mono';
+      });
+      btn.className = 'px-3.5 py-3 rounded-2xl bg-zinc-950 text-white font-bold text-xs text-center shrink-0 shadow-xs border border-zinc-900 date-btn';
+      const activeSpan = btn.querySelector('span');
+      if (activeSpan) activeSpan.className = 'block text-[10px] text-red-500 font-mono';
+    }
+
+    function selectTime(btn, time) {
+      selectedTime = time;
+      document.querySelectorAll('.time-btn').forEach(b => {
+        b.className = 'py-2.5 rounded-xl border border-zinc-200 bg-white hover:bg-zinc-50 text-zinc-800 font-mono font-bold text-xs text-center time-btn';
+      });
+      btn.className = 'py-2.5 rounded-xl border border-red-600 bg-red-50 text-red-700 font-mono font-bold text-xs text-center time-btn';
+    }
+
+    function confirmBooking() {
+      const isValet = document.getElementById('valet-toggle').checked;
+      const msg = `*APEX AUTO // SOLICITUD DE CITA EN TALLER*
+
+` +
+        `👤 *Cliente:* Mauricio Chinchilla
+` +
+        `🚗 *Vehículo:* Toyota Hilux 2.8 D-4D (Placa: BHM-782)
+` +
+        `🔧 *Servicio:* ${selectedPackage.id.toUpperCase()} (₡${selectedPackage.price.toLocaleString()})
+` +
+        `📅 *Día:* ${selectedDate} • *Hora:* ${selectedTime}
+` +
+        `🚐 *Servicio Valet VIP:* ${isValet ? 'Sí (Recoger en casa)' : 'No (Llevaré el auto)'}
+
+` +
+        `_Enviado desde App Oficial APEX Motors_`;
+      
+      const url = `https://wa.me/50670693708?text=${encodeURIComponent(msg)}`;
+      window.open(url, '_blank');
+    }
+
+    function authorizePart() {
+      const btn = document.getElementById('btn-auth-part');
+      btn.innerText = 'Autorizado ✓';
+      btn.className = 'px-3.5 py-1.5 rounded-lg bg-emerald-600 text-white font-bold text-xs';
+      alert('¡Excelente! Repuesto autorizado. El técnico ha sido notificado para instalarlo de inmediato.');
+    }
+
+    function contactMechanicWhatsApp() {
+      const msg = `Hola Carlos, te escribo desde la app de APEX por mi Hilux BHM-782 que está en la Bahía 2.`;
+      window.open(`https://wa.me/50670693708?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    function callEmergency(type) {
+      const msg = `🚨 *ASISTENCIA SOS APEX MOTORS*
+
+Necesito auxilio vial de urgencia para mi vehículo:
+• Tipo: ${type.toUpperCase()}
+• Vehículo: Toyota Hilux (Placa: BHM-782)
+• Ubicación: San José, Costa Rica
+
+Por favor enviar auxilio de inmediato.`;
+      window.open(`https://wa.me/50670693708?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    function toggleModal(id) {
+      const m = document.getElementById(id);
+      if (m) m.classList.toggle('hidden');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
