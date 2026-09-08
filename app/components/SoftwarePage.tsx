@@ -39,7 +39,7 @@ interface DemoApp {
   id: string;
   slug: string;
   name: string;
-  category: 'fitness' | 'gastro' | 'health' | 'taller' | 'auto' | 'travel';
+  category: 'fitness' | 'gastro' | 'health' | 'taller' | 'auto' | 'travel' | 'beauty';
   categoryLabel: string;
   badge: string;
   tagline: string;
@@ -52,6 +52,21 @@ interface DemoApp {
 }
 
 const DEMO_APPS: DemoApp[] = [
+  {
+    id: 'salon-app',
+    slug: 'salon-app',
+    name: 'GLOW // Salón de Belleza & Hair Atelier',
+    category: 'beauty',
+    categoryLabel: 'Belleza & Estética (App Móvil)',
+    badge: 'App Android & iOS para Salones & Spas',
+    tagline: 'Citas en Vivo, Selección de Estilista, Tarjeta VIP de Sellos & Lookbook',
+    description: 'Aplicación móvil nativa (Android & iOS) con diseño chic minimalista en tonos blanco, arena y oro rosado: permite a las clientas elegir a su estilista favorita con foto y valoración, reservar citas en vivo, ver el catálogo de balayage y uñas con fotos reales, y acumular sellos en su tarjeta VIP de fidelidad.',
+    features: ['Agendamiento de citas en tiempo real con especialista', 'Tarjeta digital de sellos y puntos de lealtad (Fidelización)', 'Lookbook interactivo de colorimetría y nail art', 'Recordatorios automáticos y confirmación por WhatsApp'],
+    color: '#f43f5e',
+    accentBg: 'bg-rose-500/10 border-rose-500/30',
+    accentText: 'text-rose-400',
+    icon: '💅'
+  },
   {
     id: 'travel-app',
     slug: 'travel-app',
@@ -328,7 +343,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
     setFullScreenApp(DEMO_APPS[nextIndex]);
     setSelectedApp(DEMO_APPS[nextIndex]);
   };
-  const [appFilter, setAppFilter] = useState<'all' | 'fitness' | 'gastro' | 'health' | 'taller' | 'auto' | 'travel'>('all');
+  const [appFilter, setAppFilter] = useState<'all' | 'fitness' | 'gastro' | 'health' | 'taller' | 'auto' | 'travel' | 'beauty'>('all');
   const [fullScreenApp, setFullScreenApp] = useState<DemoApp | null>(null);
   const [iframeKey, setIframeKey] = useState<number>(0);
   
@@ -991,6 +1006,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
             <div className="flex flex-wrap items-center justify-center gap-2 mt-6">
               {[
                 { id: 'all', label: `Todos (${DEMO_APPS.length} Demos)` },
+                { id: 'beauty', label: '💅 Salón de Belleza (App)' },
                 { id: 'travel', label: '✈️ Agencia de Viajes (App)' },
                 { id: 'auto', label: '🏎️ Automotriz & Taller (App)' },
                 { id: 'gastro', label: '🍽️ Gastronomía & Menús (7)' },

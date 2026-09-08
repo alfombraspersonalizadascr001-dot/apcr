@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>GLOW // App Móvil para Salón de Belleza & Hair Lounge (iOS & Android)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #fdfaf9;
+      color: #18181b;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    .font-serif-luxury {
+      font-family: 'Playfair Display', serif;
+    }
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-0 sm:p-4 bg-rose-50/50 antialiased">
+
+  <!-- Mobile Phone Device Wrapper -->
+  <div class="w-full max-w-md h-screen sm:h-[844px] bg-white sm:rounded-[44px] sm:border-[8px] sm:border-zinc-900 shadow-2xl flex flex-col relative overflow-hidden">
+
+    <!-- Mobile Top Status Bar (iOS / Android Native Feel) -->
+    <div class="pt-3 px-6 pb-2 flex items-center justify-between bg-white text-zinc-900 text-xs font-semibold select-none z-20 shrink-0">
+      <span class="font-mono text-[13px] font-bold">9:41</span>
+      <!-- Dynamic Island with Glow indicator -->
+      <div class="w-24 h-4 rounded-full bg-zinc-950 flex items-center justify-center">
+        <div class="w-2 h-2 rounded-full bg-rose-500 mr-2 animate-pulse"></div>
+        <div class="w-1.5 h-1.5 rounded-full bg-zinc-700"></div>
+      </div>
+      <div class="flex items-center gap-1.5 text-zinc-800">
+        <i data-lucide="signal" class="w-3.5 h-3.5"></i>
+        <i data-lucide="wifi" class="w-3.5 h-3.5"></i>
+        <i data-lucide="battery" class="w-4 h-4"></i>
+      </div>
+    </div>
+
+    <!-- App Top Navigation Header -->
+    <header class="px-5 py-3 border-b border-rose-100 flex items-center justify-between bg-white/95 backdrop-blur-md sticky top-0 z-10 shrink-0">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-rose-500 to-pink-600 flex items-center justify-center text-white font-serif-luxury font-black text-sm shadow-sm shadow-rose-500/30">
+          G
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <span class="font-serif-luxury font-bold text-base tracking-wide text-zinc-950">GLOW ATELIER</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+          </div>
+          <div class="text-[10px] text-zinc-400 font-medium tracking-wider uppercase font-mono">Hair • Nails • Spa • Costa Rica</div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <!-- VIP Points Pill -->
+        <div class="px-2.5 py-1 rounded-full bg-rose-50 text-rose-700 border border-rose-200/80 flex items-center gap-1 text-[11px] font-bold">
+          <span class="text-amber-500">⭐</span>
+          <span class="font-mono">480 pts</span>
+        </div>
+
+        <!-- Notification Bell -->
+        <button onclick="toggleModal('notifModal')" class="relative p-2 rounded-full hover:bg-rose-50 text-zinc-700 cursor-pointer transition-colors">
+          <i data-lucide="bell" class="w-4 h-4"></i>
+          <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-rose-500 border border-white animate-pulse"></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Scrollable Screen Content Container -->
+    <div class="flex-1 overflow-y-auto no-scrollbar pb-24 bg-[#fffbfa]">
+
+      <!-- ============================================================== -->
+      <!-- SCREEN 1: INICIO (HOME) -->
+      <!-- ============================================================== -->
+      <section id="screen-inicio" class="p-5 space-y-5">
+
+        <!-- User Greeting -->
+        <div class="flex items-center justify-between">
+          <div>
+            <span class="text-xs font-semibold text-zinc-400 block">Es un gusto verte,</span>
+            <h1 class="text-xl font-extrabold text-zinc-950 tracking-tight">Valeria Castro ✨</h1>
+          </div>
+          <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-rose-200 to-pink-300 border border-rose-200 flex items-center justify-center font-bold text-xs text-rose-950">
+            VC
+          </div>
+        </div>
+
+        <!-- Active Appointment Card (Live Banner) -->
+        <div class="bg-gradient-to-r from-zinc-950 via-zinc-900 to-rose-950 rounded-3xl p-5 text-white shadow-xl relative overflow-hidden">
+          <!-- Ambient Glow -->
+          <div class="absolute -top-10 -right-10 w-36 h-36 bg-rose-500/20 rounded-full blur-2xl pointer-events-none"></div>
+
+          <div class="flex items-center justify-between relative z-10 mb-3">
+            <span class="px-2.5 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30 text-[10px] font-bold font-mono tracking-wider uppercase">
+              PRÓXIMA CITA CONFIRMADA
+            </span>
+            <span class="text-xs text-rose-300 font-mono font-bold">Mañana 10:30 AM</span>
+          </div>
+
+          <div class="relative z-10 space-y-1">
+            <h2 class="text-lg font-bold text-white tracking-tight">Balayage Rubio Miel & Olaplex</h2>
+            <p class="text-xs text-zinc-300 flex items-center gap-1.5">
+              <i data-lucide="user" class="w-3.5 h-3.5 text-rose-400"></i>
+              <span>Estilista: <strong>Valentina Rossi</strong> (Master Colorista)</span>
+            </p>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-white/15 flex items-center justify-between text-xs relative z-10">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+              <span class="text-zinc-300 text-[11px]">Sillón #04 Reservado</span>
+            </div>
+            <button onclick="openAppointmentDetails()" class="text-xs font-bold text-rose-300 hover:text-white flex items-center gap-1 transition-colors cursor-pointer">
+              <span>Ver Detalles</span>
+              <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- VIP Rewards Progress Card (Fidelización) -->
+        <div class="bg-white rounded-2xl border border-rose-100 p-4 shadow-xs space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-lg">💖</span>
+              <div>
+                <h3 class="text-xs font-bold text-zinc-950">Glow VIP Club (4/5 Visitas)</h3>
+                <p class="text-[10px] text-zinc-400">¡Tu 5ta visita incluye tratamiento capilar de regalo!</p>
+              </div>
+            </div>
+            <span class="px-2 py-0.5 rounded bg-rose-50 text-rose-700 font-mono text-[10px] font-bold">NIVEL ORO</span>
+          </div>
+
+          <!-- Stamp Card Visual -->
+          <div class="grid grid-cols-5 gap-2 pt-1">
+            <div class="h-10 rounded-xl bg-rose-500 text-white flex items-center justify-center font-bold text-xs shadow-xs">✓</div>
+            <div class="h-10 rounded-xl bg-rose-500 text-white flex items-center justify-center font-bold text-xs shadow-xs">✓</div>
+            <div class="h-10 rounded-xl bg-rose-500 text-white flex items-center justify-center font-bold text-xs shadow-xs">✓</div>
+            <div class="h-10 rounded-xl bg-rose-500 text-white flex items-center justify-center font-bold text-xs shadow-xs">✓</div>
+            <div class="h-10 rounded-xl bg-rose-100/70 border-2 border-dashed border-rose-300 text-rose-600 flex items-center justify-center text-xs font-bold animate-pulse">🎁</div>
+          </div>
+        </div>
+
+        <!-- Quick Categories Grid -->
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-zinc-400 font-mono">Servicios de Autor</h3>
+            <button onclick="switchScreen('citas')" class="text-xs font-bold text-rose-600 hover:underline">Ver Todos</button>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            
+            <!-- Category 1: Cabello & Color -->
+            <div onclick="selectService('balayage', 68000)" class="bg-white p-3.5 rounded-2xl border border-rose-100 hover:border-rose-400 shadow-xs space-y-2 cursor-pointer transition-all">
+              <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-xl">
+                💇‍♀️
+              </div>
+              <div>
+                <h4 class="text-xs font-bold text-zinc-950">Colorimetría & Balayage</h4>
+                <p class="text-[10px] text-zinc-400">Rubios de autor, gloss y nutrición</p>
+              </div>
+              <div class="flex items-center justify-between pt-1 border-t border-rose-50 text-xs">
+                <span class="font-mono font-bold text-zinc-900">Desde ₡68,000</span>
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-rose-500"></i>
+              </div>
+            </div>
+
+            <!-- Category 2: Uñas & Manicure -->
+            <div onclick="selectService('unas', 22000)" class="bg-white p-3.5 rounded-2xl border border-rose-100 hover:border-rose-400 shadow-xs space-y-2 cursor-pointer transition-all">
+              <div class="w-10 h-10 rounded-xl bg-pink-50 text-pink-600 flex items-center justify-center text-xl">
+                💅
+              </div>
+              <div>
+                <h4 class="text-xs font-bold text-zinc-950">Nail Bar & Soft Gel</h4>
+                <p class="text-[10px] text-zinc-400">Manicura rusa, acrílico y diseño</p>
+              </div>
+              <div class="flex items-center justify-between pt-1 border-t border-rose-50 text-xs">
+                <span class="font-mono font-bold text-zinc-900">Desde ₡22,000</span>
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-rose-500"></i>
+              </div>
+            </div>
+
+            <!-- Category 3: Cejas & Pestañas -->
+            <div onclick="selectService('cejas', 28000)" class="bg-white p-3.5 rounded-2xl border border-rose-100 hover:border-rose-400 shadow-xs space-y-2 cursor-pointer transition-all">
+              <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl">
+                👁️
+              </div>
+              <div>
+                <h4 class="text-xs font-bold text-zinc-950">Lashes & Brows</h4>
+                <p class="text-[10px] text-zinc-400">Laminado de cejas y volumen ruso</p>
+              </div>
+              <div class="flex items-center justify-between pt-1 border-t border-rose-50 text-xs">
+                <span class="font-mono font-bold text-zinc-900">Desde ₡28,000</span>
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-rose-500"></i>
+              </div>
+            </div>
+
+            <!-- Category 4: Skin Bar & Facial -->
+            <div onclick="selectService('facial', 35000)" class="bg-white p-3.5 rounded-2xl border border-rose-100 hover:border-rose-400 shadow-xs space-y-2 cursor-pointer transition-all">
+              <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl">
+                ✨
+              </div>
+              <div>
+                <h4 class="text-xs font-bold text-zinc-950">Hydrafacial & Glow</h4>
+                <p class="text-[10px] text-zinc-400">Limpieza profunda y colágeno</p>
+              </div>
+              <div class="flex items-center justify-between pt-1 border-t border-rose-50 text-xs">
+                <span class="font-mono font-bold text-zinc-900">Desde ₡35,000</span>
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-rose-500"></i>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Book Call to Action Button -->
+        <button onclick="switchScreen('citas')" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-lg shadow-rose-500/25 transition-all cursor-pointer">
+          <i data-lucide="calendar" class="w-4 h-4"></i>
+          <span>Agendar Nueva Cita Online</span>
+        </button>
+
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- SCREEN 2: AGENDAR CITA ONLINE -->
+      <!-- ============================================================== -->
+      <section id="screen-citas" class="p-5 space-y-5 hidden">
+        
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-rose-600 font-mono">RESERVAS EN LÍNEA</span>
+          <h2 class="text-xl font-extrabold text-zinc-950">Elige tu Experiencia</h2>
+          <p class="text-xs text-zinc-400 mt-0.5">Selecciona el tratamiento, tu profesional favorita y la hora.</p>
+        </div>
+
+        <!-- Step 1: Select Service -->
+        <div class="space-y-2">
+          <label class="block text-xs font-bold text-zinc-700 uppercase tracking-wider font-mono">1. Tratamiento:</label>
+
+          <div onclick="setBookingService('balayage', 68000, 'Balayage & Nutrición Profunda')" id="srv-balayage" class="p-3.5 rounded-2xl border-2 border-rose-500 bg-rose-50/40 flex items-center justify-between cursor-pointer transition-all">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-lg bg-rose-500 text-white flex items-center justify-center text-sm font-bold">
+                💇‍♀️
+              </div>
+              <div>
+                <div class="text-xs font-bold text-zinc-950">Balayage & Nutrición Profunda</div>
+                <div class="text-[11px] text-zinc-500">Matizado de mechas, Olaplex y peinado final</div>
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="font-mono font-bold text-xs text-zinc-950">₡68,000</span>
+              <span class="block text-[9px] text-zinc-400">~3.5 h</span>
+            </div>
+          </div>
+
+          <div onclick="setBookingService('unas', 22000, 'Manicura Rusa & Gel Semipermanente')" id="srv-unas" class="p-3.5 rounded-2xl border border-rose-100 bg-white hover:border-rose-300 flex items-center justify-between cursor-pointer transition-all">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center text-sm font-bold">
+                💅
+              </div>
+              <div>
+                <div class="text-xs font-bold text-zinc-950">Manicura Rusa & Gel Semipermanente</div>
+                <div class="text-[11px] text-zinc-500">Limpieza profunda de cutícula, nivelación y esmaltado</div>
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="font-mono font-bold text-xs text-zinc-950">₡22,000</span>
+              <span class="block text-[9px] text-zinc-400">~1.5 h</span>
+            </div>
+          </div>
+
+          <div onclick="setBookingService('pestañas', 28000, 'Lash Lifting & Laminado de Cejas')" id="srv-pestañas" class="p-3.5 rounded-2xl border border-rose-100 bg-white hover:border-rose-300 flex items-center justify-between cursor-pointer transition-all">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center text-sm font-bold">
+                👁️
+              </div>
+              <div>
+                <div class="text-xs font-bold text-zinc-950">Lash Lifting & Laminado de Cejas</div>
+                <div class="text-[11px] text-zinc-500">Diseño visagista, tinte orgánico y keratina</div>
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="font-mono font-bold text-xs text-zinc-950">₡28,000</span>
+              <span class="block text-[9px] text-zinc-400">~1 h</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Choose Stylist -->
+        <div class="space-y-2">
+          <label class="block text-xs font-bold text-zinc-700 uppercase tracking-wider font-mono">2. Especialista:</label>
+          <div class="grid grid-cols-3 gap-2">
+            <button onclick="selectStylist(this, 'Valentina Rossi')" class="p-2.5 rounded-xl border-2 border-rose-500 bg-rose-50 text-center cursor-pointer stylist-btn">
+              <div class="w-10 h-10 rounded-full bg-rose-200 mx-auto mb-1 flex items-center justify-center text-xs font-bold text-rose-900">VR</div>
+              <strong class="text-xs block text-zinc-900 leading-tight">Valentina</strong>
+              <span class="text-[9px] text-rose-600 font-medium">Color Master</span>
+            </button>
+
+            <button onclick="selectStylist(this, 'Camila Soto')" class="p-2.5 rounded-xl border border-rose-100 bg-white hover:bg-rose-50/50 text-center cursor-pointer stylist-btn">
+              <div class="w-10 h-10 rounded-full bg-pink-200 mx-auto mb-1 flex items-center justify-center text-xs font-bold text-pink-900">CS</div>
+              <strong class="text-xs block text-zinc-900 leading-tight">Camila</strong>
+              <span class="text-[9px] text-zinc-400 font-medium">Nail Artist</span>
+            </button>
+
+            <button onclick="selectStylist(this, 'Sofía Morales')" class="p-2.5 rounded-xl border border-rose-100 bg-white hover:bg-rose-50/50 text-center cursor-pointer stylist-btn">
+              <div class="w-10 h-10 rounded-full bg-amber-200 mx-auto mb-1 flex items-center justify-center text-xs font-bold text-amber-900">SM</div>
+              <strong class="text-xs block text-zinc-900 leading-tight">Sofía</strong>
+              <span class="text-[9px] text-zinc-400 font-medium">Lash Designer</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 3: Date Picker -->
+        <div class="space-y-2">
+          <label class="block text-xs font-bold text-zinc-700 uppercase tracking-wider font-mono">3. Día Disponible:</label>
+          <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
+            <button onclick="selectBookingDate(this, 'Hoy')" class="px-3.5 py-2.5 rounded-2xl bg-zinc-950 text-white font-bold text-xs text-center shrink-0 border border-zinc-900 bdate-btn">
+              <span class="block text-[9px] text-rose-400 font-mono">HOY</span>
+              <span class="text-sm">7 Sep</span>
+            </button>
+            <button onclick="selectBookingDate(this, 'Mañana')" class="px-3.5 py-2.5 rounded-2xl bg-white text-zinc-800 hover:bg-rose-50 font-bold text-xs text-center shrink-0 border border-rose-100 bdate-btn">
+              <span class="block text-[9px] text-zinc-400 font-mono">MAR</span>
+              <span class="text-sm">8 Sep</span>
+            </button>
+            <button onclick="selectBookingDate(this, 'Miércoles')" class="px-3.5 py-2.5 rounded-2xl bg-white text-zinc-800 hover:bg-rose-50 font-bold text-xs text-center shrink-0 border border-rose-100 bdate-btn">
+              <span class="block text-[9px] text-zinc-400 font-mono">MIÉ</span>
+              <span class="text-sm">9 Sep</span>
+            </button>
+            <button onclick="selectBookingDate(this, 'Jueves')" class="px-3.5 py-2.5 rounded-2xl bg-white text-zinc-800 hover:bg-rose-50 font-bold text-xs text-center shrink-0 border border-rose-100 bdate-btn">
+              <span class="block text-[9px] text-zinc-400 font-mono">JUE</span>
+              <span class="text-sm">10 Sep</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 4: Time Slot -->
+        <div class="space-y-2">
+          <label class="block text-xs font-bold text-zinc-700 uppercase tracking-wider font-mono">4. Hora:</label>
+          <div class="grid grid-cols-3 gap-2">
+            <button onclick="selectBookingTime(this, '10:00 AM')" class="py-2.5 rounded-xl border border-rose-500 bg-rose-50 text-rose-700 font-mono font-bold text-xs text-center btime-btn">
+              10:00 AM
+            </button>
+            <button onclick="selectBookingTime(this, '1:30 PM')" class="py-2.5 rounded-xl border border-rose-100 bg-white hover:bg-rose-50 text-zinc-800 font-mono font-bold text-xs text-center btime-btn">
+              1:30 PM
+            </button>
+            <button onclick="selectBookingTime(this, '4:00 PM')" class="py-2.5 rounded-xl border border-rose-100 bg-white hover:bg-rose-50 text-zinc-800 font-mono font-bold text-xs text-center btime-btn">
+              4:00 PM
+            </button>
+          </div>
+        </div>
+
+        <!-- Confirm Button -->
+        <button onclick="confirmSalonBooking()" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-lg shadow-rose-500/25 transition-all cursor-pointer">
+          <i data-lucide="check-circle" class="w-4 h-4"></i>
+          <span>Confirmar Cita & Notificar a WhatsApp</span>
+        </button>
+
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- SCREEN 3: LOOKBOOK & FOTOS REALES (INSPIRACIÓN) -->
+      <!-- ============================================================== -->
+      <section id="screen-lookbook" class="p-5 space-y-5 hidden">
+        
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-rose-600 font-mono">LOOKBOOK 2026</span>
+          <h2 class="text-xl font-extrabold text-zinc-950">Inspiración & Galería</h2>
+          <p class="text-xs text-zinc-400 mt-0.5">Trabajos realizados en nuestro salón por nuestras especialistas.</p>
+        </div>
+
+        <!-- Gallery Grid -->
+        <div class="space-y-4">
+          <!-- Item 1: Balayage -->
+          <div class="bg-white rounded-3xl border border-rose-100 overflow-hidden shadow-xs">
+            <img src="https://images.unsplash.com/photo-1560869713-7d0a29430803?auto=format&fit=crop&w=600&q=80" alt="Balayage" class="w-full h-52 object-cover">
+            <div class="p-4 space-y-1">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-mono font-bold text-rose-600 uppercase">COLORIMETRÍA</span>
+                <span class="text-[11px] text-zinc-400">Por Valentina Rossi</span>
+              </div>
+              <h3 class="text-sm font-bold text-zinc-900">Balayage Vainilla Glaze & Babylights</h3>
+              <p class="text-[11px] text-zinc-500">Efecto degradado natural con raíz esfumada y tratamiento de brillo molecular.</p>
+              <button onclick="bookSpecificLook('Balayage Vainilla Glaze', 68000)" class="mt-2 text-xs font-bold text-rose-600 hover:underline flex items-center gap-1">
+                <span>Quiero este look</span>
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Item 2: Nails -->
+          <div class="bg-white rounded-3xl border border-rose-100 overflow-hidden shadow-xs">
+            <img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=600&q=80" alt="Nails" class="w-full h-52 object-cover">
+            <div class="p-4 space-y-1">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-mono font-bold text-pink-600 uppercase">NAIL ART</span>
+                <span class="text-[11px] text-zinc-400">Por Camila Soto</span>
+              </div>
+              <h3 class="text-sm font-bold text-zinc-900">Soft Gel Almond & French Cromado</h3>
+              <p class="text-[11px] text-zinc-500">Uñas almendradas esculpidas con efecto glazed donut y polvo cromado perlado.</p>
+              <button onclick="bookSpecificLook('Soft Gel Almond Cromado', 25000)" class="mt-2 text-xs font-bold text-rose-600 hover:underline flex items-center gap-1">
+                <span>Quiero este look</span>
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- SCREEN 4: CLUB DE RECOMPENSAS & BENEFICIOS -->
+      <!-- ============================================================== -->
+      <section id="screen-rewards" class="p-5 space-y-5 hidden">
+        
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-rose-600 font-mono">FIDELIDAD GLOW</span>
+          <h2 class="text-xl font-extrabold text-zinc-950">Mis Puntos & Regalos</h2>
+          <p class="text-xs text-zinc-400 mt-0.5">Acumula puntos en cada visita y canjea por tratamientos gratis.</p>
+        </div>
+
+        <!-- Digital Card -->
+        <div class="bg-gradient-to-tr from-rose-500 via-pink-500 to-amber-400 p-5 rounded-3xl text-white shadow-xl space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="font-serif-luxury font-bold text-base tracking-wider">GLOW MEMBER VIP</span>
+            <span class="text-xs font-mono font-bold bg-white/20 px-2 py-0.5 rounded-full">GOLD</span>
+          </div>
+          <div>
+            <span class="text-xs text-rose-100 block">Puntos Acumulados:</span>
+            <span class="text-3xl font-black font-mono">480 pts</span>
+          </div>
+          <div class="flex items-center justify-between text-[11px] pt-2 border-t border-white/20">
+            <span>Valeria Castro</span>
+            <span class="font-mono">ID: #GLW-9042</span>
+          </div>
+        </div>
+
+        <!-- Available Rewards to Redeem -->
+        <div class="space-y-3">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-zinc-400 font-mono">Premios Disponibles para Canjear</h3>
+
+          <div class="bg-white p-3.5 rounded-2xl border border-rose-100 shadow-xs flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">💆‍♀️</span>
+              <div>
+                <h4 class="text-xs font-bold text-zinc-900">Mascarilla Capilar Hidratante</h4>
+                <span class="text-[10px] text-rose-600 font-mono font-bold">250 PUNTOS</span>
+              </div>
+            </div>
+            <button onclick="redeemReward('Mascarilla Capilar', 250)" class="px-3 py-1.5 rounded-xl bg-zinc-950 text-white text-xs font-bold hover:bg-zinc-800">
+              Canjear
+            </button>
+          </div>
+
+          <div class="bg-white p-3.5 rounded-2xl border border-rose-100 shadow-xs flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">🥂</span>
+              <div>
+                <h4 class="text-xs font-bold text-zinc-900">Copa Mimosa & Exfoliación Manos</h4>
+                <span class="text-[10px] text-rose-600 font-mono font-bold">150 PUNTOS</span>
+              </div>
+            </div>
+            <button onclick="redeemReward('Copa Mimosa & Exfoliación', 150)" class="px-3 py-1.5 rounded-xl bg-zinc-950 text-white text-xs font-bold hover:bg-zinc-800">
+              Canjear
+            </button>
+          </div>
+
+          <div class="bg-white p-3.5 rounded-2xl border border-rose-100 shadow-xs flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">💅</span>
+              <div>
+                <h4 class="text-xs font-bold text-zinc-900">Esmaltado Semipermanente Express</h4>
+                <span class="text-[10px] text-rose-600 font-mono font-bold">400 PUNTOS</span>
+              </div>
+            </div>
+            <button onclick="redeemReward('Esmaltado Express', 400)" class="px-3 py-1.5 rounded-xl bg-zinc-950 text-white text-xs font-bold hover:bg-zinc-800">
+              Canjear
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- SCREEN 5: ATELIER / CONTACTO & UBICACIÓN -->
+      <!-- ============================================================== -->
+      <section id="screen-salon" class="p-5 space-y-5 hidden">
+        
+        <div class="text-center pt-2">
+          <div class="w-16 h-16 rounded-full bg-rose-50 border border-rose-200 text-rose-600 flex items-center justify-center text-3xl mx-auto shadow-sm mb-3">
+            📍
+          </div>
+          <span class="text-xs font-bold uppercase tracking-wider text-rose-600 font-mono">UBICACIÓN & ATENCIÓN</span>
+          <h2 class="text-xl font-extrabold text-zinc-950 mt-1">Visítanos en el Atelier</h2>
+          <p class="text-xs text-zinc-500 max-w-xs mx-auto mt-1">
+            Plaza Tempo, Escazú • Parqueo bajo techo y barra de café de especialidad de cortesía.
+          </p>
+        </div>
+
+        <!-- Schedule & Info Card -->
+        <div class="bg-white rounded-2xl border border-rose-100 p-4 shadow-xs space-y-3 text-xs">
+          <div class="flex justify-between py-1 border-b border-rose-50">
+            <span class="text-zinc-500">Lunes a Sábado:</span>
+            <strong class="text-zinc-900 font-mono">9:00 AM - 7:00 PM</strong>
+          </div>
+          <div class="flex justify-between py-1 border-b border-rose-50">
+            <span class="text-zinc-500">Domingos:</span>
+            <strong class="text-zinc-900 font-mono">10:00 AM - 4:00 PM</strong>
+          </div>
+          <div class="flex justify-between py-1">
+            <span class="text-zinc-500">WhatsApp Oficial:</span>
+            <strong class="text-rose-600 font-mono font-bold">+506 7069-3708</strong>
+          </div>
+        </div>
+
+        <a href="https://wa.me/50670693708?text=Hola%20GLOW%20Atelier,%20deseo%20consultar%20por%20disponibilidad%20de%20citas" target="_blank" class="w-full py-3.5 rounded-2xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 transition-all cursor-pointer">
+          <i data-lucide="message-circle" class="w-4 h-4 fill-white"></i>
+          <span>Abrir Chat Directo por WhatsApp</span>
+        </a>
+
+      </section>
+
+    </div>
+
+    <!-- Mobile Fixed Bottom Navigation Bar -->
+    <nav class="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-rose-100 px-3 py-2 flex items-center justify-around z-30 shrink-0">
+      
+      <button onclick="switchScreen('inicio')" id="nav-inicio" class="flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl text-rose-600 font-bold cursor-pointer transition-colors nav-btn">
+        <i data-lucide="sparkles" class="w-5 h-5 text-rose-600"></i>
+        <span class="text-[10px]">Inicio</span>
+        <span class="w-1 h-1 rounded-full bg-rose-600 -mt-0.5"></span>
+      </button>
+
+      <button onclick="switchScreen('citas')" id="nav-citas" class="flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl text-zinc-400 hover:text-zinc-700 cursor-pointer transition-colors nav-btn">
+        <i data-lucide="calendar" class="w-5 h-5"></i>
+        <span class="text-[10px]">Citas</span>
+        <span class="w-1 h-1 rounded-full bg-transparent -mt-0.5"></span>
+      </button>
+
+      <button onclick="switchScreen('lookbook')" id="nav-lookbook" class="flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl text-zinc-400 hover:text-zinc-700 cursor-pointer transition-colors nav-btn">
+        <i data-lucide="camera" class="w-5 h-5"></i>
+        <span class="text-[10px]">Lookbook</span>
+        <span class="w-1 h-1 rounded-full bg-transparent -mt-0.5"></span>
+      </button>
+
+      <button onclick="switchScreen('rewards')" id="nav-rewards" class="flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl text-zinc-400 hover:text-zinc-700 cursor-pointer transition-colors nav-btn">
+        <i data-lucide="gift" class="w-5 h-5"></i>
+        <span class="text-[10px]">Premios</span>
+        <span class="w-1 h-1 rounded-full bg-transparent -mt-0.5"></span>
+      </button>
+
+      <button onclick="switchScreen('salon')" id="nav-salon" class="flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl text-zinc-400 hover:text-zinc-700 cursor-pointer transition-colors nav-btn">
+        <i data-lucide="map-pin" class="w-5 h-5"></i>
+        <span class="text-[10px]">Atelier</span>
+        <span class="w-1 h-1 rounded-full bg-transparent -mt-0.5"></span>
+      </button>
+
+    </nav>
+
+    <!-- Notification Modal -->
+    <div id="notifModal" class="hidden absolute inset-0 bg-black/50 backdrop-blur-xs z-50 flex items-end sm:items-center justify-center p-4">
+      <div class="bg-white rounded-3xl p-5 max-w-sm w-full space-y-4 shadow-2xl border border-rose-100">
+        <div class="flex items-center justify-between pb-3 border-b border-rose-100">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+            <span class="font-bold text-xs text-zinc-900">Recordatorio de Cita</span>
+          </div>
+          <button onclick="toggleModal('notifModal')" class="text-zinc-400 hover:text-zinc-700 p-1 cursor-pointer">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+        <div class="space-y-3">
+          <div class="p-3 rounded-xl bg-rose-50/70 border border-rose-200 text-xs space-y-1">
+            <div class="flex justify-between font-bold text-rose-950">
+              <span>💇‍♀️ Mañana 10:30 AM con Valentina</span>
+              <span class="text-[10px] text-rose-600 font-mono">Balayage</span>
+            </div>
+            <p class="text-zinc-600 text-[11px]">Recuerda traer tu cabello limpio y seco. Te esperamos con café y mimosas.</p>
+          </div>
+        </div>
+        <button onclick="toggleModal('notifModal')" class="w-full py-2.5 rounded-xl bg-zinc-950 text-white font-bold text-xs">
+          Entendido
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    let currentScreen = 'inicio';
+    let bookingState = {
+      serviceId: 'balayage',
+      serviceName: 'Balayage & Nutrición Profunda',
+      price: 68000,
+      stylist: 'Valentina Rossi',
+      date: 'Mañana',
+      time: '10:00 AM'
+    };
+
+    function switchScreen(screenId) {
+      currentScreen = screenId;
+      const screens = ['inicio', 'citas', 'lookbook', 'rewards', 'salon'];
+      screens.forEach(s => {
+        const el = document.getElementById('screen-' + s);
+        const btn = document.getElementById('nav-' + s);
+        if (s === screenId) {
+          el.classList.remove('hidden');
+          btn.className = 'flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl text-rose-600 font-bold cursor-pointer transition-colors nav-btn';
+          const icon = btn.querySelector('svg') || btn.querySelector('i');
+          if (icon) icon.className = 'w-5 h-5 text-rose-600';
+          const dot = btn.querySelectorAll('span')[1];
+          if (dot) dot.className = 'w-1 h-1 rounded-full bg-rose-600 -mt-0.5';
+        } else {
+          el.classList.add('hidden');
+          btn.className = 'flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl text-zinc-400 hover:text-zinc-700 cursor-pointer transition-colors nav-btn';
+          const icon = btn.querySelector('svg') || btn.querySelector('i');
+          if (icon) icon.className = 'w-5 h-5';
+          const dot = btn.querySelectorAll('span')[1];
+          if (dot) dot.className = 'w-1 h-1 rounded-full bg-transparent -mt-0.5';
+        }
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      lucide.createIcons();
+    }
+
+    function selectService(id, price) {
+      switchScreen('citas');
+      setBookingService(id, price, id.toUpperCase());
+    }
+
+    function setBookingService(id, price, name) {
+      bookingState.serviceId = id;
+      bookingState.price = price;
+      bookingState.serviceName = name;
+
+      ['srv-balayage', 'srv-unas', 'srv-pestañas'].forEach(cardId => {
+        const el = document.getElementById(cardId);
+        if (el) {
+          el.className = 'p-3.5 rounded-2xl border border-rose-100 bg-white hover:border-rose-300 flex items-center justify-between cursor-pointer transition-all';
+        }
+      });
+
+      const target = document.getElementById('srv-' + id);
+      if (target) {
+        target.className = 'p-3.5 rounded-2xl border-2 border-rose-500 bg-rose-50/40 flex items-center justify-between cursor-pointer transition-all';
+      }
+    }
+
+    function selectStylist(btn, name) {
+      bookingState.stylist = name;
+      document.querySelectorAll('.stylist-btn').forEach(b => {
+        b.className = 'p-2.5 rounded-xl border border-rose-100 bg-white hover:bg-rose-50/50 text-center cursor-pointer stylist-btn';
+      });
+      btn.className = 'p-2.5 rounded-xl border-2 border-rose-500 bg-rose-50 text-center cursor-pointer stylist-btn';
+    }
+
+    function selectBookingDate(btn, day) {
+      bookingState.date = day;
+      document.querySelectorAll('.bdate-btn').forEach(b => {
+        b.className = 'px-3.5 py-2.5 rounded-2xl bg-white text-zinc-800 hover:bg-rose-50 font-bold text-xs text-center shrink-0 border border-rose-100 bdate-btn';
+        const span = b.querySelector('span');
+        if (span) span.className = 'block text-[9px] text-zinc-400 font-mono';
+      });
+      btn.className = 'px-3.5 py-2.5 rounded-2xl bg-zinc-950 text-white font-bold text-xs text-center shrink-0 border border-zinc-900 bdate-btn';
+      const activeSpan = btn.querySelector('span');
+      if (activeSpan) activeSpan.className = 'block text-[9px] text-rose-400 font-mono';
+    }
+
+    function selectBookingTime(btn, time) {
+      bookingState.time = time;
+      document.querySelectorAll('.btime-btn').forEach(b => {
+        b.className = 'py-2.5 rounded-xl border border-rose-100 bg-white hover:bg-rose-50 text-zinc-800 font-mono font-bold text-xs text-center btime-btn';
+      });
+      btn.className = 'py-2.5 rounded-xl border border-rose-500 bg-rose-50 text-rose-700 font-mono font-bold text-xs text-center btime-btn';
+    }
+
+    function confirmSalonBooking() {
+      const msg = `*GLOW ATELIER // SOLICITUD DE CITA VIP*
+
+` +
+        `👤 *Clienta:* Valeria Castro
+` +
+        `✨ *Servicio:* ${bookingState.serviceName} (₡${bookingState.price.toLocaleString()})
+` +
+        `👩‍🎨 *Profesional:* ${bookingState.stylist}
+` +
+        `📅 *Día:* ${bookingState.date} • *Hora:* ${bookingState.time}
+
+` +
+        `Hola, solicité esta cita desde la app de GLOW y deseo confirmar mi reserva.`;
+      
+      window.open(`https://wa.me/50670693708?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    function bookSpecificLook(lookName, price) {
+      const msg = `Hola GLOW Atelier, vi en su lookbook el estilo *${lookName}* y me gustaría agendar una cita para realizármelo.`;
+      window.open(`https://wa.me/50670693708?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    function redeemReward(name, points) {
+      alert(`¡Felicidades! Has canjeado "${name}" por ${points} puntos. Presenta tu código #GLW-9042 en recepción.`);
+    }
+
+    function openAppointmentDetails() {
+      alert('Detalles de tu cita:\n• Servicio: Balayage & Olaplex\n• Hora: Mañana 10:30 AM\n• Especialista: Valentina Rossi\n• Dirección: Plaza Tempo, Escazú');
+    }
+
+    function toggleModal(id) {
+      const m = document.getElementById(id);
+      if (m) m.classList.toggle('hidden');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
