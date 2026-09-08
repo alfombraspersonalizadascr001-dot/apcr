@@ -25,7 +25,24 @@ import {
   RotateCcw,
   Menu,
   ChevronRight,
-  ChevronLeft
+  ChevronLeft,
+  Pill,
+  Flame,
+  ShoppingBag,
+  Cake,
+  Gamepad2,
+  Wine,
+  Compass,
+  Coffee,
+  Scissors,
+  Plane,
+  Car,
+  Dumbbell,
+  Activity,
+  Stethoscope,
+  Shirt,
+  Hammer,
+  Beef
 } from 'lucide-react';
 import { airlockAudio } from '../utils/airlockSound';
 
@@ -51,6 +68,34 @@ interface DemoApp {
   icon: string;
 }
 
+// Helper component for minimalist SVG app icons
+export const renderAppIcon = (iconName: string, className = "w-5 h-5") => {
+  switch (iconName) {
+    case 'pill': return <Pill className={className} />;
+    case 'flame': return <Flame className={className} />;
+    case 'beef': return <Beef className={className} />;
+    case 'shopping-bag': return <ShoppingBag className={className} />;
+    case 'cake': return <Cake className={className} />;
+    case 'gamepad': return <Gamepad2 className={className} />;
+    case 'wine': return <Wine className={className} />;
+    case 'compass': return <Compass className={className} />;
+    case 'coffee': return <Coffee className={className} />;
+    case 'scissors': return <Scissors className={className} />;
+    case 'plane': return <Plane className={className} />;
+    case 'car': return <Car className={className} />;
+    case 'dumbbell': return <Dumbbell className={className} />;
+    case 'activity': return <Activity className={className} />;
+    case 'utensils': return <Utensils className={className} />;
+    case 'chef-hat': return <ChefHat className={className} />;
+    case 'stethoscope': return <Stethoscope className={className} />;
+    case 'shirt': return <Shirt className={className} />;
+    case 'hammer': return <Hammer className={className} />;
+    case 'qr-code': return <QrCode className={className} />;
+    case 'sparkles': return <Sparkles className={className} />;
+    default: return <Smartphone className={className} />;
+  }
+};
+
 const DEMO_APPS: DemoApp[] = [
   {
     id: 'farmacia-app',
@@ -65,7 +110,7 @@ const DEMO_APPS: DemoApp[] = [
     color: '#059669',
     accentBg: 'bg-emerald-500/10 border-emerald-500/30',
     accentText: 'text-emerald-400',
-    icon: '💊'
+    icon: 'pill'
   },
   {
     id: 'carniceria-app',
@@ -80,7 +125,7 @@ const DEMO_APPS: DemoApp[] = [
     color: '#dc2626',
     accentBg: 'bg-red-500/10 border-red-500/30',
     accentText: 'text-red-500',
-    icon: '🥩'
+    icon: 'beef'
   },
   {
     id: 'boutique-app',
@@ -95,7 +140,7 @@ const DEMO_APPS: DemoApp[] = [
     color: '#ca8a04',
     accentBg: 'bg-amber-500/10 border-amber-500/30',
     accentText: 'text-amber-400',
-    icon: '👗'
+    icon: 'shopping-bag'
   },
   {
     id: 'pasteleria-app',
@@ -110,7 +155,7 @@ const DEMO_APPS: DemoApp[] = [
     color: '#ec4899',
     accentBg: 'bg-pink-500/10 border-pink-500/30',
     accentText: 'text-pink-400',
-    icon: '🎂'
+    icon: 'cake'
   },
   {
     id: 'gaming-app',
@@ -125,7 +170,7 @@ const DEMO_APPS: DemoApp[] = [
     color: '#06b6d4',
     accentBg: 'bg-cyan-500/10 border-cyan-500/30',
     accentText: 'text-cyan-400',
-    icon: '🎮'
+    icon: 'gamepad'
   },
   {
     id: 'club-app',
@@ -140,7 +185,7 @@ const DEMO_APPS: DemoApp[] = [
     color: '#a855f7',
     accentBg: 'bg-purple-500/10 border-purple-500/30',
     accentText: 'text-purple-400',
-    icon: '🍸'
+    icon: 'wine'
   },
   {
     id: 'tours-app',
@@ -155,7 +200,7 @@ const DEMO_APPS: DemoApp[] = [
     color: '#10b981',
     accentBg: 'bg-emerald-500/10 border-emerald-500/30',
     accentText: 'text-emerald-400',
-    icon: '🛶'
+    icon: 'compass'
   },
   {
     id: 'cafe-app',
@@ -170,7 +215,7 @@ const DEMO_APPS: DemoApp[] = [
     color: '#d97706',
     accentBg: 'bg-amber-500/10 border-amber-500/30',
     accentText: 'text-amber-400',
-    icon: '☕'
+    icon: 'coffee'
   },
   {
     id: 'salon-app',
@@ -185,7 +230,7 @@ const DEMO_APPS: DemoApp[] = [
     color: '#f43f5e',
     accentBg: 'bg-rose-500/10 border-rose-500/30',
     accentText: 'text-rose-400',
-    icon: '💅'
+    icon: 'scissors'
   },
   {
     id: 'travel-app',
@@ -200,7 +245,7 @@ const DEMO_APPS: DemoApp[] = [
     color: '#06b6d4',
     accentBg: 'bg-cyan-500/10 border-cyan-500/30',
     accentText: 'text-cyan-400',
-    icon: '✈️'
+    icon: 'plane'
   },
   {
     id: 'auto-app',
@@ -215,7 +260,7 @@ const DEMO_APPS: DemoApp[] = [
     color: '#dc2626',
     accentBg: 'bg-red-500/10 border-red-500/30',
     accentText: 'text-red-500',
-    icon: '🏎️'
+    icon: 'car'
   },
   {
     id: 'aura-club',
@@ -230,7 +275,7 @@ const DEMO_APPS: DemoApp[] = [
     color: '#10b981',
     accentBg: 'bg-emerald-500/10 border-emerald-500/30',
     accentText: 'text-emerald-400',
-    icon: '✨'
+    icon: 'sparkles'
   },
   {
     id: 'crossfit',
@@ -245,7 +290,7 @@ const DEMO_APPS: DemoApp[] = [
     color: '#f97316',
     accentBg: 'bg-orange-500/10 border-orange-500/30',
     accentText: 'text-orange-400',
-    icon: '🏋️'
+    icon: 'dumbbell'
   },
   {
     id: 'gym',
@@ -260,7 +305,7 @@ const DEMO_APPS: DemoApp[] = [
     color: '#2563eb',
     accentBg: 'bg-blue-500/10 border-blue-500/30',
     accentText: 'text-blue-400',
-    icon: '⚡'
+    icon: 'activity'
   },
   {
     id: 'burger',
@@ -275,7 +320,7 @@ const DEMO_APPS: DemoApp[] = [
     color: '#dc2626',
     accentBg: 'bg-red-500/10 border-red-500/30',
     accentText: 'text-red-400',
-    icon: '🍔'
+    icon: 'utensils'
   },
   {
     id: 'italian',
@@ -290,7 +335,7 @@ const DEMO_APPS: DemoApp[] = [
     color: '#d97706',
     accentBg: 'bg-amber-500/10 border-amber-500/30',
     accentText: 'text-amber-400',
-    icon: '🍷'
+    icon: 'wine'
   },
   {
     id: 'soda-rosa',
@@ -305,7 +350,7 @@ const DEMO_APPS: DemoApp[] = [
     color: '#059669',
     accentBg: 'bg-emerald-500/10 border-emerald-500/30',
     accentText: 'text-emerald-400',
-    icon: '🍲'
+    icon: 'chef-hat'
   },
   {
     id: 'fonda-carmen',
@@ -320,7 +365,7 @@ const DEMO_APPS: DemoApp[] = [
     color: '#ea580c',
     accentBg: 'bg-orange-500/10 border-orange-500/30',
     accentText: 'text-orange-400',
-    icon: '🍛'
+    icon: 'utensils'
   },
   {
     id: 'dental',
@@ -335,7 +380,7 @@ const DEMO_APPS: DemoApp[] = [
     color: '#0284c7',
     accentBg: 'bg-sky-500/10 border-sky-500/30',
     accentText: 'text-sky-400',
-    icon: '🦷'
+    icon: 'stethoscope'
   },
   {
     id: 'plastic-surgery',
@@ -350,7 +395,7 @@ const DEMO_APPS: DemoApp[] = [
     color: '#9333ea',
     accentBg: 'bg-purple-500/10 border-purple-500/30',
     accentText: 'text-purple-400',
-    icon: '✨'
+    icon: 'sparkles'
   },
   {
     id: 'crm-textil',
@@ -365,7 +410,7 @@ const DEMO_APPS: DemoApp[] = [
     color: '#6366f1',
     accentBg: 'bg-indigo-500/10 border-indigo-500/30',
     accentText: 'text-indigo-400',
-    icon: '👕'
+    icon: 'shirt'
   },
   {
     id: 'menus-asiaticos',
@@ -380,7 +425,7 @@ const DEMO_APPS: DemoApp[] = [
     color: '#ef4444',
     accentBg: 'bg-red-500/10 border-red-500/30',
     accentText: 'text-red-400',
-    icon: '🥢'
+    icon: 'utensils'
   },
   {
     id: 'menus-mexicanos',
@@ -395,7 +440,7 @@ const DEMO_APPS: DemoApp[] = [
     color: '#f59e0b',
     accentBg: 'bg-amber-500/10 border-amber-500/30',
     accentText: 'text-amber-400',
-    icon: '🌮'
+    icon: 'flame'
   },
   {
     id: 'plataforma-menus',
@@ -410,7 +455,7 @@ const DEMO_APPS: DemoApp[] = [
     color: '#10b981',
     accentBg: 'bg-emerald-500/10 border-emerald-500/30',
     accentText: 'text-emerald-400',
-    icon: '📱'
+    icon: 'qr-code'
   },
   {
     id: 'crm-muebles',
@@ -425,7 +470,7 @@ const DEMO_APPS: DemoApp[] = [
     color: '#d97706',
     accentBg: 'bg-amber-500/10 border-amber-500/30',
     accentText: 'text-amber-400',
-    icon: '🪚'
+    icon: 'hammer'
   }
 ];
 
@@ -585,7 +630,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
           <nav className="hidden lg:flex items-center gap-7 text-sm font-medium text-slate-700">
             <a href="#demos-en-vivo" className="text-blue-600 font-bold hover:text-blue-800 transition-colors flex items-center gap-1">
               <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
-              Apps en Vivo (25 Demos)
+              Apps en Vivo
             </a>
             <a href="#soluciones" className="hover:text-blue-600 transition-colors">
               Soluciones PYME
@@ -635,7 +680,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
           <div className="lg:hidden bg-slate-900 text-white border-t border-b border-slate-700 px-4 py-5 shadow-2xl animate-in slide-in-from-top-2 duration-200">
             <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-800">
               <div className="flex items-center gap-2">
-                <span className="text-lg">🧭</span>
+                <Compass className="w-4 h-4 text-slate-400" />
                 <span className="text-xs font-bold uppercase tracking-wider text-slate-300">
                   Menú de Secciones
                 </span>
@@ -656,9 +701,9 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
                 className="flex items-center justify-between p-3.5 rounded-xl bg-blue-600/25 border border-blue-500/50 text-white font-bold text-sm active:bg-blue-600/40"
               >
                 <div className="flex items-center gap-3">
-                  <span className="text-xl">📱</span>
+                  <Smartphone className="w-5 h-5 text-blue-400" />
                   <div>
-                    <div className="font-extrabold text-blue-300">Demos de Apps en Vivo (14)</div>
+                    <div className="font-extrabold text-blue-300">Demos de Apps en Vivo</div>
                     <div className="text-[11px] text-slate-300 font-normal">Pruébalas en tu celular en 1 toque</div>
                   </div>
                 </div>
@@ -671,7 +716,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
                 className="flex items-center justify-between p-3.5 rounded-xl bg-amber-500/15 border border-amber-500/40 text-amber-200 hover:bg-amber-500/25 transition-all"
               >
                 <div className="flex items-center gap-3">
-                  <span className="text-xl">🍽️</span>
+                  <Utensils className="w-5 h-5 text-amber-400" />
                   <div>
                     <div className="font-extrabold text-amber-300">Menús Restaurantes ($15/m)</div>
                     <div className="text-[11px] text-slate-300 font-normal">Catálogo de 30+ menús QR y pedidos</div>
@@ -686,7 +731,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
                 className="flex items-center justify-between p-3.5 rounded-xl bg-indigo-500/15 border border-indigo-500/40 text-indigo-200 hover:bg-indigo-500/25 transition-all"
               >
                 <div className="flex items-center gap-3">
-                  <span className="text-xl">🔨</span>
+                  <Hammer className="w-5 h-5 text-indigo-400" />
                   <div>
                     <div className="font-extrabold text-indigo-300">CRM Taller a lo Tico</div>
                     <div className="text-[11px] text-slate-300 font-normal">Cotizaciones, Kanban y pedidos</div>
@@ -701,7 +746,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
                 className="flex items-center justify-between p-3 rounded-xl hover:bg-slate-800 text-slate-200 text-sm active:bg-slate-800"
               >
                 <div className="flex items-center gap-2.5">
-                  <span>💡</span>
+                  <Sparkles className="w-4 h-4 text-amber-400" />
                   <span>Soluciones para Empresas</span>
                 </div>
                 <ChevronRight className="w-4 h-4 text-slate-500" />
@@ -725,7 +770,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
                 className="flex items-center justify-between p-3 rounded-xl hover:bg-slate-800 text-emerald-400 font-semibold text-sm active:bg-slate-800"
               >
                 <div className="flex items-center gap-2.5">
-                  <span>🏷️</span>
+                  <DollarSign className="w-4 h-4 text-emerald-400" />
                   <span>Planes (Desde $199/mes)</span>
                 </div>
                 <ChevronRight className="w-4 h-4 text-slate-500" />
@@ -737,7 +782,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
                 className="flex items-center justify-between p-3 rounded-xl hover:bg-slate-800 text-slate-200 text-sm active:bg-slate-800"
               >
                 <div className="flex items-center gap-2.5">
-                  <span>🧮</span>
+                  <Database className="w-4 h-4 text-purple-400" />
                   <span>Simulador ROI & Laboratorio</span>
                 </div>
                 <ChevronRight className="w-4 h-4 text-slate-500" />
@@ -1122,32 +1167,36 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
               No son imágenes estáticas ni maquetas de Figma. Son aplicaciones web progresivas (PWAs) y sistemas en producción. Pruébalos en tu celular o en nuestro simulador interactivo.
             </p>
 
-            {/* Filter Pills */}
+            {/* Filter Pills with Minimalist Icons */}
             <div className="flex flex-wrap items-center justify-center gap-2 mt-6">
               {[
-                { id: 'all', label: `Todos (${DEMO_APPS.length} Demos)` },
-                { id: 'health', label: '💊 Farmacias & Salud (App)' },
-                { id: 'gastro', label: '🥩 Carnicería, Café & Gastro (10)' },
-                { id: 'beauty', label: '👗 Boutique & Belleza (App)' },
-                { id: 'gaming', label: '🎮 Videojuegos & Gaming (App)' },
-                { id: 'nightlife', label: '🍸 Bares & Nightclub (App)' },
-                { id: 'travel', label: '✈️ Agencia & Tours (App)' },
-                { id: 'auto', label: '🏎️ Automotriz & Taller (App)' },
-                { id: 'taller', label: '🔨 Fabricación & CRM' },
-                { id: 'fitness', label: '🏋️ Fitness & Deporte' }
-              ].map((f) => (
-                <button
-                  key={f.id}
-                  onClick={() => setAppFilter(f.id as any)}
-                  className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
-                    appFilter === f.id
-                      ? 'bg-blue-600 text-white shadow-md shadow-blue-500/30'
-                      : 'bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700'
-                  }`}
-                >
-                  {f.label}
-                </button>
-              ))}
+                { id: 'all', label: 'Todas las Apps', icon: Sparkles },
+                { id: 'health', label: 'Farmacias & Salud', icon: Pill },
+                { id: 'gastro', label: 'Gastronomía & Carnes', icon: Utensils },
+                { id: 'beauty', label: 'Boutique & Belleza', icon: ShoppingBag },
+                { id: 'gaming', label: 'Videojuegos & Gaming', icon: Gamepad2 },
+                { id: 'nightlife', label: 'Bares & Nightclub', icon: Wine },
+                { id: 'travel', label: 'Agencias & Tours', icon: Compass },
+                { id: 'auto', label: 'Automotriz & Taller', icon: Car },
+                { id: 'taller', label: 'Fabricación & CRM', icon: Hammer },
+                { id: 'fitness', label: 'Fitness & Deporte', icon: Dumbbell }
+              ].map((f) => {
+                const IconComponent = f.icon;
+                return (
+                  <button
+                    key={f.id}
+                    onClick={() => setAppFilter(f.id as any)}
+                    className={`px-3.5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center gap-2 ${
+                      appFilter === f.id
+                        ? 'bg-blue-600 text-white shadow-md shadow-blue-500/30'
+                        : 'bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700'
+                    }`}
+                  >
+                    <IconComponent className="w-3.5 h-3.5" />
+                    <span>{f.label}</span>
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -1155,7 +1204,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
           <div className="lg:hidden space-y-4">
             {/* Child-Friendly Hint Banner */}
             <div className="bg-gradient-to-r from-blue-600/30 via-indigo-600/30 to-purple-600/30 border border-blue-400/40 rounded-2xl p-4 text-center">
-              <div className="text-2xl mb-1">🎮</div>
+              <Smartphone className="w-6 h-6 mx-auto text-blue-400 mb-1" />
               <div className="font-extrabold text-white text-base">¡Pruébalas en tu celular con 1 toque!</div>
               <p className="text-slate-300 text-xs mt-1 leading-snug">
                 Toca cualquier recuadro o botón azul para probar la app en vivo. Dentro podrás cambiar de app usando los botones ◀ Anterior y Siguiente ▶.
@@ -1176,8 +1225,8 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
 
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex items-center gap-3">
-                    <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-3xl bg-slate-900 border border-slate-700 shadow-md group-hover:scale-105 transition-transform shrink-0">
-                      {app.icon}
+                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center bg-slate-900 border border-slate-700 shadow-md group-hover:scale-105 transition-transform shrink-0 ${app.accentText}`}>
+                      {renderAppIcon(app.icon, "w-6 h-6")}
                     </div>
                     <div>
                       <div className="flex items-center gap-1.5 flex-wrap">
@@ -1265,8 +1314,8 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
                       }`}
                     >
                       <div className="flex items-start gap-3.5">
-                        <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl bg-slate-900 border border-slate-700 shrink-0">
-                          {app.icon}
+                        <div className={`w-11 h-11 rounded-xl flex items-center justify-center bg-slate-900 border border-slate-700 shrink-0 ${isSelected ? app.accentText : 'text-slate-400'}`}>
+                          {renderAppIcon(app.icon, "w-5 h-5")}
                         </div>
                         <div>
                           <div className="flex items-center gap-2">
@@ -1419,7 +1468,9 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
               </button>
 
               <div className="flex items-center gap-1.5 sm:gap-2">
-                <span className="text-base sm:text-lg">{fullScreenApp.icon}</span>
+                <div className={`w-7 h-7 rounded-lg bg-slate-800 flex items-center justify-center ${fullScreenApp.accentText}`}>
+                  {renderAppIcon(fullScreenApp.icon, "w-4 h-4")}
+                </div>
                 <span className="font-extrabold text-xs sm:text-sm text-white truncate max-w-[120px] sm:max-w-none">{fullScreenApp.name}</span>
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
               </div>
@@ -2028,7 +2079,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
                     }}
                     className="py-1.5 px-2.5 rounded-lg bg-indigo-50 hover:bg-indigo-600 text-indigo-700 hover:text-white font-bold text-[11px] text-center transition-colors flex items-center justify-center gap-1 cursor-pointer"
                   >
-                    <span>👕 Demo Camisetas</span>
+                    <span className="flex items-center gap-1.5"><Shirt className="w-4 h-4 text-indigo-400" /> Demo Camisetas</span>
                   </button>
                   <button
                     onClick={() => {
@@ -2040,7 +2091,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
                     }}
                     className="py-1.5 px-2.5 rounded-lg bg-amber-50 hover:bg-amber-600 text-amber-700 hover:text-white font-bold text-[11px] text-center transition-colors flex items-center justify-center gap-1 cursor-pointer"
                   >
-                    <span>🪚 Demo Mueblería</span>
+                    <span className="flex items-center gap-1.5"><Hammer className="w-4 h-4 text-amber-400" /> Demo Mueblería</span>
                   </button>
                 </div>
               </div>
@@ -2176,8 +2227,8 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
           {/* 4 Critical Pillars for Restaurants in CR */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
             <div className="bg-slate-900/90 rounded-2xl p-6 border border-slate-800 hover:border-amber-500/40 transition-all">
-              <div className="w-12 h-12 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-2xl mb-4">
-                ⚡
+              <div className="w-12 h-12 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center mb-4">
+                <Clock className="w-6 h-6" />
               </div>
               <h3 className="text-lg font-bold text-white mb-2">Carga en 1 Segundo</h3>
               <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
@@ -2186,8 +2237,8 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
             </div>
 
             <div className="bg-slate-900/90 rounded-2xl p-6 border border-slate-800 hover:border-emerald-500/40 transition-all">
-              <div className="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-2xl mb-4">
-                💬
+              <div className="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mb-4">
+                <MessageCircle className="w-6 h-6" />
               </div>
               <h3 className="text-lg font-bold text-white mb-2">Pedidos a WhatsApp (0% Comisión)</h3>
               <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
@@ -2196,8 +2247,8 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
             </div>
 
             <div className="bg-slate-900/90 rounded-2xl p-6 border border-slate-800 hover:border-blue-500/40 transition-all">
-              <div className="w-12 h-12 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center text-2xl mb-4">
-                📍
+              <div className="w-12 h-12 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center mb-4">
+                <MapPin className="w-6 h-6" />
               </div>
               <h3 className="text-lg font-bold text-white mb-2">Google Maps & Local SEO</h3>
               <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
@@ -2206,8 +2257,8 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
             </div>
 
             <div className="bg-slate-900/90 rounded-2xl p-6 border border-slate-800 hover:border-red-500/40 transition-all">
-              <div className="w-12 h-12 rounded-xl bg-red-500/20 text-red-400 flex items-center justify-center text-2xl mb-4">
-                🎨
+              <div className="w-12 h-12 rounded-xl bg-red-500/20 text-red-400 flex items-center justify-center mb-4">
+                <Sparkles className="w-6 h-6" />
               </div>
               <h3 className="text-lg font-bold text-white mb-2">+30 Menús de Autor Listos</h3>
               <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
@@ -2236,7 +2287,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
               <div className="bg-slate-900/95 rounded-2xl p-6 border border-red-500/30 hover:border-red-400/80 shadow-xl flex flex-col justify-between group transition-all">
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-3xl">🥢</span>
+                    <Utensils className="w-8 h-8 text-red-400" />
                     <span className="text-[10px] font-extrabold px-2.5 py-1 rounded-full bg-red-500/20 text-red-300 border border-red-500/30">
                       20 RESTAURANTES
                     </span>
@@ -2269,7 +2320,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
               <div className="bg-slate-900/95 rounded-2xl p-6 border border-amber-500/30 hover:border-amber-400/80 shadow-xl flex flex-col justify-between group transition-all">
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-3xl">🌮</span>
+                    <Flame className="w-8 h-8 text-amber-400" />
                     <span className="text-[10px] font-extrabold px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
                       12 CONCEPTOS
                     </span>
@@ -2302,7 +2353,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
               <div className="bg-slate-900/95 rounded-2xl p-6 border border-emerald-500/30 hover:border-emerald-400/80 shadow-xl flex flex-col justify-between group transition-all">
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-3xl">🇨🇷</span>
+                    <Store className="w-8 h-8 text-emerald-400" />
                     <span className="text-[10px] font-extrabold px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
                       SODA COSTARRICENSE
                     </span>
@@ -2335,7 +2386,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
               <div className="bg-slate-900/95 rounded-2xl p-6 border border-blue-500/30 hover:border-blue-400/80 shadow-xl flex flex-col justify-between group transition-all">
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-3xl">📱</span>
+                    <QrCode className="w-8 h-8 text-blue-400" />
                     <span className="text-[10px] font-extrabold px-2.5 py-1 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30">
                       PLATAFORMA SAAS
                     </span>
@@ -2387,7 +2438,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
               <div className="bg-slate-900/90 rounded-2xl p-6 sm:p-7 border border-slate-700/80 hover:border-slate-500 transition-all flex flex-col justify-between">
                 <div>
                   <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">
-                    🚀 Lo Mínimo Indispensable
+                    Lo Mínimo Indispensable
                   </span>
                   <h4 className="text-xl font-bold text-white mb-2">Plan Básico (Menú QR + Google)</h4>
                   <p className="text-slate-400 text-xs leading-relaxed mb-6 min-h-[36px]">
@@ -2543,7 +2594,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
               <div className="bg-slate-900/90 rounded-2xl p-6 sm:p-7 border border-slate-700/80 hover:border-slate-500 transition-all flex flex-col justify-between">
                 <div>
                   <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">
-                    👑 Plataforma Completa
+                    Plataforma Completa
                   </span>
                   <h4 className="text-xl font-bold text-white mb-2">Plan Enterprise (Cocina KDS + Admin)</h4>
                   <p className="text-slate-400 text-xs leading-relaxed mb-6 min-h-[36px]">
@@ -2760,8 +2811,8 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
               <div className="bg-slate-900 rounded-2xl p-6 border border-indigo-500/40 hover:border-indigo-400 transition-all flex flex-col justify-between group">
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 rounded-2xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-2xl">
-                      👕
+                    <div className="w-12 h-12 rounded-2xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center">
+                      <Shirt className="w-6 h-6" />
                     </div>
                     <span className="px-2.5 py-1 rounded-full bg-indigo-950 text-indigo-300 border border-indigo-700 font-mono text-[10px] font-bold uppercase">
                       CONFECCIÓN & UNIFORMES
@@ -2810,8 +2861,8 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
               <div className="bg-slate-900 rounded-2xl p-6 border border-amber-500/40 hover:border-amber-400 transition-all flex flex-col justify-between group">
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-2xl">
-                      🪚
+                    <div className="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center">
+                      <Hammer className="w-6 h-6" />
                     </div>
                     <span className="px-2.5 py-1 rounded-full bg-amber-950 text-amber-300 border border-amber-700 font-mono text-[10px] font-bold uppercase">
                       CARPINTERÍA & MUEBLERÍA
@@ -3351,7 +3402,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
                   </div>
 
                   <div className="mt-6 pt-4 border-t border-slate-800 text-xs text-slate-400">
-                    🍔 <strong>Cero comisiones:</strong> No le pagas el 30% a apps intermediarias; cobras directo por SINPE Móvil o datáfono.
+                    <strong>Cero comisiones:</strong> No le pagas el 30% a apps intermediarias; cobras directo por SINPE Móvil o datáfono.
                   </div>
                 </div>
               </div>
