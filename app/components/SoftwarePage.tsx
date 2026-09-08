@@ -39,7 +39,7 @@ interface DemoApp {
   id: string;
   slug: string;
   name: string;
-  category: 'fitness' | 'gastro' | 'health' | 'taller' | 'auto' | 'travel' | 'beauty';
+  category: 'fitness' | 'gastro' | 'health' | 'taller' | 'auto' | 'travel' | 'beauty' | 'gaming' | 'nightlife';
   categoryLabel: string;
   badge: string;
   tagline: string;
@@ -52,6 +52,126 @@ interface DemoApp {
 }
 
 const DEMO_APPS: DemoApp[] = [
+  {
+    id: 'farmacia-app',
+    slug: 'farmacia-app',
+    name: 'FARMACIA SAN RAFAEL // Farmacia Digital 24/7',
+    category: 'health',
+    categoryLabel: 'Salud & Farmacia (App Móvil)',
+    badge: 'App Android & iOS para Farmacias',
+    tagline: 'Recetas Digitales, Motorizado 24/7, Pastillero Inteligente & SINPE',
+    description: 'Aplicación móvil nativa para farmacias modernas: subida y validación fotográfica de recetas médicas privadas y seguros médicos, pastillero digital con recordatorios y avisos de refill, rastreo de motorizado express en tiempo real y catálogo OTC con pago por SINPE Móvil.',
+    features: ['Subida de foto de receta médica para validación de regente', 'Pastillero digital con alertas y recordatorios de dosis', 'Rastreo de mensajero en motocicleta refrigerada en vivo', 'Catálogo completo de medicamentos y pago por SINPE Móvil'],
+    color: '#059669',
+    accentBg: 'bg-emerald-500/10 border-emerald-500/30',
+    accentText: 'text-emerald-400',
+    icon: '💊'
+  },
+  {
+    id: 'carniceria-app',
+    slug: 'carniceria-app',
+    name: 'CORTE REAL // Carnicería Boutique & Dry-Aged',
+    category: 'gastro',
+    categoryLabel: 'Gastronomía & Carnes (App Móvil)',
+    badge: 'App Android & iOS para Carnicerías Premium',
+    tagline: 'Cámara Dry-Aged, Wagyu Japonés A5, Calculadora BBQ & Frío',
+    description: 'Aplicación móvil nativa para carnicerías de alta gama y tiendas de cortes premium: calculadora inteligente de parrilladas según comensales, telemetría y seguimiento de casillero privado de maduración Dry-Aged de 45 días, selección de grosor de filete y despacho refrigerado con gel pack.',
+    features: ['Calculadora inteligente BBQ Master por comensales', 'Bóveda y seguimiento de maduración Dry-Aged en sal', 'Cortes selectos Wagyu Japonés A5 y Angus Prime', 'Despacho en caja térmica sellada al vacío en GAM'],
+    color: '#dc2626',
+    accentBg: 'bg-red-500/10 border-red-500/30',
+    accentText: 'text-red-500',
+    icon: '🥩'
+  },
+  {
+    id: 'boutique-app',
+    slug: 'boutique-app',
+    name: 'AURA STUDIO // Haute Couture & Moda Privée',
+    category: 'beauty',
+    categoryLabel: 'Moda & Boutique (App Móvil)',
+    badge: 'App Android & iOS para Boutiques de Ropa',
+    tagline: 'Colección Cápsula, Lookbook Editorial & Cita con Personal Shopper',
+    description: 'Experiencia móvil minimalista y sofisticada para boutiques de moda femenina y diseñadores: catálogo de piezas en lino toscano y seda natural, lookbook interactivo con opción de comprar outfit completo, agendamiento de suite privada con champagne y empaque de lujo con listón de seda.',
+    features: ['Lookbook interactivo con compra de look completo en 1 toque', 'Reserva de Personal Shopper VIP en suite privada en Escazú', 'Detalle de confección europea, tallas y caídas', 'Empaque en sombrerera rígida con tarjeta caligráfica'],
+    color: '#ca8a04',
+    accentBg: 'bg-amber-500/10 border-amber-500/30',
+    accentText: 'text-amber-400',
+    icon: '👗'
+  },
+  {
+    id: 'pasteleria-app',
+    slug: 'pasteleria-app',
+    name: 'MAISON SUCRE // Haute Pâtisserie & Event Cakes',
+    category: 'gastro',
+    categoryLabel: 'Gastronomía & Repostería (App Móvil)',
+    badge: 'App Android & iOS para Pastelerías Finas',
+    tagline: 'Diseñador de Pasteles a Medida, Macarons de París & Eventos',
+    description: 'Aplicación móvil para pastelerías de autor y repostería artesanal: diseñador interactivo de pasteles para bodas y celebraciones (pisos, bizcochos gourmet, rellenos y placa caligráfica con dedicatoria en vivo), catálogo de macarons parisinos y transporte climatizado especial.',
+    features: ['Diseñador interactivo de pasteles de 1 a 3 pisos con cotizador', 'Placa de chocolate con mensaje personalizado en caligrafía', 'Coffrets de regalo de macarons de París y tartaletas', 'Entrega climatizada en furgoneta para repostería fina'],
+    color: '#ec4899',
+    accentBg: 'bg-pink-500/10 border-pink-500/30',
+    accentText: 'text-pink-400',
+    icon: '🎂'
+  },
+  {
+    id: 'gaming-app',
+    slug: 'gaming-app',
+    name: 'NEXUS GAMING // Consolas, Videojuegos & Esports',
+    category: 'gaming',
+    categoryLabel: 'Videojuegos & Gaming (App Móvil)',
+    badge: 'App Android & iOS para Tiendas Gaming',
+    tagline: 'Consolas PS5/Switch, Calculadora Trade-In & Periféricos Pro',
+    description: 'Aplicación móvil de alto impacto visual cyberpunk para tiendas de videojuegos: venta de consolas oficiales (PS5 Pro, Switch OLED, Xbox), preventas de juegos físicos, catálogo de controles de élite y calculadora interactiva de Trade-In para canjear juegos usados por crédito inmediato.',
+    features: ['Calculadora interactiva de Trade-In / Canje de juegos usados', 'Preventas oficiales y consolas con garantía escrita', 'Controles profesionales, palancas traseras y headsets', 'Despacho express asegurado contra caídas y golpes'],
+    color: '#06b6d4',
+    accentBg: 'bg-cyan-500/10 border-cyan-500/30',
+    accentText: 'text-cyan-400',
+    icon: '🎮'
+  },
+  {
+    id: 'club-app',
+    slug: 'club-app',
+    name: 'VELVET // Nightclub, Rooftop & VIP Lounge',
+    category: 'nightlife',
+    categoryLabel: 'Nightclub & Discoteca (App Móvil)',
+    badge: 'App Android & iOS para Clubes & Bares',
+    tagline: 'Mesas VIP, Bottle Service, QR Fast Pass & DJ Lineup',
+    description: 'Aplicación móvil nocturna con estética dark luxury para discotecas, bares de alta gama y lounges: reserva de mesas VIP y cabanas con mínimo de consumo acreditable y pulseras All-Access, carta digital de bottle service (champagne con bengalas y tequilas premium) y Fast Pass QR para entrar sin filas.',
+    features: ['Reserva de mesas VIP y cabanas junto al DJ con pulseras', 'Carta interactiva de bottle service (Dom Pérignon, Don Julio 1942)', 'Fast Pass QR para acceso preferencial por puerta VIP sin filas', 'Calendario de DJs internacionales y festivales'],
+    color: '#a855f7',
+    accentBg: 'bg-purple-500/10 border-purple-500/30',
+    accentText: 'text-purple-400',
+    icon: '🍸'
+  },
+  {
+    id: 'tours-app',
+    slug: 'tours-app',
+    name: 'TIERRA PURA // Expediciones & Eco-Aventura CR',
+    category: 'travel',
+    categoryLabel: 'Turismo & Tours (App Móvil)',
+    badge: 'App Android & iOS para Tour Operadores',
+    tagline: 'Rafting Pacuare, Canopy Arenal, Voucher ICT & Checklist',
+    description: 'Aplicación móvil para empresas de turismo receptivo y tour operadores en Costa Rica: cotizador automático según cantidad de aventureros con add-ons de fotografía GoPro 4K y transporte van, checklist interactivo de qué llevar, telemetría de caudales y ríos en vivo, y emisión de voucher oficial ICT.',
+    features: ['Cotizador en tiempo real de expediciones (Rafting, Canopy, Fauna)', 'Telemetría de condiciones de ríos y clima en vivo', 'Checklist técnico de qué empacar para la expedición', 'Emisión de voucher oficial con pólizas de seguro INS'],
+    color: '#10b981',
+    accentBg: 'bg-emerald-500/10 border-emerald-500/30',
+    accentText: 'text-emerald-400',
+    icon: '🛶'
+  },
+  {
+    id: 'cafe-app',
+    slug: 'cafe-app',
+    name: 'ORIGEN // Specialty Coffee Roasters & Slow Bar',
+    category: 'gastro',
+    categoryLabel: 'Café de Especialidad (App Móvil)',
+    badge: 'App Android & iOS para Cafeterías Gourmet',
+    tagline: 'Micro-Lotes Geisha, Molienda a Medida, Slow Bar & Grab & Go',
+    description: 'Aplicación móvil para barras de especialidad y tostadurías de café: pedido previo Grab & Go para recoger en barra sin hacer filas, venta de micro-lotes de altura (Geisha Tarrazú 89.5 SCA, Naranjo Honey) con selección de tipo de molienda según cafetera y carta interactiva de filtrados Slow Bar.',
+    features: ['Grab & Go: Pide tu café y desayuno y pasa a recoger sin filas', 'Venta de micro-lotes con selección de molienda exacta para casa', 'Carta Slow Bar con métodos artesanales (V60, Chemex, Nitro Cold Brew)', 'Garantía de frescura con fecha de tueste semanal'],
+    color: '#d97706',
+    accentBg: 'bg-amber-500/10 border-amber-500/30',
+    accentText: 'text-amber-400',
+    icon: '☕'
+  },
   {
     id: 'salon-app',
     slug: 'salon-app',
@@ -343,7 +463,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
     setFullScreenApp(DEMO_APPS[nextIndex]);
     setSelectedApp(DEMO_APPS[nextIndex]);
   };
-  const [appFilter, setAppFilter] = useState<'all' | 'fitness' | 'gastro' | 'health' | 'taller' | 'auto' | 'travel' | 'beauty'>('all');
+  const [appFilter, setAppFilter] = useState<'all' | 'fitness' | 'gastro' | 'health' | 'taller' | 'auto' | 'travel' | 'beauty' | 'gaming' | 'nightlife'>('all');
   const [fullScreenApp, setFullScreenApp] = useState<DemoApp | null>(null);
   const [iframeKey, setIframeKey] = useState<number>(0);
   
@@ -465,7 +585,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
           <nav className="hidden lg:flex items-center gap-7 text-sm font-medium text-slate-700">
             <a href="#demos-en-vivo" className="text-blue-600 font-bold hover:text-blue-800 transition-colors flex items-center gap-1">
               <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
-              Apps en Vivo (9 Demos)
+              Apps en Vivo (25 Demos)
             </a>
             <a href="#soluciones" className="hover:text-blue-600 transition-colors">
               Soluciones PYME
@@ -1006,13 +1126,15 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
             <div className="flex flex-wrap items-center justify-center gap-2 mt-6">
               {[
                 { id: 'all', label: `Todos (${DEMO_APPS.length} Demos)` },
-                { id: 'beauty', label: '💅 Salón de Belleza (App)' },
-                { id: 'travel', label: '✈️ Agencia de Viajes (App)' },
+                { id: 'health', label: '💊 Farmacias & Salud (App)' },
+                { id: 'gastro', label: '🥩 Carnicería, Café & Gastro (10)' },
+                { id: 'beauty', label: '👗 Boutique & Belleza (App)' },
+                { id: 'gaming', label: '🎮 Videojuegos & Gaming (App)' },
+                { id: 'nightlife', label: '🍸 Bares & Nightclub (App)' },
+                { id: 'travel', label: '✈️ Agencia & Tours (App)' },
                 { id: 'auto', label: '🏎️ Automotriz & Taller (App)' },
-                { id: 'gastro', label: '🍽️ Gastronomía & Menús (7)' },
                 { id: 'taller', label: '🔨 Fabricación & CRM' },
-                { id: 'fitness', label: '🏋️ Fitness & Deporte' },
-                { id: 'health', label: '🦷 Salud & Estética' }
+                { id: 'fitness', label: '🏋️ Fitness & Deporte' }
               ].map((f) => (
                 <button
                   key={f.id}

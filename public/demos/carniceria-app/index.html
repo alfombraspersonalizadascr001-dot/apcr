@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>CORTE REAL // Carnicería Boutique & Dry-Aged (iOS & Android)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #09090b;
+      color: #f4f4f5;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    .font-serif-luxury {
+      font-family: 'Playfair Display', serif;
+    }
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-0 sm:p-4 bg-zinc-950 antialiased">
+
+  <!-- Mobile Device Frame -->
+  <div class="w-full max-w-md h-screen sm:h-[844px] bg-zinc-900 sm:rounded-[44px] sm:border-[8px] sm:border-zinc-800 shadow-2xl flex flex-col relative overflow-hidden text-zinc-100">
+
+    <!-- Native Status Bar -->
+    <div class="pt-3 px-6 pb-2 flex items-center justify-between bg-zinc-900 text-zinc-200 text-xs font-semibold select-none z-20 shrink-0">
+      <span class="font-mono text-[13px] font-bold text-white">9:41</span>
+      <div class="w-24 h-4 rounded-full bg-zinc-950 flex items-center justify-center border border-zinc-800">
+        <div class="w-2 h-2 rounded-full bg-red-500 mr-2 animate-pulse"></div>
+        <div class="w-1.5 h-1.5 rounded-full bg-zinc-700"></div>
+      </div>
+      <div class="flex items-center gap-1.5 text-zinc-300">
+        <i data-lucide="signal" class="w-3.5 h-3.5"></i>
+        <i data-lucide="wifi" class="w-3.5 h-3.5"></i>
+        <i data-lucide="battery" class="w-4 h-4 text-zinc-300"></i>
+      </div>
+    </div>
+
+    <!-- Top App Navigation Header -->
+    <header class="px-5 py-3 border-b border-zinc-800 flex items-center justify-between bg-zinc-900/95 backdrop-blur-md sticky top-0 z-10 shrink-0">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-red-700 to-amber-600 flex items-center justify-center text-white font-serif-luxury font-black text-sm shadow-md shadow-red-950">
+          CR
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <span class="font-serif-luxury font-bold text-base tracking-wide text-white">CORTE REAL</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+          </div>
+          <div class="text-[10px] text-zinc-400 font-medium tracking-wider uppercase font-mono">Dry-Aged • Wagyu A5 • Escazú</div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <!-- Meat Locker Badge -->
+        <button onclick="switchScreen('maduracion')" class="px-2.5 py-1 rounded-full bg-zinc-800 text-amber-400 border border-amber-500/30 flex items-center gap-1 text-[11px] font-bold cursor-pointer hover:bg-zinc-750 transition-colors">
+          <span>🥩 Bóveda</span>
+          <span class="font-mono text-white text-[10px]">#08</span>
+        </button>
+
+        <!-- Cart Quick Button -->
+        <button onclick="switchScreen('carrito')" class="relative p-2 rounded-full hover:bg-zinc-800 text-zinc-200 cursor-pointer transition-colors">
+          <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+          <span id="headerCartCount" class="absolute top-1 right-1 w-4 h-4 rounded-full bg-red-600 text-white text-[9px] font-bold flex items-center justify-center font-mono">2</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Scrollable Screen Content -->
+    <div class="flex-1 overflow-y-auto no-scrollbar pb-24 bg-zinc-950">
+
+      <!-- ========================================== -->
+      <!-- SCREEN 1: INICIO (HOME) -->
+      <!-- ========================================== -->
+      <section id="screen-inicio" class="p-5 space-y-5">
+
+        <!-- User VIP Greeting -->
+        <div class="flex items-center justify-between">
+          <div>
+            <span class="text-xs font-semibold text-zinc-400 block">Bienvenido Maestro Parrillero,</span>
+            <h1 class="text-xl font-extrabold text-white tracking-tight">Don Andrés Tinoco 🔥</h1>
+          </div>
+          <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-zinc-800 to-red-950 border border-red-500/30 flex items-center justify-center font-bold text-xs text-red-400">
+            AT
+          </div>
+        </div>
+
+        <!-- Hero Feature: Dry-Aged Showcase -->
+        <div class="bg-gradient-to-r from-red-950 via-zinc-900 to-black rounded-3xl p-5 border border-red-900/50 text-white shadow-2xl relative overflow-hidden">
+          <div class="absolute -top-12 -right-12 w-40 h-40 bg-red-600/20 rounded-full blur-3xl pointer-events-none"></div>
+
+          <div class="flex items-center justify-between relative z-10 mb-2">
+            <span class="px-2.5 py-0.5 rounded-full bg-red-500/20 text-red-300 border border-red-500/40 text-[10px] font-bold font-mono tracking-wider uppercase flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-red-400 animate-ping"></span>
+              EDICIÓN ESPECIAL 45 DÍAS
+            </span>
+            <span class="text-xs text-amber-400 font-mono font-bold">Cámara de Sal</span>
+          </div>
+
+          <div class="relative z-10 space-y-1">
+            <h2 class="text-lg font-serif-luxury font-bold text-white tracking-wide">Tomahawk Dry-Aged Angus Prime</h2>
+            <p class="text-xs text-zinc-300 leading-snug">
+              Maduración lenta de 45 días en bloque de sal rosa del Himalaya. Textura mantecosa y notas a nuez y trufa.
+            </p>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between relative z-10">
+            <div>
+              <span class="text-[10px] text-zinc-400 font-mono">Pieza ~1.200 gramos</span>
+              <div class="text-sm font-extrabold font-mono text-amber-400">₡38,500 <span class="text-xs text-zinc-400 font-normal">($75)</span></div>
+            </div>
+            <button onclick="addToCart('Tomahawk Dry-Aged 45 Días (1.2kg)', 38500)" class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-bold text-xs shadow-md shadow-red-950 flex items-center gap-1 cursor-pointer">
+              <i data-lucide="flame" class="w-3.5 h-3.5"></i>
+              <span>Ordenar Corte</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 2 Quick Action Feature Boxes -->
+        <div class="grid grid-cols-2 gap-3">
+          <!-- BBQ Box Quoter -->
+          <button onclick="switchScreen('parrillada')" class="p-4 rounded-2xl bg-zinc-900 border border-zinc-800 hover:border-red-500/50 shadow-md text-left flex flex-col justify-between group cursor-pointer transition-all">
+            <div class="w-10 h-10 rounded-xl bg-red-950 text-red-400 flex items-center justify-center mb-2 border border-red-900/50 group-hover:scale-105 transition-transform">
+              <i data-lucide="calculator" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <div class="font-bold text-sm text-white">Calculadora BBQ</div>
+              <p class="text-[10px] text-zinc-400 mt-0.5">Calcula gramos y cortes según # personas</p>
+            </div>
+          </button>
+
+          <!-- Aging Vault Status -->
+          <button onclick="switchScreen('maduracion')" class="p-4 rounded-2xl bg-zinc-900 border border-zinc-800 hover:border-amber-500/50 shadow-md text-left flex flex-col justify-between group cursor-pointer transition-all">
+            <div class="w-10 h-10 rounded-xl bg-amber-950 text-amber-400 flex items-center justify-center mb-2 border border-amber-900/50 group-hover:scale-105 transition-transform">
+              <i data-lucide="shield-check" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <div class="font-bold text-sm text-white">Mi Bóveda Dry-Aged</div>
+              <p class="text-[10px] text-zinc-400 mt-0.5">Tu Ribeye lleva 28 días madurando</p>
+            </div>
+          </button>
+        </div>
+
+        <!-- Master Butcher Direct Consultation -->
+        <div class="p-3.5 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-full bg-red-950 border border-red-800 flex items-center justify-center text-lg">
+              🔪
+            </div>
+            <div>
+              <div class="text-xs font-bold text-white">Maestro Carnicero Don Gonzalo</div>
+              <div class="text-[10px] text-zinc-400">Recomendaciones de grosor y fuego en vivo</div>
+            </div>
+          </div>
+          <button onclick="consultButcher()" class="px-3 py-1.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-red-400 border border-zinc-700 text-xs font-bold transition-all cursor-pointer flex items-center gap-1">
+            <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+            <span>Preguntar</span>
+          </button>
+        </div>
+
+        <!-- Best-Sellers Showcase -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xs font-bold text-zinc-300 uppercase tracking-wider font-mono">Cortes Emblemáticos</h3>
+            <button onclick="switchScreen('cortes')" class="text-xs font-bold text-red-400 hover:underline">Ver Todo el Menú</button>
+          </div>
+
+          <div class="space-y-2.5">
+            <!-- Cut 1 -->
+            <div class="p-3.5 bg-zinc-900 rounded-2xl border border-zinc-800 flex items-center justify-between">
+              <div class="space-y-1">
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-bold text-white">Picaña Black Angus USDA Prime</span>
+                  <span class="px-1.5 py-0.5 rounded bg-amber-950 text-amber-300 text-[9px] font-mono border border-amber-800/40">Prime</span>
+                </div>
+                <div class="text-[10px] text-zinc-400 font-mono">Capa de grasa uniforme de 1cm • ~1.100g</div>
+                <div class="text-xs font-extrabold font-mono text-amber-400">₡24,500 <span class="text-[10px] text-zinc-400 font-normal">($48)</span></div>
+              </div>
+              <button onclick="addToCart('Picaña Black Angus Prime', 24500)" class="p-2 rounded-xl bg-zinc-800 hover:bg-red-600 text-white font-bold transition-all cursor-pointer border border-zinc-700">
+                <i data-lucide="plus" class="w-4 h-4"></i>
+              </button>
+            </div>
+
+            <!-- Cut 2 -->
+            <div class="p-3.5 bg-zinc-900 rounded-2xl border border-zinc-800 flex items-center justify-between">
+              <div class="space-y-1">
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-bold text-white">Japanese Wagyu A5 Miyazaki Ribeye</span>
+                  <span class="px-1.5 py-0.5 rounded bg-red-950 text-red-300 text-[9px] font-mono border border-red-800/40">BMS 11</span>
+                </div>
+                <div class="text-[10px] text-zinc-400 font-mono">Certificado de origen Japón • Grosor 1 pulgada</div>
+                <div class="text-xs font-extrabold font-mono text-amber-400">₡68,000 <span class="text-[10px] text-zinc-400 font-normal">($132)</span></div>
+              </div>
+              <button onclick="addToCart('Wagyu A5 Miyazaki Ribeye', 68000)" class="p-2 rounded-xl bg-zinc-800 hover:bg-red-600 text-white font-bold transition-all cursor-pointer border border-zinc-700">
+                <i data-lucide="plus" class="w-4 h-4"></i>
+              </button>
+            </div>
+
+            <!-- Cut 3 -->
+            <div class="p-3.5 bg-zinc-900 rounded-2xl border border-zinc-800 flex items-center justify-between">
+              <div class="space-y-1">
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-bold text-white">Chorizo Español Artesanal al Tempranillo</span>
+                  <span class="px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-300 text-[9px] font-mono">Artesanal</span>
+                </div>
+                <div class="text-[10px] text-zinc-400 font-mono">Paquete 4 unidades (500g) sin preservantes</div>
+                <div class="text-xs font-extrabold font-mono text-amber-400">₡6,900</div>
+              </div>
+              <button onclick="addToCart('Chorizo Español al Tempranillo', 6900)" class="p-2 rounded-xl bg-zinc-800 hover:bg-red-600 text-white font-bold transition-all cursor-pointer border border-zinc-700">
+                <i data-lucide="plus" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SCREEN 2: CORTES & CATÁLOGO PREMIUM -->
+      <!-- ========================================== -->
+      <section id="screen-cortes" class="p-5 space-y-4 hidden">
+        <div class="space-y-1">
+          <h2 class="text-lg font-serif-luxury font-bold text-white">Cortes de Autor & Bóveda</h2>
+          <p class="text-xs text-zinc-400">Seleccionados a mano, porcionados a medida y sellados al vacío</p>
+        </div>
+
+        <!-- Filter Tags -->
+        <div class="flex gap-1.5 overflow-x-auto no-scrollbar pb-1">
+          <button class="px-3 py-1.5 rounded-full bg-red-600 text-white text-xs font-bold shrink-0">Todos</button>
+          <button class="px-3 py-1.5 rounded-full bg-zinc-900 text-zinc-400 border border-zinc-800 text-xs font-semibold shrink-0">Dry-Aged</button>
+          <button class="px-3 py-1.5 rounded-full bg-zinc-900 text-zinc-400 border border-zinc-800 text-xs font-semibold shrink-0">Wagyu A5</button>
+          <button class="px-3 py-1.5 rounded-full bg-zinc-900 text-zinc-400 border border-zinc-800 text-xs font-semibold shrink-0">Angus Prime</button>
+          <button class="px-3 py-1.5 rounded-full bg-zinc-900 text-zinc-400 border border-zinc-800 text-xs font-semibold shrink-0">Carbón & Sales</button>
+        </div>
+
+        <div class="space-y-3">
+          <!-- Cut Card Detailed -->
+          <div class="p-4 bg-zinc-900 rounded-2xl border border-zinc-800 space-y-3">
+            <div class="flex justify-between items-start">
+              <div>
+                <span class="text-xs font-bold text-white">New York Strip Dry-Aged 30 Días</span>
+                <p class="text-[11px] text-zinc-400 mt-0.5">Corte magro con borde crocante de grasa madurada</p>
+              </div>
+              <span class="font-mono text-sm font-bold text-amber-400">₡19,800</span>
+            </div>
+
+            <!-- Thickness selector -->
+            <div class="flex items-center justify-between text-xs pt-2 border-t border-zinc-800">
+              <span class="text-zinc-400 text-[11px]">Grosor de corte:</span>
+              <div class="flex gap-1.5 font-mono text-[10px]">
+                <button class="px-2 py-1 rounded bg-zinc-800 border border-zinc-700 text-zinc-300">1.0"</button>
+                <button class="px-2 py-1 rounded bg-red-950 border border-red-600 text-white font-bold">1.5" (Recomendado)</button>
+                <button class="px-2 py-1 rounded bg-zinc-800 border border-zinc-700 text-zinc-300">2.0"</button>
+              </div>
+            </div>
+
+            <button onclick="addToCart('NY Strip Dry-Aged 30d (1.5 pulg)', 19800)" class="w-full py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 cursor-pointer transition-all">
+              <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
+              <span>Añadir Corte al Carrito</span>
+            </button>
+          </div>
+
+          <!-- Cut Card 2 -->
+          <div class="p-4 bg-zinc-900 rounded-2xl border border-zinc-800 space-y-3">
+            <div class="flex justify-between items-start">
+              <div>
+                <span class="text-xs font-bold text-white">Entraña Fina Angus Premium (Skirt Steak)</span>
+                <p class="text-[11px] text-zinc-400 mt-0.5">Marmoleo intenso, jugosidad suprema para fuego directo</p>
+              </div>
+              <span class="font-mono text-sm font-bold text-amber-400">₡16,500</span>
+            </div>
+
+            <button onclick="addToCart('Entraña Fina Angus (800g)', 16500)" class="w-full py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 cursor-pointer transition-all">
+              <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
+              <span>Añadir Corte al Carrito</span>
+            </button>
+          </div>
+
+          <!-- Cut Card 3 -->
+          <div class="p-4 bg-zinc-900 rounded-2xl border border-zinc-800 space-y-3">
+            <div class="flex justify-between items-start">
+              <div>
+                <span class="text-xs font-bold text-white">Carbón de Quebracho Blanco & Sal Negra Volcánica</span>
+                <p class="text-[11px] text-zinc-400 mt-0.5">Saco de carbón duro 8kg + Sal en escamas para el sellado</p>
+              </div>
+              <span class="font-mono text-sm font-bold text-amber-400">₡9,500</span>
+            </div>
+
+            <button onclick="addToCart('Kit Carbón Quebracho + Sal Volcánica', 9500)" class="w-full py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 cursor-pointer transition-all">
+              <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
+              <span>Añadir Kit al Carrito</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SCREEN 3: CALCULADORA BBQ PARRILLADA -->
+      <!-- ========================================== -->
+      <section id="screen-parrillada" class="p-5 space-y-4 hidden">
+        <div class="space-y-1">
+          <span class="px-2 py-0.5 rounded bg-red-950 text-red-400 text-[10px] font-bold font-mono border border-red-900/50">SMART BBQ QUOTER</span>
+          <h2 class="text-lg font-serif-luxury font-bold text-white">Calculadora BBQ Master</h2>
+          <p class="text-xs text-zinc-400">Calcula la cantidad exacta de carne sin que sobre ni falte nada.</p>
+        </div>
+
+        <!-- Guests Selector -->
+        <div class="p-4 bg-zinc-900 rounded-2xl border border-zinc-800 space-y-2">
+          <label class="text-xs font-bold text-zinc-200 block">¿Para cuántas personas es el asado?</label>
+          <div class="grid grid-cols-4 gap-2">
+            <button onclick="setBbqGuests(4)" class="bbq-guest-btn p-2 rounded-xl bg-zinc-800 border border-zinc-700 text-center font-bold text-xs text-zinc-300">4 pax</button>
+            <button onclick="setBbqGuests(8)" class="bbq-guest-btn p-2 rounded-xl bg-red-950 border border-red-600 text-center font-bold text-xs text-white">8 pax</button>
+            <button onclick="setBbqGuests(12)" class="bbq-guest-btn p-2 rounded-xl bg-zinc-800 border border-zinc-700 text-center font-bold text-xs text-zinc-300">12 pax</button>
+            <button onclick="setBbqGuests(20)" class="bbq-guest-btn p-2 rounded-xl bg-zinc-800 border border-zinc-700 text-center font-bold text-xs text-zinc-300">20+ pax</button>
+          </div>
+        </div>
+
+        <!-- Meat Style Selector -->
+        <div class="p-4 bg-zinc-900 rounded-2xl border border-zinc-800 space-y-2">
+          <label class="text-xs font-bold text-zinc-200 block">Experiencia de Cortes:</label>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2.5 p-2.5 rounded-xl bg-zinc-800/60 border border-zinc-700 cursor-pointer">
+              <input type="radio" name="bbqTier" value="tradicional" onchange="recalcBbq()" class="accent-red-600">
+              <div class="text-xs">
+                <span class="font-bold text-white block">Parrillada Criolla & Cortes Tradicionales</span>
+                <span class="text-[10px] text-zinc-400">Pajarilla, costilla tierna, chorizo y chimichurri</span>
+              </div>
+            </label>
+            <label class="flex items-center gap-2.5 p-2.5 rounded-xl bg-red-950/40 border border-red-800/80 cursor-pointer">
+              <input type="radio" name="bbqTier" value="prime" checked onchange="recalcBbq()" class="accent-red-600">
+              <div class="text-xs">
+                <span class="font-bold text-white block">Prime Steakhouse Experience (Recomendado)</span>
+                <span class="text-[10px] text-zinc-300">Picaña Prime, Entraña fina, Chorizo artesanal</span>
+              </div>
+            </label>
+            <label class="flex items-center gap-2.5 p-2.5 rounded-xl bg-zinc-800/60 border border-zinc-700 cursor-pointer">
+              <input type="radio" name="bbqTier" value="wagyu" onchange="recalcBbq()" class="accent-red-600">
+              <div class="text-xs">
+                <span class="font-bold text-white block">Ultra-Lujo Dry-Aged & Wagyu A5</span>
+                <span class="text-[10px] text-amber-400">Tomahawk 45d, Ribeye Wagyu A5 y sales de autor</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Calculated Summary Card -->
+        <div class="p-4 rounded-2xl bg-gradient-to-br from-zinc-900 to-black border border-red-900/60 space-y-3">
+          <div class="flex justify-between items-center text-xs">
+            <span class="text-zinc-400">Carne total recomendada:</span>
+            <span id="bbqKilosText" class="font-mono font-bold text-white">3.60 kg (450g / persona)</span>
+          </div>
+
+          <div class="text-xs space-y-1 bg-zinc-950/60 p-3 rounded-xl border border-zinc-800/80">
+            <div class="font-bold text-amber-400 mb-1">Caja Sugerida por el Maestro:</div>
+            <div id="bbqBreakdownText" class="text-[11px] text-zinc-300 leading-relaxed font-mono">
+              • 1.6kg Picaña Black Angus Prime<br>
+              • 1.2kg Entraña Fina Angus<br>
+              • 800g Chorizos al Tempranillo (8 un.)<br>
+              • Chimichurri Ahumado de la Casa + Sal Marina (Gratis)
+            </div>
+          </div>
+
+          <div class="pt-2 flex justify-between items-center border-t border-zinc-800">
+            <div>
+              <span class="text-[10px] text-zinc-400">Cotización Total Box:</span>
+              <div id="bbqPriceText" class="text-base font-extrabold text-amber-400 font-mono">₡48,900 <span class="text-xs text-zinc-400 font-normal">($95)</span></div>
+            </div>
+            <button onclick="orderBbqBox()" class="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs flex items-center gap-1.5 cursor-pointer">
+              <i data-lucide="send" class="w-3.5 h-3.5"></i>
+              <span>Pedir Box por WhatsApp</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SCREEN 4: BÓVEDA DRY-AGED (LOCKER PERSONAL) -->
+      <!-- ========================================== -->
+      <section id="screen-maduracion" class="p-5 space-y-4 hidden">
+        <div class="space-y-1">
+          <div class="flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="text-[10px] font-mono font-bold uppercase text-emerald-400">CÁMARA DE MADURACIÓN ACTIVA</span>
+          </div>
+          <h2 class="text-lg font-serif-luxury font-bold text-white">Tu Casillero Dry-Aged</h2>
+          <p class="text-xs text-zinc-400">Monitorea la maduración de tus piezas exclusivas en nuestra cava de sal.</p>
+        </div>
+
+        <!-- Vault Card -->
+        <div class="p-5 rounded-3xl bg-zinc-900 border border-zinc-800 space-y-4 shadow-xl">
+          <div class="flex items-center justify-between">
+            <div>
+              <span class="text-[10px] text-zinc-400 font-mono uppercase">Casillero Asignado</span>
+              <div class="text-base font-bold text-white">Cava #08 // Don Andrés Tinoco</div>
+            </div>
+            <span class="px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/30 text-xs font-mono font-bold">28 DÍAS</span>
+          </div>
+
+          <div class="p-3 bg-zinc-950 rounded-2xl border border-zinc-800 flex justify-around text-center">
+            <div>
+              <span class="text-[9px] text-zinc-500 font-mono uppercase block">Temperatura</span>
+              <span class="text-xs font-bold font-mono text-white">1.8 °C</span>
+            </div>
+            <div class="border-r border-zinc-800"></div>
+            <div>
+              <span class="text-[9px] text-zinc-500 font-mono uppercase block">Humedad</span>
+              <span class="text-xs font-bold font-mono text-white">82% RH</span>
+            </div>
+            <div class="border-r border-zinc-800"></div>
+            <div>
+              <span class="text-[9px] text-zinc-500 font-mono uppercase block">Filtro Sal</span>
+              <span class="text-xs font-bold font-mono text-emerald-400">Activo</span>
+            </div>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="space-y-1">
+            <div class="flex justify-between text-[11px] font-mono">
+              <span class="text-zinc-400">Maduración: 28 / 45 Días</span>
+              <span class="text-amber-400 font-bold">62%</span>
+            </div>
+            <div class="w-full bg-zinc-800 h-2 rounded-full overflow-hidden">
+              <div class="bg-gradient-to-r from-amber-500 to-red-600 h-full rounded-full w-[62%]"></div>
+            </div>
+            <div class="flex justify-between text-[9px] text-zinc-500 font-mono pt-0.5">
+              <span>0 Días (Fresco)</span>
+              <span>30 Días (Tierna)</span>
+              <span>45 Días (Intensa)</span>
+            </div>
+          </div>
+
+          <div class="pt-2 flex gap-2">
+            <button onclick="requestLockerSlice()" class="flex-1 py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-750 text-zinc-200 border border-zinc-700 text-xs font-bold cursor-pointer transition-all text-center">
+              Solicitar Corte Ahora
+            </button>
+            <button onclick="extendAging()" class="flex-1 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold cursor-pointer transition-all text-center">
+              Madurar a 60 Días
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SCREEN 5: CARRITO & DESPACHO REFRIGERADO -->
+      <!-- ========================================== -->
+      <section id="screen-carrito" class="p-5 space-y-4 hidden">
+        <div class="space-y-1">
+          <h2 class="text-lg font-serif-luxury font-bold text-white">Tu Pedido Gourmet</h2>
+          <p class="text-xs text-zinc-400">Despacho en caja térmica sellada con gel refrigerante</p>
+        </div>
+
+        <!-- Cart Items -->
+        <div id="cartItemsList" class="space-y-2.5">
+          <!-- JS dynamic render -->
+        </div>
+
+        <!-- Breakdown -->
+        <div class="bg-zinc-900 rounded-2xl border border-zinc-800 p-4 space-y-2 text-xs">
+          <div class="flex justify-between text-zinc-400">
+            <span>Subtotal Cortes:</span>
+            <span id="cartSubtotalText" class="font-mono font-bold text-white">₡63,000</span>
+          </div>
+          <div class="flex justify-between text-zinc-400">
+            <span>Caja Térmica + Gel Ice Pack:</span>
+            <span class="font-mono text-emerald-400 font-bold">GRATIS</span>
+          </div>
+          <div class="border-t border-zinc-800 pt-2 flex justify-between text-sm font-extrabold text-white">
+            <span>Total a Pagar:</span>
+            <span id="cartTotalText" class="font-mono text-amber-400">₡63,000</span>
+          </div>
+        </div>
+
+        <button onclick="confirmCarniceriaOrder()" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-red-950 cursor-pointer active:scale-98 transition-all">
+          <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+          <span>Confirmar Pedido Refrigerado vía WhatsApp</span>
+        </button>
+      </section>
+
+    </div>
+
+    <!-- Bottom Navigation Tabs -->
+    <nav class="absolute bottom-0 left-0 right-0 bg-zinc-900/95 backdrop-blur-md border-t border-zinc-800 px-3 py-2 flex items-center justify-around z-20 shrink-0">
+      <button onclick="switchScreen('inicio')" class="nav-tab active flex flex-col items-center gap-0.5 text-red-500 cursor-pointer">
+        <i data-lucide="home" class="w-5 h-5"></i>
+        <span class="text-[10px] font-bold">Inicio</span>
+        <span class="w-1 h-1 rounded-full bg-red-500 -mt-0.5"></span>
+      </button>
+
+      <button onclick="switchScreen('cortes')" class="nav-tab flex flex-col items-center gap-0.5 text-zinc-400 hover:text-zinc-200 cursor-pointer">
+        <i data-lucide="utensils-crossed" class="w-5 h-5"></i>
+        <span class="text-[10px] font-semibold">Cortes</span>
+        <span class="w-1 h-1 rounded-full bg-transparent -mt-0.5"></span>
+      </button>
+
+      <button onclick="switchScreen('parrillada')" class="nav-tab flex flex-col items-center gap-0.5 text-zinc-400 hover:text-zinc-200 cursor-pointer">
+        <i data-lucide="calculator" class="w-5 h-5"></i>
+        <span class="text-[10px] font-semibold">BBQ Box</span>
+        <span class="w-1 h-1 rounded-full bg-transparent -mt-0.5"></span>
+      </button>
+
+      <button onclick="switchScreen('maduracion')" class="nav-tab flex flex-col items-center gap-0.5 text-zinc-400 hover:text-zinc-200 cursor-pointer">
+        <i data-lucide="shield-check" class="w-5 h-5"></i>
+        <span class="text-[10px] font-semibold">Bóveda</span>
+        <span class="w-1 h-1 rounded-full bg-transparent -mt-0.5"></span>
+      </button>
+
+      <button onclick="switchScreen('carrito')" class="nav-tab flex flex-col items-center gap-0.5 text-zinc-400 hover:text-zinc-200 cursor-pointer relative">
+        <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+        <span class="text-[10px] font-semibold">Carrito</span>
+        <span id="bottomNavBadge" class="absolute top-0 right-2 w-3.5 h-3.5 rounded-full bg-red-600 text-white text-[8px] font-bold flex items-center justify-center font-mono">2</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <script>
+    const state = {
+      cart: [
+        { name: 'Tomahawk Dry-Aged 45 Días (1.2kg)', price: 38500, qty: 1 },
+        { name: 'Picaña Black Angus Prime', price: 24500, qty: 1 }
+      ],
+      bbqGuests: 8,
+      bbqTier: 'prime'
+    };
+
+    function switchScreen(screenId) {
+      ['inicio', 'cortes', 'parrillada', 'maduracion', 'carrito'].forEach(id => {
+        const el = document.getElementById('screen-' + id);
+        if (el) el.classList.add('hidden');
+      });
+      const activeEl = document.getElementById('screen-' + screenId);
+      if (activeEl) activeEl.classList.remove('hidden');
+
+      const tabMap = { 'inicio': 0, 'cortes': 1, 'parrillada': 2, 'maduracion': 3, 'carrito': 4 };
+      const tabs = document.querySelectorAll('.nav-tab');
+      tabs.forEach((t, i) => {
+        if (i === tabMap[screenId]) {
+          t.className = 'nav-tab active flex flex-col items-center gap-0.5 text-red-500 cursor-pointer';
+          const dot = t.querySelectorAll('span')[1];
+          if (dot) dot.className = 'w-1 h-1 rounded-full bg-red-500 -mt-0.5';
+        } else {
+          t.className = 'nav-tab flex flex-col items-center gap-0.5 text-zinc-400 hover:text-zinc-200 cursor-pointer';
+          const dot = t.querySelectorAll('span')[1];
+          if (dot) dot.className = 'w-1 h-1 rounded-full bg-transparent -mt-0.5';
+        }
+      });
+
+      if (screenId === 'carrito') renderCart();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      lucide.createIcons();
+    }
+
+    function renderCart() {
+      const container = document.getElementById('cartItemsList');
+      if (!container) return;
+
+      if (state.cart.length === 0) {
+        container.innerHTML = `
+          <div class="p-8 text-center bg-zinc-900 rounded-2xl border border-zinc-800">
+            <div class="text-3xl mb-2">🥩</div>
+            <div class="text-sm font-bold text-white">Tu carrito está vacío</div>
+            <p class="text-xs text-zinc-400 mt-1">Explora nuestros cortes Dry-Aged o Wagyu A5</p>
+            <button onclick="switchScreen('cortes')" class="mt-3 px-4 py-2 rounded-xl bg-red-600 text-white text-xs font-bold cursor-pointer">Ver Cortes</button>
+          </div>
+        `;
+        updateCartTotals();
+        return;
+      }
+
+      container.innerHTML = state.cart.map((item, index) => `
+        <div class="p-3 bg-zinc-900 rounded-2xl border border-zinc-800 flex items-center justify-between">
+          <div>
+            <div class="text-xs font-bold text-white">${item.name}</div>
+            <div class="text-xs font-extrabold text-amber-400 font-mono">₡${item.price.toLocaleString()}</div>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="flex items-center border border-zinc-700 rounded-lg bg-zinc-800">
+              <button onclick="updateQty(${index}, -1)" class="px-2 py-1 text-xs font-bold text-zinc-300 hover:bg-zinc-700 rounded-l">-</button>
+              <span class="px-2 text-xs font-bold font-mono text-white">${item.qty}</span>
+              <button onclick="updateQty(${index}, 1)" class="px-2 py-1 text-xs font-bold text-zinc-300 hover:bg-zinc-700 rounded-r">+</button>
+            </div>
+            <button onclick="removeItem(${index})" class="p-1 text-zinc-400 hover:text-red-400 cursor-pointer">
+              <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        </div>
+      `).join('');
+
+      updateCartTotals();
+      lucide.createIcons();
+    }
+
+    function addToCart(name, price) {
+      const existing = state.cart.find(i => i.name === name);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        state.cart.push({ name, price, qty: 1 });
+      }
+      updateBadges();
+      alert(`🥩 "${name}" añadido a tu pedido refrigerado.`);
+    }
+
+    function updateQty(index, delta) {
+      if (state.cart[index]) {
+        state.cart[index].qty += delta;
+        if (state.cart[index].qty <= 0) {
+          state.cart.splice(index, 1);
+        }
+        renderCart();
+        updateBadges();
+      }
+    }
+
+    function removeItem(index) {
+      state.cart.splice(index, 1);
+      renderCart();
+      updateBadges();
+    }
+
+    function updateCartTotals() {
+      const subtotal = state.cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+      const total = subtotal;
+
+      const subEl = document.getElementById('cartSubtotalText');
+      const totEl = document.getElementById('cartTotalText');
+
+      if (subEl) subEl.innerText = '₡' + subtotal.toLocaleString();
+      if (totEl) totEl.innerText = '₡' + total.toLocaleString();
+    }
+
+    function updateBadges() {
+      const count = state.cart.reduce((s, i) => s + i.qty, 0);
+      const b1 = document.getElementById('headerCartCount');
+      const b2 = document.getElementById('bottomNavBadge');
+      if (b1) b1.innerText = count;
+      if (b2) b2.innerText = count;
+    }
+
+    function setBbqGuests(pax) {
+      state.bbqGuests = pax;
+      document.querySelectorAll('.bbq-guest-btn').forEach(b => {
+        b.className = 'bbq-guest-btn p-2 rounded-xl bg-zinc-800 border border-zinc-700 text-center font-bold text-xs text-zinc-300';
+      });
+      event.target.className = 'bbq-guest-btn p-2 rounded-xl bg-red-950 border border-red-600 text-center font-bold text-xs text-white';
+      recalcBbq();
+    }
+
+    function recalcBbq() {
+      const tier = document.querySelector('input[name="bbqTier"]:checked').value;
+      state.bbqTier = tier;
+
+      const pax = state.bbqGuests;
+      const kilos = (pax * 0.45).toFixed(2);
+
+      let price = 0;
+      let text = '';
+
+      if (tier === 'tradicional') {
+        price = pax * 4200;
+        text = `• ${(pax*0.2).toFixed(1)}kg Pajarilla & Costilla de Cerdo\n• ${(pax*0.15).toFixed(1)}kg Chorizo Criollo\n• Chimichurri Casero`;
+      } else if (tier === 'prime') {
+        price = pax * 6100;
+        text = `• ${(pax*0.22).toFixed(1)}kg Picaña Black Angus Prime\n• ${(pax*0.15).toFixed(1)}kg Entraña Fina Angus\n• ${(pax*0.08).toFixed(1)}kg Chorizos al Tempranillo\n• Sal Ahumada y Chimichurri de la Casa`;
+      } else {
+        price = pax * 14500;
+        text = `• ${(pax*0.25).toFixed(1)}kg Tomahawk Dry-Aged 45 Días\n• ${(pax*0.15).toFixed(1)}kg Ribeye Wagyu Japonés A5\n• Sales Volcánicas de Escamas`;
+      }
+
+      document.getElementById('bbqKilosText').innerText = `${kilos} kg (450g / persona)`;
+      document.getElementById('bbqBreakdownText').innerText = text;
+      document.getElementById('bbqPriceText').innerText = `₡${price.toLocaleString()} ($${Math.round(price/515)})`;
+    }
+
+    function orderBbqBox() {
+      const tier = state.bbqTier.toUpperCase();
+      const pax = state.bbqGuests;
+      const kilos = (pax * 0.45).toFixed(2);
+
+      const msg = `*CORTE REAL // PEDIDO BBQ BOX MASTER*\n\n` +
+        `👤 *Cliente:* Don Andrés Tinoco\n` +
+        `🔥 *Experiencia:* ${tier}\n` +
+        `👥 *Comensales:* ${pax} personas (${kilos} kg total)\n` +
+        `📦 *Despacho:* Caja térmica sellada al vacío\n\n` +
+        `Hola maestro carnicero, coticé esta BBQ Box desde la app y deseo encargarla para este fin de semana.`;
+
+      window.open(`https://wa.me/50670693708?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    function consultButcher() {
+      const msg = `Hola Don Gonzalo de Corte Real, tengo una duda sobre el grosor ideal y tiempo de sellado para un corte especial.`;
+      window.open(`https://wa.me/50670693708?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    function confirmCarniceriaOrder() {
+      if (state.cart.length === 0) {
+        alert('Agrega cortes a tu pedido primero.');
+        return;
+      }
+      const total = state.cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+      const itemsList = state.cart.map(i => `• ${i.name} (x${i.qty}) - ₡${(i.price * i.qty).toLocaleString()}`).join('\n');
+
+      const msg = `*CORTE REAL // ORDEN DE CARNES PREMIUM*\n\n` +
+        `👤 *Cliente:* Don Andrés Tinoco\n` +
+        `📍 *Entrega:* Escazú / GAM (Envío en frío con Ice Packs)\n\n` +
+        `*CORTES SELECCIONADOS:*\n${itemsList}\n\n` +
+        `💰 *TOTAL:* ₡${total.toLocaleString()}\n\n` +
+        `Hola, deseo confirmar el despacho refrigerado de esta orden.`;
+
+      window.open(`https://wa.me/50670693708?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    function requestLockerSlice() {
+      alert('Solicitud enviada a cava: Tu Ribeye de 28 días será retirado, porcionado en filetes de 1.5 pulgadas y empacado al vacío hoy mismo.');
+    }
+
+    function extendAging() {
+      alert('Configuración actualizada: Tu casillero #08 continuará en maduración hasta completar 60 días para máxima intensidad.');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      updateBadges();
+      updateCartTotals();
+    });
+  </script>
+</body>
+</html>
