@@ -1418,7 +1418,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
                       src={`/demos/${selectedApp.slug}/index.html`}
                       title={selectedApp.name}
                       className="w-full h-full border-0"
-                      loading="lazy"
+                      loading="eager"
                     />
                   </div>
 
@@ -1497,11 +1497,10 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
               src={`/demos/${fullScreenApp.slug}/index.html`}
               title={fullScreenApp.name}
               className="w-full h-full border-0"
-              sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
             />
           </div>
 
-          {/* Bottom Floating Navigation Switcher (Browse all 9 apps effortlessly with 1 tap) */}
+          {/* Bottom Floating Navigation Switcher (Browse all apps effortlessly with 1 tap) */}
           <div className="bg-slate-900/95 backdrop-blur-md border-t border-slate-800 px-4 py-2.5 flex items-center justify-between gap-3 shrink-0 z-30">
             <button
               onClick={handlePrevApp}
@@ -3707,7 +3706,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
           className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl bg-blue-600 active:bg-blue-700 text-white font-extrabold text-xs shadow-md shadow-blue-600/30 text-center"
         >
           <Play className="w-3.5 h-3.5 fill-white shrink-0" />
-          <span>Probar 9 Apps</span>
+          <span>Probar Apps</span>
         </a>
 
         <a

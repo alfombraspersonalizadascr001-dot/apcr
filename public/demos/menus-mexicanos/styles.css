@@ -161,6 +161,24 @@ body {
   filter: brightness(1.15);
 }
 
+.btn-whatsapp-accent {
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  text-decoration: none !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #fff !important;
+}
+
+.btn-short-text {
+  display: none;
+}
+
+.btn-full-text {
+  display: inline;
+}
+
 /* ==========================================================================
    VISTA DEL CATÁLOGO MAESTRO (GRID DE LOS RESTAURANTES MEXICANOS)
    ========================================================================== */
@@ -353,6 +371,12 @@ body {
   backdrop-filter: blur(16px);
   margin-bottom: 2.5rem;
   overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.sections-tab-bar::-webkit-scrollbar {
+  display: none;
 }
 
 .tab-item {
@@ -643,6 +667,315 @@ body {
 
 .drawer-backdrop.active {
   right: 0;
+}
+
+/* ==========================================================================
+   RESPONSIVIDAD MÓVIL Y TABLETS (@media max-width: 768px)
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+  .btn-short-text {
+    display: inline !important;
+  }
+  .btn-full-text {
+    display: none !important;
+  }
+
+  /* Header Compacto y adaptable */
+  .brand-header {
+    padding: 0.75rem 1rem;
+  }
+
+  .brand-header-inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .brand-logo-container {
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .brand-logo-icon {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    font-size: 1.6rem;
+    border-radius: 12px;
+  }
+
+  .brand-kanji-tag {
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+  }
+
+  .brand-main-name {
+    font-size: 1.15rem;
+    line-height: 1.2;
+  }
+
+  .brand-sub-region {
+    font-size: 0.7rem;
+    letter-spacing: 0.5px;
+  }
+
+  /* Botones de acción del header */
+  .header-action-btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    width: 100%;
+  }
+
+  .header-action-btns .btn-catalog-switch {
+    width: 100% !important;
+    flex: 1 1 100% !important;
+    order: -1;
+    justify-content: center;
+    padding: 0.6rem 0.75rem;
+    font-size: 0.8rem;
+    border-radius: 12px;
+  }
+
+  .header-action-btns .btn-print-accent {
+    flex: 1 1 calc(50% - 0.25rem) !important;
+    min-width: 0 !important;
+    padding: 0.6rem 0.4rem !important;
+    font-size: 0.75rem !important;
+    justify-content: center;
+    text-align: center;
+    border-radius: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+  }
+
+  /* Vista Catálogo */
+  .catalog-view {
+    margin: 1.25rem auto 3rem auto;
+    padding: 0 1rem;
+  }
+
+  .catalog-hero {
+    margin-bottom: 1.5rem;
+  }
+
+  .catalog-title {
+    font-size: 1.6rem;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .catalog-desc {
+    font-size: 0.85rem;
+    margin-bottom: 1.25rem;
+    padding: 0 0.25rem;
+  }
+
+  .filter-bar-center {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 0.25rem 0.25rem 0.5rem 0.25rem;
+    gap: 0.4rem;
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  .filter-bar-center::-webkit-scrollbar {
+    display: none;
+  }
+
+  .chip-btn {
+    flex-shrink: 0;
+    padding: 0.5rem 0.85rem;
+    font-size: 0.78rem;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .restaurant-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .rest-card-imgbox {
+    height: 180px;
+  }
+
+  .rest-card-body {
+    padding: 1.25rem;
+  }
+
+  .rest-name {
+    font-size: 1.2rem;
+  }
+
+  .rest-tagline {
+    font-size: 0.82rem;
+    margin-bottom: 1rem;
+  }
+
+  .btn-open-world {
+    padding: 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  /* Vista Detalle Restaurante */
+  .restaurant-view {
+    padding: 0 1rem 4rem 1rem;
+  }
+
+  .rest-hero-card {
+    min-height: 220px;
+    margin-bottom: 1.25rem;
+    border-radius: 16px;
+  }
+
+  .rest-hero-overlay {
+    padding: 1.25rem 1rem;
+  }
+
+  .rest-hero-title {
+    font-size: 1.5rem;
+    line-height: 1.15;
+  }
+
+  .rest-hero-tagline {
+    font-size: 0.82rem;
+  }
+
+  .sections-tab-bar {
+    display: flex;
+    gap: 0.35rem;
+    padding: 0.35rem;
+    border-radius: 24px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    margin-bottom: 1.25rem;
+  }
+
+  .sections-tab-bar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tab-item {
+    flex: 0 0 auto;
+    padding: 0.55rem 0.85rem;
+    font-size: 0.78rem;
+    white-space: nowrap;
+  }
+
+  .dishes-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .dish-imgbox {
+    height: 180px;
+  }
+
+  .dish-content {
+    padding: 1rem;
+  }
+
+  .dish-title {
+    font-size: 1.1rem;
+  }
+
+  .dish-desc {
+    font-size: 0.82rem;
+  }
+
+  /* Modales en Móvil */
+  .modal-backdrop {
+    padding: 1rem;
+  }
+
+  .modal-backdrop > div {
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 16px !important;
+  }
+
+  .modal-backdrop > div > div:first-child {
+    height: 200px !important;
+  }
+
+  .modal-backdrop > div > div:last-child {
+    padding: 1.25rem !important;
+  }
+
+  #modalTitle {
+    font-size: 1.3rem !important;
+  }
+
+  #modalPrice {
+    font-size: 1.25rem !important;
+  }
+
+  #modalDesc {
+    font-size: 0.88rem !important;
+  }
+
+  .print-topbar {
+    padding: 0.75rem 1rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.6rem;
+  }
+
+  .print-format-toggle {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .print-format-btn {
+    flex: 1;
+    justify-content: center;
+    padding: 0.45rem 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .print-sheet-wrapper {
+    padding: 1rem 0.5rem;
+  }
+
+  .physical-menu-sheet {
+    padding: 1.5rem 1rem !important;
+  }
+
+  .printable-flyer-hd {
+    padding: 1.25rem 0.85rem !important;
+  }
+
+  .flyer-header-banner {
+    height: 160px;
+    margin-bottom: 1.25rem;
+  }
+
+  .flyer-dish-row {
+    grid-template-columns: 65px 1fr;
+    gap: 0.65rem;
+    padding: 0.5rem;
+  }
+
+  .flyer-dish-img {
+    width: 65px;
+    height: 65px;
+  }
+
+  .drawer-backdrop {
+    max-width: 100vw;
+    width: 100%;
+    padding: 1.25rem;
+  }
 }
 
 /* ==========================================================================
