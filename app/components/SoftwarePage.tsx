@@ -39,7 +39,7 @@ interface DemoApp {
   id: string;
   slug: string;
   name: string;
-  category: 'fitness' | 'gastro' | 'health' | 'taller' | 'auto';
+  category: 'fitness' | 'gastro' | 'health' | 'taller' | 'auto' | 'travel';
   categoryLabel: string;
   badge: string;
   tagline: string;
@@ -52,6 +52,21 @@ interface DemoApp {
 }
 
 const DEMO_APPS: DemoApp[] = [
+  {
+    id: 'travel-app',
+    slug: 'travel-app',
+    name: 'VAGAMUNDO // Agencia de Viajes & Turismo VIP',
+    category: 'travel',
+    categoryLabel: 'Turismo & Viajes (App Móvil)',
+    badge: 'App Android & iOS para Pasajeros',
+    tagline: 'Paquetes VIP, Itinerario en Vivo, Boarding Pass QR & Concierge 24/7',
+    description: 'La aplicación móvil definitiva para agencias de viajes boutique y mayoristas: sus clientes exploran paquetes (Cancún, Europa, Cruceros, Japón), cotizan viajes a la medida con cuotas mensuales, siguen su itinerario de vuelos en vivo con pase de abordar QR y reciben asistencia concierge 24/7 en español.',
+    features: ['Explorador de paquetes vacacionales con doble moneda ($ y ₡)', 'Itinerario interactivo día por día con vuelos en tiempo real', 'Bóveda digital de pases de abordar QR, vouchers de hotel y seguros', 'Cotizador a la medida en cuotas y chat concierge por WhatsApp'],
+    color: '#06b6d4',
+    accentBg: 'bg-cyan-500/10 border-cyan-500/30',
+    accentText: 'text-cyan-400',
+    icon: '✈️'
+  },
   {
     id: 'auto-app',
     slug: 'auto-app',
@@ -313,7 +328,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
     setFullScreenApp(DEMO_APPS[nextIndex]);
     setSelectedApp(DEMO_APPS[nextIndex]);
   };
-  const [appFilter, setAppFilter] = useState<'all' | 'fitness' | 'gastro' | 'health' | 'taller' | 'auto'>('all');
+  const [appFilter, setAppFilter] = useState<'all' | 'fitness' | 'gastro' | 'health' | 'taller' | 'auto' | 'travel'>('all');
   const [fullScreenApp, setFullScreenApp] = useState<DemoApp | null>(null);
   const [iframeKey, setIframeKey] = useState<number>(0);
   
@@ -976,6 +991,7 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
             <div className="flex flex-wrap items-center justify-center gap-2 mt-6">
               {[
                 { id: 'all', label: `Todos (${DEMO_APPS.length} Demos)` },
+                { id: 'travel', label: '✈️ Agencia de Viajes (App)' },
                 { id: 'auto', label: '🏎️ Automotriz & Taller (App)' },
                 { id: 'gastro', label: '🍽️ Gastronomía & Menús (7)' },
                 { id: 'taller', label: '🔨 Fabricación & CRM' },

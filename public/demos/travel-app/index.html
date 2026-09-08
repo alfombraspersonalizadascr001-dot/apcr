@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>VAGAMUNDO // App Móvil para Agencia de Viajes (iOS & Android)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #f1f5f9;
+      color: #0f172a;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    .font-brand {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-0 sm:p-4 bg-slate-200 antialiased">
+
+  <!-- Mobile Phone Wrapper -->
+  <div class="w-full max-w-md h-screen sm:h-[844px] bg-white sm:rounded-[44px] sm:border-[8px] sm:border-slate-900 shadow-2xl flex flex-col relative overflow-hidden">
+
+    <!-- Mobile Top Status Bar -->
+    <div class="pt-3 px-6 pb-2 flex items-center justify-between bg-white text-slate-900 text-xs font-semibold select-none z-20 shrink-0">
+      <span class="font-mono text-[13px] font-bold">9:41</span>
+      <!-- Dynamic Island -->
+      <div class="w-24 h-4 rounded-full bg-slate-950 flex items-center justify-center">
+        <div class="w-2 h-2 rounded-full bg-cyan-400 mr-2 animate-pulse"></div>
+        <div class="w-1.5 h-1.5 rounded-full bg-slate-700"></div>
+      </div>
+      <div class="flex items-center gap-1.5 text-slate-800">
+        <i data-lucide="signal" class="w-3.5 h-3.5"></i>
+        <i data-lucide="wifi" class="w-3.5 h-3.5"></i>
+        <i data-lucide="battery" class="w-4 h-4"></i>
+      </div>
+    </div>
+
+    <!-- App Top Navigation Header -->
+    <header class="px-5 py-3 border-b border-slate-100 flex items-center justify-between bg-white/95 backdrop-blur-md sticky top-0 z-10 shrink-0">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-cyan-600 to-blue-600 flex items-center justify-center text-white font-black text-sm shadow-sm shadow-cyan-500/30">
+          ✈️
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <span class="font-brand font-black text-sm tracking-tight text-slate-950">VAGAMUNDO</span>
+            <span class="px-1.5 py-0.2 rounded text-[9px] font-black bg-cyan-50 text-cyan-700 border border-cyan-200">VIAJES VIP</span>
+          </div>
+          <div class="text-[10px] text-slate-400 font-medium">Agencia de Viajes & Experiencias • CR</div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <!-- Currency Switcher -->
+        <button onclick="toggleCurrency()" id="btn-currency" class="px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-[11px] font-bold transition-colors cursor-pointer border border-slate-200">
+          USD ($)
+        </button>
+
+        <!-- Notification Bell -->
+        <button onclick="toggleModal('notifModal')" class="relative p-2 rounded-full hover:bg-slate-100 text-slate-700 cursor-pointer transition-colors">
+          <i data-lucide="bell" class="w-4 h-4"></i>
+          <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-cyan-500 border border-white animate-pulse"></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Scrollable Screen Content Container -->
+    <div class="flex-1 overflow-y-auto no-scrollbar pb-24 bg-[#f8fafc]">
+
+      <!-- ============================================================== -->
+      <!-- SCREEN 1: EXPLORAR DESTINOS & PAQUETES (HOME) -->
+      <!-- ============================================================== -->
+      <section id="screen-explorar" class="p-5 space-y-5">
+
+        <!-- Welcome Banner -->
+        <div class="flex items-center justify-between">
+          <div>
+            <span class="text-xs font-semibold text-slate-400 block">¿A dónde viajarás hoy?</span>
+            <h1 class="text-xl font-extrabold text-slate-950 tracking-tight">Hola, Daniel 👋</h1>
+          </div>
+          <div class="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-bold flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            <span>Pasaporte Activo</span>
+          </div>
+        </div>
+
+        <!-- Stories / Destination Quick Filters -->
+        <div class="flex items-center gap-3 overflow-x-auto no-scrollbar py-1">
+          <button onclick="filterDest('todos')" class="flex flex-col items-center gap-1 shrink-0 cursor-pointer group">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-xl text-white shadow-md shadow-cyan-500/20 group-hover:scale-105 transition-transform">
+              🌍
+            </div>
+            <span class="text-[10px] font-bold text-slate-900">Todos</span>
+          </button>
+
+          <button onclick="filterDest('caribe')" class="flex flex-col items-center gap-1 shrink-0 cursor-pointer group">
+            <div class="w-14 h-14 rounded-2xl bg-slate-900 overflow-hidden border border-slate-200 relative group-hover:scale-105 transition-transform">
+              <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=150&q=80" alt="Caribe" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-black/20"></div>
+            </div>
+            <span class="text-[10px] font-medium text-slate-600">Caribe</span>
+          </button>
+
+          <button onclick="filterDest('europa')" class="flex flex-col items-center gap-1 shrink-0 cursor-pointer group">
+            <div class="w-14 h-14 rounded-2xl bg-slate-900 overflow-hidden border border-slate-200 relative group-hover:scale-105 transition-transform">
+              <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=150&q=80" alt="Europa" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-black/20"></div>
+            </div>
+            <span class="text-[10px] font-medium text-slate-600">Europa</span>
+          </button>
+
+          <button onclick="filterDest('asia')" class="flex flex-col items-center gap-1 shrink-0 cursor-pointer group">
+            <div class="w-14 h-14 rounded-2xl bg-slate-900 overflow-hidden border border-slate-200 relative group-hover:scale-105 transition-transform">
+              <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=150&q=80" alt="Asia" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-black/20"></div>
+            </div>
+            <span class="text-[10px] font-medium text-slate-600">Asia</span>
+          </button>
+
+          <button onclick="filterDest('cruceros')" class="flex flex-col items-center gap-1 shrink-0 cursor-pointer group">
+            <div class="w-14 h-14 rounded-2xl bg-slate-900 overflow-hidden border border-slate-200 relative group-hover:scale-105 transition-transform">
+              <img src="https://images.unsplash.com/photo-1548574505-5e239809ee19?auto=format&fit=crop&w=150&q=80" alt="Cruceros" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-black/20"></div>
+            </div>
+            <span class="text-[10px] font-medium text-slate-600">Cruceros</span>
+          </button>
+        </div>
+
+        <!-- Featured Hero Trip Card -->
+        <div class="rounded-3xl overflow-hidden relative shadow-xl border border-slate-200 bg-slate-900 text-white">
+          <img src="https://images.unsplash.com/photo-1512100356356-de1b84283e18?auto=format&fit=crop&w=800&q=80" alt="Cancún" class="w-full h-56 object-cover opacity-80">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+
+          <div class="absolute top-4 left-4 flex gap-2">
+            <span class="px-2.5 py-1 rounded-full bg-cyan-500 text-slate-950 text-[10px] font-black uppercase tracking-wider shadow-md">
+              ★ MÁS VENDIDO 2026
+            </span>
+            <span class="px-2.5 py-1 rounded-full bg-slate-900/80 backdrop-blur-md text-white text-[10px] font-bold border border-white/20">
+              SIN VISA AMERICANA
+            </span>
+          </div>
+
+          <div class="absolute bottom-4 left-4 right-4 space-y-2">
+            <div>
+              <span class="text-cyan-400 text-xs font-bold font-mono uppercase">RIVIERA MAYA • TODO INCLUIDO</span>
+              <h3 class="text-xl font-extrabold text-white leading-tight">Escapada Resort 5★ & Parques Xcaret</h3>
+            </div>
+
+            <div class="flex items-center justify-between pt-2 border-t border-white/15">
+              <div>
+                <span class="text-[10px] text-slate-300 block">Por persona desde:</span>
+                <span class="font-mono font-black text-xl text-cyan-300 price-display" data-usd="795" data-crc="415000">$795</span>
+                <span class="text-[10px] text-slate-400 ml-1">(5 Días / 4 Noches)</span>
+              </div>
+              <button onclick="bookTripModal('Cancún All-Inclusive VIP', 795)" class="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-extrabold text-xs shadow-lg shadow-cyan-500/30 transition-all cursor-pointer">
+                Ver Itinerario
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Package Deals List -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 font-mono">Paquetes Disponibles desde Costa Rica</h3>
+            <span class="text-[11px] text-cyan-600 font-bold">Vuelos desde SJO</span>
+          </div>
+
+          <!-- Deal 1: Europa Clásica -->
+          <div class="bg-white rounded-2xl border border-slate-200 p-3.5 shadow-xs flex gap-3 hover:border-cyan-400 transition-all cursor-pointer" onclick="bookTripModal('Europa Clásica 15 Días', 2150)">
+            <img src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=200&q=80" alt="París" class="w-24 h-24 rounded-xl object-cover shrink-0">
+            <div class="flex-1 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] font-bold text-blue-600 font-mono">EUROPA • 15 DÍAS</span>
+                  <span class="text-[10px] bg-slate-100 px-1.5 py-0.5 rounded text-slate-600 font-semibold">Tasa Cero 12m</span>
+                </div>
+                <h4 class="text-xs font-bold text-slate-950 mt-0.5 leading-snug">Madrid, París, Venecia & Roma</h4>
+                <p class="text-[11px] text-slate-400 line-clamp-1">Vuelos directos + Hoteles 4★ + Desayunos + Trenes</p>
+              </div>
+              <div class="flex items-center justify-between pt-1.5 border-t border-slate-100">
+                <span class="font-mono font-black text-sm text-slate-900 price-display" data-usd="2150" data-crc="1120000">$2,150</span>
+                <span class="text-[11px] text-cyan-600 font-bold flex items-center gap-0.5">
+                  Cotizar <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Deal 2: Crucero Caribe Sin Visa -->
+          <div class="bg-white rounded-2xl border border-slate-200 p-3.5 shadow-xs flex gap-3 hover:border-cyan-400 transition-all cursor-pointer" onclick="bookTripModal('Crucero Caribe 8 Días Sin Visa', 980)">
+            <img src="https://images.unsplash.com/photo-1548574505-5e239809ee19?auto=format&fit=crop&w=200&q=80" alt="Crucero" class="w-24 h-24 rounded-xl object-cover shrink-0">
+            <div class="flex-1 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] font-bold text-cyan-600 font-mono">CRUCERO • 8 DÍAS</span>
+                  <span class="text-[10px] bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded font-bold">Sin Visa</span>
+                </div>
+                <h4 class="text-xs font-bold text-slate-950 mt-0.5 leading-snug">Cartagena, Aruba, Curazao & Bonaire</h4>
+                <p class="text-[11px] text-slate-400 line-clamp-1">Todo incluido a bordo: comidas ilimitadas y shows</p>
+              </div>
+              <div class="flex items-center justify-between pt-1.5 border-t border-slate-100">
+                <span class="font-mono font-black text-sm text-slate-900 price-display" data-usd="980" data-crc="510000">$980</span>
+                <span class="text-[11px] text-cyan-600 font-bold flex items-center gap-0.5">
+                  Cotizar <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Deal 3: Japón Ancestral & Moderno -->
+          <div class="bg-white rounded-2xl border border-slate-200 p-3.5 shadow-xs flex gap-3 hover:border-cyan-400 transition-all cursor-pointer" onclick="bookTripModal('Japón Imperial 12 Días', 2890)">
+            <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=200&q=80" alt="Japón" class="w-24 h-24 rounded-xl object-cover shrink-0">
+            <div class="flex-1 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] font-bold text-rose-600 font-mono">ASIA • 12 DÍAS</span>
+                  <span class="text-[10px] bg-rose-50 text-rose-700 px-1.5 py-0.5 rounded font-bold">Japón Pass</span>
+                </div>
+                <h4 class="text-xs font-bold text-slate-950 mt-0.5 leading-snug">Tokio, Kioto, Osaka & Monte Fuji</h4>
+                <p class="text-[11px] text-slate-400 line-clamp-1">Shinkansen Tren Bala + Hoteles Boutique + Guía</p>
+              </div>
+              <div class="flex items-center justify-between pt-1.5 border-t border-slate-100">
+                <span class="font-mono font-black text-sm text-slate-900 price-display" data-usd="2890" data-crc="1510000">$2,890</span>
+                <span class="text-[11px] text-cyan-600 font-bold flex items-center gap-0.5">
+                  Cotizar <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Agency Trust Banner -->
+        <div class="p-4 rounded-2xl bg-gradient-to-r from-blue-900 to-slate-900 text-white flex items-center justify-between">
+          <div class="space-y-0.5">
+            <span class="text-[10px] font-mono font-bold text-cyan-300">ASISTENCIA 24/7 EN ESPAÑOL</span>
+            <h4 class="text-xs font-bold">¿Viajas con tranquilidad?</h4>
+            <p class="text-[11px] text-slate-300">Seguro médico internacional incluido en todos los viajes.</p>
+          </div>
+          <button onclick="switchScreen('concierge')" class="px-3 py-1.5 rounded-xl bg-white text-slate-900 text-xs font-bold shrink-0">
+            Asesor VIP
+          </button>
+        </div>
+
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- SCREEN 2: MI ITINERARIO EN VIVO (DÍA A DÍA) -->
+      <!-- ============================================================== -->
+      <section id="screen-itinerario" class="p-5 space-y-5 hidden">
+        
+        <div class="flex items-center justify-between">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-cyan-600 font-mono">VIAJE ACTIVO</span>
+            <h2 class="text-xl font-extrabold text-slate-950">Riviera Maya & Cancún</h2>
+            <p class="text-xs text-slate-400">Hotel Xcaret Arte 5★ • 5 Días / 4 Noches</p>
+          </div>
+          <span class="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-mono font-bold">
+            CONFIRMADO
+          </span>
+        </div>
+
+        <!-- Flight Live Card -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs space-y-3">
+          <div class="flex items-center justify-between pb-2 border-b border-slate-100 text-xs">
+            <div class="flex items-center gap-2 font-bold text-slate-800">
+              <i data-lucide="plane" class="w-4 h-4 text-cyan-600"></i>
+              <span>Vuelo de Ida: Avianca AV-692</span>
+            </div>
+            <span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 font-mono text-[10px] font-bold">A TIEMPO</span>
+          </div>
+
+          <div class="flex items-center justify-between py-1">
+            <div>
+              <span class="text-2xl font-black text-slate-900 font-mono">SJO</span>
+              <span class="block text-[11px] text-slate-400">San José, CR</span>
+              <strong class="text-xs text-slate-700">07:45 AM</strong>
+            </div>
+
+            <div class="flex-1 px-4 flex flex-col items-center">
+              <span class="text-[10px] text-slate-400 font-mono">2h 40m Directo</span>
+              <div class="w-full flex items-center my-1">
+                <div class="w-2 h-2 rounded-full bg-cyan-600"></div>
+                <div class="flex-1 h-0.5 bg-gradient-to-r from-cyan-600 to-blue-600"></div>
+                <i data-lucide="plane" class="w-3.5 h-3.5 text-blue-600 rotate-90 mx-1"></i>
+                <div class="flex-1 h-0.5 bg-slate-200"></div>
+                <div class="w-2 h-2 rounded-full bg-slate-300"></div>
+              </div>
+              <span class="text-[9px] text-cyan-600 font-bold">Puerta 4B • Terminal 1</span>
+            </div>
+
+            <div class="text-right">
+              <span class="text-2xl font-black text-slate-900 font-mono">CUN</span>
+              <span class="block text-[11px] text-slate-400">Cancún, MX</span>
+              <strong class="text-xs text-slate-700">11:25 AM</strong>
+            </div>
+          </div>
+
+          <button onclick="switchScreen('vouchers')" class="w-full py-2 rounded-xl bg-slate-900 text-white text-xs font-bold flex items-center justify-center gap-1.5">
+            <i data-lucide="qr-code" class="w-3.5 h-3.5 text-cyan-400"></i>
+            <span>Ver Pase de Abordar Digital</span>
+          </button>
+        </div>
+
+        <!-- Day by Day Timeline -->
+        <div class="space-y-3">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 font-mono">Cronograma Día por Día</h3>
+
+          <!-- Día 1 -->
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="px-2 py-0.5 rounded bg-cyan-50 text-cyan-700 font-mono text-[10px] font-bold">DÍA 1 • JUEVES</span>
+              <span class="text-xs text-slate-400">Llegada & Bienvenida</span>
+            </div>
+            <h4 class="text-xs font-bold text-slate-900">Check-in Resort & Traslado Privado</h4>
+            <p class="text-[11px] text-slate-500">Chofer privado esperando en salida internacional con letrero "Daniel". Check-in VIP en Hotel Xcaret Arte con cóctel de bienvenida.</p>
+          </div>
+
+          <!-- Día 2 -->
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="px-2 py-0.5 rounded bg-blue-50 text-blue-700 font-mono text-[10px] font-bold">DÍA 2 • VIERNES</span>
+              <span class="text-xs text-slate-400">Excursión Incluida</span>
+            </div>
+            <h4 class="text-xs font-bold text-slate-900">Parque Xcaret Plus & Show México Espectacular</h4>
+            <p class="text-[11px] text-slate-500">Acceso ilimitado a ríos subterráneos, almuerzo buffet gourmet y asientos reservados en primera fila para el espectáculo nocturno.</p>
+          </div>
+
+          <!-- Día 3 -->
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-700 font-mono text-[10px] font-bold">DÍA 3 • SÁBADO</span>
+              <span class="text-xs text-slate-400">Día de Mar</span>
+            </div>
+            <h4 class="text-xs font-bold text-slate-900">Catamarán Privado a Isla Mujeres</h4>
+            <p class="text-[11px] text-slate-500">Snorkel en arrecife de coral, barra libre nacional a bordo y tarde libre en Playa Norte (una de las 10 mejores playas del mundo).</p>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- SCREEN 3: COTIZADOR DE VIAJES A LA MEDIDA -->
+      <!-- ============================================================== -->
+      <section id="screen-cotizador" class="p-5 space-y-5 hidden">
+        
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-cyan-600 font-mono">PLANIFICADOR INTELIGENTE</span>
+          <h2 class="text-xl font-extrabold text-slate-950">Diseña tu Viaje Soñado</h2>
+          <p class="text-xs text-slate-500 mt-0.5">Calcula vuelos, hoteles y tours a la medida en tiempo real.</p>
+        </div>
+
+        <!-- Origin & Destination -->
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs space-y-3">
+          <div>
+            <label class="block text-[11px] font-bold text-slate-500 mb-1 uppercase font-mono">Punto de Partida:</label>
+            <div class="flex items-center gap-2 p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-bold text-slate-900">
+              <i data-lucide="plane-takeoff" class="w-4 h-4 text-cyan-600"></i>
+              <span>San José, Costa Rica (SJO - Juan Santamaría)</span>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-bold text-slate-500 mb-1 uppercase font-mono">Destino Deseado:</label>
+            <select id="cotiz-destino" onchange="calculateQuote()" class="w-full p-2.5 rounded-xl bg-white border border-slate-300 text-xs font-bold text-slate-900 focus:outline-none focus:border-cyan-500 cursor-pointer">
+              <option value="cancun">Cancún & Riviera Maya, México (Sin Visa)</option>
+              <option value="orlando">Orlando & Parques Disney / Universal</option>
+              <option value="madrid">Europa Mágica (España, Francia, Italia)</option>
+              <option value="cartagena">Cartagena & Islas del Rosario, Colombia</option>
+              <option value="tokio">Japón Imperial (Tokio & Kioto)</option>
+              <option value="arenal">Costa Rica Eco-Lodge VIP (Arenal & Manuel Antonio)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Passengers & Duration -->
+        <div class="grid grid-cols-2 gap-3">
+          <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-xs">
+            <span class="text-[10px] font-bold text-slate-400 font-mono uppercase block mb-1">Viajeros:</span>
+            <div class="flex items-center justify-between">
+              <button onclick="changePax(-1)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-slate-200 font-bold text-sm text-slate-800 flex items-center justify-center cursor-pointer">-</button>
+              <span class="font-mono font-black text-base text-slate-900" id="cotiz-pax">2</span>
+              <button onclick="changePax(1)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-slate-200 font-bold text-sm text-slate-800 flex items-center justify-center cursor-pointer">+</button>
+            </div>
+          </div>
+
+          <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-xs">
+            <span class="text-[10px] font-bold text-slate-400 font-mono uppercase block mb-1">Noches de Estadía:</span>
+            <div class="flex items-center justify-between">
+              <button onclick="changeNights(-1)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-slate-200 font-bold text-sm text-slate-800 flex items-center justify-center cursor-pointer">-</button>
+              <span class="font-mono font-black text-base text-slate-900" id="cotiz-noches">5</span>
+              <button onclick="changeNights(1)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-slate-200 font-bold text-sm text-slate-800 flex items-center justify-center cursor-pointer">+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hotel Category -->
+        <div class="space-y-2">
+          <label class="block text-[11px] font-bold text-slate-500 uppercase font-mono">Categoría de Hospedaje:</label>
+          <div class="grid grid-cols-3 gap-2 text-center text-xs">
+            <button onclick="setHotelTier('3star', 0)" id="tier-3" class="p-2.5 rounded-xl border border-slate-200 bg-white font-bold text-slate-700 tier-btn">
+              3★ Superior
+            </button>
+            <button onclick="setHotelTier('4star', 150)" id="tier-4" class="p-2.5 rounded-xl border-2 border-cyan-500 bg-cyan-50 text-cyan-900 font-bold tier-btn">
+              4★ Confort
+            </button>
+            <button onclick="setHotelTier('5star', 350)" id="tier-5" class="p-2.5 rounded-xl border border-slate-200 bg-white font-bold text-slate-700 tier-btn">
+              5★ Gran Lujo
+            </button>
+          </div>
+        </div>
+
+        <!-- Extras Toggles -->
+        <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-xs space-y-2.5 text-xs">
+          <label class="flex items-center justify-between cursor-pointer">
+            <span class="text-slate-700 font-medium">Seguro Médico Internacional ($50k cobertura)</span>
+            <input type="checkbox" id="chk-seguro" checked onchange="calculateQuote()" class="w-4 h-4 accent-cyan-600">
+          </label>
+          <label class="flex items-center justify-between cursor-pointer border-t border-slate-100 pt-2">
+            <span class="text-slate-700 font-medium">Traslado Privado Aeropuerto - Hotel</span>
+            <input type="checkbox" id="chk-traslado" checked onchange="calculateQuote()" class="w-4 h-4 accent-cyan-600">
+          </label>
+        </div>
+
+        <!-- Live Quote Box -->
+        <div class="bg-slate-900 rounded-3xl p-5 text-white shadow-xl space-y-3">
+          <div class="flex items-center justify-between text-xs pb-3 border-b border-slate-800">
+            <span class="text-slate-400">Total Estimado Paquete:</span>
+            <span class="px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 font-mono text-[10px] font-bold">VUELOS + HOTEL + TOURS</span>
+          </div>
+
+          <div class="flex items-baseline justify-between">
+            <div>
+              <span class="text-2xl sm:text-3xl font-black text-cyan-300 font-mono" id="quote-total-price">$1,890</span>
+              <span class="text-xs text-slate-400 block" id="quote-per-pax">($945 por persona)</span>
+            </div>
+            <div class="text-right">
+              <span class="text-[10px] text-slate-400 block font-mono">Tasa Cero 12 Cuotas:</span>
+              <strong class="text-sm font-mono text-emerald-400" id="quote-installments">$157.50 / mes</strong>
+            </div>
+          </div>
+
+          <button onclick="sendCustomQuoteWhatsApp()" class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-extrabold text-xs flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/30 cursor-pointer transition-all">
+            <i data-lucide="message-circle" class="w-4 h-4 text-slate-950"></i>
+            <span>Solicitar este Itinerario a un Asesor</span>
+          </button>
+        </div>
+
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- SCREEN 4: BÓVEDA DE DOCUMENTOS & VOUCHERS -->
+      <!-- ============================================================== -->
+      <section id="screen-vouchers" class="p-5 space-y-5 hidden">
+        
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-cyan-600 font-mono">DOCUMENTACIÓN OFICIAL</span>
+          <h2 class="text-xl font-extrabold text-slate-950">Bóveda de Viaje Digital</h2>
+          <p class="text-xs text-slate-500 mt-0.5">Tus pases de abordar, pólizas y vouchers disponibles sin internet.</p>
+        </div>
+
+        <!-- Boarding Pass QR Card -->
+        <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-lg">
+          <!-- Top Pass Header -->
+          <div class="bg-gradient-to-r from-blue-700 to-cyan-600 p-4 text-white flex items-center justify-between">
+            <div>
+              <span class="text-[10px] font-mono tracking-widest uppercase text-cyan-200">BOARDING PASS • AVIANCA</span>
+              <h3 class="text-sm font-extrabold">Daniel Mora Chaves</h3>
+            </div>
+            <span class="font-mono text-xs font-bold px-2 py-0.5 rounded bg-white/20">Clase Confort</span>
+          </div>
+
+          <!-- Flight Route -->
+          <div class="p-5 space-y-4">
+            <div class="flex items-center justify-between text-center">
+              <div>
+                <span class="text-3xl font-black font-mono text-slate-950">SJO</span>
+                <span class="block text-[11px] text-slate-400">San José</span>
+                <span class="font-bold text-xs text-slate-700">07:45 AM</span>
+              </div>
+              <div class="px-3">
+                <i data-lucide="plane" class="w-6 h-6 text-cyan-600 mx-auto"></i>
+                <span class="text-[9px] text-slate-400 font-mono">Vuelo AV-692</span>
+              </div>
+              <div>
+                <span class="text-3xl font-black font-mono text-slate-950">CUN</span>
+                <span class="block text-[11px] text-slate-400">Cancún</span>
+                <span class="font-bold text-xs text-slate-700">11:25 AM</span>
+              </div>
+            </div>
+
+            <!-- Gate, Seat, Group -->
+            <div class="grid grid-cols-3 gap-2 py-3 border-y border-dashed border-slate-200 text-center text-xs">
+              <div>
+                <span class="text-[10px] text-slate-400 font-mono block">PUERTA</span>
+                <strong class="text-base text-slate-900 font-mono">4B</strong>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-400 font-mono block">ASIENTO</span>
+                <strong class="text-base text-cyan-600 font-mono">12A</strong>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-400 font-mono block">GRUPO</span>
+                <strong class="text-base text-slate-900 font-mono">2</strong>
+              </div>
+            </div>
+
+            <!-- QR Code Mockup -->
+            <div class="pt-2 text-center space-y-2">
+              <div class="w-36 h-36 mx-auto bg-slate-950 p-2 rounded-2xl flex items-center justify-center text-white">
+                <i data-lucide="qr-code" class="w-28 h-28 text-white"></i>
+              </div>
+              <span class="text-[10px] font-mono text-slate-400 block">Escanear en Puerta de Embarque</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hotel Voucher & Medical Card -->
+        <div class="space-y-3">
+          <!-- Hotel Voucher -->
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+                <i data-lucide="hotel" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h4 class="text-xs font-bold text-slate-900">Hotel Xcaret Arte 5★</h4>
+                <span class="text-[11px] text-slate-400 font-mono">Reserva: #HTL-9042-XCAR</span>
+              </div>
+            </div>
+            <button onclick="alert('Voucher verificado: Todo Incluido VIP')" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold">
+              Ver
+            </button>
+          </div>
+
+          <!-- Medical Insurance -->
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                <i data-lucide="shield-plus" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h4 class="text-xs font-bold text-slate-900">Seguro Assist Card VIP</h4>
+                <span class="text-[11px] text-slate-400 font-mono">Cobertura $60,000 USD Médica</span>
+              </div>
+            </div>
+            <button onclick="alert('Póliza Activa: Asistencia 24h +506 7069-3708')" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold">
+              Póliza
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- SCREEN 5: ASISTENTE CONCIERGE & WHATSAPP 24/7 -->
+      <!-- ============================================================== -->
+      <section id="screen-concierge" class="p-5 space-y-5 hidden">
+        
+        <div class="text-center pt-2">
+          <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-600 text-white flex items-center justify-center text-3xl mx-auto shadow-lg shadow-cyan-500/30 mb-3">
+            👨‍💼
+          </div>
+          <span class="text-xs font-bold uppercase tracking-wider text-cyan-600 font-mono">CONCIERGE DE VIAJES 24/7</span>
+          <h2 class="text-xl font-extrabold text-slate-950 mt-1">Tu Agente de Viajes Dedicado</h2>
+          <p class="text-xs text-slate-500 max-w-xs mx-auto mt-1">
+            Soporte continuo antes, durante y después de tu viaje para que nunca te sientas solo en el extranjero.
+          </p>
+        </div>
+
+        <!-- Quick Help Topics -->
+        <div class="space-y-2.5">
+          <button onclick="askConcierge('equipaje')" class="w-full p-3.5 rounded-2xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-900 flex items-center justify-between text-xs font-bold cursor-pointer transition-colors shadow-xs">
+            <div class="flex items-center gap-2.5">
+              <i data-lucide="luggage" class="w-4 h-4 text-cyan-600"></i>
+              <span>Consultar Políticas de Equipaje (Avianca)</span>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+          </button>
+
+          <button onclick="askConcierge('itinerario')" class="w-full p-3.5 rounded-2xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-900 flex items-center justify-between text-xs font-bold cursor-pointer transition-colors shadow-xs">
+            <div class="flex items-center gap-2.5">
+              <i data-lucide="calendar" class="w-4 h-4 text-blue-600"></i>
+              <span>Modificar Fechas o Añadir Pasajeros</span>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+          </button>
+
+          <button onclick="askConcierge('visas')" class="w-full p-3.5 rounded-2xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-900 flex items-center justify-between text-xs font-bold cursor-pointer transition-colors shadow-xs">
+            <div class="flex items-center gap-2.5">
+              <i data-lucide="file-check" class="w-4 h-4 text-emerald-600"></i>
+              <span>Requisitos de Ingreso & Vacunas en Destino</span>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+          </button>
+
+          <button onclick="askConcierge('emergencia')" class="w-full p-3.5 rounded-2xl bg-red-50 hover:bg-red-100 border border-red-200 text-red-900 flex items-center justify-between text-xs font-bold cursor-pointer transition-colors shadow-xs">
+            <div class="flex items-center gap-2.5">
+              <i data-lucide="alert-circle" class="w-4 h-4 text-red-600"></i>
+              <span>Línea SOS de Emergencia en el Extranjero</span>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-red-400"></i>
+          </button>
+        </div>
+
+        <!-- Direct WhatsApp Button -->
+        <a href="https://wa.me/50670693708?text=Hola%20VAGAMUNDO,%20necesito%20asistencia%20con%20mi%20paquete%20de%20viaje" target="_blank" class="w-full py-3.5 rounded-2xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 transition-all cursor-pointer">
+          <i data-lucide="message-circle" class="w-4 h-4 fill-white"></i>
+          <span>Chatear en Vivo con Asesor por WhatsApp</span>
+        </a>
+
+      </section>
+
+    </div>
+
+    <!-- Mobile Fixed Bottom Navigation Bar -->
+    <nav class="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 px-3 py-2 flex items-center justify-around z-30 shrink-0">
+      
+      <button onclick="switchScreen('explorar')" id="nav-explorar" class="flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl text-cyan-600 font-bold cursor-pointer transition-colors nav-btn">
+        <i data-lucide="compass" class="w-5 h-5 text-cyan-600"></i>
+        <span class="text-[10px]">Explorar</span>
+        <span class="w-1 h-1 rounded-full bg-cyan-600 -mt-0.5"></span>
+      </button>
+
+      <button onclick="switchScreen('itinerario')" id="nav-itinerario" class="flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl text-slate-400 hover:text-slate-700 cursor-pointer transition-colors nav-btn relative">
+        <span class="absolute top-1 right-2 w-1.5 h-1.5 rounded-full bg-cyan-500 animate-ping"></span>
+        <i data-lucide="map" class="w-5 h-5"></i>
+        <span class="text-[10px]">Itinerario</span>
+        <span class="w-1 h-1 rounded-full bg-transparent -mt-0.5"></span>
+      </button>
+
+      <button onclick="switchScreen('cotizador')" id="nav-cotizador" class="flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl text-slate-400 hover:text-slate-700 cursor-pointer transition-colors nav-btn">
+        <i data-lucide="calculator" class="w-5 h-5"></i>
+        <span class="text-[10px]">Cotizador</span>
+        <span class="w-1 h-1 rounded-full bg-transparent -mt-0.5"></span>
+      </button>
+
+      <button onclick="switchScreen('vouchers')" id="nav-vouchers" class="flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl text-slate-400 hover:text-slate-700 cursor-pointer transition-colors nav-btn">
+        <i data-lucide="ticket" class="w-5 h-5"></i>
+        <span class="text-[10px]">Vouchers</span>
+        <span class="w-1 h-1 rounded-full bg-transparent -mt-0.5"></span>
+      </button>
+
+      <button onclick="switchScreen('concierge')" id="nav-concierge" class="flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl text-slate-400 hover:text-slate-700 cursor-pointer transition-colors nav-btn">
+        <i data-lucide="headphones" class="w-5 h-5"></i>
+        <span class="text-[10px]">Asesor</span>
+        <span class="w-1 h-1 rounded-full bg-transparent -mt-0.5"></span>
+      </button>
+
+    </nav>
+
+    <!-- Notification Modal -->
+    <div id="notifModal" class="hidden absolute inset-0 bg-black/50 backdrop-blur-xs z-50 flex items-end sm:items-center justify-center p-4">
+      <div class="bg-white rounded-3xl p-5 max-w-sm w-full space-y-4 shadow-2xl border border-slate-200">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-cyan-500"></span>
+            <span class="font-bold text-xs text-slate-900">Avisos de tu Viaje</span>
+          </div>
+          <button onclick="toggleModal('notifModal')" class="text-slate-400 hover:text-slate-700 p-1 cursor-pointer">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+        <div class="space-y-3">
+          <div class="p-3 rounded-xl bg-cyan-50/70 border border-cyan-200 text-xs space-y-1">
+            <div class="flex justify-between font-bold text-cyan-900">
+              <span>✈️ Check-in Abierto para Vuelo AV-692</span>
+              <span class="text-[10px] text-cyan-600 font-mono">Hoy</span>
+            </div>
+            <p class="text-slate-600 text-[11px]">Tu pase de abordar ya está generado con asiento 12A asignado en clase Confort.</p>
+          </div>
+        </div>
+        <button onclick="toggleModal('notifModal')" class="w-full py-2.5 rounded-xl bg-slate-950 text-white font-bold text-xs">
+          Entendido
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    let currentCurrency = 'USD';
+    let quoteState = {
+      pax: 2,
+      nights: 5,
+      tierExtra: 150,
+      destBasePrice: 750
+    };
+
+    function switchScreen(screenId) {
+      const screens = ['explorar', 'itinerario', 'cotizador', 'vouchers', 'concierge'];
+      screens.forEach(s => {
+        const el = document.getElementById('screen-' + s);
+        const btn = document.getElementById('nav-' + s);
+        if (s === screenId) {
+          el.classList.remove('hidden');
+          btn.className = 'flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl text-cyan-600 font-bold cursor-pointer transition-colors nav-btn';
+          const icon = btn.querySelector('svg') || btn.querySelector('i');
+          if (icon) icon.className = 'w-5 h-5 text-cyan-600';
+          const dot = btn.querySelectorAll('span')[1];
+          if (dot) dot.className = 'w-1 h-1 rounded-full bg-cyan-600 -mt-0.5';
+        } else {
+          el.classList.add('hidden');
+          btn.className = 'flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl text-slate-400 hover:text-slate-700 cursor-pointer transition-colors nav-btn';
+          const icon = btn.querySelector('svg') || btn.querySelector('i');
+          if (icon) icon.className = 'w-5 h-5';
+          const dot = btn.querySelectorAll('span')[1];
+          if (dot) dot.className = 'w-1 h-1 rounded-full bg-transparent -mt-0.5';
+        }
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      lucide.createIcons();
+    }
+
+    function toggleCurrency() {
+      currentCurrency = currentCurrency === 'USD' ? 'CRC' : 'USD';
+      document.getElementById('btn-currency').innerText = currentCurrency === 'USD' ? 'USD ($)' : 'CRC (₡)';
+      
+      document.querySelectorAll('.price-display').forEach(el => {
+        const usd = el.getAttribute('data-usd');
+        const crc = el.getAttribute('data-crc');
+        if (currentCurrency === 'USD') {
+          el.innerText = '$' + parseInt(usd).toLocaleString();
+        } else {
+          el.innerText = '₡' + parseInt(crc).toLocaleString();
+        }
+      });
+      calculateQuote();
+    }
+
+    function changePax(delta) {
+      quoteState.pax = Math.max(1, Math.min(10, quoteState.pax + delta));
+      document.getElementById('cotiz-pax').innerText = quoteState.pax;
+      calculateQuote();
+    }
+
+    function changeNights(delta) {
+      quoteState.nights = Math.max(3, Math.min(30, quoteState.nights + delta));
+      document.getElementById('cotiz-noches').innerText = quoteState.nights;
+      calculateQuote();
+    }
+
+    function setHotelTier(tier, extra) {
+      quoteState.tierExtra = extra;
+      ['tier-3', 'tier-4', 'tier-5'].forEach(id => {
+        const btn = document.getElementById(id);
+        btn.className = 'p-2.5 rounded-xl border border-slate-200 bg-white font-bold text-slate-700 tier-btn';
+      });
+      const target = tier === '3star' ? 'tier-3' : (tier === '4star' ? 'tier-4' : 'tier-5');
+      document.getElementById(target).className = 'p-2.5 rounded-xl border-2 border-cyan-500 bg-cyan-50 text-cyan-900 font-bold tier-btn';
+      calculateQuote();
+    }
+
+    function calculateQuote() {
+      const destSelect = document.getElementById('cotiz-destino');
+      const dest = destSelect ? destSelect.value : 'cancun';
+
+      const basePrices = {
+        cancun: 650,
+        orlando: 890,
+        madrid: 1650,
+        cartagena: 550,
+        tokio: 2200,
+        arenal: 450
+      };
+
+      const base = basePrices[dest] || 650;
+      const hotelAdd = quoteState.tierExtra;
+      const seguro = document.getElementById('chk-seguro')?.checked ? 45 : 0;
+      const traslado = document.getElementById('chk-traslado')?.checked ? 35 : 0;
+
+      const perPax = base + hotelAdd + seguro + traslado;
+      const total = perPax * quoteState.pax;
+      const installments = Math.round(total / 12);
+
+      if (currentCurrency === 'USD') {
+        document.getElementById('quote-total-price').innerText = '$' + total.toLocaleString();
+        document.getElementById('quote-per-pax').innerText = `($${perPax.toLocaleString()} por persona)`;
+        document.getElementById('quote-installments').innerText = `$${installments.toLocaleString()} / mes`;
+      } else {
+        const totalCrc = total * 525;
+        const perPaxCrc = perPax * 525;
+        const instCrc = Math.round(totalCrc / 12);
+        document.getElementById('quote-total-price').innerText = '₡' + totalCrc.toLocaleString();
+        document.getElementById('quote-per-pax').innerText = `(₡${perPaxCrc.toLocaleString()} por persona)`;
+        document.getElementById('quote-installments').innerText = `₡${instCrc.toLocaleString()} / mes`;
+      }
+    }
+
+    function sendCustomQuoteWhatsApp() {
+      const destText = document.getElementById('cotiz-destino').options[document.getElementById('cotiz-destino').selectedIndex].text;
+      const totalStr = document.getElementById('quote-total-price').innerText;
+      const msg = `*VAGAMUNDO // COTIZACIÓN DE VIAJE PERSONALIZADO*
+
+` +
+        `🌍 *Destino:* ${destText}
+` +
+        `👥 *Viajeros:* ${quoteState.pax} Personas
+` +
+        `🌙 *Estadía:* ${quoteState.nights} Noches
+` +
+        `💰 *Presupuesto Estimado:* ${totalStr}
+
+` +
+        `Hola, armé esta cotización en su app y me gustaría recibir el itinerario detallado con vuelos y hoteles disponibles.`;
+      
+      window.open(`https://wa.me/50670693708?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    function bookTripModal(tripName, price) {
+      const msg = `Hola VAGAMUNDO, vi en su app el paquete *${tripName}* y me gustaría cotizarlo para mi familia.`;
+      window.open(`https://wa.me/50670693708?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    function askConcierge(topic) {
+      const msgs = {
+        equipaje: 'Hola VAGAMUNDO, deseo consultar sobre el peso de maletas y equipaje permitido para mi vuelo.',
+        itinerario: 'Hola VAGAMUNDO, me gustaría agregar noches extra o cambiar fechas en mi itinerario.',
+        visas: 'Hola VAGAMUNDO, deseo verificar qué vacunas o visados necesito para mi próximo destino.',
+        emergencia: '🚨 SOS VAGAMUNDO: Tengo una consulta urgente en el aeropuerto o con mi hotel.'
+      };
+      window.open(`https://wa.me/50670693708?text=${encodeURIComponent(msgs[topic])}`, '_blank');
+    }
+
+    function filterDest(category) {
+      switchScreen('explorar');
+    }
+
+    function toggleModal(id) {
+      const m = document.getElementById(id);
+      if (m) m.classList.toggle('hidden');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      calculateQuote();
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
