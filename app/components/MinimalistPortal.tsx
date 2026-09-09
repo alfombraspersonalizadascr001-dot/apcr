@@ -392,28 +392,7 @@ export const MinimalistPortal: React.FC<MinimalistPortalProps> = ({
       </header>
 
       {/* HERO & DUAL CIRCULAR PORTALS */}
-      <main className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 pt-8 sm:pt-14 pb-16 flex-1 flex flex-col justify-center">
-        {/* Header Title Section */}
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/10 bg-zinc-900/60 backdrop-blur-md mb-5 shadow-inner">
-            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-zinc-300">
-              {t.tag}
-            </span>
-          </div>
-
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-light tracking-tight text-white leading-[1.15] mb-4">
-            {t.title1}
-            <span className="block font-normal text-transparent bg-clip-text bg-gradient-to-r from-zinc-200 via-zinc-400 to-zinc-500 mt-1">
-              {t.title2}
-            </span>
-          </h1>
-
-          <p className="text-zinc-400 text-sm sm:text-base font-light max-w-2xl mx-auto leading-relaxed">
-            {t.subtitle}
-          </p>
-        </div>
-
+      <main className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 pt-4 sm:pt-8 pb-16 flex-1 flex flex-col justify-center my-auto">
         {/* DUAL MONUMENTAL CIRCULAR PORTALS */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 relative items-stretch">
           {/* Central Architectural Axis Marker (Desktop) */}
