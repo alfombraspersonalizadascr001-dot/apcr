@@ -101,7 +101,7 @@ export default function App() {
 
   return (
     <div className={`min-h-screen select-none font-sans transition-colors duration-500 ${
-      isLightPortal ? 'bg-[#F8F9FA] text-[#111114]' : 'bg-[#070709] text-slate-100'
+      isLightPortal ? 'bg-gradient-to-b from-sky-100 via-amber-50 to-rose-100 text-slate-900' : 'bg-[#070709] text-slate-100'
     }`}>
       {/* 1. PORTALES DE ENTRADA (MINIMALISTA OBSIDIAN O ESCLUSA VR AIRLOCK) */}
       {viewMode === 'portal' && (

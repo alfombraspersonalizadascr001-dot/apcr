@@ -1,21 +1,21 @@
-"use client";
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { airlockAudio } from '../utils/airlockSound';
 import { childrenMusic, CHILDREN_SONGS, SongInfo } from '../utils/childrenMusic';
 import { 
-  Volume2, 
-  VolumeX, 
   Lock, 
   X, 
   CheckCircle2, 
-  Music, 
   Play, 
   Pause, 
   SkipForward, 
   Sparkles,
-  Heart
+  Music,
+  PartyPopper,
+  Flame,
+  Volume2
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
@@ -31,12 +31,10 @@ export const MinimalistPortal: React.FC<MinimalistPortalProps> = ({
   onEnterWorld
 }) => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
 
   // Estado de Música del Día del Niño
   const [isChildMusicPlaying, setIsChildMusicPlaying] = useState(false);
   const [currentSong, setCurrentSong] = useState<SongInfo>(CHILDREN_SONGS[0]);
-  const [showChildMusicPlayer, setShowChildMusicPlayer] = useState(true);
 
   // CRM Auth State
   const [loginIdentifier, setLoginIdentifier] = useState('admin');
@@ -49,7 +47,6 @@ export const MinimalistPortal: React.FC<MinimalistPortalProps> = ({
   const [hovered, setHovered] = useState<'physical' | 'digital' | null>(null);
 
   useEffect(() => {
-    // Escuchar estado del reproductor infantil
     const unsubscribe = childrenMusic.addListener((playing, song) => {
       setIsChildMusicPlaying(playing);
       setCurrentSong(song);
@@ -122,132 +119,165 @@ export const MinimalistPortal: React.FC<MinimalistPortalProps> = ({
       }
 
       setLoginSuccess(true);
-      const expires = new Date();
-      expires.setDate(expires.getDate() + 7);
-      document.cookie = `crm_authenticated=true; path=/; expires=${expires.toUTCString()}; SameSite=Lax`;
-      document.cookie = `crm_user_id=${user.id}; path=/; expires=${expires.toUTCString()}; SameSite=Lax`;
-      document.cookie = `crm_role=${user.role}; path=/; expires=${expires.toUTCString()}; SameSite=Lax`;
-      document.cookie = `crm_agent_name=${encodeURIComponent(user.contact_name || 'Admin')}; path=/; expires=${expires.toUTCString()}; SameSite=Lax`;
+      const isBoss = user.account_number === 'admin' || user.email === 'admin@apcr.cr' || user.email === 'admin@apcr.online';
+      const role = isBoss ? 'admin' : (user.role || 'client');
+      const agentName = user.contact_name || user.company_name || 'Agente';
 
-      localStorage.setItem('crm_authenticated', 'true');
-      localStorage.setItem('crm_user_role', user.role);
-      localStorage.setItem('crm_user_name', user.contact_name || 'Admin');
+      document.cookie = "crm_authenticated=true; path=/; max-age=604800; SameSite=Lax";
+      document.cookie = `crm_role=${role}; path=/; max-age=604800; SameSite=Lax`;
+      document.cookie = `crm_agent_name=${encodeURIComponent(agentName)}; path=/; max-age=604800; SameSite=Lax`;
+      document.cookie = `crm_account_number=${user.account_number || ''}; path=/; max-age=604800; SameSite=Lax`;
+      document.cookie = `crm_user_id=${user.id}; path=/; max-age=604800; SameSite=Lax`;
 
       setTimeout(() => {
-        window.location.href = user.role === 'admin' ? '/crm' : '/dashboard';
-      }, 600);
-    } catch {
-      setLoginError('Error de autenticación');
+        setIsLoginOpen(false);
+        window.location.href = isBoss ? '/crm/admin' : '/crm';
+      }, 500);
+    } catch (err: any) {
+      setLoginError(err.message || 'Error de conexión');
       setLoginLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-between select-none relative bg-[#F8F9FA] text-[#111114] font-sans overflow-x-hidden">
-      {/* Ambient Daylight Depth Glow inspired by Stitch Executive Design */}
-      <div 
-        className="fixed inset-0 pointer-events-none transition-all duration-1000"
-        style={{
-          background: hovered === 'physical'
-            ? 'radial-gradient(circle 700px at 30% 50%, rgba(0, 0, 0, 0.04) 0%, rgba(248, 249, 250, 0) 100%)'
-            : hovered === 'digital'
-            ? 'radial-gradient(circle 700px at 70% 50%, rgba(0, 43, 127, 0.04) 0%, rgba(248, 249, 250, 0) 100%)'
-            : 'radial-gradient(circle 600px at 50% 50%, rgba(212, 175, 55, 0.035) 0%, rgba(248, 249, 250, 0) 100%)'
-        }}
-      />
+    <div className="relative min-h-screen w-full flex flex-col justify-between overflow-x-hidden select-none font-sans bg-gradient-to-b from-sky-100 via-amber-50 to-rose-100 text-slate-900 transition-colors duration-500">
+      
+      {/* DECORACIONES FESTIVAS DE FONDO DÍA DEL NIÑO (GLOBOS, CONFETI, BURBUJAS) */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+        {/* Globos flotantes en las esquinas y laterales */}
+        <div className="absolute -top-4 left-6 text-4xl sm:text-6xl animate-bounce duration-1000 opacity-90 drop-shadow-md">🎈</div>
+        <div className="absolute top-12 right-8 text-3xl sm:text-5xl animate-pulse opacity-85">🎉</div>
+        <div className="absolute top-1/3 -left-4 text-3xl sm:text-5xl opacity-80" style={{ animation: 'bounce 3s infinite' }}>⭐</div>
+        <div className="absolute top-1/2 -right-3 text-4xl sm:text-6xl opacity-85" style={{ animation: 'bounce 4s infinite' }}>🎈</div>
+        <div className="absolute bottom-24 left-10 text-3xl sm:text-4xl opacity-75">🎨</div>
+        <div className="absolute bottom-28 right-12 text-3xl sm:text-5xl opacity-80">🎁</div>
 
-      {/* HEADER: Minimal Executive HUD con fondo claro de alto contraste */}
-      <header className="w-full max-w-7xl mx-auto px-6 sm:px-14 pt-6 pb-4 flex items-center justify-between z-20">
-        {/* Brand Wordmark */}
-        <div className="flex items-center gap-3">
-          <span className="text-[14px] sm:text-[15px] tracking-[0.38em] font-bold text-[#111114] uppercase">
-            APCR
+        {/* Destellos y círculos de luz multicolor */}
+        <div className="absolute top-1/4 left-1/4 w-72 h-72 rounded-full bg-amber-300/30 blur-3xl"></div>
+        <div className="absolute top-1/3 right-1/4 w-80 h-80 rounded-full bg-pink-400/25 blur-3xl"></div>
+        <div className="absolute bottom-1/4 left-1/3 w-96 h-96 rounded-full bg-sky-400/25 blur-3xl"></div>
+      </div>
+
+      {/* TOP BAR: BRANDING + ACCESOS */}
+      <header className="w-full max-w-7xl mx-auto px-4 sm:px-8 py-3.5 sm:py-5 flex items-center justify-between z-20 relative">
+        <div className="flex items-center gap-2">
+          <span className="text-2xl font-black tracking-tight text-slate-950 flex items-center gap-1.5 font-sans">
+            <span className="text-amber-500">A</span>
+            <span className="text-rose-500">P</span>
+            <span className="text-sky-500">C</span>
+            <span className="text-emerald-500">R</span>
+            <span className="text-lg">🎈</span>
           </span>
-          <span className="hidden xs:inline-block text-[9px] font-mono font-bold tracking-wider px-2 py-0.5 rounded-full bg-blue-600/10 text-blue-700 border border-blue-600/20">
-            COSTA RICA
+          <span className="hidden sm:inline-block text-[10px] font-black uppercase tracking-widest bg-amber-400 text-amber-950 px-2 py-0.5 rounded-full shadow-sm">
+            Costa Rica 🇨🇷
           </span>
         </div>
 
-        {/* Header Actions: Día del Niño Music & CRM Access */}
-        <div className="flex items-center gap-3 sm:gap-5 text-[11px] tracking-[0.2em] uppercase font-medium">
+        <div className="flex items-center gap-2 sm:gap-3">
           {/* Botón interactivo de Música Infantil */}
-          <button 
+          <button
             onClick={handleToggleChildMusic}
-            title={isChildMusicPlaying ? 'Pausar música infantil' : 'Escuchar música infantil tradicional'}
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-full border transition-all duration-300 ${
+            className={`px-3 py-1.5 rounded-full text-xs font-black flex items-center gap-2 transition-all shadow-md active:scale-95 border ${
               isChildMusicPlaying 
-                ? 'bg-amber-500/15 border-amber-500/40 text-amber-900 shadow-sm shadow-amber-500/20' 
-                : 'bg-white border-neutral-200 text-neutral-600 hover:text-black hover:border-neutral-400'
+                ? 'bg-gradient-to-r from-amber-500 to-rose-500 text-white border-white animate-pulse' 
+                : 'bg-white text-slate-800 border-amber-300 hover:bg-amber-50'
             }`}
+            title={isChildMusicPlaying ? 'Pausar música infantil' : 'Escuchar música infantil tradicional'}
           >
-            <span className={`w-2 h-2 rounded-full ${isChildMusicPlaying ? 'bg-amber-500 animate-ping' : 'bg-neutral-400'}`}></span>
-            <Music className={`w-3.5 h-3.5 ${isChildMusicPlaying ? 'text-amber-600 animate-bounce' : 'text-neutral-500'}`} />
-            <span className="text-[10px] sm:text-[11px] font-semibold tracking-wider">
-              {isChildMusicPlaying ? 'SONANDO ♫' : 'MÚSICA'}
-            </span>
+            <Music className={`w-3.5 h-3.5 ${isChildMusicPlaying ? 'animate-spin' : 'text-amber-500'}`} />
+            <span>{isChildMusicPlaying ? 'SONANDO ♫' : 'MÚSICA'}</span>
           </button>
 
-          {/* CRM Access */}
-          <button 
+          {/* CRM Login Button */}
+          <button
             onClick={handleOpenLogin}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-neutral-200 text-neutral-700 hover:text-black hover:border-neutral-400 shadow-sm transition-all duration-300"
+            className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-white text-slate-800 border border-slate-300 hover:border-slate-900 hover:bg-slate-50 transition-all flex items-center gap-1.5 shadow-sm active:scale-95"
           >
-            <Lock className="w-3 h-3 text-neutral-500" />
-            <span className="text-[10px] sm:text-[11px] font-semibold tracking-wider">CRM</span>
+            <Lock className="w-3.5 h-3.5 text-slate-600" />
+            <span>CRM</span>
           </button>
         </div>
       </header>
 
-      {/* BANNER CELEBRATORIO: DÍA DEL NIÑO EN COSTA RICA (9 DE SEPTIEMBRE) */}
-      <div className="w-full max-w-2xl mx-auto px-4 sm:px-6 pt-2 pb-2 z-20">
-        <div className="rounded-2xl bg-gradient-to-r from-amber-50 via-white to-blue-50 border border-amber-300/50 p-3 sm:p-4 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left transition-all">
-          <div className="space-y-1">
-            <div className="flex items-center justify-center sm:justify-start gap-2 flex-wrap">
-              <span className="text-base">🎈</span>
-              <span className="text-xs sm:text-sm font-bold tracking-tight text-amber-950 flex items-center gap-1">
-                ¡Feliz Día del Niño en Costa Rica! 🇨🇷
-              </span>
-              <span className="text-[10px] font-mono font-bold bg-amber-500/20 text-amber-900 px-2 py-0.5 rounded-full">
-                9 de Septiembre
-              </span>
-            </div>
-            <p className="text-[11px] sm:text-xs text-neutral-600 leading-tight">
-              Celebramos la alegría de la niñez costarricense. 25% de descuento especial en alfombras ergonómicas infantiles para kínder y escuelas.
-            </p>
-          </div>
+      {/* HERO BANNER FESTIVO Y COLORIDO: DÍA DEL NIÑO EN COSTA RICA (9 DE SEPTIEMBRE) */}
+      <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 pt-1 pb-2 z-20">
+        <div className="relative rounded-3xl bg-gradient-to-r from-amber-400 via-rose-500 to-indigo-600 p-1 shadow-xl shadow-rose-500/15 overflow-hidden transition-all hover:shadow-2xl">
+          
+          <div className="rounded-[22px] bg-white/95 backdrop-blur-md p-4 sm:p-5 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+            
+            {/* Lado izquierdo: Textos y Promoción Festiva */}
+            <div className="space-y-2 flex-1">
+              <div className="flex items-center justify-center md:justify-start gap-2 flex-wrap">
+                <span className="text-xl sm:text-2xl animate-bounce">🎈</span>
+                <span className="text-base sm:text-lg font-black uppercase tracking-tight bg-gradient-to-r from-amber-600 via-rose-600 to-indigo-600 bg-clip-text text-transparent">
+                  ¡Feliz Día del Niño en Costa Rica! 🇨🇷
+                </span>
+                <span className="text-[11px] font-black uppercase tracking-wider bg-rose-500 text-white px-2.5 py-0.5 rounded-full shadow-sm">
+                  9 de Septiembre
+                </span>
+              </div>
 
-          {/* Mini Reproductor de la Canción Infantil */}
-          <div className="flex items-center gap-1.5 flex-shrink-0 bg-white/90 border border-amber-200/80 rounded-xl px-2.5 py-1.5 shadow-sm">
-            <button
-              onClick={handleToggleChildMusic}
-              className="w-7 h-7 rounded-lg bg-amber-500 hover:bg-amber-600 text-white flex items-center justify-center transition-transform active:scale-95"
-              title={isChildMusicPlaying ? 'Pausar' : 'Reproducir'}
-            >
-              {isChildMusicPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 ml-0.5" />}
-            </button>
+              <p className="text-xs sm:text-sm font-semibold text-slate-700 leading-relaxed max-w-xl">
+                ¡Celebramos la alegría de la niñez costarricense! <strong className="text-rose-600 font-black">25% de descuento especial</strong> en alfombras ergonómicas infantiles didácticas para kínder, escuelas y cuartos de juegos.
+              </p>
 
-            <div className="text-left px-1">
-              <span className="text-[10px] font-bold text-neutral-900 block truncate max-w-[130px]">
-                {currentSong.title.split('(')[0]}
-              </span>
-              <span className="text-[9px] font-mono text-neutral-500 block">
-                {isChildMusicPlaying ? '♫ Sonando...' : 'Pausado'}
-              </span>
+              <div className="flex items-center justify-center md:justify-start gap-2 pt-0.5 text-[11px] font-black text-slate-600">
+                <span className="bg-amber-100 text-amber-900 px-2.5 py-1 rounded-lg border border-amber-300">
+                  ✨ Diseños Didácticos
+                </span>
+                <span className="bg-sky-100 text-sky-900 px-2.5 py-1 rounded-lg border border-sky-300">
+                  🛡️ Antifatiga y Seguras
+                </span>
+                <span className="bg-emerald-100 text-emerald-900 px-2.5 py-1 rounded-lg border border-emerald-300">
+                  🎨 100% Personalizadas
+                </span>
+              </div>
             </div>
 
-            <button
-              onClick={handleNextSong}
-              className="p-1 rounded text-neutral-400 hover:text-neutral-800 transition-colors"
-              title="Siguiente canción infantil"
-            >
-              <SkipForward className="w-3.5 h-3.5" />
-            </button>
+            {/* Lado derecho: Cajita Musical Interactiva (Reproductor de Canciones de Niños) */}
+            <div className="w-full md:w-auto flex-shrink-0 bg-gradient-to-br from-amber-100 via-rose-50 to-sky-100 border-2 border-amber-300 rounded-2xl p-3 shadow-md flex items-center justify-between md:justify-start gap-3">
+              <button
+                onClick={handleToggleChildMusic}
+                className="w-12 h-12 rounded-2xl bg-gradient-to-r from-amber-500 to-rose-500 hover:from-amber-600 hover:to-rose-600 text-white flex items-center justify-center shadow-lg shadow-rose-500/20 transition-all hover:scale-105 active:scale-95 flex-shrink-0"
+                title={isChildMusicPlaying ? 'Pausar música' : 'Reproducir música'}
+              >
+                {isChildMusicPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6 ml-0.5" />}
+              </button>
+
+              <div className="text-left min-w-[140px]">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-xs font-black text-slate-900 block truncate">
+                    {currentSong.title}
+                  </span>
+                </div>
+                <div className="flex items-center gap-1.5 mt-0.5">
+                  {/* Ecualizador animado */}
+                  <div className="flex items-end gap-0.5 h-3">
+                    <div className={`w-1 bg-amber-500 rounded-full transition-all duration-300 ${isChildMusicPlaying ? 'h-3 animate-pulse' : 'h-1'}`}></div>
+                    <div className={`w-1 bg-rose-500 rounded-full transition-all duration-300 ${isChildMusicPlaying ? 'h-3.5 animate-bounce' : 'h-1.5'}`}></div>
+                    <div className={`w-1 bg-sky-500 rounded-full transition-all duration-300 ${isChildMusicPlaying ? 'h-2 animate-pulse' : 'h-1'}`}></div>
+                  </div>
+                  <span className="text-[10px] font-bold text-slate-600">
+                    {isChildMusicPlaying ? '♫ Sonando marimba' : 'Pausado'}
+                  </span>
+                </div>
+              </div>
+
+              <button
+                onClick={handleNextSong}
+                className="p-2 rounded-xl bg-white/80 hover:bg-white text-slate-700 hover:text-slate-900 border border-slate-200 transition-all shadow-sm active:scale-90"
+                title="Siguiente canción infantil"
+              >
+                <SkipForward className="w-4 h-4" />
+              </button>
+            </div>
+
           </div>
         </div>
       </div>
 
-      {/* MAIN STAGE: EXACTLY TWO MONUMENTAL LUXURY CIRCULAR EMBLEMS SOBRE FONDO CLARO */}
-      <main className="flex-1 flex flex-col items-center justify-center px-4 sm:px-8 my-auto z-10 py-6 sm:py-10">
+      {/* MAIN STAGE: EXACTLY TWO MONUMENTAL LUXURY CIRCULAR EMBLEMS SOBRE FONDO CLARO CON ACENTOS COLORIDOS */}
+      <main className="flex-1 flex flex-col items-center justify-center px-4 sm:px-8 my-auto z-10 py-6 sm:py-8">
         <div className="w-full max-w-5xl flex flex-col md:flex-row items-center justify-center gap-10 sm:gap-14 md:gap-20 lg:gap-28">
           
           {/* ========================================================
@@ -262,17 +292,18 @@ export const MinimalistPortal: React.FC<MinimalistPortalProps> = ({
           >
             {/* Monumental Circular Medallion con altísimo contraste */}
             <div className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-[330px] lg:h-[330px] rounded-full flex items-center justify-center transition-all duration-500">
-              {/* Outer Daylight Halo */}
-              <div className="absolute -inset-4 rounded-full bg-neutral-950/[0.04] blur-2xl opacity-60 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              {/* Resplandor cálido festivo */}
+              <div className="absolute -inset-4 rounded-full bg-gradient-to-tr from-amber-400/20 via-rose-400/20 to-sky-400/20 blur-2xl opacity-70 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-              {/* Outer Architectural Bevel Ring en Blanco & Sombra Profunda */}
-              <div className="absolute inset-0 rounded-full bg-white border-2 border-neutral-300/80 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.18)] transition-all duration-500 group-hover:border-neutral-950 group-hover:shadow-[0_30px_70px_-10px_rgba(0,0,0,0.25)]"></div>
+              {/* Anillo exterior arquitectónico en blanco y sombra profunda */}
+              <div className="absolute inset-0 rounded-full bg-white border-4 border-amber-400/60 shadow-[0_25px_60px_-15px_rgba(245,158,11,0.25)] transition-all duration-500 group-hover:border-amber-500 group-hover:shadow-[0_30px_70px_-10px_rgba(245,158,11,0.4)]"></div>
 
-              {/* Secondary Micro-concentric Hairline */}
-              <div className="absolute inset-3 rounded-full border border-neutral-200"></div>
+              {/* Micro-anillo concéntrico */}
+              <div className="absolute inset-3 rounded-full border-2 border-slate-100"></div>
 
-              {/* Internal Medallion Housing the Black Logo */}
-              <div className="relative w-[84%] h-[84%] rounded-full bg-[#111114] border-2 border-neutral-800 flex items-center justify-center overflow-hidden shadow-2xl p-6 group-hover:border-neutral-700 transition-colors duration-500">
+              {/* Medallón interno en carbono con logo invertido blanco */}
+              <div className="relative w-[84%] h-[84%] rounded-full bg-[#111114] border-2 border-neutral-800 flex items-center justify-center overflow-hidden shadow-2xl p-6 group-hover:border-amber-400 transition-colors duration-500">
                 <Image
                   src="/images/logos/ap-monogram-black.png"
                   alt="Productos - Alfombras"
@@ -282,14 +313,19 @@ export const MinimalistPortal: React.FC<MinimalistPortalProps> = ({
                   priority
                 />
               </div>
+
+              {/* Insignia flotante festiva */}
+              <div className="absolute -bottom-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-lg border border-white">
+                Alfombras & Diseños
+              </div>
             </div>
 
-            {/* Portal Label: 'PRODUCTOS' con tipografía oscura ultra legible */}
-            <div className="mt-6 text-center space-y-1">
-              <span className="text-base sm:text-lg tracking-[0.3em] uppercase font-bold text-[#111114] group-hover:text-blue-700 transition-colors duration-300 block">
+            {/* Portal Label: 'PRODUCTOS' */}
+            <div className="mt-7 text-center space-y-1">
+              <span className="text-lg sm:text-xl tracking-[0.25em] uppercase font-black text-slate-950 group-hover:text-amber-600 transition-colors duration-300 block">
                 PRODUCTOS
               </span>
-              <span className="text-[11px] tracking-wider uppercase font-mono text-neutral-500 block">
+              <span className="text-xs tracking-wider uppercase font-bold text-slate-600 block">
                 Alfombras de vinil troqueladas
               </span>
             </div>
@@ -307,17 +343,18 @@ export const MinimalistPortal: React.FC<MinimalistPortalProps> = ({
           >
             {/* Monumental Circular Medallion */}
             <div className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-[330px] lg:h-[330px] rounded-full flex items-center justify-center transition-all duration-500">
-              {/* Outer Daylight Halo */}
-              <div className="absolute -inset-4 rounded-full bg-blue-600/[0.06] blur-2xl opacity-60 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              {/* Resplandor multicolor festivo */}
+              <div className="absolute -inset-4 rounded-full bg-gradient-to-tr from-sky-400/20 via-indigo-400/20 to-pink-400/20 blur-2xl opacity-70 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-              {/* Matching Outer Bevel Frame */}
-              <div className="absolute inset-0 rounded-full bg-white border-2 border-neutral-300/80 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.18)] transition-all duration-500 group-hover:border-blue-600 group-hover:shadow-[0_30px_70px_-10px_rgba(0,43,127,0.22)]"></div>
+              {/* Anillo exterior a juego */}
+              <div className="absolute inset-0 rounded-full bg-white border-4 border-sky-400/60 shadow-[0_25px_60px_-15px_rgba(14,165,233,0.25)] transition-all duration-500 group-hover:border-sky-500 group-hover:shadow-[0_30px_70px_-10px_rgba(14,165,233,0.4)]"></div>
 
-              {/* Secondary Micro-concentric Hairline */}
-              <div className="absolute inset-3 rounded-full border border-neutral-200"></div>
+              {/* Micro-anillo concéntrico */}
+              <div className="absolute inset-3 rounded-full border-2 border-slate-100"></div>
 
-              {/* Internal Medallion Housing the 4-Color Logo */}
-              <div className="relative w-[84%] h-[84%] rounded-full overflow-hidden shadow-2xl flex items-center justify-center border-2 border-neutral-200 group-hover:border-blue-500 transition-colors duration-500 bg-white">
+              {/* Medallón interno que alberga el logo de 4 colores */}
+              <div className="relative w-[84%] h-[84%] rounded-full overflow-hidden shadow-2xl flex items-center justify-center border-2 border-neutral-200 group-hover:border-sky-500 transition-colors duration-500 bg-white">
                 <Image
                   src="/images/logos/ap-circle-color.jpg"
                   alt="Software"
@@ -327,14 +364,19 @@ export const MinimalistPortal: React.FC<MinimalistPortalProps> = ({
                   priority
                 />
               </div>
+
+              {/* Insignia flotante festiva */}
+              <div className="absolute -bottom-2 bg-gradient-to-r from-sky-500 to-indigo-600 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-lg border border-white">
+                Suite Digital & POS
+              </div>
             </div>
 
-            {/* Portal Label: 'SOFTWARE' con tipografía oscura ultra legible */}
-            <div className="mt-6 text-center space-y-1">
-              <span className="text-base sm:text-lg tracking-[0.3em] uppercase font-bold text-[#111114] group-hover:text-blue-700 transition-colors duration-300 block">
+            {/* Portal Label: 'SOFTWARE' */}
+            <div className="mt-7 text-center space-y-1">
+              <span className="text-lg sm:text-xl tracking-[0.25em] uppercase font-black text-slate-950 group-hover:text-sky-600 transition-colors duration-300 block">
                 SOFTWARE
               </span>
-              <span className="text-[11px] tracking-wider uppercase font-mono text-neutral-500 block">
+              <span className="text-xs tracking-wider uppercase font-bold text-slate-600 block">
                 Suite digital & punto de venta
               </span>
             </div>
@@ -343,86 +385,93 @@ export const MinimalistPortal: React.FC<MinimalistPortalProps> = ({
         </div>
       </main>
 
-      {/* FOOTER: Pure Executive Minimal Elegance sobre fondo claro */}
-      <footer className="w-full max-w-7xl mx-auto px-6 sm:px-14 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 z-20 text-[11px] tracking-[0.18em] text-neutral-500 uppercase font-medium">
-        <span>© 2026 APCR COSTA RICA. TODOS LOS DERECHOS RESERVADOS.</span>
+      {/* FOOTER */}
+      <footer className="w-full max-w-7xl mx-auto px-6 sm:px-14 py-4 flex flex-col sm:flex-row items-center justify-between gap-3 z-20 text-[11px] tracking-[0.18em] text-slate-600 uppercase font-bold">
+        <span>© 2026 APCR COSTA RICA. CELEBRANDO EL DÍA DE LA NIÑEZ 🇨🇷</span>
         <div className="flex items-center gap-4">
-          <a href="/simulador" className="hover:text-neutral-900 transition-colors">
+          <a href="/simulador" className="hover:text-slate-950 transition-colors">
             SIMULADOR
           </a>
           <span>•</span>
-          <a href="/crm/landing-pages" className="hover:text-neutral-900 transition-colors">
+          <a href="/crm/landing-pages" className="hover:text-slate-950 transition-colors">
             PORTADAS
           </a>
         </div>
       </footer>
 
-      {/* MINIMAL EXECUTIVE LOGIN MODAL */}
+      {/* MODAL DE LOGIN CRM */}
       {isLoginOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
-          <div 
-            className="relative w-full max-w-xs rounded-2xl bg-white border border-neutral-200 p-6 shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center justify-between pb-3 border-b border-neutral-200 mb-4">
-              <span className="text-xs tracking-[0.25em] font-bold text-neutral-900 uppercase">ACCESO CRM</span>
-              <button
-                onClick={() => setIsLoginOpen(false)}
-                className="p-1 rounded-lg text-neutral-400 hover:text-black transition-colors"
-              >
-                <X className="w-4 h-4" />
-              </button>
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in duration-300">
+          <div className="w-full max-w-sm rounded-3xl bg-white border border-slate-200 p-6 shadow-2xl relative text-slate-900">
+            <button
+              onClick={() => setIsLoginOpen(false)}
+              className="absolute top-4 right-4 text-slate-400 hover:text-slate-800 transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="flex flex-col items-center mb-6">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 to-rose-500 flex items-center justify-center shadow-lg text-white mb-3">
+                <Lock className="w-6 h-6" />
+              </div>
+              <h2 className="text-lg font-black tracking-tight text-slate-900">Acceso Seguro CRM</h2>
+              <p className="text-xs text-slate-500 mt-1">Plataforma Administrativa APCR</p>
             </div>
 
-            <form onSubmit={handleLoginSubmit} className="space-y-3">
+            <form onSubmit={handleLoginSubmit} className="space-y-4">
               <div>
-                <label className="text-[10px] font-mono text-neutral-500 uppercase block mb-1">Usuario</label>
+                <label className="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">
+                  Usuario o Correo
+                </label>
                 <input
                   type="text"
                   value={loginIdentifier}
                   onChange={(e) => setLoginIdentifier(e.target.value)}
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-slate-50 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all font-mono"
                   placeholder="admin"
                   required
-                  className="w-full px-3 py-2 rounded-lg bg-neutral-50 border border-neutral-300 focus:border-black text-neutral-900 text-xs focus:outline-none transition-colors"
                 />
               </div>
 
               <div>
-                <label className="text-[10px] font-mono text-neutral-500 uppercase block mb-1">Contraseña</label>
+                <label className="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">
+                  Contraseña
+                </label>
                 <input
                   type="password"
                   value={loginPassword}
                   onChange={(e) => setLoginPassword(e.target.value)}
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-slate-50 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all font-mono"
                   placeholder="••••••••"
                   required
-                  className="w-full px-3 py-2 rounded-lg bg-neutral-50 border border-neutral-300 focus:border-black text-neutral-900 text-xs focus:outline-none transition-colors"
                 />
               </div>
 
               {loginError && (
-                <div className="text-red-600 text-[11px] font-medium">
+                <div className="p-2.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-bold text-center">
                   {loginError}
                 </div>
               )}
 
               {loginSuccess && (
-                <div className="text-emerald-600 text-[11px] flex items-center gap-1.5 font-medium">
-                  <CheckCircle2 className="w-3.5 h-3.5" />
-                  Acceso concedido
+                <div className="p-2.5 rounded-xl bg-green-50 border border-green-200 text-green-700 text-xs font-bold flex items-center justify-center gap-2">
+                  <CheckCircle2 className="w-4 h-4" />
+                  <span>Acceso autorizado...</span>
                 </div>
               )}
 
               <button
                 type="submit"
                 disabled={loginLoading}
-                className="w-full py-2.5 rounded-lg bg-[#111114] text-white font-semibold text-xs tracking-wider uppercase hover:bg-neutral-800 transition-colors disabled:opacity-50 mt-2"
+                className="w-full py-3 rounded-xl bg-slate-950 text-white font-black text-xs uppercase tracking-widest hover:bg-slate-800 active:scale-[0.98] transition-all disabled:opacity-50 shadow-lg mt-2"
               >
-                {loginLoading ? 'Ingresando...' : 'Entrar al CRM'}
+                {loginLoading ? 'Verificando...' : 'Iniciar Sesión'}
               </button>
             </form>
           </div>
         </div>
       )}
+
     </div>
   );
 };

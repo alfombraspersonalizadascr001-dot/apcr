@@ -777,22 +777,70 @@ ${pdfLink}
                 {/* Formulario e Items (Solo Pantalla) */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12 print:hidden">
                     {/* Datos Cliente */}
-                    <div className="bg-card p-6 rounded-2xl shadow-sm border border-border lg:col-span-1">
+                    {/* Datos Cliente */}
+                    <div className="bg-white dark:bg-zinc-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-zinc-800 lg:col-span-1">
                         <div className="flex justify-between items-center mb-6">
-                            <h3 className="font-black text-foreground flex items-center gap-2 text-xs uppercase tracking-widest">
+                            <h3 className="font-black text-slate-900 dark:text-white flex items-center gap-2 text-xs uppercase tracking-widest">
                                 <User className="w-4 h-4 text-amber-500" /> Cliente
                             </h3>
-                            <button onClick={() => setShowClientForm(!showClientForm)} className="text-xs text-blue-500 font-bold hover:underline">
-                                {showClientForm ? 'Ocultar' : 'Editar'}
+                            <button onClick={() => setShowClientForm(!showClientForm)} className="text-xs text-blue-600 dark:text-blue-400 font-bold hover:underline">
+                                {showClientForm ? 'Ocultar' : (client.name ? 'Editar' : 'Completar')}
                             </button>
                         </div>
+
+                        {/* Tarjeta de Resumen si el formulario está oculto y hay cliente */}
+                        {!showClientForm && client.name && (
+                            <div className="bg-gradient-to-br from-amber-50/80 via-white to-orange-50/50 dark:from-zinc-800/80 dark:to-zinc-900 p-4 rounded-xl border border-amber-200 dark:border-zinc-700 space-y-3">
+                                <div className="flex items-start justify-between gap-2">
+                                    <div>
+                                        <span className="text-[10px] font-black uppercase tracking-wider text-amber-800 dark:text-amber-400 block">Cliente Activo</span>
+                                        <h4 className="text-base font-black text-slate-900 dark:text-white tracking-tight leading-snug">{client.name}</h4>
+                                    </div>
+                                    {client.id && (
+                                        <span className="text-[9px] font-black bg-emerald-500 text-white px-2 py-0.5 rounded-full uppercase tracking-wider whitespace-nowrap shadow-sm">
+                                            ✓ Registrado
+                                        </span>
+                                    )}
+                                </div>
+                                <div className="grid grid-cols-2 gap-2 text-xs font-mono bg-white dark:bg-zinc-800 p-2.5 rounded-lg border border-slate-200 dark:border-zinc-700 text-slate-700 dark:text-zinc-300">
+                                    <div>
+                                        <span className="text-[9px] uppercase font-bold text-slate-400 block font-sans">Cédula</span>
+                                        <span className="font-semibold">{client.idNumber || 'Sin cédula'}</span>
+                                    </div>
+                                    <div>
+                                        <span className="text-[9px] uppercase font-bold text-slate-400 block font-sans">Teléfono</span>
+                                        <span className="font-semibold">{client.phone || 'Sin teléfono'}</span>
+                                    </div>
+                                </div>
+                                <div className="flex gap-2 pt-1">
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowClientForm(true)}
+                                        className="flex-1 py-1.5 px-3 bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs rounded-lg transition-all shadow-sm text-center"
+                                    >
+                                        Editar Datos
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setClient({ ...client, id: undefined, name: '' });
+                                            setShowClientForm(true);
+                                        }}
+                                        className="py-1.5 px-3 bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-200 font-bold text-xs rounded-lg transition-colors border border-slate-200 dark:border-zinc-700"
+                                    >
+                                        Cambiar
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+
                         {showClientForm && (
                             <div className="space-y-4">
                                 <div>
                                     <div className="flex justify-between items-end mb-1">
-                                        <label className="text-[10px] font-black text-muted-foreground uppercase block tracking-wider">Nombre / Razón Social</label>
+                                        <label className="text-[10px] font-black text-slate-500 dark:text-zinc-400 uppercase block tracking-wider">Nombre / Razón Social</label>
                                         {client.id && (
-                                            <span className="text-[9px] font-black bg-green-500/10 text-green-500 px-2 py-0.5 rounded-full uppercase tracking-widest animate-in fade-in zoom-in duration-300">
+                                            <span className="text-[9px] font-black bg-green-500/10 text-green-600 dark:text-green-400 px-2 py-0.5 rounded-full uppercase tracking-widest animate-in fade-in zoom-in duration-300">
                                                 Cliente Registrado ✓
                                             </span>
                                         )}
@@ -801,12 +849,11 @@ ${pdfLink}
                                         <input 
                                             value={client.name} 
                                             onChange={e => {
-                                                // Reset ID if user types something else after selecting
                                                 const newName = e.target.value;
                                                 setClient({ ...client, name: newName, id: (client.id && newName !== client.name) ? undefined : client.id });
                                             }} 
-                                            className="w-full border border-border bg-white text-slate-800 p-3 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 outline-none transition-all placeholder:text-slate-400" 
-                                            placeholder="Nombre del Cliente o Empresa" 
+                                            className="w-full border border-slate-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-900 dark:text-white p-3 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 outline-none transition-all placeholder:text-slate-400" 
+                                            placeholder="Escribe el nombre o empresa para buscar..." 
                                             autoComplete="off"
                                         />
                                         {isSearching && (
@@ -816,48 +863,65 @@ ${pdfLink}
                                         )}
                                         
                                         {showResults && (
-                                            <div className="absolute left-0 right-0 top-full mt-1 bg-card border border-border rounded-xl shadow-2xl z-50 overflow-hidden animate-in fade-in slide-in-from-top-2">
-                                                <div className="p-2 bg-slate-50 dark:bg-zinc-800/50 text-[10px] font-black text-muted-foreground uppercase tracking-widest border-b border-border">
-                                                    Clientes Encontrados
+                                            <>
+                                                {/* Backdrop para cerrar al hacer clic afuera */}
+                                                <div 
+                                                    className="fixed inset-0 z-40" 
+                                                    onClick={() => setShowResults(false)} 
+                                                />
+                                                {/* Menú desplegable 100% OPACO y con alto contraste */}
+                                                <div className="absolute left-0 right-0 top-full mt-1.5 bg-white dark:bg-zinc-900 border-2 border-amber-500 rounded-xl shadow-2xl z-50 overflow-hidden">
+                                                    <div className="p-2.5 bg-amber-50 dark:bg-zinc-800 text-[10px] font-black text-amber-900 dark:text-amber-400 uppercase tracking-widest border-b border-amber-200 dark:border-zinc-700 flex justify-between items-center">
+                                                        <span>Clientes Encontrados ({searchResults.length})</span>
+                                                        <span className="text-[9px] font-normal text-slate-500">Haz clic para elegir</span>
+                                                    </div>
+                                                    <div className="max-h-64 overflow-y-auto divide-y divide-slate-100 dark:divide-zinc-800 bg-white dark:bg-zinc-900">
+                                                        {searchResults.map(r => (
+                                                            <button
+                                                                key={r.id}
+                                                                type="button"
+                                                                onClick={() => selectClient(r)}
+                                                                className="w-full text-left p-3 hover:bg-amber-50/80 dark:hover:bg-zinc-800 transition-colors flex flex-col gap-1 bg-white dark:bg-zinc-900 group"
+                                                            >
+                                                                <div className="flex items-center justify-between">
+                                                                    <span className="text-sm font-bold text-slate-900 dark:text-white group-hover:text-amber-700 dark:group-hover:text-amber-400">
+                                                                        {r.company_name || r.contact_name}
+                                                                    </span>
+                                                                    <span className="text-[10px] font-mono font-bold bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 px-2 py-0.5 rounded border border-slate-200 dark:border-zinc-700">
+                                                                        {r.account_number}
+                                                                    </span>
+                                                                </div>
+                                                                <span className="text-[11px] text-slate-500 dark:text-zinc-400">
+                                                                    Cédula: <strong className="text-slate-700 dark:text-zinc-300">{r.cedula || 'Sin Cédula'}</strong> • Tel: <strong className="text-slate-700 dark:text-zinc-300">{r.phone || 'Sin Tel'}</strong>
+                                                                </span>
+                                                            </button>
+                                                        ))}
+                                                    </div>
+                                                    <div className="p-2.5 bg-slate-50 dark:bg-zinc-800/80 text-slate-600 dark:text-zinc-400 text-[10px] text-center font-medium border-t border-slate-200 dark:border-zinc-700">
+                                                        ¿No está en la lista? Sigue escribiendo para registrar uno nuevo.
+                                                    </div>
                                                 </div>
-                                                {searchResults.map(r => (
-                                                    <button
-                                                        key={r.id}
-                                                        onClick={() => selectClient(r)}
-                                                        className="w-full text-left p-3 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors flex flex-col gap-0.5 border-b border-border last:border-0"
-                                                    >
-                                                        <span className="text-sm font-bold text-foreground">
-                                                            {r.company_name || r.contact_name}
-                                                        </span>
-                                                        <span className="text-[10px] text-muted-foreground">
-                                                            {r.account_number} • {r.cedula || 'Sin Cédula'}
-                                                        </span>
-                                                    </button>
-                                                ))}
-                                                <div className="p-2 bg-amber-500/5 text-amber-600 text-[10px] italic text-center font-medium">
-                                                    Si no está en la lista, sigue escribiendo para crear uno nuevo.
-                                                </div>
-                                            </div>
+                                            </>
                                         )}
                                     </div>
                                 </div>
                                 <div className="grid grid-cols-2 gap-3">
                                     <div>
-                                        <label className="text-[10px] font-bold text-slate-500 dark:text-zinc-500 uppercase block mb-1">Cédula</label>
-                                        <input value={client.idNumber} onChange={e => setClient({ ...client, idNumber: e.target.value })} className="w-full border border-slate-200 bg-white text-slate-800 p-2 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none transition-all" placeholder="0-0000-0000" />
+                                        <label className="text-[10px] font-bold text-slate-500 dark:text-zinc-400 uppercase block mb-1">Cédula</label>
+                                        <input value={client.idNumber} onChange={e => setClient({ ...client, idNumber: e.target.value })} className="w-full border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-900 dark:text-white p-2 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none transition-all" placeholder="0-0000-0000" />
                                     </div>
                                     <div>
-                                        <label className="text-[10px] font-bold text-slate-500 dark:text-zinc-500 uppercase block mb-1">Teléfono</label>
-                                        <input value={client.phone} onChange={e => setClient({ ...client, phone: e.target.value })} className="w-full border border-slate-200 bg-white text-slate-800 p-2 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none transition-all" placeholder="8888-8888" />
+                                        <label className="text-[10px] font-bold text-slate-500 dark:text-zinc-400 uppercase block mb-1">Teléfono</label>
+                                        <input value={client.phone} onChange={e => setClient({ ...client, phone: e.target.value })} className="w-full border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-900 dark:text-white p-2 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none transition-all" placeholder="8888-8888" />
                                     </div>
                                 </div>
                                 <div className="grid grid-cols-2 gap-3">
                                     <div>
-                                        <label className="text-[10px] font-bold text-slate-500 uppercase block mb-1">Medio de Pago</label>
+                                        <label className="text-[10px] font-bold text-slate-500 dark:text-zinc-400 uppercase block mb-1">Medio de Pago</label>
                                         <select
                                             value={paymentMethod}
                                             onChange={e => setPaymentMethod(e.target.value)}
-                                            className="w-full border border-slate-200 bg-white text-slate-800 p-2 rounded-lg text-sm outline-none focus:ring-2 focus:ring-amber-500 transition-all appearance-none"
+                                            className="w-full border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-900 dark:text-white p-2 rounded-lg text-sm outline-none focus:ring-2 focus:ring-amber-500 transition-all appearance-none"
                                         >
                                             <option value="Transferencia-Depósito Bancario">Transferencia</option>
                                             <option value="Pago con SINPE Móvil">SINPE Móvil</option>
@@ -865,22 +929,22 @@ ${pdfLink}
                                         </select>
                                     </div>
                                     <div>
-                                        <label className="text-[10px] font-bold text-slate-500 uppercase block mb-1">Entrega (Días Nat.)</label>
+                                        <label className="text-[10px] font-bold text-slate-500 dark:text-zinc-400 uppercase block mb-1">Entrega (Días Nat.)</label>
                                         <input
                                             type="number"
                                             min="1"
                                             value={deliveryTimeDays}
                                             onChange={e => setDeliveryTimeDays(Number(e.target.value))}
-                                            className="w-full border border-slate-200 bg-white text-slate-800 p-2 rounded-lg text-sm outline-none focus:ring-2 focus:ring-amber-500 transition-all font-mono"
+                                            className="w-full border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-900 dark:text-white p-2 rounded-lg text-sm outline-none focus:ring-2 focus:ring-amber-500 transition-all font-mono"
                                         />
                                     </div>
                                 </div>
                                 <div className="pt-2">
-                                    <label className="text-[10px] font-bold text-slate-500 dark:text-zinc-500 uppercase block mb-2 flex items-center gap-1"><MessageSquare className="w-3 h-3 text-purple-500" /> Notas</label>
+                                    <label className="text-[10px] font-bold text-slate-500 dark:text-zinc-400 uppercase block mb-2 flex items-center gap-1"><MessageSquare className="w-3 h-3 text-purple-500" /> Notas</label>
                                     <textarea
                                         value={comments}
                                         onChange={e => setComments(e.target.value)}
-                                        className="w-full border border-slate-200 bg-white text-slate-800 p-3 rounded-lg text-xs h-32 outline-none resize-none focus:ring-2 focus:ring-amber-500 transition-all"
+                                        className="w-full border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-900 dark:text-white p-3 rounded-lg text-xs h-32 outline-none resize-none focus:ring-2 focus:ring-amber-500 transition-all"
                                     />
                                 </div>
                             </div>
