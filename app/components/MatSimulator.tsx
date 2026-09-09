@@ -43,9 +43,14 @@ export function MatSimulator() {
   const [logoDataUrl, setLogoDataUrl] = useState<string>('');
   const [logoImageElement, setLogoImageElement] = useState<HTMLImageElement | null>(null);
   const [rawLogoImage, setRawLogoImage] = useState<HTMLImageElement | null>(null);
-  const [logoScale, setLogoScale] = useState<number>(1.0); // 100% Tamaño máximo por defecto
+  const [logoScale, setLogoScale] = useState<number>(1.0); // 100% Tamaño MÁXIMO por defecto
   const [isProcessingLogo, setIsProcessingLogo] = useState<boolean>(false);
   const [processedStats, setProcessedStats] = useState<LogoProcessResult | null>(null);
+
+  // Opciones de Troquelado & Color de Vinil
+  const [vinylColor, setVinylColor] = useState<string>('#FFFFFF'); // Blanco por defecto para contraste con alfombra negra
+  const [bgTolerance, setBgTolerance] = useState<number>(38);
+  const [showCompareModal, setShowCompareModal] = useState<boolean>(false);
 
   // Datos del cliente para el cajetín
   const [clientName, setClientName] = useState<string>('');
@@ -83,7 +88,7 @@ export function MatSimulator() {
     };
   }, []);
 
-  // Cargar logo por defecto (monograma AP) si el usuario aún no subió uno
+  // Cargar logo por defecto (monograma AP en vinil blanco para contraste con alfombra negra)
   useEffect(() => {
     if (!logoDataUrl) {
       const defaultImg = new window.Image();
@@ -91,16 +96,30 @@ export function MatSimulator() {
       defaultImg.src = '/images/logos/ap-monogram-black.png';
       defaultImg.onload = () => {
         setRawLogoImage(defaultImg);
-        processAndMaximizeLogo(defaultImg);
+        processAndMaximizeLogo(defaultImg, '#FFFFFF', 38);
       };
     }
   }, [logoDataUrl]);
 
   // Función para remover fondo, maximizar tamaño y eliminar elementos < 1cm
-  const processAndMaximizeLogo = async (img: HTMLImageElement) => {
+  const processAndMaximizeLogo = async (
+    img: HTMLImageElement,
+    customColor = vinylColor,
+    tolerance = bgTolerance
+  ) => {
     setIsProcessingLogo(true);
     try {
-      const result = await processLogoForDieCut(img, widthCm, heightCm, 7.5, 1.0);
+      const result = await processLogoForDieCut(
+        img, 
+        widthCm, 
+        heightCm, 
+        7.5, 
+        1.0,
+        {
+          tolerance,
+          customVinylColor: customColor || undefined
+        }
+      );
       setLogoImageElement(result.processedImage);
       setLogoDataUrl(result.processedDataUrl);
       setProcessedStats(result);
@@ -116,15 +135,17 @@ export function MatSimulator() {
   // Re-procesar cuando el cliente cambie dimensiones de la alfombra
   useEffect(() => {
     if (rawLogoImage) {
-      processAndMaximizeLogo(rawLogoImage);
+      processAndMaximizeLogo(rawLogoImage, vinylColor, bgTolerance);
     }
-  }, [widthCm, heightCm]);
+  }, [widthCm, heightCm, vinylColor, bgTolerance]);
 
   // Manejar subida de logo por el cliente
   const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       setLogoFile(file);
+      // Al subir logo nuevo, preservar colores originales por defecto
+      setVinylColor('');
       const reader = new FileReader();
       reader.onload = (event) => {
         const result = event.target?.result as string;
@@ -133,7 +154,7 @@ export function MatSimulator() {
         img.src = result;
         img.onload = () => {
           setRawLogoImage(img);
-          processAndMaximizeLogo(img);
+          processAndMaximizeLogo(img, '', bgTolerance);
         };
       };
       reader.readAsDataURL(file);
@@ -357,16 +378,29 @@ export function MatSimulator() {
             </div>
           </div>
 
-          {/* 3. Cargar Logotipo */}
-          <div className="space-y-3 pt-4 border-t border-border">
-            <label className="text-xs font-bold uppercase tracking-wider text-foreground block">
-              3. Logotipo del Cliente
-            </label>
+          {/* 3. Cargar Logotipo & Procesador Técnico de Troquel */}
+          <div className="space-y-4 pt-4 border-t border-border">
+            <div className="flex items-center justify-between">
+              <label className="text-xs font-bold uppercase tracking-wider text-foreground block">
+                3. Logotipo del Cliente
+              </label>
+              {processedStats && (
+                <button
+                  type="button"
+                  onClick={() => setShowCompareModal(!showCompareModal)}
+                  className="text-[11px] font-mono text-blue-500 hover:text-blue-400 underline flex items-center gap-1"
+                >
+                  <Sparkles className="w-3 h-3" />
+                  {showCompareModal ? 'Ocultar comparativa' : 'Ver Antes / Después'}
+                </button>
+              )}
+            </div>
 
+            {/* Subida de Archivo */}
             <div className="relative border-2 border-dashed border-border hover:border-blue-500 rounded-2xl p-4 text-center transition-colors bg-secondary/20">
               <input
                 type="file"
-                accept="image/png, image/jpeg, image/svg+xml"
+                accept="image/png, image/jpeg, image/svg+xml, image/webp"
                 onChange={handleLogoUpload}
                 className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
               />
@@ -375,65 +409,177 @@ export function MatSimulator() {
                 <span className="text-xs font-medium text-foreground">
                   {logoFile ? logoFile.name : 'Haz clic o arrastra tu logo aquí'}
                 </span>
-                <span className="text-[10px] text-muted-foreground">PNG transparente, JPG o SVG</span>
+                <span className="text-[10px] text-muted-foreground">PNG transparente, JPG o SVG (Auto-remoción de fondo)</span>
               </div>
             </div>
+
+            {/* Comparativa Antes / Después (Original vs Troquelado) */}
+            {showCompareModal && processedStats && (
+              <div className="p-3 rounded-2xl bg-black/40 border border-blue-500/30 space-y-2 animate-in fade-in duration-200">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-blue-400 block font-bold">
+                  Comparativa de Procesamiento Técnico:
+                </span>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-1 text-center">
+                    <span className="text-[9px] font-mono text-muted-foreground block">Original (Con fondo / detalles)</span>
+                    <div className="w-full h-24 rounded-lg bg-zinc-900 border border-white/10 p-1 flex items-center justify-center overflow-hidden">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img 
+                        src={processedStats.originalDataUrl} 
+                        alt="Logo original" 
+                        className="max-w-full max-h-full object-contain"
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-1 text-center">
+                    <span className="text-[9px] font-mono text-emerald-400 block font-bold">Troquelado (Sin fondo / &ge;1cm)</span>
+                    <div className="w-full h-24 rounded-lg bg-zinc-900 border border-emerald-500/30 p-1 flex items-center justify-center overflow-hidden relative">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img 
+                        src={processedStats.processedDataUrl} 
+                        alt="Logo troquelado" 
+                        className="max-w-full max-h-full object-contain"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* Estado de Procesamiento Automático de Logo para Troquel */}
             {isProcessingLogo ? (
               <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/30 text-xs text-blue-400 flex items-center gap-2">
                 <div className="w-3.5 h-3.5 border-2 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
-                <span>Removiendo fondo, maximizando tamaño y eliminando elementos &lt; 1cm...</span>
+                <span>Removiendo fondo perimetral, maximizando tamaño y eliminando elementos &lt; 1cm...</span>
               </div>
             ) : processedStats && (
-              <div className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-xs space-y-1.5">
+              <div className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-xs space-y-2">
                 <div className="flex items-center justify-between font-bold text-emerald-400 text-[11px] uppercase tracking-wider">
                   <span className="flex items-center gap-1.5">
                     <CheckCircle className="w-3.5 h-3.5" />
-                    Optimizado para Troquelado
+                    Optimizado para Troquelado Oficial
                   </span>
-                  <button
-                    type="button"
-                    onClick={() => rawLogoImage && processAndMaximizeLogo(rawLogoImage)}
-                    className="text-[10px] underline hover:text-white font-mono"
-                  >
-                    Re-optimizar
-                  </button>
+                  <span className="text-[10px] font-mono bg-emerald-500/20 px-2 py-0.5 rounded-full">
+                    A Escala 100%
+                  </span>
                 </div>
+
+                <div className="grid grid-cols-2 gap-2 pt-1">
+                  <div className="p-2 rounded-xl bg-black/30 border border-white/5 space-y-0.5">
+                    <span className="text-[9px] font-mono text-muted-foreground uppercase block">Área Segura (Margen 7.5cm):</span>
+                    <span className="text-xs font-bold font-mono text-foreground">
+                      {processedStats.safeAreaSizeCm.w} × {processedStats.safeAreaSizeCm.h} cm
+                    </span>
+                  </div>
+                  <div className="p-2 rounded-xl bg-black/30 border border-emerald-500/20 space-y-0.5">
+                    <span className="text-[9px] font-mono text-emerald-400 uppercase block font-bold">Tamaño Máximo Logo:</span>
+                    <span className="text-xs font-bold font-mono text-emerald-400">
+                      {processedStats.physicalLogoSizeCm.w} × {processedStats.physicalLogoSizeCm.h} cm
+                    </span>
+                  </div>
+                </div>
+
                 <ul className="space-y-1 text-[11px] text-zinc-300 pt-1">
                   <li className="flex items-center gap-1.5">
                     <Check className="w-3 h-3 text-emerald-400 flex-shrink-0" />
-                    <span>Fondo removido automáticamente.</span>
+                    <span>Fondo removido automáticamente mediante Flood-Fill perimetral.</span>
                   </li>
                   <li className="flex items-center gap-1.5">
                     <Check className="w-3 h-3 text-emerald-400 flex-shrink-0" />
-                    <span>Ajustado al <strong>tamaño MÁXIMO</strong>: {processedStats.physicalLogoSizeCm.w} × {processedStats.physicalLogoSizeCm.h} cm (Margen 7.5 cm).</span>
+                    <span>Ajustado al <strong>TAMAÑO MÁXIMO</strong> permitido en la alfombra.</span>
                   </li>
                   <li className="flex items-center gap-1.5">
-                    <Check className="w-3 h-3 text-emerald-400 flex-shrink-0" />
-                    <span>
-                      {processedStats.elementsRemovedCount > 0 
-                        ? `${processedStats.elementsRemovedCount} detalle(s) menores a 1.0 cm eliminados automáticamente.`
-                        : 'Todos los trazos superan el grosor mínimo de 1.0 cm.'}
-                    </span>
+                    {processedStats.elementsRemovedCount > 0 ? (
+                      <>
+                        <AlertTriangle className="w-3 h-3 text-amber-400 flex-shrink-0" />
+                        <span className="text-amber-300">
+                          <strong>{processedStats.elementsRemovedCount} detalle(s) &lt; 1.0 cm eliminados</strong> automáticamente (subtítulos o trazos no troquelables).
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        <Check className="w-3 h-3 text-emerald-400 flex-shrink-0" />
+                        <span>Todos los trazos superan el grosor mínimo de 1.0 cm.</span>
+                      </>
+                    )}
                   </li>
                 </ul>
               </div>
             )}
 
-            {/* Slider de Escala del Logo */}
-            <div>
-              <div className="flex justify-between text-[11px] font-mono text-muted-foreground mb-1">
-                <span>Tamaño del Logo en Área Segura:</span>
-                <span className="font-bold text-foreground">{Math.round(logoScale * 100)}% (Máximo)</span>
+            {/* Selector de Color de Vinil de Troquelado */}
+            <div className="space-y-2 pt-2">
+              <div className="flex items-center justify-between">
+                <span className="text-[11px] font-mono text-muted-foreground uppercase">
+                  Color de Troquelado del Logo:
+                </span>
+                <span className="text-[10px] font-mono text-blue-400">
+                  {vinylColor ? 'Personalizado' : 'Colores Originales'}
+                </span>
+              </div>
+              <div className="flex items-center gap-1.5 flex-wrap">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setVinylColor('');
+                    if (rawLogoImage) processAndMaximizeLogo(rawLogoImage, '', bgTolerance);
+                  }}
+                  className={`px-2.5 py-1 rounded-lg text-[10px] font-mono uppercase font-bold border transition-all ${
+                    !vinylColor
+                      ? 'bg-blue-600 text-white border-blue-500 shadow-sm'
+                      : 'bg-secondary/40 text-muted-foreground border-border hover:text-foreground'
+                  }`}
+                >
+                  Originales
+                </button>
+
+                {[
+                  { name: 'Blanco Puro', hex: '#FFFFFF' },
+                  { name: 'Oro Bronce', hex: '#8B7332' },
+                  { name: 'Amarillo Cromo', hex: '#FFD000' },
+                  { name: 'Rojo Carmesí', hex: '#D00000' },
+                  { name: 'Azul Real', hex: '#0033AA' },
+                  { name: 'Cian Vibrante', hex: '#00D2FF' },
+                  { name: 'Negro Carbón', hex: '#111111' }
+                ].map((vc) => (
+                  <button
+                    key={vc.hex}
+                    type="button"
+                    onClick={() => {
+                      setVinylColor(vc.hex);
+                      if (rawLogoImage) processAndMaximizeLogo(rawLogoImage, vc.hex, bgTolerance);
+                    }}
+                    title={vc.name}
+                    className={`w-6 h-6 rounded-md border-2 transition-transform hover:scale-110 flex items-center justify-center ${
+                      vinylColor === vc.hex ? 'border-blue-500 scale-110 shadow' : 'border-white/20'
+                    }`}
+                    style={{ backgroundColor: vc.hex }}
+                  >
+                    {vinylColor === vc.hex && (
+                      <Check className={`w-3 h-3 ${vc.hex === '#FFFFFF' || vc.hex === '#FFD000' ? 'text-black' : 'text-white'}`} />
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Ajuste de Tolerancia de Fondo (Opcional) */}
+            <div className="pt-2">
+              <div className="flex justify-between text-[10px] font-mono text-muted-foreground mb-1">
+                <span>Tolerancia remoción de fondo:</span>
+                <span className="font-bold text-foreground">{bgTolerance}</span>
               </div>
               <input
                 type="range"
-                min={0.5}
-                max={1.0}
-                step={0.05}
-                value={logoScale}
-                onChange={(e) => setLogoScale(parseFloat(e.target.value))}
+                min={20}
+                max={60}
+                step={2}
+                value={bgTolerance}
+                onChange={(e) => {
+                  const val = parseInt(e.target.value);
+                  setBgTolerance(val);
+                  if (rawLogoImage) processAndMaximizeLogo(rawLogoImage, vinylColor, val);
+                }}
                 className="w-full accent-blue-600"
               />
             </div>
@@ -661,19 +807,24 @@ export function MatSimulator() {
                       }}
                     />
 
-                    {/* Logo montado */}
-                    {logoImageElement && (
-                      <div 
-                        className="relative z-10 max-w-[80%] max-h-[80%] flex items-center justify-center filter drop-shadow-md"
-                      >
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                    {/* Área segura con margen de 7.5 cm perimetral a escala exacta */}
+                    <div 
+                      className="relative z-10 flex items-center justify-center border border-dashed border-amber-400/50 p-1"
+                      style={{
+                        width: `${((Math.max(10, widthCm - 15)) / widthCm) * 100}%`,
+                        height: `${((Math.max(10, heightCm - 15)) / heightCm) * 100}%`
+                      }}
+                    >
+                      {/* Logo montado al MÁXIMO en el área segura */}
+                      {logoImageElement && (
+                        // eslint-disable-next-line @next/next/no-img-element
                         <img
                           src={logoDataUrl || '/images/logos/ap-monogram-black.png'}
                           alt="Logo cliente"
-                          className="max-w-full max-h-36 object-contain"
+                          className="w-full h-full object-contain filter drop-shadow-md"
                         />
-                      </div>
-                    )}
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
