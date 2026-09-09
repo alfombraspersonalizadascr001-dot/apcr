@@ -2,14 +2,18 @@
 
 import { useState, useEffect } from 'react';
 import { AirlockPortal } from './components/AirlockPortal';
+import { MinimalistPortal } from './components/MinimalistPortal';
 import { ProductsPage } from './components/ProductsPage';
 import { SoftwarePage } from './components/SoftwarePage';
 import { LogoShowcaseModal } from './components/LogoShowcaseModal';
 import { airlockAudio } from './utils/airlockSound';
 import type { ViewMode } from './types';
 
+export type PortalTheme = 'minimal' | 'airlock';
+
 export default function App() {
   const [viewMode, setViewMode] = useState<ViewMode>('portal');
+  const [portalTheme, setPortalTheme] = useState<PortalTheme>('minimal');
   const [lang, setLang] = useState<'es' | 'en'>('es');
   const [mounted, setMounted] = useState(false);
 
@@ -18,6 +22,19 @@ export default function App() {
     try {
       const params = new URLSearchParams(window.location.search);
       const page = params.get('page') || params.get('view');
+      const themeParam = params.get('v') || params.get('theme') || params.get('portal');
+
+      // 1. Check portal theme preference: URL param overrides localStorage
+      if (themeParam === 'airlock' || themeParam === 'minimal') {
+        setPortalTheme(themeParam as PortalTheme);
+      } else {
+        const savedTheme = localStorage.getItem('apcr_home_theme') as PortalTheme;
+        if (savedTheme === 'airlock' || savedTheme === 'minimal') {
+          setPortalTheme(savedTheme);
+        }
+      }
+
+      // 2. Check inner navigation
       if (page === 'software' || page === 'digital' || window.location.hash.includes('software')) {
         setViewMode('digital');
       } else if (page === 'productos' || page === 'physical' || window.location.hash.includes('producto')) {
@@ -33,6 +50,12 @@ export default function App() {
       try {
         const params = new URLSearchParams(window.location.search);
         const page = params.get('page') || params.get('view');
+        const themeParam = params.get('v') || params.get('theme') || params.get('portal');
+
+        if (themeParam === 'airlock' || themeParam === 'minimal') {
+          setPortalTheme(themeParam as PortalTheme);
+        }
+
         if (page === 'software' || page === 'digital') {
           setViewMode('digital');
         } else if (page === 'productos' || page === 'physical') {
@@ -54,31 +77,47 @@ export default function App() {
     } catch {}
     setViewMode('portal');
     if (typeof window !== 'undefined' && window.history.pushState) {
-      window.history.pushState(null, '', window.location.pathname);
+      // Preserve ?v= parameter if present
+      const params = new URLSearchParams(window.location.search);
+      const v = params.get('v');
+      const newUrl = v ? `?v=${v}` : window.location.pathname;
+      window.history.pushState(null, '', newUrl);
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleEnterWorld = (world: 'physical' | 'digital') => {
+    setViewMode(world);
+    if (typeof window !== 'undefined' && window.history.pushState) {
+      const pageParam = world === 'physical' ? 'productos' : 'software';
+      const params = new URLSearchParams(window.location.search);
+      const v = params.get('v');
+      const newUrl = v ? `?page=${pageParam}&v=${v}` : `?page=${pageParam}`;
+      window.history.pushState(null, '', newUrl);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-white text-slate-900 select-none font-sans">
-      {/* 1. PORTAL DE ENTRADA (PUERTAS CON VISOR VR) */}
+    <div className="min-h-screen bg-[#070709] text-slate-100 select-none font-sans">
+      {/* 1. PORTALES DE ENTRADA (MINIMALISTA OBSIDIAN O ESCLUSA VR AIRLOCK) */}
       {viewMode === 'portal' && (
-        <AirlockPortal 
-          currentWorld={viewMode}
-          lang={lang}
-          onToggleLang={(l) => setLang(l)}
-          onEnterWorld={(world) => {
-            setViewMode(world);
-            if (typeof window !== 'undefined' && window.history.pushState) {
-              if (world === 'physical') {
-                window.history.pushState(null, '', '?page=productos');
-              } else if (world === 'digital') {
-                window.history.pushState(null, '', '?page=software');
-              }
-            }
-          }}
-          onReturnToPortal={handleReturnToPortal}
-        />
+        portalTheme === 'airlock' ? (
+          <AirlockPortal 
+            currentWorld={viewMode}
+            lang={lang}
+            onToggleLang={(l) => setLang(l)}
+            onEnterWorld={handleEnterWorld}
+            onReturnToPortal={handleReturnToPortal}
+          />
+        ) : (
+          <MinimalistPortal 
+            currentWorld={viewMode}
+            lang={lang}
+            onToggleLang={(l) => setLang(l)}
+            onEnterWorld={handleEnterWorld}
+            onReturnToPortal={handleReturnToPortal}
+          />
+        )
       )}
 
       {/* 2. PÁGINA DE PRODUCTOS // ESTILO HP */}

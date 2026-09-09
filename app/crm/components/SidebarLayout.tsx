@@ -7,7 +7,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import { 
   Users, Calculator, Globe, Book, MessageCircle, 
   BarChart3, Mail, Calendar, LogOut, Settings, Package,
-  Sun, Moon, Layers, FileText, Menu, X
+  Sun, Moon, Layers, FileText, Menu, X, SlidersHorizontal
 } from 'lucide-react';
 import { cn } from "@/lib/utils";
 
@@ -118,6 +118,7 @@ export default function SidebarLayout({
     if (pathname === '/crm/cotizador') return 'cotizador';
     if (pathname === '/crm/proformas') return 'proformas';
     if (pathname === '/crm/inventory') return 'inventory';
+    if (pathname.includes('/landing-pages')) return 'landing-pages';
     if (pathname.includes('/knowledge')) return 'knowledge';
     return '';
   };
@@ -173,6 +174,14 @@ export default function SidebarLayout({
         label="Tablero de Pedidos" 
         href="/crm?activeModule=kanban" 
         active={currentModule === 'kanban'} 
+        onClick={isMobile ? () => setMobileMenuOpen(false) : undefined}
+      />
+
+      <NavItem 
+        icon={<SlidersHorizontal className="w-4 h-4 text-indigo-500" />} 
+        label="Portadas Web" 
+        href="/crm/landing-pages" 
+        active={currentModule === 'landing-pages'} 
         onClick={isMobile ? () => setMobileMenuOpen(false) : undefined}
       />
 

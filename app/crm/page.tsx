@@ -10,7 +10,7 @@ import {
   ArrowRight, MousePointer2, GripVertical, Trash2, Package, Menu, Printer,
   ShoppingBag, Store, Sparkles, Percent, ExternalLink, Tag, Phone, ShieldCheck,
   Award, MapPin, Gift, Bell, Clock, CheckCircle, Building2, UtensilsCrossed,
-  Stethoscope, Wrench, Dumbbell, Shirt, Truck, Headphones, Receipt
+  Stethoscope, Wrench, Dumbbell, Shirt, Truck, Headphones, Receipt, SlidersHorizontal
 } from 'lucide-react';
 import Link from 'next/link';
 import ChatImporter from './components/ChatImporter';
@@ -285,6 +285,10 @@ export default function Dashboard() {
                 <NavItem icon={<Layers className="text-amber-500" />} label="Tablero de Pedidos" active={activeModule === 'kanban'} />
               </button>
 
+              <Link href="/crm/landing-pages">
+                <NavItem icon={<SlidersHorizontal className="text-indigo-500" />} label="Portadas Web" />
+              </Link>
+
               <Link href="/">
                 <NavItem icon={<Globe />} label="Sitio Web" />
               </Link>
@@ -400,6 +404,10 @@ export default function Dashboard() {
                   <button onClick={() => { setActiveModule('kanban'); setIsMobileMenuOpen(false); }} className="w-full text-left">
                     <NavItem icon={<Layers className="text-amber-500" />} label="Tablero de Pedidos" active={activeModule === 'kanban'} />
                   </button>
+
+                  <Link href="/crm/landing-pages" onClick={() => setIsMobileMenuOpen(false)}>
+                    <NavItem icon={<SlidersHorizontal className="text-indigo-500" />} label="Portadas Web" />
+                  </Link>
 
                   <Link href="/" onClick={() => setIsMobileMenuOpen(false)}>
                     <NavItem icon={<Globe />} label="Sitio Web" />

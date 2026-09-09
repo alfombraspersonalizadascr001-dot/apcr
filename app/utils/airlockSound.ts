@@ -164,6 +164,10 @@ class AirlockSoundController {
     return this.isMuted;
   }
 
+  isSoundMuted(): boolean {
+    return this.isMuted;
+  }
+
   // Tactile arcade joystick click / microswitch snap
   playJoystickClick() {
     try {
