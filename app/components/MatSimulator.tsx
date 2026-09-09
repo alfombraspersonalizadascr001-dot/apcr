@@ -245,27 +245,55 @@ export function MatSimulator() {
               </div>
             )}
 
-            {/* Botones de Medidas Estándar Rápidas */}
-            <div className="flex flex-wrap gap-1.5 pt-1">
-              {[
-                { w: 120, h: 100, label: '120 × 100 (Mínima)' },
-                { w: 150, h: 100, label: '150 × 100' },
-                { w: 180, h: 120, label: '180 × 120' },
-                { w: 200, h: 150, label: '200 × 150' },
-              ].map((m, idx) => (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => { setWidthCm(m.w); setHeightCm(m.h); }}
-                  className={`text-[11px] font-mono px-2.5 py-1 rounded-lg border transition-all ${
-                    widthCm === m.w && heightCm === m.h
-                      ? 'bg-blue-600 text-white border-blue-600'
-                      : 'bg-secondary text-secondary-foreground border-border hover:bg-secondary/80'
-                  }`}
-                >
-                  {m.label}
-                </button>
-              ))}
+            {/* Botones de Medidas Estándar Oficiales (Con Precios de Promoción) */}
+            <div className="space-y-2 pt-2">
+              <span className="text-[10px] font-mono text-muted-foreground uppercase block">
+                Medidas Oficiales con Precios Promocionales:
+              </span>
+              <div className="grid grid-cols-2 gap-2">
+                {[
+                  { w: 120, h: 100, label: '1.2m × 1m (Mínima)', promo: '₡93.500', reg: '₡110.000' },
+                  { w: 150, h: 100, label: '1.5m × 1m', promo: '₡127.500', reg: '₡150.000' },
+                  { w: 180, h: 120, label: '1.8m × 1.2m', promo: '₡152.150', reg: '₡179.000' },
+                  { w: 200, h: 120, label: '2.0m × 1.2m', promo: '₡169.150', reg: '₡199.000' },
+                ].map((m, idx) => {
+                  const isSelected = widthCm === m.w && heightCm === m.h;
+                  return (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => { setWidthCm(m.w); setHeightCm(m.h); }}
+                      className={`p-2 rounded-xl border text-left transition-all ${
+                        isSelected
+                          ? 'bg-blue-600/10 border-blue-600 text-foreground ring-1 ring-blue-600/30'
+                          : 'bg-secondary/40 border-border text-muted-foreground hover:text-foreground'
+                      }`}
+                    >
+                      <span className="text-xs font-bold block">{m.label}</span>
+                      <div className="flex items-center gap-1.5 mt-0.5 font-mono">
+                        <span className="text-emerald-500 font-extrabold text-xs">{m.promo}</span>
+                        <span className="text-[10px] line-through text-muted-foreground">{m.reg}</span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Banner de Vigencia de Descuentos */}
+              <div className="p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-xs text-emerald-500 space-y-1">
+                <div className="flex items-center justify-between font-bold">
+                  <span className="flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    15% DE DESCUENTO ACTIVO
+                  </span>
+                  <span className="text-[10px] font-mono bg-emerald-500/20 px-2 py-0.5 rounded-full">
+                    Hasta 31 Oct
+                  </span>
+                </div>
+                <p className="text-[11px] text-muted-foreground leading-tight">
+                  Descuento del 15% válido hasta el <strong>31 de octubre</strong>. A partir del <strong>1 de noviembre hasta el 31 de diciembre</strong> regirán los precios regulares sin descuento.
+                </p>
+              </div>
             </div>
           </div>
 
