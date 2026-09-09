@@ -265,19 +265,19 @@ export default function Dashboard() {
             <>
               <div className="pt-4 pb-2 px-3 text-xs font-bold text-muted-foreground uppercase tracking-widest">Herramientas</div>
               
-              <Link href="/inventory">
+              <Link href="/crm/inventory">
                 <NavItem icon={<Package />} label="Inventario" />
               </Link>
               
-              <Link href="/admin">
+              <Link href="/crm/admin">
                 <NavItem icon={<Users />} label={agentName === 'Freelance' ? "Mis Clientes" : "Clientes y Cuentas"} />
               </Link>
 
-              <Link href="/cotizador">
+              <Link href="/crm/cotizador">
                 <NavItem icon={<Calculator />} label="Cotizador" />
               </Link>
 
-              <Link href="/proformas">
+              <Link href="/crm/proformas">
                 <NavItem icon={<FileText />} label="Cotizaciones" />
               </Link>
 
@@ -285,11 +285,11 @@ export default function Dashboard() {
                 <NavItem icon={<Layers className="text-amber-500" />} label="Tablero de Pedidos" active={activeModule === 'kanban'} />
               </button>
 
-              <a href="https://website-two-ruddy-28.vercel.app" target="_blank" rel="noopener noreferrer">
+              <Link href="/">
                 <NavItem icon={<Globe />} label="Sitio Web" />
-              </a>
+              </Link>
 
-              <Link href="/admin/knowledge">
+              <Link href="/crm/admin/knowledge">
                 <NavItem icon={<Book />} label="Base de Conocimiento" />
               </Link>
             </>
@@ -381,25 +381,33 @@ export default function Dashboard() {
                 <>
                   <div className="pt-4 pb-2 px-3 text-xs font-bold text-muted-foreground uppercase tracking-widest">Herramientas</div>
                   
-                  <Link href="/inventory" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Link href="/crm/inventory" onClick={() => setIsMobileMenuOpen(false)}>
                     <NavItem icon={<Package />} label="Inventario" />
                   </Link>
                   
-                  <Link href="/admin" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Link href="/crm/admin" onClick={() => setIsMobileMenuOpen(false)}>
                     <NavItem icon={<Users />} label={agentName === 'Freelance' ? "Mis Clientes" : "Clientes y Cuentas"} />
                   </Link>
 
-                  <Link href="/cotizador" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Link href="/crm/cotizador" onClick={() => setIsMobileMenuOpen(false)}>
                     <NavItem icon={<Calculator />} label="Cotizador" />
                   </Link>
 
-                  <Link href="/proformas" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Link href="/crm/proformas" onClick={() => setIsMobileMenuOpen(false)}>
                     <NavItem icon={<FileText />} label="Cotizaciones" />
                   </Link>
 
                   <button onClick={() => { setActiveModule('kanban'); setIsMobileMenuOpen(false); }} className="w-full text-left">
                     <NavItem icon={<Layers className="text-amber-500" />} label="Tablero de Pedidos" active={activeModule === 'kanban'} />
                   </button>
+
+                  <Link href="/" onClick={() => setIsMobileMenuOpen(false)}>
+                    <NavItem icon={<Globe />} label="Sitio Web" />
+                  </Link>
+
+                  <Link href="/crm/admin/knowledge" onClick={() => setIsMobileMenuOpen(false)}>
+                    <NavItem icon={<Book />} label="Base de Conocimiento" />
+                  </Link>
                 </>
               )}
 
@@ -995,7 +1003,7 @@ function FinancialSummary({ agentName, isDark }: { agentName: string; isDark: bo
                 <div key={p.id} className="p-3 bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800/80 rounded-xl flex justify-between items-center group hover:border-amber-500/30 transition-all shadow-sm">
                   <div>
                     <Link 
-                      href={`/admin?client=${p.user_id || ''}&search=${encodeURIComponent(p.client_name || '')}`}
+                      href={`/crm/admin?client=${p.user_id || ''}&search=${encodeURIComponent(p.client_name || '')}`}
                       className="text-xs font-black text-slate-800 dark:text-zinc-200 uppercase leading-none mb-1 hover:text-amber-500 transition-colors inline-block"
                       title="Ver cuenta del cliente en el CRM"
                     >
@@ -1029,7 +1037,7 @@ function FinancialSummary({ agentName, isDark }: { agentName: string; isDark: bo
                 <div key={p.id} className="p-3 bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800/80 rounded-xl flex justify-between items-center group hover:border-amber-500/30 transition-all shadow-sm">
                   <div>
                     <Link 
-                      href={`/admin?client=${p.user_id || ''}&search=${encodeURIComponent(p.client_name || '')}`}
+                      href={`/crm/admin?client=${p.user_id || ''}&search=${encodeURIComponent(p.client_name || '')}`}
                       className="text-xs font-black text-slate-800 dark:text-zinc-200 uppercase leading-none mb-1 hover:text-amber-500 transition-colors inline-block"
                       title="Ver cuenta del cliente en el CRM"
                     >
@@ -1083,7 +1091,7 @@ function FinancialSummary({ agentName, isDark }: { agentName: string; isDark: bo
             <h4 className="font-black text-xs uppercase tracking-widest flex items-center gap-2">
               <FileText className="w-4 h-4 text-amber-500" /> Proformas — Ventas Activas
             </h4>
-            <Link href="/admin" className="text-[10px] text-amber-500 font-black uppercase tracking-widest hover:underline">Ver todas →</Link>
+            <Link href="/crm/admin" className="text-[10px] text-amber-500 font-black uppercase tracking-widest hover:underline">Ver todas →</Link>
           </div>
           <div className="divide-y divide-zinc-800/30">
             {closedClients.length === 0 ? (
@@ -1092,7 +1100,7 @@ function FinancialSummary({ agentName, isDark }: { agentName: string; isDark: bo
               <div key={p.id} className="px-4 py-3 flex items-center justify-between hover:bg-card dark:hover:bg-zinc-800/30 transition-colors">
                 <div>
                   <Link 
-                    href={`/admin?client=${p.user_id || ''}&search=${encodeURIComponent(p.client_name || '')}`}
+                    href={`/crm/admin?client=${p.user_id || ''}&search=${encodeURIComponent(p.client_name || '')}`}
                     className="text-xs font-black text-slate-900 dark:text-white hover:text-amber-500 transition-colors inline-block"
                     title="Ver cuenta del cliente en el CRM"
                   >
@@ -1112,7 +1120,7 @@ function FinancialSummary({ agentName, isDark }: { agentName: string; isDark: bo
             <h4 className="font-black text-xs uppercase tracking-widest flex items-center gap-2">
               <CreditCard className="w-4 h-4 text-emerald-500" /> Últimos Recibos
             </h4>
-            <Link href="/admin" className="text-[10px] text-amber-500 font-black uppercase tracking-widest hover:underline">Ver todos →</Link>
+            <Link href="/crm/admin" className="text-[10px] text-amber-500 font-black uppercase tracking-widest hover:underline">Ver todos →</Link>
           </div>
           <div className="divide-y divide-zinc-800/30">
             {recentReceipts.length === 0 ? (
@@ -1121,7 +1129,7 @@ function FinancialSummary({ agentName, isDark }: { agentName: string; isDark: bo
               <div key={r.id || `receipt-${r.receipt_number}-${idx}`} className="px-4 py-3 flex items-center justify-between hover:bg-card dark:hover:bg-zinc-800/30 transition-colors">
                 <div>
                   <Link
-                    href={`/admin?client=${r.user_id || ''}&search=${encodeURIComponent(r.client_name || '')}`}
+                    href={`/crm/admin?client=${r.user_id || ''}&search=${encodeURIComponent(r.client_name || '')}`}
                     className="text-xs font-black text-slate-900 dark:text-white hover:text-amber-500 transition-colors inline-block"
                     title="Ver cuenta del cliente en el CRM"
                   >

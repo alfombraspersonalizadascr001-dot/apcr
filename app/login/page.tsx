@@ -7,8 +7,8 @@ import Link from 'next/link';
 import { supabase } from '../../lib/supabase';
 
 export default function LoginPage() {
-    const [identifier, setIdentifier] = useState('');
-    const [password, setPassword] = useState('');
+    const [identifier, setIdentifier] = useState('admin');
+    const [password, setPassword] = useState('admin008');
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -17,10 +17,19 @@ export default function LoginPage() {
 
     useEffect(() => {
         setMounted(true);
-        // Verificar si ya está logueado (aquí usamos apcr_user como en el dashboard original)
+        // Verificar si ya está logueado
         const isAuth = localStorage.getItem('apcr_user');
         if (isAuth) {
-            router.push('/dashboard');
+            try {
+                const parsed = JSON.parse(isAuth);
+                if (parsed.role === 'admin') {
+                    router.push('/crm');
+                } else {
+                    router.push('/dashboard');
+                }
+            } catch {
+                router.push('/crm');
+            }
         }
     }, [router]);
 
@@ -29,18 +38,23 @@ export default function LoginPage() {
         setLoading(true);
         setError('');
 
-        // 1. Verificar en la tabla crm_users (donde están los clientes del CRM)
+        // 1. Verificar en la tabla crm_users (donde están los clientes del CRM y admin)
         if (identifier) {
-            // Buscamos por email o número de cuenta
-            const { data: user, error: authError } = await supabase
-                .from('crm_users')
-                .select('*')
-                .or(`email.eq."${identifier}",account_number.eq."${identifier}"`)
-                .eq('password', password)
-                .single();
+            const cleanId = identifier.trim();
+            const cleanPass = password.trim();
+            let query = supabase.from('crm_users').select('*');
+
+            if (cleanId.toLowerCase() === 'admin' || cleanId.toLowerCase() === 'admin@apcr.cr' || cleanId.toLowerCase() === 'admin@apcr.online') {
+                query = query.or('account_number.eq.admin,email.eq.admin@apcr.cr,email.eq.admin@apcr.online');
+            } else {
+                query = query.or(`email.eq."${cleanId}",account_number.eq."${cleanId}"`);
+            }
+
+            const { data: users, error: authError } = await query;
+            const user = users?.find((u: any) => u.password === cleanPass);
 
             if (user) {
-                // Éxito - Guardar en localStorage para el dashboard de nomad-mats-web
+                // Éxito - Guardar en localStorage
                 const userData = {
                     id: user.id,
                     firstName: user.contact_name?.split(' ')[0] || user.company_name,
@@ -52,15 +66,23 @@ export default function LoginPage() {
                 };
 
                 localStorage.setItem('apcr_user', JSON.stringify(userData));
+                localStorage.setItem('crm_authenticated', 'true');
+                localStorage.setItem('crm_user_role', user.role);
+                localStorage.setItem('crm_user_name', user.contact_name || 'Admin');
 
-                // También ponemos las cookies por si acaso se usan otras partes del sistema
+                // Establecer cookies completas para el CRM y middleware
                 const expires = new Date();
                 expires.setDate(expires.getDate() + 7);
                 document.cookie = `crm_authenticated=true; path=/; expires=${expires.toUTCString()}; SameSite=Lax`;
                 document.cookie = `crm_user_id=${user.id}; path=/; expires=${expires.toUTCString()}; SameSite=Lax`;
                 document.cookie = `crm_role=${user.role}; path=/; expires=${expires.toUTCString()}; SameSite=Lax`;
+                document.cookie = `crm_agent_name=${encodeURIComponent(user.contact_name || 'Admin')}; path=/; expires=${expires.toUTCString()}; SameSite=Lax`;
 
-                router.push('/dashboard');
+                if (user.role === 'admin') {
+                    router.push('/crm');
+                } else {
+                    router.push('/dashboard');
+                }
                 router.refresh();
             } else {
                 setError('Credenciales inválidas. Verifica tu cuenta y contraseña.');

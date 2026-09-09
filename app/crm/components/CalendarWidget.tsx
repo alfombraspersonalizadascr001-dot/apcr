@@ -469,7 +469,7 @@ export default function CalendarWidget() {
                           <p className="text-xs text-slate-400 mt-0.5">Proforma #{p.proforma_number} • Total: <strong className="text-amber-400 font-mono">₡{Number(p.total).toLocaleString('es-CR')}</strong></p>
                         </div>
                         <a 
-                          href={`/proformas?view=${p.proforma_number || p.id}`}
+                          href={`/crm/proformas?view=${p.proforma_number || p.id}`}
                           className="text-xs font-bold text-amber-500 hover:text-amber-400 flex items-center gap-1"
                         >
                           Ver Proforma <ArrowRight className="w-3.5 h-3.5" />

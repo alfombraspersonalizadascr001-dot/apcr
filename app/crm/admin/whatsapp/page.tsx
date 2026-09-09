@@ -449,7 +449,7 @@ export default function WhatsAppCRMPage() {
                         <div className="flex items-center gap-1.5 text-[10px] font-black text-slate-500 uppercase">
                           <Smartphone className="w-3 h-3" /> {lead.phone}
                         </div>
-                        <Link href="/admin" className="flex items-center gap-1.5 p-1.5 px-3 bg-slate-100 dark:bg-zinc-800 rounded-xl text-[10px] font-black uppercase text-slate-600 hover:text-amber-500 transition-colors">
+                        <Link href="/crm/admin" className="flex items-center gap-1.5 p-1.5 px-3 bg-slate-100 dark:bg-zinc-800 rounded-xl text-[10px] font-black uppercase text-slate-600 hover:text-amber-500 transition-colors">
                           Gestionar <ArrowRight className="w-3 h-3" />
                         </Link>
                       </div>

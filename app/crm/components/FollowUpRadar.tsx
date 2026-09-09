@@ -235,7 +235,7 @@ ${pdfLink}
                     </button>
 
                     <a
-                      href={`/proformas?view=${p.proforma_number || p.id}`}
+                      href={`/crm/proformas?view=${p.proforma_number || p.id}`}
                       className="p-2 bg-slate-100 dark:bg-zinc-800 text-slate-500 hover:text-slate-900 dark:hover:text-white rounded-xl transition-colors"
                       title="Ver Proforma"
                     >

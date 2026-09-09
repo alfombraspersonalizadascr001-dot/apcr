@@ -702,7 +702,7 @@ ${pdfLink}
                             <Settings className="w-4 h-4" /> {showConfig ? 'Cerrar Ajustes' : 'Ajustes'}
                         </button>
                         <Link
-                            href="/admin"
+                            href="/crm/admin"
                             className="px-4 py-2 bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-900/30 text-indigo-700 dark:text-indigo-400 rounded-lg hover:bg-indigo-100 dark:hover:bg-indigo-900/30 flex items-center gap-2 text-sm font-bold transition-all shadow-sm"
                             title="Ver base de datos de Clientes / Admin"
                         >

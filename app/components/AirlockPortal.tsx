@@ -45,9 +45,9 @@ export const AirlockPortal: React.FC<AirlockPortalProps> = ({
   const [activeCrm, setActiveCrm] = useState<'alfombras' | 'software'>('alfombras');
   const [isMuted, setIsMuted] = useState(false);
 
-  // Real CRM Authentication State
-  const [loginIdentifier, setLoginIdentifier] = useState('');
-  const [loginPassword, setLoginPassword] = useState('');
+  // Real CRM Authentication State (Pre-filled for direct admin access)
+  const [loginIdentifier, setLoginIdentifier] = useState('admin');
+  const [loginPassword, setLoginPassword] = useState('admin008');
   const [loginLoading, setLoginLoading] = useState(false);
   const [loginError, setLoginError] = useState('');
   const [loginSuccess, setLoginSuccess] = useState(false);
@@ -674,6 +674,20 @@ export const AirlockPortal: React.FC<AirlockPortalProps> = ({
               onSubmit={handleLoginSubmit} 
               className="space-y-3 relative z-20"
             >
+              <div className="flex items-center justify-between px-3 py-1.5 rounded-xl bg-cyan-950/50 border border-cyan-500/30 text-[11px] font-mono text-cyan-300 shadow-sm">
+                <span>🔑 Acceso: <strong>admin</strong> / <strong>admin008</strong></span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setLoginIdentifier('admin');
+                    setLoginPassword('admin008');
+                  }}
+                  className="text-amber-400 hover:text-amber-300 font-bold underline cursor-pointer"
+                >
+                  Restablecer
+                </button>
+              </div>
+
               <div>
                 <label className="block text-[11px] font-mono text-slate-400 mb-1 uppercase">
                   {t.userLabel}

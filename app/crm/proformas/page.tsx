@@ -330,7 +330,7 @@ ${pdfLink}
                 <RefreshCw className="w-5 h-5" />
               </button>
               <Link 
-                href="/cotizador"
+                href="/crm/cotizador"
                 className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl font-bold text-sm shadow-md transition-all flex items-center gap-2 whitespace-nowrap"
               >
                 <FileText className="w-4 h-4" />
@@ -450,7 +450,7 @@ ${pdfLink}
                       <td className="p-4" onClick={(e) => e.stopPropagation()}>
                         {proforma.crm_users?.id ? (
                           <Link 
-                            href={`/admin?client=${proforma.crm_users.id}&search=${encodeURIComponent(proforma.crm_users.account_number || proforma.crm_users.company_name || '')}`}
+                            href={`/crm/admin?client=${proforma.crm_users.id}&search=${encodeURIComponent(proforma.crm_users.account_number || proforma.crm_users.company_name || '')}`}
                             className="inline-flex items-center gap-1.5 font-bold text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 hover:underline group"
                             title="Ir al expediente / cuenta del cliente en el CRM"
                           >
@@ -593,7 +593,7 @@ ${pdfLink}
                             <Printer className="w-4 h-4" />
                           </button>
                           <Link 
-                            href={`/cotizador?edit=${proforma.id}`}
+                            href={`/crm/cotizador?edit=${proforma.id}`}
                             className="p-2 text-slate-400 hover:text-amber-500 hover:bg-amber-50 dark:hover:bg-amber-950/20 rounded-lg transition-colors inline-block"
                             title="Editar en Cotizador"
                           >
@@ -645,7 +645,7 @@ ${pdfLink}
                     Imprimir Proforma
                   </button>
                   <Link 
-                    href={`/cotizador?edit=${selectedProforma.id}`}
+                    href={`/crm/cotizador?edit=${selectedProforma.id}`}
                     className="bg-amber-500 hover:bg-amber-600 text-black px-4 py-2 rounded-xl text-sm font-bold shadow-md flex items-center gap-2 transition-colors"
                   >
                     <Pencil className="w-4 h-4" />
@@ -703,7 +703,7 @@ ${pdfLink}
                         <span className="font-black text-sm uppercase">{selectedProforma.crm_users?.company_name || selectedProforma.crm_users?.contact_name || 'Cliente sin Nombre'}</span>
                         {selectedProforma.crm_users?.id && (
                           <Link 
-                            href={`/admin?client=${selectedProforma.crm_users.id}&search=${encodeURIComponent(selectedProforma.crm_users.account_number || selectedProforma.crm_users.company_name || '')}`}
+                            href={`/crm/admin?client=${selectedProforma.crm_users.id}&search=${encodeURIComponent(selectedProforma.crm_users.account_number || selectedProforma.crm_users.company_name || '')}`}
                             target="_blank"
                             className="no-print inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-100 hover:text-blue-900 transition-colors shadow-xs"
                             title="Abrir expediente completo y cuenta en el CRM"

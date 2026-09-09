@@ -814,7 +814,7 @@ function OrderCardContent({
       <div>
         {proforma.crm_users?.id ? (
           <Link
-            href={`/admin?client=${proforma.crm_users.id}&search=${encodeURIComponent(proforma.crm_users.account_number || proforma.crm_users.company_name || '')}`}
+            href={`/crm/admin?client=${proforma.crm_users.id}&search=${encodeURIComponent(proforma.crm_users.account_number || proforma.crm_users.company_name || '')}`}
             onClick={(e) => e.stopPropagation()}
             className="font-bold text-xs text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 hover:underline line-clamp-1 uppercase inline-flex items-center gap-1 group"
             title="Ir al expediente / cuenta del cliente en el CRM"
@@ -906,7 +906,7 @@ function OrderCardContent({
           )}
 
           <a
-            href={`/proformas?view=${proforma.proforma_number || proforma.id}`}
+            href={`/crm/proformas?view=${proforma.proforma_number || proforma.id}`}
             className="p-1 hover:bg-slate-100 dark:hover:bg-zinc-800 text-slate-400 hover:text-slate-700 dark:hover:text-white rounded transition-colors"
             title="Ver Proforma"
           >

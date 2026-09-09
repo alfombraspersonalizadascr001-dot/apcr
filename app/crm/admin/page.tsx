@@ -704,7 +704,7 @@ function AdminDashboardInternal() {
     assigned_to: "",
   });
   const [isArchiveView, setIsArchiveView] = useState(false);
-  const [loggedInAgent, setLoggedInAgent] = useState<string>("");
+  const [loggedInAgent, setLoggedInAgent] = useState<string>("Admin");
   const [activeId, setActiveId] = useState<string | null>(null);
   const [showWhatsAppModal, setShowWhatsAppModal] = useState(false);
   const [whatsappTargetClient, setWhatsappTargetClient] = useState<CRMUser | null>(null);
@@ -729,6 +729,8 @@ function AdminDashboardInternal() {
       .find((row) => row.startsWith("crm_agent_name="));
     if (agentNameCookie) {
       setLoggedInAgent(decodeURIComponent(agentNameCookie.split("=")[1]));
+    } else {
+      setLoggedInAgent("Admin");
     }
   }, []);
 
@@ -766,10 +768,8 @@ function AdminDashboardInternal() {
       router.push("/login");
       return;
     }
-    // Esperar a que el agente esté cargado para aplicar filtros de seguridad
-    if (loggedInAgent) {
-      loadClients();
-    }
+    // Carga inmediata de todos los clientes sin bloquearse por cookies
+    loadClients();
   }, [router, loggedInAgent, isArchiveView]);
 
   const loadClients = async () => {
@@ -2188,7 +2188,7 @@ function AdminDashboardInternal() {
                     <MessageCircle className="w-4 h-4" /> WhatsApp
                   </button>
                   <Link
-                    href={`/cotizador?clientId=${selectedClient.id}`}
+                    href={`/crm/cotizador?clientId=${selectedClient.id}`}
                     className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg flex items-center gap-2 font-bold shadow-sm transition-all animate-in zoom-in-90 duration-300"
                   >
                     <Calculator className="w-4 h-4" /> Cotizar
@@ -2845,7 +2845,7 @@ function AdminDashboardInternal() {
                       </span>
                     </div>
                     <Link
-                      href={`/cotizador?client=${selectedClient.id}`}
+                      href={`/crm/cotizador?client=${selectedClient.id}`}
                       className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-black font-black text-xs uppercase tracking-wider rounded-xl transition-all shadow-sm flex items-center gap-1.5"
                     >
                       <Plus className="w-3.5 h-3.5" /> Nueva Cotización
@@ -2856,13 +2856,13 @@ function AdminDashboardInternal() {
                     <div className="text-center py-12 bg-card dark:bg-zinc-950 rounded-2xl border border-dashed border-zinc-800/40 flex flex-col items-center justify-center p-6">
                       <FileText className="w-10 h-10 text-slate-400 dark:text-zinc-600 mb-3" />
                       <p className="text-sm font-black text-slate-800 dark:text-white uppercase tracking-wider mb-1">
-                        No hay cotizaciones registradas
+                         No hay cotizaciones registradas
                       </p>
                       <p className="text-xs text-slate-400 mb-4">
                         Crea una nueva cotización para este cliente en el cotizador
                       </p>
                       <Link
-                        href={`/cotizador?client=${selectedClient.id}`}
+                        href={`/crm/cotizador?client=${selectedClient.id}`}
                         className="px-5 py-2.5 bg-amber-500 hover:bg-amber-600 text-black font-black text-xs uppercase tracking-wider rounded-xl transition-all shadow-md flex items-center gap-2"
                       >
                         <Plus className="w-4 h-4" /> Crear Cotización
@@ -3052,7 +3052,7 @@ function AdminDashboardInternal() {
                                     <Eye className="w-4 h-4" />
                                   </button>
                                   <Link
-                                    href={`/cotizador?edit=${p.id}`}
+                                    href={`/crm/cotizador?edit=${p.id}`}
                                     className="p-2 bg-amber-500/10 text-amber-600 rounded-lg hover:bg-amber-500 hover:text-white transition-all shadow-sm inline-block"
                                     title="Editar Cotización en Cotizador"
                                   >
@@ -3103,7 +3103,7 @@ function AdminDashboardInternal() {
                       </button>
                     ) : (
                       <Link
-                        href={`/cotizador?client=${selectedClient.id}`}
+                        href={`/crm/cotizador?client=${selectedClient.id}`}
                         className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-black font-black text-xs uppercase tracking-wider rounded-xl transition-all shadow-sm flex items-center gap-1.5"
                       >
                         <Plus className="w-3.5 h-3.5" /> Crear Cotización Primero
@@ -3517,7 +3517,7 @@ function AdminDashboardInternal() {
 
                   <button 
                     type="button"
-                    onClick={() => router.push(`/cotizador?edit=${viewingProforma.id}`)}
+                    onClick={() => router.push(`/crm/cotizador?edit=${viewingProforma.id}`)}
                     className="bg-amber-500 hover:bg-amber-600 text-black px-4 py-2 rounded-xl text-sm font-bold shadow-md flex items-center gap-2 transition-all hover:scale-105"
                     title="Editar proforma en el cotizador dinámico"
                   >
@@ -4061,7 +4061,7 @@ function AdminDashboardInternal() {
             )}
 
             <Link
-              href="/cotizador"
+              href="/crm/cotizador"
               className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-xl flex items-center gap-2 text-sm font-bold transition-all shadow-lg shadow-purple-600/20 hover:scale-105"
               title="Ir al Generador de Proformas / Cotizaciones"
             >

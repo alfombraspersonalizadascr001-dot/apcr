@@ -20,6 +20,7 @@ import {
     Activity
 } from 'lucide-react';
 import Image from 'next/image';
+import { supabase } from '@/lib/supabase';
 
 // --- TIPO DE DATOS MOCK ---
 type OrderStatus = 'Pendiente' | 'Producción' | 'Entregado' | 'Enviado';
@@ -60,23 +61,81 @@ const DEFAULT_CLIENT = {
     mobilePhone: "+506 8888-8888"
 };
 
-const MOCK_ORDERS: Order[] = [];
-// MOCK_ORDERS is now empty by default. Real orders would be fetched from database.
-
 export default function DashboardPage() {
     const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
     const [clientData, setClientData] = useState(DEFAULT_CLIENT);
+    const [orders, setOrders] = useState<Order[]>([]);
+    const [loadingOrders, setLoadingOrders] = useState(true);
 
     useEffect(() => {
-        // Cargar datos reales si el usuario se ha registrado
-        const storedUser = localStorage.getItem('apcr_user');
-        if (storedUser) {
+        const fetchClientDataAndOrders = async () => {
+            setLoadingOrders(true);
             try {
-                setClientData(JSON.parse(storedUser));
-            } catch (e) {
-                console.error("Error reading user data", e);
+                const storedUser = localStorage.getItem('apcr_user');
+                if (storedUser) {
+                    const parsed = JSON.parse(storedUser);
+                    setClientData(parsed);
+
+                    // Buscar proformas asociadas al cliente
+                    let query = supabase.from('proformas').select('*');
+                    if (parsed.id) {
+                        query = query.eq('user_id', parsed.id);
+                    }
+                    const { data, error } = await query.order('created_at', { ascending: false });
+
+                    if (!error && data && data.length > 0) {
+                        const mapped: Order[] = data.map((p: any) => {
+                            let step = 1;
+                            let status: OrderStatus = 'Pendiente';
+                            const prod = (p.production_status || '').toUpperCase();
+                            const st = (p.status || '').toLowerCase();
+
+                            if (prod.includes('STANCIL') || prod.includes('CORTE')) {
+                                step = 2;
+                                status = 'Producción';
+                            } else if (prod.includes('ARMADO') || prod.includes('PEGADO') || prod.includes('BORDE')) {
+                                step = 4;
+                                status = 'Producción';
+                            } else if (prod.includes('ENVÍO') || prod.includes('ENVIO')) {
+                                step = 5;
+                                status = 'Enviado';
+                            } else if (prod.includes('ENTREGADO') || st.includes('entregado')) {
+                                step = 6;
+                                status = 'Entregado';
+                            }
+
+                            const itemsList = Array.isArray(p.items) && p.items.length > 0
+                                ? p.items.map((it: any) => `${it.quantity || 1}x ${it.productName || 'Alfombra Personalizada'} (${it.width || 0}x${it.height || 0}cm)`)
+                                : ['Alfombra Personalizada'];
+
+                            return {
+                                id: p.proforma_number ? `COT-${p.proforma_number}` : `PED-${p.id.slice(0, 6).toUpperCase()}`,
+                                date: p.date || (p.created_at ? new Date(p.created_at).toLocaleDateString('es-CR') : 'Reciente'),
+                                status,
+                                step,
+                                total: `₡${Number(p.total || 0).toLocaleString('es-CR')}`,
+                                items: itemsList,
+                                images: {
+                                    topView: "/hero-mat.png",
+                                    render: "/hero-mat.png"
+                                },
+                                documents: {
+                                    proforma: `/crm/proformas?id=${p.id}`,
+                                    invoice: null
+                                }
+                            };
+                        });
+                        setOrders(mapped);
+                    }
+                }
+            } catch (err) {
+                console.error("Error loading client data or orders:", err);
+            } finally {
+                setLoadingOrders(false);
             }
-        }
+        };
+
+        fetchClientDataAndOrders();
     }, []);
 
     return (
@@ -110,7 +169,12 @@ export default function DashboardPage() {
                 </h2>
 
                 <div className="grid gap-4">
-                    {MOCK_ORDERS.length === 0 ? (
+                    {loadingOrders ? (
+                        <div className="text-center py-16 bg-white border border-slate-200 rounded-xl">
+                            <Package className="w-10 h-10 text-tropical-cyan animate-bounce mx-auto mb-3" />
+                            <p className="text-slate-500 text-sm font-bold">Cargando tus pedidos y cotizaciones...</p>
+                        </div>
+                    ) : orders.length === 0 ? (
                         <div className="text-center py-16 bg-white border border-slate-200 rounded-xl border-dashed">
                             <Package className="w-16 h-16 text-slate-300 mx-auto mb-4" />
                             <h3 className="text-xl font-bold text-slate-900 mb-2">No tienes pedidos activos</h3>
@@ -122,7 +186,7 @@ export default function DashboardPage() {
                             </a>
                         </div>
                     ) : (
-                        MOCK_ORDERS.map((order) => (
+                        orders.map((order) => (
                             <div
                                 key={order.id}
                                 onClick={() => setSelectedOrder(order)}

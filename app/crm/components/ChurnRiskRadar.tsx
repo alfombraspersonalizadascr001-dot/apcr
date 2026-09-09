@@ -239,7 +239,7 @@ Las alfombras de alto tránsito acumulan desgaste natural por el paso constante 
                     </button>
 
                     <a
-                      href={`/admin?search=${encodeURIComponent(client.account_number || client.company_name)}`}
+                      href={`/crm/admin?search=${encodeURIComponent(client.account_number || client.company_name)}`}
                       className="p-2 bg-slate-100 dark:bg-zinc-800 text-slate-500 hover:text-slate-900 dark:hover:text-white rounded-xl transition-colors"
                       title="Ver Perfil del Cliente"
                     >
@@ -254,7 +254,7 @@ Las alfombras de alto tránsito acumulan desgaste natural por el paso constante 
           {atRiskList.length > 12 && (
             <div className="text-center pt-2">
               <a 
-                href="/admin" 
+                href="/crm/admin" 
                 className="text-xs font-bold text-red-500 hover:underline uppercase tracking-wider inline-flex items-center gap-1"
               >
                 <span>Ver los {atRiskList.length} clientes en riesgo de abandono en Clientes y Cuentas</span>
