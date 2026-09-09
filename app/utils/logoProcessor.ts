@@ -8,14 +8,29 @@
  * 4. Recorte milimétrico automático de bordes transparentes (Auto-trimming)
  * 5. Escalado al tamaño MÁXIMO dentro del área segura (W - 15 cm, H - 15 cm)
  * 6. Análisis de componentes conectados (CCL): Eliminación de cualquier elemento < 1.0 cm a escala real
- * 7. Re-recorte y re-maximización de los elementos troquelables restantes
+ * 7. Generación de Auditoría de Viabilidad Técnica & Mapa de Rayos X (Rojo = No viable, Verde = Aprobado)
+ * 8. Re-recorte y re-maximización de los elementos troquelables restantes
  */
+
+export interface ViabilityAudit {
+  status: 'viable' | 'needs_simplification' | 'rejected';
+  badgeText: string;
+  title: string;
+  description: string;
+  issues: string[];
+  smallElementsCount: number;
+  smallestElementCm: number;
+  suggestedMatWidthCm?: number;
+  isRealisticPhoto: boolean;
+}
 
 export interface LogoProcessResult {
   processedDataUrl: string;
   processedImage: HTMLImageElement;
   originalDataUrl: string;
+  xrayDataUrl: string;                // Mapa de Rayos X: Rojo = <1.0cm (no troquelable), Verde = >=1.0cm (aprobado)
   elementsRemovedCount: number;
+  viability: ViabilityAudit;          // Diagnóstico técnico de taller
   originalDimensions: { w: number; h: number };
   croppedDimensions: { w: number; h: number };
   physicalLogoSizeCm: { w: number; h: number };
@@ -35,7 +50,8 @@ export interface LogoProcessOptions {
  * 2. Recorte automático a los límites exactos de los gráficos
  * 3. Mapeo a la escala física real de la alfombra (con margen de 7.5 cm)
  * 4. Detección y eliminación automática de cualquier elemento < 1.0 cm
- * 5. Re-escalado al tamaño MÁXIMO absoluto dentro del área segura
+ * 5. Generación de mapa de calor / Rayos X de troquel
+ * 6. Re-escalado al tamaño MÁXIMO absoluto dentro del área segura
  */
 export async function processLogoForDieCut(
   sourceImage: HTMLImageElement,
@@ -88,12 +104,10 @@ export async function processLogoForDieCut(
   // =========================================================================
   // PASO 1: REMOCIÓN DE FONDO EXTERIOR (FLOOD-FILL DESDE PERÍMETRO)
   // =========================================================================
-  // Muestrear píxeles perimetrales para detectar si ya es transparente o el color de fondo
   let transparentPerimeterCount = 0;
   let perimeterTotal = 0;
   const perimeterColors: Array<[number, number, number]> = [];
 
-  // Muestrear borde superior e inferior
   for (let x = 0; x < workW; x += 2) {
     const topIdx = x * 4;
     const botIdx = ((workH - 1) * workW + x) * 4;
@@ -105,7 +119,6 @@ export async function processLogoForDieCut(
     else perimeterColors.push([data[botIdx], data[botIdx + 1], data[botIdx + 2]]);
   }
 
-  // Muestrear borde izquierdo y derecho
   for (let y = 1; y < workH - 1; y += 2) {
     const leftIdx = (y * workW) * 4;
     const rightIdx = (y * workW + (workW - 1)) * 4;
@@ -120,7 +133,6 @@ export async function processLogoForDieCut(
   const isAlreadyTransparent = transparentPerimeterCount > perimeterTotal * 0.25;
 
   if (!isAlreadyTransparent && perimeterColors.length > 0) {
-    // Determinar el color de fondo dominante en el perímetro
     let sumR = 0, sumG = 0, sumB = 0;
     for (const [r, g, b] of perimeterColors) {
       sumR += r; sumG += g; sumB += b;
@@ -132,14 +144,12 @@ export async function processLogoForDieCut(
     const tolerance = options.tolerance || 38;
     const tolSq = tolerance * tolerance;
 
-    // Cola Flood-Fill usando Int32Array para rendimiento nativo de alta velocidad
     const totalPixels = workW * workH;
     const visited = new Uint8Array(totalPixels);
     const queue = new Int32Array(totalPixels);
     let qHead = 0;
     let qTail = 0;
 
-    // Sembrar toda la frontera exterior (4 bordes)
     for (let x = 0; x < workW; x++) {
       queue[qTail++] = x;
       visited[x] = 1;
@@ -156,7 +166,6 @@ export async function processLogoForDieCut(
       visited[rIdx] = 1;
     }
 
-    // Expansión Flood-Fill (solo borra fondo conectado con los bordes exteriores)
     while (qHead < qTail) {
       const p = queue[qHead++];
       const px = p % workW;
@@ -170,9 +179,8 @@ export async function processLogoForDieCut(
       const distSq = (r - bgR) * (r - bgR) + (g - bgG) * (g - bgG) + (b - bgB) * (b - bgB);
 
       if (distSq <= tolSq) {
-        data[idx + 3] = 0; // Transparente
+        data[idx + 3] = 0;
 
-        // Propagar a los 4 vecinos ortogonales
         if (px > 0) {
           const n = p - 1;
           if (!visited[n]) { visited[n] = 1; queue[qTail++] = n; }
@@ -190,13 +198,26 @@ export async function processLogoForDieCut(
           if (!visited[n]) { visited[n] = 1; queue[qTail++] = n; }
         }
       } else if (distSq <= (tolerance + 12) * (tolerance + 12)) {
-        // Suavizado anti-aliasing en el contorno del logo
         const dist = Math.sqrt(distSq);
         const fade = (dist - tolerance) / 12;
         data[idx + 3] = Math.round(data[idx + 3] * Math.max(0, Math.min(1, fade)));
       }
     }
   }
+
+  // =========================================================================
+  // PASO 1.5: DETECCIÓN DE DEGRADADOS O FOTOS REALISTAS
+  // =========================================================================
+  const colorSet = new Set<number>();
+  let foregroundCount = 0;
+  for (let i = 0; i < data.length; i += 4) {
+    if (data[i + 3] > 30) {
+      foregroundCount++;
+      const key = ((data[i] >> 3) << 10) | ((data[i + 1] >> 3) << 5) | (data[i + 2] >> 3);
+      colorSet.add(key);
+    }
+  }
+  const isRealisticPhoto = colorSet.size > 1400;
 
   // =========================================================================
   // PASO 2: AUTO-TRIMMING INICIAL (RECORTE DE MÁRGENES TRANSPARENTES)
@@ -226,7 +247,6 @@ export async function processLogoForDieCut(
   // =========================================================================
   // PASO 3: CÁLCULO DE ESCALA FÍSICA AL TAMAÑO MÁXIMO EN ÁREA SEGURA
   // =========================================================================
-  // Área segura respetando 7.5 cm en los 4 bordes de la alfombra:
   const safeWCm = Math.max(10, matWidthCm - marginCm * 2);
   const safeHCm = Math.max(10, matHeightCm - marginCm * 2);
 
@@ -247,18 +267,26 @@ export async function processLogoForDieCut(
   let pixelsPerCm = cropW / logoWCm;
 
   // =========================================================================
-  // PASO 4: ANÁLISIS DE COMPONENTES CONECTADOS (CCL) & ELIMINACIÓN < 1.0 CM
+  // PASO 4: ANÁLISIS DE COMPONENTES CONECTADOS (CCL), RAYOS X & ELIMINACIÓN < 1.0 CM
   // =========================================================================
+  // Crear canvas de Rayos X técnico (muestra en Rojo lo no troquelable y en Verde lo aprobado)
+  const xrayCanvas = document.createElement('canvas');
+  xrayCanvas.width = workW;
+  xrayCanvas.height = workH;
+  const xrayCtx = xrayCanvas.getContext('2d');
+  const xrayImgData = xrayCtx?.createImageData(workW, workH);
+  const xrayData = xrayImgData ? xrayImgData.data : new Uint8ClampedArray(workW * workH * 4);
+
   const compVisited = new Uint8Array(workW * workH);
   const cQueue = new Int32Array(workW * workH);
   let elementsRemovedCount = 0;
+  let smallestElementCm = 999;
 
   for (let y = minY; y <= maxY; y++) {
     for (let x = minX; x <= maxX; x++) {
       const p = y * workW + x;
       if (data[p * 4 + 3] <= 25 || compVisited[p]) continue;
 
-      // Explorar componente conectado (8 vecinos para mantener letras unidas)
       let cHead = 0;
       let cTail = 0;
       cQueue[cTail++] = p;
@@ -295,7 +323,6 @@ export async function processLogoForDieCut(
         }
       }
 
-      // Medir tamaño del componente a escala física real en centímetros
       const compWPx = cMaxX - cMinX + 1;
       const compHPx = cMaxY - cMinY + 1;
       const compWCm = compWPx / pixelsPerCm;
@@ -303,19 +330,37 @@ export async function processLogoForDieCut(
       const compMaxDimCm = Math.max(compWCm, compHCm);
 
       // CRITERIO TÉCNICO DE FABRICACIÓN (TROQUELADO VINIL 12MM):
-      // En corte e incrustación de alfombra Nomad de 12mm de espesor:
-      // Cualquier elemento, letra, subtítulo, trazo o detalle que a escala real mida menos de 1.0 cm
-      // en su altura o en su ancho NO se puede troquelar sin romperse o deformarse.
+      // En alfombras Nomad de 12mm: cualquier elemento, letra o trazo menor a 1.0 cm
+      // en su altura o en su ancho NO se puede troquelar sin romperse o desprenderse.
       const isTooSmall = 
         compMaxDimCm < minDieCutSizeCm || 
         compHCm < minDieCutSizeCm || 
         compWCm < minDieCutSizeCm;
 
       if (isTooSmall) {
+        smallestElementCm = Math.min(smallestElementCm, compMaxDimCm);
         for (let i = 0; i < cTail; i++) {
-          data[cQueue[i] * 4 + 3] = 0; // Eliminar píxel (hacer transparente)
+          const pi = cQueue[i];
+          data[pi * 4 + 3] = 0; // Borrar del archivo troquelable
+
+          // En Rayos X: Pintar en ROJO carmesí de advertencia
+          const xi = pi * 4;
+          xrayData[xi] = 239;     // R
+          xrayData[xi + 1] = 68;  // G
+          xrayData[xi + 2] = 68;  // B
+          xrayData[xi + 3] = 255; // Alpha
         }
         elementsRemovedCount++;
+      } else {
+        // En Rayos X: Pintar en VERDE esmeralda de aprobación
+        for (let i = 0; i < cTail; i++) {
+          const pi = cQueue[i];
+          const xi = pi * 4;
+          xrayData[xi] = 16;      // R
+          xrayData[xi + 1] = 185; // G
+          xrayData[xi + 2] = 129; // B
+          xrayData[xi + 3] = 255; // Alpha
+        }
       }
     }
   }
@@ -323,7 +368,6 @@ export async function processLogoForDieCut(
   // =========================================================================
   // PASO 5: RE-TRIMMING & RE-MAXIMIZACIÓN DE ELEMENTOS RESTANTES
   // =========================================================================
-  // Si se eliminaron subtítulos o detalles en los extremos, re-ajustar el cuadro
   minX = workW; maxX = 0; minY = workH; maxY = 0;
   let remainingPixels = 0;
 
@@ -344,7 +388,6 @@ export async function processLogoForDieCut(
     cropH = Math.max(1, maxY - minY + 1);
   }
 
-  // Recalcular tamaño físico MÁXIMO absoluto en el área segura de la alfombra
   aspect = cropW / cropH;
   if (aspect >= safeAspect) {
     logoWCm = safeWCm;
@@ -355,10 +398,8 @@ export async function processLogoForDieCut(
   }
   pixelsPerCm = cropW / logoWCm;
 
-  // Actualizar imagen con los píxeles limpios
   ctx.putImageData(imgData, 0, 0);
 
-  // Crear canvas final recortado exactamente a los gráficos limpios
   const finalCanvas = document.createElement('canvas');
   finalCanvas.width = cropW;
   finalCanvas.height = cropH;
@@ -367,7 +408,6 @@ export async function processLogoForDieCut(
 
   finalCtx.drawImage(canvas, minX, minY, cropW, cropH, 0, 0, cropW, cropH);
 
-  // Opcional: Si el usuario solicitó recolorear a un vinil específico (e.g. Blanco para alfombra oscura)
   if (options.customVinylColor) {
     finalCtx.globalCompositeOperation = 'source-in';
     finalCtx.fillStyle = options.customVinylColor;
@@ -382,11 +422,74 @@ export async function processLogoForDieCut(
     processedImage.src = processedDataUrl;
   });
 
+  // Exportar mapa de Rayos X recortado a las mismas proporciones
+  if (xrayCtx && xrayImgData) {
+    xrayCtx.putImageData(xrayImgData, 0, 0);
+  }
+  const finalXrayCanvas = document.createElement('canvas');
+  finalXrayCanvas.width = cropW;
+  finalXrayCanvas.height = cropH;
+  const finalXrayCtx = finalXrayCanvas.getContext('2d');
+  if (finalXrayCtx) {
+    finalXrayCtx.drawImage(xrayCanvas, minX, minY, cropW, cropH, 0, 0, cropW, cropH);
+  }
+  const xrayDataUrl = finalXrayCanvas.toDataURL('image/png', 1.0);
+
+  // =========================================================================
+  // PASO 6: AUDITORÍA DE VIABILIDAD TÉCNICA (SEMÁFORO DE TALLER)
+  // =========================================================================
+  let viabilityStatus: 'viable' | 'needs_simplification' | 'rejected';
+  let badgeText: string;
+  let title: string;
+  let description: string;
+  const issues: string[] = [];
+
+  if (smallestElementCm === 999) smallestElementCm = 1.0;
+  const smallestFormatted = parseFloat(smallestElementCm.toFixed(1));
+
+  let suggestedMatWidthCm: number | undefined = undefined;
+  if (elementsRemovedCount > 0 && smallestElementCm > 0.1) {
+    suggestedMatWidthCm = Math.min(400, Math.round(matWidthCm * (1.05 / smallestElementCm)));
+  }
+
+  if (isRealisticPhoto) {
+    viabilityStatus = 'rejected';
+    badgeText = 'NO APTO PARA TROQUELADO';
+    title = 'Diseño Fotográfico o con Degradados Continuos';
+    description = 'El archivo parece ser una fotografía o tener degradados de color continuos. Las alfombras Nomad de 12mm se fabrican mediante incrustación de piezas sólidas de vinil plano.';
+    issues.push('Contiene degradados complejos que no se pueden troquelar en vinil.');
+    issues.push('Requiere vectorización previa o adaptación a colores sólidos.');
+  } else if (elementsRemovedCount > 0) {
+    viabilityStatus = 'needs_simplification';
+    badgeText = 'REQUIERE SIMPLIFICACIÓN TÉCNICA';
+    title = 'Logotipo con Letras o Trazos Menores a 1.0 cm';
+    description = `Se detectaron ${elementsRemovedCount} detalle(s) o letras menores a 1.0 cm (mínimo de corte de 10mm). El sistema aisló el isotipo y nombre principal apto para garantizar un troquelado perfecto.`;
+    issues.push(`${elementsRemovedCount} elemento(s) o subtítulos miden menos de 1.0 cm a escala real.`);
+    issues.push('En vinil Nomad de 12mm, letras menores a 10mm se despedazan con las cuchillas de corte.');
+  } else {
+    viabilityStatus = 'viable';
+    badgeText = '100% APTO PARA TROQUELADO';
+    title = 'Logotipo Aprobado para Fabricación';
+    description = 'Todos los trazos, letras y elementos superan el grosor mínimo de 1.0 cm a escala real. El archivo está listo para producción en taller.';
+  }
+
   return {
     processedDataUrl,
     processedImage,
     originalDataUrl,
+    xrayDataUrl,
     elementsRemovedCount,
+    viability: {
+      status: viabilityStatus,
+      badgeText,
+      title,
+      description,
+      issues,
+      smallElementsCount: elementsRemovedCount,
+      smallestElementCm: smallestFormatted,
+      suggestedMatWidthCm,
+      isRealisticPhoto
+    },
     originalDimensions: { w: origW, h: origH },
     croppedDimensions: { w: cropW, h: cropH },
     physicalLogoSizeCm: {
@@ -401,3 +504,4 @@ export async function processLogoForDieCut(
     minDieCutSizeCm
   };
 }
+

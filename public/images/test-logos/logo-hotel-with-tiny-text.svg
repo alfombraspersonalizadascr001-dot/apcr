@@ -1,0 +1,8 @@
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="600" fill="#FFFFFF"/>
+  <circle cx="400" cy="200" r="130" fill="#0033AA"/>
+  <polygon points="320,220 350,130 400,190 450,130 480,220" fill="#FFD000"/>
+  <text x="400" y="400" font-family="Arial, sans-serif" font-size="58" font-weight="bold" fill="#0033AA" text-anchor="middle">HOTEL IMPERIAL</text>
+  <text x="400" y="470" font-family="Arial, sans-serif" font-size="10" fill="#333333" text-anchor="middle">S.A. - TEL: (506) 2494-0000 - WWW.HOTELIMPERIALCR.COM</text>
+  <text x="400" y="500" font-family="Arial, sans-serif" font-size="8" fill="#555555" text-anchor="middle">GRECIA, ALAJUELA - CED. JUR. 3-101-998877</text>
+</svg>
