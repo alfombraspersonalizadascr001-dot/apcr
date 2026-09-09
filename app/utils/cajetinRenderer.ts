@@ -214,12 +214,12 @@ export async function renderCajetinBlueprint(
     const logoImg = config.logoImage;
     const aspectLogo = logoImg.naturalWidth / logoImg.naturalHeight;
 
-    // Escalar para que quepa perfectamente dentro del área de seguridad
-    let logoDrawW = safeAreaW * (config.logoScale || 0.85);
+    // Escalar para llenar al MÁXIMO el área segura (margen de 7.5 cm)
+    let logoDrawW = safeAreaW * (config.logoScale || 1.0);
     let logoDrawH = logoDrawW / aspectLogo;
 
-    if (logoDrawH > safeAreaH * (config.logoScale || 0.85)) {
-      logoDrawH = safeAreaH * (config.logoScale || 0.85);
+    if (logoDrawH > safeAreaH * (config.logoScale || 1.0)) {
+      logoDrawH = safeAreaH * (config.logoScale || 1.0);
       logoDrawW = logoDrawH * aspectLogo;
     }
 

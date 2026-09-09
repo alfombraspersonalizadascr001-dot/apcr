@@ -28,6 +28,7 @@ import {
   MatConfig, 
   DieCutValidation 
 } from '../utils/cajetinRenderer';
+import { processLogoForDieCut, LogoProcessResult } from '../utils/logoProcessor';
 
 export function MatSimulator() {
   // Dimensiones (Mínimo estricto 120 x 100 cm)
@@ -37,11 +38,14 @@ export function MatSimulator() {
   // Color base
   const [selectedColor, setSelectedColor] = useState(NOMAD_COLOR_PALETTE[0]); // Negro por defecto
 
-  // Logo subido
+  // Logo subido y procesado
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [logoDataUrl, setLogoDataUrl] = useState<string>('');
   const [logoImageElement, setLogoImageElement] = useState<HTMLImageElement | null>(null);
-  const [logoScale, setLogoScale] = useState<number>(0.85);
+  const [rawLogoImage, setRawLogoImage] = useState<HTMLImageElement | null>(null);
+  const [logoScale, setLogoScale] = useState<number>(1.0); // 100% Tamaño máximo por defecto
+  const [isProcessingLogo, setIsProcessingLogo] = useState<boolean>(false);
+  const [processedStats, setProcessedStats] = useState<LogoProcessResult | null>(null);
 
   // Datos del cliente para el cajetín
   const [clientName, setClientName] = useState<string>('');
@@ -86,10 +90,35 @@ export function MatSimulator() {
       defaultImg.crossOrigin = 'anonymous';
       defaultImg.src = '/images/logos/ap-monogram-black.png';
       defaultImg.onload = () => {
-        setLogoImageElement(defaultImg);
+        setRawLogoImage(defaultImg);
+        processAndMaximizeLogo(defaultImg);
       };
     }
   }, [logoDataUrl]);
+
+  // Función para remover fondo, maximizar tamaño y eliminar elementos < 1cm
+  const processAndMaximizeLogo = async (img: HTMLImageElement) => {
+    setIsProcessingLogo(true);
+    try {
+      const result = await processLogoForDieCut(img, widthCm, heightCm, 7.5, 1.0);
+      setLogoImageElement(result.processedImage);
+      setLogoDataUrl(result.processedDataUrl);
+      setProcessedStats(result);
+      setLogoScale(1.0); // 100% TAMAÑO MÁXIMO DENTRO DEL ÁREA SEGURA
+    } catch (err) {
+      console.error('Error procesando logo para troquel:', err);
+      setLogoImageElement(img);
+    } finally {
+      setIsProcessingLogo(false);
+    }
+  };
+
+  // Re-procesar cuando el cliente cambie dimensiones de la alfombra
+  useEffect(() => {
+    if (rawLogoImage) {
+      processAndMaximizeLogo(rawLogoImage);
+    }
+  }, [widthCm, heightCm]);
 
   // Manejar subida de logo por el cliente
   const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,12 +128,12 @@ export function MatSimulator() {
       const reader = new FileReader();
       reader.onload = (event) => {
         const result = event.target?.result as string;
-        setLogoDataUrl(result);
         const img = new window.Image();
         img.crossOrigin = 'anonymous';
         img.src = result;
         img.onload = () => {
-          setLogoImageElement(img);
+          setRawLogoImage(img);
+          processAndMaximizeLogo(img);
         };
       };
       reader.readAsDataURL(file);
@@ -350,15 +379,57 @@ export function MatSimulator() {
               </div>
             </div>
 
+            {/* Estado de Procesamiento Automático de Logo para Troquel */}
+            {isProcessingLogo ? (
+              <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/30 text-xs text-blue-400 flex items-center gap-2">
+                <div className="w-3.5 h-3.5 border-2 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
+                <span>Removiendo fondo, maximizando tamaño y eliminando elementos &lt; 1cm...</span>
+              </div>
+            ) : processedStats && (
+              <div className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-xs space-y-1.5">
+                <div className="flex items-center justify-between font-bold text-emerald-400 text-[11px] uppercase tracking-wider">
+                  <span className="flex items-center gap-1.5">
+                    <CheckCircle className="w-3.5 h-3.5" />
+                    Optimizado para Troquelado
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => rawLogoImage && processAndMaximizeLogo(rawLogoImage)}
+                    className="text-[10px] underline hover:text-white font-mono"
+                  >
+                    Re-optimizar
+                  </button>
+                </div>
+                <ul className="space-y-1 text-[11px] text-zinc-300 pt-1">
+                  <li className="flex items-center gap-1.5">
+                    <Check className="w-3 h-3 text-emerald-400 flex-shrink-0" />
+                    <span>Fondo removido automáticamente.</span>
+                  </li>
+                  <li className="flex items-center gap-1.5">
+                    <Check className="w-3 h-3 text-emerald-400 flex-shrink-0" />
+                    <span>Ajustado al <strong>tamaño MÁXIMO</strong>: {processedStats.physicalLogoSizeCm.w} × {processedStats.physicalLogoSizeCm.h} cm (Margen 7.5 cm).</span>
+                  </li>
+                  <li className="flex items-center gap-1.5">
+                    <Check className="w-3 h-3 text-emerald-400 flex-shrink-0" />
+                    <span>
+                      {processedStats.elementsRemovedCount > 0 
+                        ? `${processedStats.elementsRemovedCount} detalle(s) menores a 1.0 cm eliminados automáticamente.`
+                        : 'Todos los trazos superan el grosor mínimo de 1.0 cm.'}
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            )}
+
             {/* Slider de Escala del Logo */}
             <div>
               <div className="flex justify-between text-[11px] font-mono text-muted-foreground mb-1">
-                <span>Tamaño del Logo:</span>
-                <span>{Math.round(logoScale * 100)}%</span>
+                <span>Tamaño del Logo en Área Segura:</span>
+                <span className="font-bold text-foreground">{Math.round(logoScale * 100)}% (Máximo)</span>
               </div>
               <input
                 type="range"
-                min={0.4}
+                min={0.5}
                 max={1.0}
                 step={0.05}
                 value={logoScale}
