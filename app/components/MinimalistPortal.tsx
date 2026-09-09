@@ -11,11 +11,7 @@ import {
   Play, 
   Pause, 
   SkipForward, 
-  Sparkles,
-  Music,
-  PartyPopper,
-  Flame,
-  Volume2
+  Music
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
@@ -140,28 +136,15 @@ export const MinimalistPortal: React.FC<MinimalistPortalProps> = ({
   };
 
   return (
-    <div className="relative min-h-screen w-full flex flex-col justify-between overflow-x-hidden select-none font-sans bg-gradient-to-b from-sky-100 via-amber-50 to-rose-100 text-slate-900 transition-colors duration-500">
+    <div className="relative min-h-screen w-full flex flex-col justify-between overflow-x-hidden select-none font-sans bg-cover bg-center bg-no-repeat bg-[url('/images/dia_nino_bg.jpg')] md:bg-[url('/images/dia_nino_desktop.jpg')] text-slate-900 transition-colors duration-500">
       
-      {/* DECORACIONES FESTIVAS DE FONDO DÍA DEL NIÑO (GLOBOS, CONFETI, BURBUJAS) */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-        {/* Globos flotantes en las esquinas y laterales */}
-        <div className="absolute -top-4 left-6 text-4xl sm:text-6xl animate-bounce duration-1000 opacity-90 drop-shadow-md">🎈</div>
-        <div className="absolute top-12 right-8 text-3xl sm:text-5xl animate-pulse opacity-85">🎉</div>
-        <div className="absolute top-1/3 -left-4 text-3xl sm:text-5xl opacity-80" style={{ animation: 'bounce 3s infinite' }}>⭐</div>
-        <div className="absolute top-1/2 -right-3 text-4xl sm:text-6xl opacity-85" style={{ animation: 'bounce 4s infinite' }}>🎈</div>
-        <div className="absolute bottom-24 left-10 text-3xl sm:text-4xl opacity-75">🎨</div>
-        <div className="absolute bottom-28 right-12 text-3xl sm:text-5xl opacity-80">🎁</div>
-
-        {/* Destellos y círculos de luz multicolor */}
-        <div className="absolute top-1/4 left-1/4 w-72 h-72 rounded-full bg-amber-300/30 blur-3xl"></div>
-        <div className="absolute top-1/3 right-1/4 w-80 h-80 rounded-full bg-pink-400/25 blur-3xl"></div>
-        <div className="absolute bottom-1/4 left-1/3 w-96 h-96 rounded-full bg-sky-400/25 blur-3xl"></div>
-      </div>
+      {/* Velo traslúcido suave para realce perfecto de tipografía y botones */}
+      <div className="absolute inset-0 bg-white/40 backdrop-blur-[1px] pointer-events-none z-0"></div>
 
       {/* TOP BAR: BRANDING + ACCESOS */}
       <header className="w-full max-w-7xl mx-auto px-4 sm:px-8 py-3.5 sm:py-5 flex items-center justify-between z-20 relative">
-        <div className="flex items-center gap-2">
-          <span className="text-2xl font-black tracking-tight text-slate-950 flex items-center gap-1.5 font-sans">
+        <div className="flex items-center gap-2 bg-white/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/80 shadow-md">
+          <span className="text-2xl font-black tracking-tight text-slate-950 flex items-center gap-1 font-sans">
             <span className="text-amber-500">A</span>
             <span className="text-rose-500">P</span>
             <span className="text-sky-500">C</span>
@@ -180,7 +163,7 @@ export const MinimalistPortal: React.FC<MinimalistPortalProps> = ({
             className={`px-3 py-1.5 rounded-full text-xs font-black flex items-center gap-2 transition-all shadow-md active:scale-95 border ${
               isChildMusicPlaying 
                 ? 'bg-gradient-to-r from-amber-500 to-rose-500 text-white border-white animate-pulse' 
-                : 'bg-white text-slate-800 border-amber-300 hover:bg-amber-50'
+                : 'bg-white/95 text-slate-800 border-amber-300 hover:bg-amber-50'
             }`}
             title={isChildMusicPlaying ? 'Pausar música infantil' : 'Escuchar música infantil tradicional'}
           >
@@ -191,7 +174,7 @@ export const MinimalistPortal: React.FC<MinimalistPortalProps> = ({
           {/* CRM Login Button */}
           <button
             onClick={handleOpenLogin}
-            className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-white text-slate-800 border border-slate-300 hover:border-slate-900 hover:bg-slate-50 transition-all flex items-center gap-1.5 shadow-sm active:scale-95"
+            className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-white/95 text-slate-800 border border-slate-300 hover:border-slate-900 hover:bg-white transition-all flex items-center gap-1.5 shadow-md active:scale-95"
           >
             <Lock className="w-3.5 h-3.5 text-slate-600" />
             <span>CRM</span>
@@ -199,16 +182,16 @@ export const MinimalistPortal: React.FC<MinimalistPortalProps> = ({
         </div>
       </header>
 
-      {/* HERO BANNER FESTIVO Y COLORIDO: DÍA DEL NIÑO EN COSTA RICA (9 DE SEPTIEMBRE) */}
-      <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 pt-1 pb-2 z-20">
-        <div className="relative rounded-3xl bg-gradient-to-r from-amber-400 via-rose-500 to-indigo-600 p-1 shadow-xl shadow-rose-500/15 overflow-hidden transition-all hover:shadow-2xl">
+      {/* HERO BANNER FESTIVO: FELICITACIÓN DÍA DEL NIÑO (SIN PRODUCTOS NI OFERTAS FALSAS) */}
+      <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 pt-1 pb-2 z-20 relative">
+        <div className="relative rounded-3xl bg-gradient-to-r from-amber-400 via-rose-500 to-indigo-600 p-1 shadow-2xl shadow-rose-500/20 overflow-hidden transition-all hover:shadow-rose-500/30">
           
           <div className="rounded-[22px] bg-white/95 backdrop-blur-md p-4 sm:p-5 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
             
-            {/* Lado izquierdo: Textos y Promoción Festiva */}
+            {/* Lado izquierdo: Felicitación Festiva */}
             <div className="space-y-2 flex-1">
               <div className="flex items-center justify-center md:justify-start gap-2 flex-wrap">
-                <span className="text-xl sm:text-2xl animate-bounce">🎈</span>
+                <span className="text-2xl animate-bounce">🎈</span>
                 <span className="text-base sm:text-lg font-black uppercase tracking-tight bg-gradient-to-r from-amber-600 via-rose-600 to-indigo-600 bg-clip-text text-transparent">
                   ¡Feliz Día del Niño en Costa Rica! 🇨🇷
                 </span>
@@ -218,18 +201,18 @@ export const MinimalistPortal: React.FC<MinimalistPortalProps> = ({
               </div>
 
               <p className="text-xs sm:text-sm font-semibold text-slate-700 leading-relaxed max-w-xl">
-                ¡Celebramos la alegría de la niñez costarricense! <strong className="text-rose-600 font-black">25% de descuento especial</strong> en alfombras ergonómicas infantiles didácticas para kínder, escuelas y cuartos de juegos.
+                Celebramos con orgullo la alegría, la imaginación y las sonrisas de la niñez costarricense. ¡El mayor tesoro y el futuro de nuestra patria! 🇨🇷✨
               </p>
 
               <div className="flex items-center justify-center md:justify-start gap-2 pt-0.5 text-[11px] font-black text-slate-600">
                 <span className="bg-amber-100 text-amber-900 px-2.5 py-1 rounded-lg border border-amber-300">
-                  ✨ Diseños Didácticos
+                  ✨ Tradición & Alegría
                 </span>
                 <span className="bg-sky-100 text-sky-900 px-2.5 py-1 rounded-lg border border-sky-300">
-                  🛡️ Antifatiga y Seguras
+                  🎶 Marimba Costarricense
                 </span>
                 <span className="bg-emerald-100 text-emerald-900 px-2.5 py-1 rounded-lg border border-emerald-300">
-                  🎨 100% Personalizadas
+                  🎈 ¡Pura Vida Siempre!
                 </span>
               </div>
             </div>
@@ -276,8 +259,8 @@ export const MinimalistPortal: React.FC<MinimalistPortalProps> = ({
         </div>
       </div>
 
-      {/* MAIN STAGE: EXACTLY TWO MONUMENTAL LUXURY CIRCULAR EMBLEMS SOBRE FONDO CLARO CON ACENTOS COLORIDOS */}
-      <main className="flex-1 flex flex-col items-center justify-center px-4 sm:px-8 my-auto z-10 py-6 sm:py-8">
+      {/* MAIN STAGE: EXACTLY TWO MONUMENTAL LUXURY CIRCULAR EMBLEMS */}
+      <main className="flex-1 flex flex-col items-center justify-center px-4 sm:px-8 my-auto z-10 py-6 sm:py-8 relative">
         <div className="w-full max-w-5xl flex flex-col md:flex-row items-center justify-center gap-10 sm:gap-14 md:gap-20 lg:gap-28">
           
           {/* ========================================================
@@ -293,11 +276,11 @@ export const MinimalistPortal: React.FC<MinimalistPortalProps> = ({
             {/* Monumental Circular Medallion con altísimo contraste */}
             <div className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-[330px] lg:h-[330px] rounded-full flex items-center justify-center transition-all duration-500">
               
-              {/* Resplandor cálido festivo */}
-              <div className="absolute -inset-4 rounded-full bg-gradient-to-tr from-amber-400/20 via-rose-400/20 to-sky-400/20 blur-2xl opacity-70 group-hover:opacity-100 transition-opacity duration-500"></div>
+              {/* Resplandor cálido */}
+              <div className="absolute -inset-4 rounded-full bg-gradient-to-tr from-amber-400/30 via-rose-400/20 to-sky-400/30 blur-2xl opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
 
               {/* Anillo exterior arquitectónico en blanco y sombra profunda */}
-              <div className="absolute inset-0 rounded-full bg-white border-4 border-amber-400/60 shadow-[0_25px_60px_-15px_rgba(245,158,11,0.25)] transition-all duration-500 group-hover:border-amber-500 group-hover:shadow-[0_30px_70px_-10px_rgba(245,158,11,0.4)]"></div>
+              <div className="absolute inset-0 rounded-full bg-white border-4 border-amber-400/80 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.3)] transition-all duration-500 group-hover:border-amber-500 group-hover:shadow-[0_30px_70px_-10px_rgba(245,158,11,0.5)]"></div>
 
               {/* Micro-anillo concéntrico */}
               <div className="absolute inset-3 rounded-full border-2 border-slate-100"></div>
@@ -314,18 +297,18 @@ export const MinimalistPortal: React.FC<MinimalistPortalProps> = ({
                 />
               </div>
 
-              {/* Insignia flotante festiva */}
-              <div className="absolute -bottom-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-lg border border-white">
-                Alfombras & Diseños
+              {/* Insignia flotante */}
+              <div className="absolute -bottom-2 bg-gradient-to-r from-amber-500 to-orange-600 text-white text-[10px] font-black uppercase tracking-widest px-3.5 py-1 rounded-full shadow-lg border-2 border-white">
+                Alfombras de Vinil
               </div>
             </div>
 
-            {/* Portal Label: 'PRODUCTOS' */}
-            <div className="mt-7 text-center space-y-1">
+            {/* Portal Label: 'PRODUCTOS' con fondo protector para legibilidad */}
+            <div className="mt-6 text-center space-y-1 bg-white/85 backdrop-blur-md px-5 py-2 rounded-2xl border border-white/80 shadow-md">
               <span className="text-lg sm:text-xl tracking-[0.25em] uppercase font-black text-slate-950 group-hover:text-amber-600 transition-colors duration-300 block">
                 PRODUCTOS
               </span>
-              <span className="text-xs tracking-wider uppercase font-bold text-slate-600 block">
+              <span className="text-xs tracking-wider uppercase font-bold text-slate-700 block">
                 Alfombras de vinil troqueladas
               </span>
             </div>
@@ -344,11 +327,11 @@ export const MinimalistPortal: React.FC<MinimalistPortalProps> = ({
             {/* Monumental Circular Medallion */}
             <div className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-[330px] lg:h-[330px] rounded-full flex items-center justify-center transition-all duration-500">
               
-              {/* Resplandor multicolor festivo */}
-              <div className="absolute -inset-4 rounded-full bg-gradient-to-tr from-sky-400/20 via-indigo-400/20 to-pink-400/20 blur-2xl opacity-70 group-hover:opacity-100 transition-opacity duration-500"></div>
+              {/* Resplandor multicolor */}
+              <div className="absolute -inset-4 rounded-full bg-gradient-to-tr from-sky-400/30 via-indigo-400/20 to-pink-400/30 blur-2xl opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
 
               {/* Anillo exterior a juego */}
-              <div className="absolute inset-0 rounded-full bg-white border-4 border-sky-400/60 shadow-[0_25px_60px_-15px_rgba(14,165,233,0.25)] transition-all duration-500 group-hover:border-sky-500 group-hover:shadow-[0_30px_70px_-10px_rgba(14,165,233,0.4)]"></div>
+              <div className="absolute inset-0 rounded-full bg-white border-4 border-sky-400/80 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.3)] transition-all duration-500 group-hover:border-sky-500 group-hover:shadow-[0_30px_70px_-10px_rgba(14,165,233,0.5)]"></div>
 
               {/* Micro-anillo concéntrico */}
               <div className="absolute inset-3 rounded-full border-2 border-slate-100"></div>
@@ -365,18 +348,18 @@ export const MinimalistPortal: React.FC<MinimalistPortalProps> = ({
                 />
               </div>
 
-              {/* Insignia flotante festiva */}
-              <div className="absolute -bottom-2 bg-gradient-to-r from-sky-500 to-indigo-600 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-lg border border-white">
+              {/* Insignia flotante */}
+              <div className="absolute -bottom-2 bg-gradient-to-r from-sky-500 to-indigo-600 text-white text-[10px] font-black uppercase tracking-widest px-3.5 py-1 rounded-full shadow-lg border-2 border-white">
                 Suite Digital & POS
               </div>
             </div>
 
-            {/* Portal Label: 'SOFTWARE' */}
-            <div className="mt-7 text-center space-y-1">
+            {/* Portal Label: 'SOFTWARE' con fondo protector para legibilidad */}
+            <div className="mt-6 text-center space-y-1 bg-white/85 backdrop-blur-md px-5 py-2 rounded-2xl border border-white/80 shadow-md">
               <span className="text-lg sm:text-xl tracking-[0.25em] uppercase font-black text-slate-950 group-hover:text-sky-600 transition-colors duration-300 block">
                 SOFTWARE
               </span>
-              <span className="text-xs tracking-wider uppercase font-bold text-slate-600 block">
+              <span className="text-xs tracking-wider uppercase font-bold text-slate-700 block">
                 Suite digital & punto de venta
               </span>
             </div>
@@ -386,14 +369,14 @@ export const MinimalistPortal: React.FC<MinimalistPortalProps> = ({
       </main>
 
       {/* FOOTER */}
-      <footer className="w-full max-w-7xl mx-auto px-6 sm:px-14 py-4 flex flex-col sm:flex-row items-center justify-between gap-3 z-20 text-[11px] tracking-[0.18em] text-slate-600 uppercase font-bold">
+      <footer className="w-full max-w-7xl mx-auto px-6 sm:px-14 py-4 flex flex-col sm:flex-row items-center justify-between gap-3 z-20 text-[11px] tracking-[0.18em] text-slate-800 uppercase font-black bg-white/80 backdrop-blur-md rounded-2xl sm:rounded-full border border-white/80 shadow-md mb-3 sm:mb-4">
         <span>© 2026 APCR COSTA RICA. CELEBRANDO EL DÍA DE LA NIÑEZ 🇨🇷</span>
         <div className="flex items-center gap-4">
-          <a href="/simulador" className="hover:text-slate-950 transition-colors">
+          <a href="/simulador" className="hover:text-amber-600 transition-colors">
             SIMULADOR
           </a>
           <span>•</span>
-          <a href="/crm/landing-pages" className="hover:text-slate-950 transition-colors">
+          <a href="/crm/landing-pages" className="hover:text-amber-600 transition-colors">
             PORTADAS
           </a>
         </div>
