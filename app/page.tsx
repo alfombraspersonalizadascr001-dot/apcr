@@ -97,8 +97,12 @@ export default function App() {
     }
   };
 
+  const isLightPortal = viewMode === 'portal' && portalTheme !== 'airlock';
+
   return (
-    <div className="min-h-screen bg-[#070709] text-slate-100 select-none font-sans">
+    <div className={`min-h-screen select-none font-sans transition-colors duration-500 ${
+      isLightPortal ? 'bg-[#F8F9FA] text-[#111114]' : 'bg-[#070709] text-slate-100'
+    }`}>
       {/* 1. PORTALES DE ENTRADA (MINIMALISTA OBSIDIAN O ESCLUSA VR AIRLOCK) */}
       {viewMode === 'portal' && (
         portalTheme === 'airlock' ? (
