@@ -7,7 +7,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import { 
   Users, Calculator, Globe, Book, MessageCircle, 
   BarChart3, Mail, Calendar, LogOut, Settings, Package,
-  Sun, Moon, Layers, FileText, Menu, X, SlidersHorizontal
+  Sun, Moon, Layers, FileText, Menu, X, SlidersHorizontal, Sparkles
 } from 'lucide-react';
 import { cn } from "@/lib/utils";
 
@@ -119,6 +119,7 @@ export default function SidebarLayout({
     if (pathname === '/crm/proformas') return 'proformas';
     if (pathname === '/crm/inventory') return 'inventory';
     if (pathname.includes('/landing-pages')) return 'landing-pages';
+    if (pathname.includes('/simulador')) return 'simulador';
     if (pathname.includes('/knowledge')) return 'knowledge';
     return '';
   };
@@ -137,6 +138,14 @@ export default function SidebarLayout({
 
       <div className="pt-4 pb-2 px-3 text-xs font-bold text-muted-foreground dark:text-zinc-500 uppercase tracking-widest">Herramientas</div>
       
+      <NavItem 
+        icon={<Sparkles className="w-4 h-4 text-emerald-500" />} 
+        label="Simulador & Ficha" 
+        href="/crm/simulador" 
+        active={currentModule === 'simulador'} 
+        onClick={isMobile ? () => setMobileMenuOpen(false) : undefined}
+      />
+
       <NavItem 
         icon={<Package className="w-4 h-4" />} 
         label="Inventario" 

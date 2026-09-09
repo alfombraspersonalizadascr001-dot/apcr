@@ -265,6 +265,10 @@ export default function Dashboard() {
             <>
               <div className="pt-4 pb-2 px-3 text-xs font-bold text-muted-foreground uppercase tracking-widest">Herramientas</div>
               
+              <Link href="/crm/simulador">
+                <NavItem icon={<Sparkles className="text-emerald-500" />} label="Simulador & Ficha" />
+              </Link>
+
               <Link href="/crm/inventory">
                 <NavItem icon={<Package />} label="Inventario" />
               </Link>
@@ -385,6 +389,10 @@ export default function Dashboard() {
                 <>
                   <div className="pt-4 pb-2 px-3 text-xs font-bold text-muted-foreground uppercase tracking-widest">Herramientas</div>
                   
+                  <Link href="/crm/simulador" onClick={() => setIsMobileMenuOpen(false)}>
+                    <NavItem icon={<Sparkles className="text-emerald-500" />} label="Simulador & Ficha" />
+                  </Link>
+
                   <Link href="/crm/inventory" onClick={() => setIsMobileMenuOpen(false)}>
                     <NavItem icon={<Package />} label="Inventario" />
                   </Link>
