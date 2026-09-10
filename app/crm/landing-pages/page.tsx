@@ -23,7 +23,7 @@ import {
 } from 'lucide-react';
 
 interface LandingPageOption {
-  id: 'minimal' | 'airlock';
+  id: 'minimal' | 'airlock' | 'dia-nino' | 'obsidian';
   title: string;
   category: string;
   badge: string;
@@ -44,18 +44,18 @@ interface LandingPageOption {
 }
 
 export default function LandingPagesManagerPage() {
-  const [activeTheme, setActiveTheme] = useState<'minimal' | 'airlock'>('minimal');
+  const [activeTheme, setActiveTheme] = useState<'minimal' | 'airlock' | 'dia-nino' | 'obsidian'>('minimal');
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   useEffect(() => {
     // Load current active landing page theme
-    const saved = localStorage.getItem('apcr_home_theme') as 'minimal' | 'airlock';
-    if (saved === 'airlock' || saved === 'minimal') {
+    const saved = localStorage.getItem('apcr_home_theme') as 'minimal' | 'airlock' | 'dia-nino' | 'obsidian';
+    if (saved) {
       setActiveTheme(saved);
     }
   }, []);
 
-  const handleSetActive = (id: 'minimal' | 'airlock') => {
+  const handleSetActive = (id: 'minimal' | 'airlock' | 'dia-nino' | 'obsidian') => {
     setActiveTheme(id);
     localStorage.setItem('apcr_home_theme', id);
 
@@ -64,7 +64,14 @@ export default function LandingPagesManagerPage() {
     expires.setDate(expires.getDate() + 30);
     document.cookie = `apcr_home_theme=${id}; path=/; expires=${expires.toUTCString()}; SameSite=Lax`;
 
-    setSuccessMessage(`¡Portada "${id === 'minimal' ? 'Minimalista Obsidian' : 'Esclusa Espacial VR'}" activada como portada principal de la web!`);
+    const titles: Record<string, string> = {
+      minimal: 'Minimalista Porcelain Luxury',
+      'dia-nino': 'Edición Día del Niño en CR',
+      airlock: 'Esclusa Espacial VR',
+      obsidian: 'Obsidian Dark Glass'
+    };
+
+    setSuccessMessage(`¡Portada "${titles[id] || id}" activada como portada principal de la web!`);
     setTimeout(() => {
       setSuccessMessage(null);
     }, 4500);
@@ -73,35 +80,61 @@ export default function LandingPagesManagerPage() {
   const landingPages: LandingPageOption[] = [
     {
       id: 'minimal',
-      title: 'Obsidian Minimalist Luxury (Doble Emblema Circular)',
+      title: 'Minimalista Porcelain Luxury (Luz Natural & Alto Contraste Solar)',
       category: 'Diseño Suizo & Alta Gama',
-      badge: 'NUEVA // STITCH DESIGN',
-      description: 'Concepto hiper-minimalista de arquitectura de lujo. Cuenta con fondo obsidian (#070709), micro-rejilla de telemetría y dos portales circulares concéntricos con los logotipos oficiales de PRODUCTOS y SOFTWARE.',
+      badge: 'ACTUAL // PREDETERMINADA',
+      description: 'Concepto hiper-minimalista de arquitectura de lujo en tono marfil porcelana (#F8F9FA). Máxima legibilidad bajo el sol y en teléfonos móviles. Medallones circulares de alta definición para Productos (Monograma Negro) y Software (Emblema Color). Cero saturación y velocidad extrema.',
       previewUrl: '/?v=minimal',
       imageLeft: '/images/logos/ap-monogram-black.png',
       imageRight: '/images/logos/ap-circle-color.jpg',
       accentColor: 'text-amber-500',
       accentBg: 'bg-amber-500/10 border-amber-500/30',
-      tags: ['Minimalista', 'Logos Circulares', 'Obsidian Dark Glass', 'Sonido Procedural', 'Modal Login'],
+      tags: ['Porcelain Ivory', 'Luz de Día', 'Máxima Legibilidad', 'Cero Sobrecarga', 'Minimalismo Suizo'],
       features: [
-        'Emblema circular 4 cuadrantes para Productos con anillos concéntricos',
-        'Emblema circular monograma negro para Software en medallón contrastado',
-        'Top HUD con telemetría en vivo, conmutador de idiomas (ES/EN) y ecualizador de audio',
-        'Modal holográfico de autenticación directa con Supabase y credenciales precargadas',
-        'Micro-métricas arquitectónicas en el footer y diseño 100% responsivo'
+        'Fondo blanco porcelana (#F8F9FA) de altísimo contraste solar para pantallas de celular',
+        'Doble medallón circular táctil con respuesta háptica y micro-elevación suave',
+        'Tipografía suiza arquitectónica sin ornamentos innecesarios',
+        'Acceso directo a la Galería de Portadas (/portadas) y al CRM',
+        'Carga instantánea < 100ms sin scripts pesados'
       ],
       designSpecs: {
-        font: 'Inter / Swiss Typography',
-        background: '#070709 Obsidian Deep',
-        audio: 'Audio Procedural & Proximidad',
-        style: 'Modern Architectural Luxury'
+        font: 'Inter / Swiss Arch',
+        background: '#F8F9FA Porcelain Ivory',
+        audio: 'Silencio Arquitectónico',
+        style: 'Daylight Minimal Luxury'
+      }
+    },
+    {
+      id: 'dia-nino',
+      title: 'Edición Especial Día del Niño en Costa Rica (Ilustración Real & Marimba)',
+      category: 'Celebración Nacional & Cultura CR',
+      badge: 'EDICIÓN CONMEMORATIVA',
+      description: 'Homenaje festivo a la niñez costarricense con ilustración artística de campo con niños jugando, sintetizador Web Audio API tocando temas tradicionales en marimba costarricense (Caballito Nicoyano, Los Pollitos Dicen, Arroz con Leche) y botones translúcidos vibrantes.',
+      previewUrl: '/?v=dia-nino',
+      imageLeft: '/images/logos/ap-monogram-black.png',
+      imageRight: '/images/logos/ap-circle-color.jpg',
+      accentColor: 'text-rose-500',
+      accentBg: 'bg-rose-500/10 border-rose-500/30',
+      tags: ['Día del Niño', 'Costa Rica', 'Marimba Web Audio', 'Ilustración Artística', 'Familiar'],
+      features: [
+        'Wallpaper artístico con campo verde, papalotes y cielo despejado',
+        'Sintetizador Web Audio API puro de marimba costarricense (sin archivos mp3 externos)',
+        'Selector de 3 canciones infantiles tradicionales de Costa Rica con toggle de audio',
+        'Doble portal translúcido con glassmorphism suave respetando la visibilidad del arte',
+        'Frase célebre de Nelson Mandela en honor al futuro y la niñez'
+      ],
+      designSpecs: {
+        font: 'Inter Bold & Warm Display',
+        background: 'Ilustración Día del Niño',
+        audio: 'Marimba Costarricense (Web Audio API)',
+        style: 'Festive Tribute & Joy'
       }
     },
     {
       id: 'airlock',
       title: 'Esclusa Espacial VR (Puertas Blindadas & Visor)',
       category: 'Sci-Fi Inmersivo',
-      badge: 'CLÁSICA FAVORITA',
+      badge: 'INTERACTIVA // 3D',
       description: 'Experiencia interactiva cinematográfica con visor de realidad virtual y compuertas hidráulicas blindadas que se abren con efectos de sonido de descompresión al seleccionar Productos o Software.',
       previewUrl: '/?v=airlock',
       imageLeft: '/images/logos/ap-monogram-black.png',
@@ -121,6 +154,32 @@ export default function LandingPagesManagerPage() {
         background: '#040608 Deep Space Vault',
         audio: 'Sintetizador Web Audio API',
         style: 'Futuristic Industrial VR'
+      }
+    },
+    {
+      id: 'obsidian',
+      title: 'Obsidian Dark Glass Luxury (Modo Nocturno / Pantallas OLED)',
+      category: 'Diseño Suizo & Alta Gama',
+      badge: 'MODO NOCTURNO OLED',
+      description: 'Variante oscura del concepto minimalista suizo sobre fondo obsidian (#070709). Diseñada para pantallas OLED, entornos de baja iluminación y usuarios que prefieren interfaces oscuras de alta precisión tecnológica.',
+      previewUrl: '/?v=obsidian',
+      imageLeft: '/images/logos/ap-monogram-black.png',
+      imageRight: '/images/logos/ap-circle-color.jpg',
+      accentColor: 'text-purple-400',
+      accentBg: 'bg-purple-500/10 border-purple-500/30',
+      tags: ['Obsidian OLED', 'Dark Glass', 'Telemetría', 'Neón Suave', 'Nocturno'],
+      features: [
+        'Fondo negro puro obsidian con micro-rejilla de telemetría y rejilla de ingeniería',
+        'Medallones oscuros con halo de retroiluminación sutil en ámbar y cian',
+        'Consumo de batería optimizado para dispositivos móviles con pantallas OLED',
+        'HUD superior con reloj de precisión y conmutador táctil',
+        'Acceso transparente al catálogo y plataforma CRM'
+      ],
+      designSpecs: {
+        font: 'Inter / Swiss Typography',
+        background: '#070709 Obsidian Deep',
+        audio: 'Audio Procedural & Proximidad',
+        style: 'Modern Architectural Luxury'
       }
     }
   ];
@@ -153,6 +212,15 @@ export default function LandingPagesManagerPage() {
 
             <div className="flex flex-col sm:flex-row items-center gap-3">
               <Link
+                href="/portadas"
+                target="_blank"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-lg active:scale-95"
+              >
+                <Layers className="w-4 h-4" />
+                Galería Pública Clientes (/portadas)
+                <ExternalLink className="w-3.5 h-3.5 opacity-60" />
+              </Link>
+              <Link
                 href="/"
                 target="_blank"
                 className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-white text-slate-900 hover:bg-slate-100 font-bold text-xs uppercase tracking-wider transition-all shadow-lg active:scale-95"
@@ -181,7 +249,7 @@ export default function LandingPagesManagerPage() {
               Portada Actualmente Activa para Visitantes:
             </span>
             <span className="px-3 py-1 rounded-full text-xs font-bold bg-primary/10 text-primary uppercase">
-              {activeTheme === 'minimal' ? 'Minimalista Obsidian Luxury' : 'Esclusa Espacial VR'}
+              {landingPages.find(p => p.id === activeTheme)?.title || 'Minimalista Porcelain Luxury'}
             </span>
           </div>
 

@@ -3,13 +3,16 @@
 import { useState, useEffect } from 'react';
 import { AirlockPortal } from './components/AirlockPortal';
 import { MinimalistPortal } from './components/MinimalistPortal';
+import { DiaDelNinoPortal } from './components/DiaDelNinoPortal';
 import { ProductsPage } from './components/ProductsPage';
 import { SoftwarePage } from './components/SoftwarePage';
 import { LogoShowcaseModal } from './components/LogoShowcaseModal';
 import { airlockAudio } from './utils/airlockSound';
 import type { ViewMode } from './types';
 
-export type PortalTheme = 'minimal' | 'airlock';
+export type PortalTheme = 'minimal' | 'airlock' | 'dia-nino' | 'obsidian' | 'porcelain';
+
+const VALID_THEMES: PortalTheme[] = ['minimal', 'airlock', 'dia-nino', 'obsidian', 'porcelain'];
 
 export default function App() {
   const [viewMode, setViewMode] = useState<ViewMode>('portal');
@@ -25,12 +28,14 @@ export default function App() {
       const themeParam = params.get('v') || params.get('theme') || params.get('portal');
 
       // 1. Check portal theme preference: URL param overrides localStorage
-      if (themeParam === 'airlock' || themeParam === 'minimal') {
+      if (themeParam && VALID_THEMES.includes(themeParam as PortalTheme)) {
         setPortalTheme(themeParam as PortalTheme);
       } else {
         const savedTheme = localStorage.getItem('apcr_home_theme') as PortalTheme;
-        if (savedTheme === 'airlock' || savedTheme === 'minimal') {
+        if (savedTheme && VALID_THEMES.includes(savedTheme)) {
           setPortalTheme(savedTheme);
+        } else {
+          setPortalTheme('minimal');
         }
       }
 
@@ -52,7 +57,7 @@ export default function App() {
         const page = params.get('page') || params.get('view');
         const themeParam = params.get('v') || params.get('theme') || params.get('portal');
 
-        if (themeParam === 'airlock' || themeParam === 'minimal') {
+        if (themeParam && VALID_THEMES.includes(themeParam as PortalTheme)) {
           setPortalTheme(themeParam as PortalTheme);
         }
 
@@ -97,16 +102,28 @@ export default function App() {
     }
   };
 
-  const isLightPortal = viewMode === 'portal' && portalTheme !== 'airlock';
+  const isDarkPortal = portalTheme === 'airlock' || portalTheme === 'obsidian';
+  const isDiaNinoPortal = portalTheme === 'dia-nino';
+  const isLightPortal = viewMode === 'portal' && !isDarkPortal && !isDiaNinoPortal;
 
   return (
     <div className={`min-h-screen select-none font-sans transition-colors duration-500 ${
-      isLightPortal ? 'bg-gradient-to-b from-sky-100 via-amber-50 to-rose-100 text-slate-900' : 'bg-[#070709] text-slate-100'
+      isDiaNinoPortal 
+        ? 'bg-sky-100 text-slate-900'
+        : (isLightPortal ? 'bg-[#F8F9FA] text-[#111114]' : 'bg-[#070709] text-slate-100')
     }`}>
-      {/* 1. PORTALES DE ENTRADA (MINIMALISTA OBSIDIAN O ESCLUSA VR AIRLOCK) */}
+      {/* 1. PORTALES DE ENTRADA (MINIMALISTA, ESCLUSA VR O DÍA DEL NIÑO) */}
       {viewMode === 'portal' && (
         portalTheme === 'airlock' ? (
           <AirlockPortal 
+            currentWorld={viewMode}
+            lang={lang}
+            onToggleLang={(l) => setLang(l)}
+            onEnterWorld={handleEnterWorld}
+            onReturnToPortal={handleReturnToPortal}
+          />
+        ) : portalTheme === 'dia-nino' ? (
+          <DiaDelNinoPortal
             currentWorld={viewMode}
             lang={lang}
             onToggleLang={(l) => setLang(l)}
@@ -117,6 +134,7 @@ export default function App() {
           <MinimalistPortal 
             currentWorld={viewMode}
             lang={lang}
+            variant={portalTheme === 'obsidian' ? 'obsidian' : 'light'}
             onToggleLang={(l) => setLang(l)}
             onEnterWorld={handleEnterWorld}
             onReturnToPortal={handleReturnToPortal}
