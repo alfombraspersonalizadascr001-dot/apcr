@@ -169,11 +169,30 @@ export default function CotizadorPage() {
         // Disabled theme toggle
     };
 
-    const resetQuotation = () => {
+    const resetQuotation = async () => {
+        setEditMode(false);
+        setOriginalProformaId(null);
+        setOriginalTotal(0);
+        setOriginalAuditLog([]);
         setItems([]);
+        setClient({
+            name: '',
+            idNumber: '',
+            activityCode: '',
+            phone: '',
+            province: '',
+            canton: '',
+            district: '',
+            neighborhood: ''
+        });
+        setShowClientForm(true);
         setIsSaved(false);
-        fetchNextProformaNumber();
-        alert("Formulario reiniciado. Se ha cargado el siguiente número consecutivo.");
+        setDate(new Date().toLocaleDateString('es-CR'));
+        if (typeof window !== 'undefined') {
+            window.history.replaceState(null, '', '/crm/cotizador');
+        }
+        await fetchNextProformaNumber();
+        alert("Formulario reiniciado para una nueva cotización. Se ha cargado el siguiente número consecutivo.");
     };
 
     const fetchNextProformaNumber = async () => {
@@ -601,16 +620,19 @@ ${pdfLink}
                    message: `Modificación por ${loggedInAgent || 'Administrador'} el ${new Date().toLocaleString('es-CR')}`
                 };
                 
-                // Obtener historial actual
-                const { data: currentP } = await supabase.from('proformas').select('production_history').eq('id', originalProformaId).single();
+                // Obtener historial actual y proforma_number de la base de datos para preservar el número original
+                const { data: currentP } = await supabase.from('proformas').select('production_history, proforma_number').eq('id', originalProformaId).single();
                 const currentHistory = Array.isArray(currentP?.production_history) ? currentP.production_history : [];
                 const updatedHistory = [...currentHistory, auditEntry];
+                
+                // Conservar siempre el número oficial de la proforma
+                const safeProformaNumber = proformaNumber || currentP?.proforma_number;
                 
                 const { error: updateError } = await supabase
                     .from('proformas')
                     .update({
                        user_id: userId,
-                       proforma_number: proformaNumber,
+                       proforma_number: safeProformaNumber,
                        date: date,
                        subtotal: subtotal,
                        iva: iva,
@@ -627,7 +649,7 @@ ${pdfLink}
                 setIsSaved(true);
                 setOriginalTotal(total);
                 setOriginalAuditLog(updatedHistory.filter((h: any) => h.type === 'AUDIT_LOG'));
-                alert(`✅ Cotización #${proformaNumber} ACTUALIZADA exitosamente con registro de auditoría.`);
+                alert(`✅ Cotización #${safeProformaNumber} ACTUALIZADA exitosamente con registro de auditoría.`);
             } else {
                 // 2. Comprobar número de Proforma real
                 const { data: allProformas } = await supabase
@@ -647,7 +669,7 @@ ${pdfLink}
                 let finalProformaNumber = proformaNumber ? String(Math.max(parseInt(proformaNumber) || 0, maxNum + 1)) : String(maxNum + 1);
 
                 // 3. Guardar Proforma
-                const { error: proformaError } = await supabase
+                const { data: insertedData, error: proformaError } = await supabase
                     .from('proformas')
                     .insert([{
                         user_id: userId,
@@ -664,15 +686,26 @@ ${pdfLink}
                         production_history: [{ status: 'COTIZACION', completed_at: new Date().toISOString() }],
                         created_at: new Date().toISOString(),
                         updated_at: new Date().toISOString()
-                    }]);
+                    }])
+                    .select()
+                    .single();
 
                 if (proformaError) throw proformaError;
 
-                const nextProformaNum = String(parseInt(finalProformaNumber) + 1);
-                setProformaNumber(nextProformaNum);
+                // CORRECCIÓN CRÍTICA: Mantener el número exacto guardado (#finalProformaNumber)
+                // NO cambiar proformaNumber a +1 mientras el usuario ve esta cotización guardada.
+                setProformaNumber(finalProformaNumber);
                 setIsSaved(true);
+                if (insertedData?.id) {
+                    setEditMode(true);
+                    setOriginalProformaId(insertedData.id);
+                    setOriginalTotal(total);
+                    if (typeof window !== 'undefined') {
+                        window.history.replaceState(null, '', `/crm/cotizador?edit=${insertedData.id}`);
+                    }
+                }
 
-                alert(`✅ Cotización #${finalProformaNumber} guardada exitosamente.`);
+                alert(`✅ Cotización #${finalProformaNumber} guardada exitosamente en la nube.`);
             }
 
         } catch (error: any) {
@@ -715,10 +748,11 @@ ${pdfLink}
                         >
                             <User className="w-4 h-4" /> {saving ? 'Guardando...' : (isSaved && !editMode ? 'Guardado ✓' : (editMode ? 'Actualizar Proforma' : 'Guardar en Nube'))}
                         </button>
-                        {isSaved && (
+                        {(isSaved || editMode) && (
                             <button
                                 onClick={resetQuotation}
-                                className="px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 text-sm flex items-center gap-2 font-bold shadow-lg animate-bounce"
+                                className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-sm flex items-center gap-2 font-bold shadow-md transition-all active:scale-95"
+                                title="Limpiar formulario para crear una nueva cotización"
                             >
                                 <Plus className="w-4 h-4" /> Nueva Cotización
                             </button>
@@ -735,6 +769,30 @@ ${pdfLink}
                         </button>
                     </div>
                 </div>
+
+                {/* Banner de Modo Edición */}
+                {editMode && (
+                    <div className="mb-6 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-900 dark:text-amber-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 print:hidden animate-in fade-in duration-300">
+                        <div className="flex items-center gap-3">
+                            <span className="w-3 h-3 rounded-full bg-amber-500 animate-pulse flex-shrink-0"></span>
+                            <div>
+                                <span className="text-sm font-black uppercase tracking-wider block">
+                                    Modo Edición Activo: Cotización #{proformaNumber}
+                                </span>
+                                <span className="text-xs opacity-80">
+                                    Cualquier cambio se actualizará sobre este mismo documento sin alterar su número consecutivo.
+                                </span>
+                            </div>
+                        </div>
+                        <button
+                            type="button"
+                            onClick={resetQuotation}
+                            className="px-3.5 py-2 bg-white dark:bg-zinc-800 border border-amber-500/40 text-amber-900 dark:text-amber-300 font-bold text-xs rounded-xl hover:bg-amber-500 hover:text-white transition-all shadow-sm whitespace-nowrap"
+                        >
+                            + Salir y Crear Nueva Cotización
+                        </button>
+                    </div>
+                )}
 
                 {/* Panel de Configuración */}
                 {showConfig && (
@@ -765,10 +823,9 @@ ${pdfLink}
                             <input
                                 type="text"
                                 value={proformaNumber}
-                                disabled={isSaved}
                                 onChange={e => setProformaNumber(e.target.value)}
-                                className={`w-full bg-white border border-slate-200 text-slate-800 p-2 rounded-lg outline-none focus:ring-2 focus:ring-amber-500 font-mono transition-all ${isSaved ? 'opacity-50 cursor-not-allowed' : ''}`}
-                                title={isSaved ? "Número bloqueado tras guardado" : ""}
+                                className="w-full bg-white border border-slate-200 text-slate-800 p-2 rounded-lg outline-none focus:ring-2 focus:ring-amber-500 font-mono transition-all"
+                                title="Número consecutivo editable"
                             />
                         </div>
                     </div>
@@ -1127,7 +1184,15 @@ ${pdfLink}
                     <div className="bg-slate-50 border-y border-slate-200 py-3 px-6 mb-6 text-[10px]">
                         <div className="grid grid-cols-2">
                             <div>
-                                <p><span className="font-bold">Proforma Nº:</span> <span className="ml-2 font-mono font-bold text-amber-600">{proformaNumber}</span></p>
+                                <p className="flex items-center">
+                                    <span className="font-bold">Proforma Nº:</span>
+                                    <span className="ml-2 font-mono font-bold text-amber-600">{proformaNumber}</span>
+                                    {editMode && (
+                                        <span className="ml-2 text-[9px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 font-sans font-bold print:hidden">
+                                            (En Edición)
+                                        </span>
+                                    )}
+                                </p>
                                 <p className="mt-1"><span className="font-bold">Fecha:</span> <span className="ml-2">{date}</span></p>
                                 <p className="mt-1"><span className="font-bold">Tiempo de Entrega:</span> <span className="ml-2">{deliveryTimeDays} días naturales</span></p>
                             </div>
