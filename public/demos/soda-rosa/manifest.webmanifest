@@ -1,0 +1,31 @@
+{
+  "id": "dona-rosa-soda-tradicional-pwa",
+  "name": "DO\u00d1A ROSA - Soda Tradicional & Casados",
+  "short_name": "Do\u00f1a Rosa",
+  "description": "App oficial de Soda Do\u00f1a Rosa: Men\u00fa del d\u00eda en tiempo real, casados y pedidos directos.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#201815",
+  "theme_color": "#E8590C",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": [
+    "food",
+    "restaurants",
+    "lifestyle"
+  ]
+}

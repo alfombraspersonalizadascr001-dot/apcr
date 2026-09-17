@@ -1,0 +1,31 @@
+{
+  "id": "titan-crossfit-box-pwa",
+  "name": "TITAN CROSSFIT - Box & Atletas",
+  "short_name": "Titan CrossFit",
+  "description": "App oficial de Titan CrossFit: Registro de WODs, PRs y reservas.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0A0A0A",
+  "theme_color": "#CCFF00",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": [
+    "fitness",
+    "lifestyle",
+    "sports"
+  ]
+}

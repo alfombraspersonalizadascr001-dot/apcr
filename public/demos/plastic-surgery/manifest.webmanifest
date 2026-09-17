@@ -1,0 +1,31 @@
+{
+  "id": "aurea-aesthetic-clinic-pwa",
+  "name": "AUREA CLINIC - Haute Couture Aesthetics",
+  "short_name": "Aurea Clinic",
+  "description": "App oficial de Aurea Clinic: Cirug\u00eda pl\u00e1stica, simulaci\u00f3n 3D y concierge VIP.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#07090A",
+  "theme_color": "#C5A880",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": [
+    "medical",
+    "health",
+    "lifestyle"
+  ]
+}

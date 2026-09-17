@@ -9,10 +9,21 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="./assets/index-DJ-oNUol.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-Bezwppa4.css">
-  </head>
+  
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="./icon-192.png" />
+    <meta name="theme-color" content="#00A3BF" />
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').catch(console.error);
+        });
+      }
+    </script>
+  <script type="module" crossorigin src="./assets/index-BOeXguov.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-N8RW87GF.css">
+</head>
   <body class="bg-[#0D1518] text-[#1E293B] antialiased selection:bg-[#00A3BF]/20 selection:text-[#00A3BF]">
-    <div id="root"></div>
+    <div id="root"></div>
   </body>
 </html>

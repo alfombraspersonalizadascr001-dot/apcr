@@ -1,0 +1,31 @@
+{
+  "id": "aura-luxury-wellness-club-pwa",
+  "name": "AURA Luxury Fitness & Wellness",
+  "short_name": "Aura Club",
+  "description": "App oficial de AURA Club: Pilates reformer, spa termal, membres\u00edas de autor y bienestar de lujo.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0B0C0E",
+  "theme_color": "#D4AF37",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": [
+    "fitness",
+    "lifestyle",
+    "sports"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "id": "crave-burger-chain-pwa",
+  "name": "CRAVE BURGER - App Oficial de Cadena",
+  "short_name": "Crave Burger",
+  "description": "App oficial de Crave Burger: Pedidos express, personalizaci\u00f3n de combos y cupones de lealtad.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#111827",
+  "theme_color": "#DC2626",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": [
+    "food",
+    "restaurants",
+    "lifestyle"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "id": "pulse-fitness-commercial-pwa",
+  "name": "PULSE FITNESS - Gimnasio & Entrenamiento",
+  "short_name": "Pulse Fitness",
+  "description": "App oficial de Pulse Fitness: Rutinas, clases grupales, pase QR y tracking.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0F172A",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": [
+    "fitness",
+    "lifestyle",
+    "sports"
+  ]
+}
