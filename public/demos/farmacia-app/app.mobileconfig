@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>FullScreen</key>
+            <true/>
+            <key>Icon</key>
+            <data>
+            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
+            </data>
+            <key>IsRemovable</key>
+            <true/>
+            <key>Label</key>
+            <string>Farmacia San Rafael</string>
+            <key>PayloadDescription</key>
+            <string>Acceso directo WebClip para Farmacia San Rafael 24/7</string>
+            <key>PayloadDisplayName</key>
+            <string>Farmacia San Rafael</string>
+            <key>PayloadIdentifier</key>
+            <string>cr.apcr.webclip.farmacia</string>
+            <key>PayloadType</key>
+            <string>com.apple.webClip.managed</string>
+            <key>PayloadUUID</key>
+            <string>5446715C-1B72-4266-8AF6-299080C5F993</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>Precomposed</key>
+            <true/>
+            <key>URL</key>
+            <string>https://apcr-web-oficial-tau.vercel.app/demos/farmacia-app/</string>
+        </dict>
+    </array>
+    <key>PayloadDescription</key>
+    <string>Acceso directo WebClip para Farmacia San Rafael 24/7</string>
+    <key>PayloadDisplayName</key>
+    <string>Farmacia San Rafael (App)</string>
+    <key>PayloadIdentifier</key>
+    <string>cr.apcr.webclip.farmacia.profile</string>
+    <key>PayloadOrganization</key>
+    <string>APCR Apps</string>
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>877B80E4-2C75-4D90-8F23-B6FA3F09CC08</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+</dict>
+</plist>

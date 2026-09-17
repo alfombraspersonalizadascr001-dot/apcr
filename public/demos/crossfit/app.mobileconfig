@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>FullScreen</key>
+            <true/>
+            <key>Icon</key>
+            <data>
+            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
+            </data>
+            <key>IsRemovable</key>
+            <true/>
+            <key>Label</key>
+            <string>Titan CrossFit</string>
+            <key>PayloadDescription</key>
+            <string>Acceso directo WebClip para Titan CrossFit Box</string>
+            <key>PayloadDisplayName</key>
+            <string>Titan CrossFit</string>
+            <key>PayloadIdentifier</key>
+            <string>cr.apcr.webclip.crossfit</string>
+            <key>PayloadType</key>
+            <string>com.apple.webClip.managed</string>
+            <key>PayloadUUID</key>
+            <string>BD93E4F2-16B9-420C-B027-F30454FCF8F5</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>Precomposed</key>
+            <true/>
+            <key>URL</key>
+            <string>https://apcr-web-oficial-tau.vercel.app/demos/crossfit/</string>
+        </dict>
+    </array>
+    <key>PayloadDescription</key>
+    <string>Acceso directo WebClip para Titan CrossFit Box</string>
+    <key>PayloadDisplayName</key>
+    <string>Titan CrossFit (App)</string>
+    <key>PayloadIdentifier</key>
+    <string>cr.apcr.webclip.crossfit.profile</string>
+    <key>PayloadOrganization</key>
+    <string>APCR Apps</string>
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>C7A745F3-D955-44DF-95BC-F4F57260E4B1</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+</dict>
+</plist>

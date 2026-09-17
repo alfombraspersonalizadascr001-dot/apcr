@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>FullScreen</key>
+            <true/>
+            <key>Icon</key>
+            <data>
+            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
+            </data>
+            <key>IsRemovable</key>
+            <true/>
+            <key>Label</key>
+            <string>Corte Real Carnicería</string>
+            <key>PayloadDescription</key>
+            <string>Acceso directo WebClip para Carnicería Boutique Corte Real</string>
+            <key>PayloadDisplayName</key>
+            <string>Corte Real Carnicería</string>
+            <key>PayloadIdentifier</key>
+            <string>cr.apcr.webclip.carniceria</string>
+            <key>PayloadType</key>
+            <string>com.apple.webClip.managed</string>
+            <key>PayloadUUID</key>
+            <string>B9F5A888-46DF-4953-9489-1123B10BEDF9</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>Precomposed</key>
+            <true/>
+            <key>URL</key>
+            <string>https://apcr-web-oficial-tau.vercel.app/demos/carniceria-app/</string>
+        </dict>
+    </array>
+    <key>PayloadDescription</key>
+    <string>Acceso directo WebClip para Carnicería Boutique Corte Real</string>
+    <key>PayloadDisplayName</key>
+    <string>Corte Real Carnicería (App)</string>
+    <key>PayloadIdentifier</key>
+    <string>cr.apcr.webclip.carniceria.profile</string>
+    <key>PayloadOrganization</key>
+    <string>APCR Apps</string>
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>E85F4B6A-97CF-4BEF-895A-AFCFBB541B04</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+</dict>
+</plist>

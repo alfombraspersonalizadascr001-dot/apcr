@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>FullScreen</key>
+            <true/>
+            <key>Icon</key>
+            <data>
+            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
+            </data>
+            <key>IsRemovable</key>
+            <true/>
+            <key>Label</key>
+            <string>Maison Sucre</string>
+            <key>PayloadDescription</key>
+            <string>Acceso directo WebClip para Maison Sucre Pâtisserie</string>
+            <key>PayloadDisplayName</key>
+            <string>Maison Sucre</string>
+            <key>PayloadIdentifier</key>
+            <string>cr.apcr.webclip.pasteleria</string>
+            <key>PayloadType</key>
+            <string>com.apple.webClip.managed</string>
+            <key>PayloadUUID</key>
+            <string>B0E35266-500B-42F4-8B3A-85371872808B</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>Precomposed</key>
+            <true/>
+            <key>URL</key>
+            <string>https://apcr-web-oficial-tau.vercel.app/demos/pasteleria-app/</string>
+        </dict>
+    </array>
+    <key>PayloadDescription</key>
+    <string>Acceso directo WebClip para Maison Sucre Pâtisserie</string>
+    <key>PayloadDisplayName</key>
+    <string>Maison Sucre (App)</string>
+    <key>PayloadIdentifier</key>
+    <string>cr.apcr.webclip.pasteleria.profile</string>
+    <key>PayloadOrganization</key>
+    <string>APCR Apps</string>
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>AC9BB2B9-CFF9-4DEB-A99D-3059B09452C6</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+</dict>
+</plist>

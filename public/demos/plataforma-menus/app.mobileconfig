@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>FullScreen</key>
+            <true/>
+            <key>Icon</key>
+            <data>
+            iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAASRklEQVR4nO2dCZRU1ZnHv1f70t1VTa/KLthBBCKoQY0BFMYIGg1CiMsIZiKSRCeJCwESR48JZEYj4HGMjgZ1BNeJLFGcAAG3mFEU0CAqKVAQaYQGuqu69n3OV211vap6r+pVd1W95X6/c+qcru3V7fu+//2We999nKNldBIIglF0cjeAIOSEBEAwDQmAYBoSAME0JACCaUgABNOQAAimIQEQTEMCIJiGBEAwDQmAYBoSAME0JACCaUgABNOQAAimIQEQTEMCIJiGBEAwjQE0TPPlb8jdBM3QsXEyaBFOK9cEk7FXnw4NiELVAiCjVw4dKhWDKgUgxfBdqxpnVqUxDNF244n1WhOCqgRQyPDJ4JUliA6VCEEVAhAzfDJ65YuhQ+FCULQA+mv4Ulw2IY3+9rlShaBYAQgZf6GTQMZefVwlng8likBxAijF8MnolYOrhHOkJCEoSgC5xk+Grz5cEoWgFBEoRgBSjJ9GfPXgknD+lCACRQigmPGT4asXV5FzKbcIZBcA3/hp1NcmriLeQE4RyLoalIyfDdoEEmG+KORc0iKbByhk/BTyaBdXgXMthyeQxQOQ8bNLW443kNsTVF0AZPxEm4JEUFUBFPrnKOxhi7YCy1SqKQLZkmC+6sn42aSNJwK5FjbqlFLxIQiXDKFQVQRAcT+h1HxA1nkACn0Iue1AJ9foT8ZPSMkHKu0FaF8ggmkqKgAa/QmlewHyAATTVEwANPoTavAC5AEIpqmIAGj0J9TiBcgDEExDAiCYpuwCoPCHUFMYRB6AYBoSAME0JACCaSomAFrzT6jBnsoqALEEhVZ+En1BzG7KmQhTCEQwDQmAYBoSAME0JACCaUgABNOQAAimIQEQTEMCIJiGBEAwDQmAYBoSAME0JACCaUgABNOQAAimIQEQTEMCIJjGACrjtXsHwMCGfN2+/UkU5i33iH7v+SUOmDDCmPf6oeNxmLakK+u1l+52wqjBfe+aSQs74WhXIvPbix0wYWTmt9/ZG4W594u3Veg7N6zwwP99HM36zOal9TC8Vd/7/IENAXh4Y0D0mHU2DnY82JD12o0PdMObeyKi3xk/wgDfPtsME79mhGanDuprdBCNJcETSML+I3HYuS8KG94JQ/uJOKgR1QlAjAkjDWA2chCO5t/22GrmYNywfOOXi/NGGeGSCSbYskvc8OTGWcPBr6+vgUvPNue9Z9BzqT5trdfBhWca4ZYrbLBqUxBWrvdDQpa7TvcdzYRAaPw4Wglx7ulGMGQGSkWwZI491WYlYjFx8Oi/OgSNXwi9DmDBDCssnVcDakMzAkDOP8MoOuIqjYGNevjht62gROZNs4gOJoWYfaEFJo01gZpQfQiELlf31UB6/hkmWLk+PwY+jyeMeKJnxCqFR14JCB63v+Coue5voax8QQlcd1G2MDHOf3xLEHYfiEGXLwFWEwdDmvQwZ5IFrp5syfrsnG9Z4M0PlRvaac4DfHIo1vv32GEGqLFmhxW1Vg5GD8no/JMvMp+XGzSkhbPtoCTqbD2xPZ+f/N4LW9+PQIc7AdEYQHcgCXs+j8Fda3yw8d1w1mdHD1FYrKl1AbzrylRGcGTHeJ8PVi/SHgJ57x/ZlRS5+c5Ec1a1R27MAnnJTdOtYDII5yu3PebF7Ut6Hxcvzq6oKR3VCyDXoHPzgIk58T9fMHKBIQWff7vGniVSOTnZnQCPP7uUg7nK6/fVw60zbTC4SV0jvOYF8NnROBz3ZGLoC3IEcD5PAPi5A0flr1c/+ucgHOPF/WcONcCsC7NjaTlzqpfeCeW93lingx9fZoOtv62H5xY54PuTLKlwSe2oPglGduyLwvRzekp2pw80QEOtDk56E6lJG3ye5t0+hj944vEhhQUPdsNruwsngcFwEu570Q/L59f2vnbbVTbYtCMM3qD8hfT/fDkAU8eb4dQB+eMjxwGcfbox9bjzGjts2hmB1VuD8OFB5eRWTHmAXMPGE5QOe7D8ic+VFP6keXl7GHZ9mmkPivaW70gTWaVx+5Jww3IPHDwWL5ovXHmeGdbe6YRHbqmDJof6zEl9LRbgvRzDTodBufX/vnqASrH02eyZ0+unWuE03tKGYpTDVyRFDoLGf8U9bvjdi/6scE2MqWeZYMNdTjhFwGsoGXW1VoR9R+Kp+nRu3Z8vgE5vAj79Uv74nw+WEte+lYm3cbb6l1dLL4smcuyyWETO94ZpYgXWLoQiSfjDpiBMWdQJP1zZDS+8GUqVQsVAD7CCF9apAU3kADiK7XDF4J8m9MxC4iQNzmTyF4r1J/yp1EQYsmJdIJW/pOcvJo0xwUXjpM2mRmLZxmsscjaFSplRCaE7Th7+9aNI6pFO2nEt0xUTzakZbT6YG4wZZoA9KskJNOEBhAz81pl2RYc/aTBZf+jlbHEt+b4djCJ1dz6+nIQZJ/0KYbfkvx+MlB5IffR5LDUgXLykC371lC8vjPr6cPWMq5oRQG4ekBf/u5Q7Iq3eFswqzw5r0admtYtxojs7HBlfZEJNKL/o9GYfY+M99Xgzit7HT68UT8zR8P/41xAcyEmWcdm0WlBPS4uw94tYaopeCJzY2deuXAHE4gDLXvCX/L1DHdmGN2Zoz9p9IXCWfO7U7DU+4WgyL6b/+2fZA8l1F1lgaLN4Yo7vDWrMNiOx86BENCMAzOV27o+KegexaodSwAVkb5S4iOytnAtkkOXza+D2WXYYeao+tdYI1/Wf22aEx35WBxeMNuZdRBRP5Jdn+eBcyrOLHKnZYMypbGYulawPatTDtVMs8NxiR15usX2vMsNNIdQTrEkA43yhBLK/9f9SJsL6kzQve94P3xxtknztAgobk01MOtOgMS6Ybk09ivHCm/kzvni12vZ/RFNrqPjVnUXfs6ceUs4BVrfUgmY8QKFEV6kJsFDtHfMBqaBXW/i4NzVxVSob3g7Dtg+EPc7iJ319WqL9ZWcC7ljlBTWhKQF8fCgG/lC2MeDSAswP1AJWhHKT20Lg3Ma197lTlRkpYMjzxJYgLH5C3FDx+t5r/sOd8gZSSV/nrLRrG5gKgfDkYh6AtXT+OiE1XaeKpU2cG/jtDdIvL8SL02ctdcOl55hT9Xm8oL/FqUtd2hiLJ1NFgMMn46mY/09vh4sucUDaTyZSBo1LtS//hhnGDTfA4CYd1Fh0EE8kwe1PphYX7nBF4fUPI6ljqxHO0TK6bObBv30l/76udJtUoq+I2VHHxslQDjQVAhFEqZAACKYhARBMQwIgmIYEQDANCYBgGhIAwTQkAIJpSAAE05AACKYhARBMQwIgmIYEQDANCYBgGhIAwTSauiCmGCNP1UeunWLtnjjKGDylXhczG7lkly+h//BgzLx5Z9j+8vZwbe5F4gumW923z7KfFDoeftYXSuraT8SNr/49Ynt8c9DpDyWLDipix8TjhSJJ3UlvQv/67ojt0f8N1h/3JPTlbsuZQw3h2RdavOeNMgabndgPkOz0JvW7D8TMG7eHazbvCtcofROBcsGEAHDv/Z9/19Z50wxbV+4+/GgAU88y4cP/g0usnpt/7205fCIu6Y4VuNWIw8YlHEMM4dFDDOEpY02Ba+/zDAxFkn3aNxyPZ7dwCbtFn5g71eqZ+nWT/+p7PQOPdSUM5WgLbo14+1X2k/Mvtbpzt0lsredirfWm2CUTTP73P7V6bnm4u5UvPq3CRAiEo+aPLss3/lzOGGwIr7mj7oizhuvTJqJjhhnCV0+2dEOZGNioj936XVtnudpy20x7503T840/l/EjDKE1Cx3tNVZOXRf49gHNewB09zjipZ9/djRuXLHO37B9b9QajAA3rFUfvW6KxXPNlB5jQaO74yp7552rfU25x3rmtZDjnmd8jfg3GpGOg+SgRn3sN3NrjmM4ga9PGmMK/Pdfgg6p7Xtqa9Cx7Hl/Ix7PqOeSAxt1sZ9daeucca7Zh+9PHmcS3F+l1Lak+mG6tff+RfuPxE0rN/gHvLs3ag1EktzwFn30ny+2etKiOa1VH0Xx/eY5f+o3tIrmPQCGEum/Dx6LG7+3zD1oy66I3RNI6iKxJOc6HDPd/bSv6f61/t5bqM+8wOItNvphjBxPAPd5R9z4/BuhuvTrfR018XjYngNH48b71wYGpF9vqNXF9brCO6FLaQsadtoD4m/M+Xf3wL981Q/RGHCu9rjprjW+ppXrM789Z5Kl22bWthfQvADOP6NnNEQefiVQ7w0KJ4ZPbAk6Or09Ma/RAMkJI435u0bxwFEXk+i2QYbIvGk8kR2Vlj8IYTJwyWEt+ugdszJhj9uX1KNx97ct6A3Sfz/ySqDeJ9IPqzYHnB5/z3t4zHNOL9wPakfTIZBBD8nWel3vhjnvuWKi26XF4sDtORgzTxrbYyiDGjLfS3PdRRYPPgqNxE+/Jj38QdBg+Uaby+ZdYcHt2EppCybILfx+2CfeD9EYcLsPRi3fOrOnH4Y069S534lENO0BcsMRbyBR8P/FMmL6b6zGlPJbwUiSW/yktxlLiVAmMF9Zvs7fG5L0tS21Ni7OLwAU6wdvINMPtVadpkMgTXuA3Dp4nU0X7w7ERU8+31t084ygELjp1vK1/oYX3wrX4pxCf9qLo28gnOSOdMaN2z6I2J7YEnSKhSqltCUQyh7oHPbC/eC063qrYN5gYbGoHU0LAA0Ka+hp9/+NrxlD6Ro/hgXPLHK0b3s/Yn9qa8hRX8vFxw039m6NjAmlUOVl6XO+xtYB+thPr7B1zrzA7MWR9abptq6d+2KWvgggXQUq9XultAWTa6zpNzl6DBurRF8cF85VLCYuOW64obcfvjieUM5dvCuAptWNvP1JtDfe/dEMa1ftV2HRxWeZ/BNGGEMLZ9tPbrjLeXjF/NoOzBnwvUA4qdu1P2YRm3FtPxE3YIiBs8f4msPOJf7w87ovhzTpqxovl9KWv30c7d3e+seXWd34ORDg5sttXenQEYWzY19UGTcwrhCaF8DqVzNJKVZY/ueXzvZp403+jw7GzA/+KTAAZ0pxicS5bZlq0ZpXQ3V48gsdF5PMxU/6mrG0is9RWPfPr+1Az1JtpLRl9dZMPwxq1Edf/JXzMM414OwxVr1GDTZE7v2X2o4FMzJzBRhKSVnaoWY0HQIhWNl5ckvQ+YNLeibDRpyijzx8c91Rsc9jaPDQS5laeCHQONDwnl3kaMfw46zTDKG506xu/L1y/g/laMuez2PmVZuCzhu/mhQc2qyPPrCg9pjY8Q4djxtXrsvMjWgVTas7zb1/9Dc89uegU8oCr8FN+uhDP6k9erbE+veu/VHL0zwvg2uOcIQFGSjWFpzs+69XAvXF+mHPwZj5+t95TsVJMtA4mv8H09URPPmX3d01+OlXQw6c9cTqSjpJ3vZBxI7vYzyNn5881hT4xWzhVZdCLF8baEgnlVYTl/z19TUnKvn/9LUt2A8r1gcGYD9gEr3/SNyEngP7ocPd0w+3PeZtmb3MPejLzuIL8LQAbY+eUwGZN83invVNi/cXj3ubP/hMOBEmtLM9OhMqlwomxLgGHx9yt4WoDkyEQAQhBgmAYBoSAME0JACCaUgABNOQAAimIQEQTEMCIJiGBEAwDQmAYBoSAME0ZRWA2AIl/oImgpCKmN2UayFcRT0Af+UeQSjVnigEIpiGBEAwDQmAYJqyC4CfoPDjNkqECSVdCZaGPADBNCQAgmkqIgAKgwg1hD8IeQCCaSomAPIChNJHf4Q8AME0FRUAeQFCyaM/Qh6AYJqKC4C8AKHU0V92D0Czw4TcdlAVAYh5AYREwDauHOOv5uhfVQ9QSAQEIYfxyxoC0UI5wiUS91eTqgqgkKopFGILV4G4v1qjvywegPIBwiVz3C97CEQiYBeXgoy/7LdIKpXmy98o6BIpWdYOriLnVw7jl30eoFhliPICbeBSqPHL7gGEPEExN0moC1eRcymn8StGAFJEgJAQ1INLwvmT2/gVJQCpIkBICMrFJfGcKcH4FScAIREgJATl4yphsFKK8StSAH0RAkJeofq4SjwfSjJ8xQtATASlVIdIFOXD1c8+V6LxK14A5RICUXnaVGb4qhJAMSEgJIbq01agPK10w1elAKQIIQ0Jovy0SZiPUYvhq1oApQiBqA4dKjN8TQiAD4mh+nSo1Og1KQAhSBTlo0MDxs6cAAiiGLQvEME0JACCaUgABNOQAAimIQEQTEMCIJiGBEAwDQmAYBoSAME0JACCaUgABNOQAAimIQEQTEMCIJiGBEAwDQmAYBoSAAEs8/9PoGAoO7gmTwAAAABJRU5ErkJggg==
+            </data>
+            <key>IsRemovable</key>
+            <true/>
+            <key>Label</key>
+            <string>Menús QR Pro</string>
+            <key>PayloadDescription</key>
+            <string>Acceso directo WebClip para Plataforma Menús QR</string>
+            <key>PayloadDisplayName</key>
+            <string>Menús QR Pro</string>
+            <key>PayloadIdentifier</key>
+            <string>cr.apcr.webclip.menusqr</string>
+            <key>PayloadType</key>
+            <string>com.apple.webClip.managed</string>
+            <key>PayloadUUID</key>
+            <string>6D9D6417-692D-4010-A319-4E0A29DEFA48</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>Precomposed</key>
+            <true/>
+            <key>URL</key>
+            <string>https://apcr-web-oficial-tau.vercel.app/demos/plataforma-menus/</string>
+        </dict>
+    </array>
+    <key>PayloadDescription</key>
+    <string>Acceso directo WebClip para Plataforma Menús QR</string>
+    <key>PayloadDisplayName</key>
+    <string>Menús QR Pro (App)</string>
+    <key>PayloadIdentifier</key>
+    <string>cr.apcr.webclip.menusqr.profile</string>
+    <key>PayloadOrganization</key>
+    <string>APCR Apps</string>
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>501B7FB0-4DF9-47AC-8D75-488F297E5D3E</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+</dict>
+</plist>

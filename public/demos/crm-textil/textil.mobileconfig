@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>FullScreen</key>
+            <true/>
+            <key>Icon</key>
+            <data>
+            iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAOOUlEQVR4nO2dCZAU5RXHv577WNiTSwUiHoAcVkw8UEvOcMixrKgkgsSy1qIqlcskllYSoymrcmhZSSjNYU1ULtFkYVkVkENQo1EwYsQLa9EsKCzCHuw9PVen3qyz27M71+5OT/f0+/+qpnZ2Zrpnevr9vve+r7/ukQpHXaYIAJhi0fsDAKAnEACwBgIA1kAAwBoIAFgDAQBrIABgDQQArIEAgDUQALAGAgDWQADAGggAWAMBAGsgAGANBACsgQCANRAAsMYmTMzN5W/q/RFMQ1XNDGFGJLOcE4xgzz1VJpAirwVA0BuHqjyVIS8FyCTwfX8bXpGTD8OIyrWt1WYTIa8ESBX4CHhjCVGVJyLkhQDJAh9Bb3wZqgwugqEFGGrgZ5KyQWYM9Ts3qgiGFSBR8KfaCQj23OMb4P4wogSGE2AggY+gNw6+AewjI4lgKAH6Bj8CP//wZSiCUSQwjACZBD9a/PzBl8H+M4IEhhAgXfAj8PMXX5p9qbcEugugDn60+ubElyYb6CmBrrNBEfw8qEzQEVZLoeeUFt0yQKrgR8ljXnwp9rUemUCXDIDg50tln2ygdybIuQAIflBpIAlyKkCqjUPZw4vKFNNUcimBbp1gtfUIfp5UqiTQa2KjxSgjPgD4dCiFciIA6n5g1P6ArscBUPoAvePAolfrj+AHmfQHtM4CuC4QYI2mAqD1B0bPAsgAgDWaCYDWH+RDFkAGAKzRRAC0/iBfsgAyAGANBACsyboAKH9APpVByACANRAAsAYCANZoJgDm/IN8iKesCpCsg4KZn2AwJIubbHaEUQIB1kAAwBoIAFgDAQBrIABgDQQArIEAgDUQALAGAgDWQADAGggAWAMBAGsgAGANBACsgQCANRAAsMYm8pBrrraLyjvdQ1rHkfdDYt1jndH7D9zvFWMvsA56Xffc1y6amyOiwCuJh35dIIYNk3qek2VF3P9gh2hqiiRctqhIEg89WCDc7t5l2toUcf8D7WLqVFtWt/PxdcOE09n7Pus3dol/vR7s+f+H3/eI6dN6Q+Ktg0Hhe7JLmBlkgCzS3qGI5/7pj3uMAm7NalfSZW5f5Y4LfmLLc/7ouoD2QIAsQ63mBx+G4h6bOsUmZlxj7/faq660i8unxyfh9z8IiUNv97bKQFsggAZs2uyPlj5qVt7qiiuNCgok8Z2V8ZmBltm4OT6DAG2x5WsrS7dEPPGX4cKi0ppq2GSvTcaOnbKorpEH/fkaGiOi5nlZ3HpLb4BT/4AC/glfd01927fjhSC2VctxfQWttxMgA2jGvv0BUXc8nLDkmT7dFr2v5rPPwmL/KwHEZI5BCaQRkYgQ6zf4o3/VrF7ljnZ81YRCQjy9sUso6PfmHAigIZ9/ERa798aXUsVFUvSmZtdLsjh1KvEwKdAWCKAxL7wgi7Nnkwd3fX1E7Ng1+P4GYNgJ1prFNzqjt0xY93inOHIkfthTTSAoxPpNfvGzuz39nqOShw5GUQkE9AEZIAccPRqK3vry0cchcezT+I4yyC0QIAeMH28Vl17aP9lOnmSLPgf0AwJojNUqxB1rXHFj9j1fviX5cyA3oA+gwYEwNYsWOFNOtKPn6DXoCOsD2h4NGTPGIpYsju9Md3QoossfP+C/dIlTjB6FXaEH+NY1QpKovHELW58cS7NFt26Lzy70mu+ucUeXAbkFAmjE3DkOcdEEa79Rn3+/GRSvvhYQtcfiR38uudgqZs10aPVxQBIggAaUlVpERXl86RMIKGLDJn/P+P+GTf3H/1dUOEVJMXZJLkEneIgHwhJ1mtfc7oo784rYXiOLhoZI3BHgnbtksWxp7/u4XJJYvcrVcwaXEc68u+bq/ucxJOKZZ/1i/4H8m8yH5ibLXHetXVw2Ob5doVmhNDu0LztpDlB9/DQJOiXx6qsyCzowdCBAFikcLomVqnMAUs0KJagE2pBgFiidN0AnzADtgQBZZNVtLuHxxAfuS7vl6KzQZNBUCOoUq0l0thjQBqlw1GVZm4Wu/vlK9e+64mdSwWBJFkdVNTNENkAGAKyBAIA1EACwBgIA1kAAwBoIAFgDAQBrIABgDQQArIEAgDUQALAGAgDWQADAGggAWAMBAGtMf07wooXOcysqnI19H6cztAIBxdLWpliPvB/y7NwlF7e0KtZ0y8WW9fsVS0NjxP7eeyHP7r2BIvo/0WvHj7PK119nb5s00dZVVCSF7HZJaWuLWP9XF3YePBQqOPxusGAwvwswerQlOHe2o2XyZFtncZEUtlgkpbk5YvukNuzefyAw/PPPw3EnNWdre8yG6QVIBl2O0OWSInSbO8fRcvnlto7fP9xxfvM5xZbJsh6PFBnnscrjxlrladNsnQ8/0nF+ICh6Tgeja/zcVOFsXDjfea7v9X6Kiy0hul3xdXvHp585Wv78187RLS298qWDgrmi3NnY95KKI0dagnS7boa9tXq7XLprt1yU6XfhSbM9ZoWF5ZlQVmoJLS93NQ1m2a+Nt8ozb3C0qh+rKHc2LVrQP/j7ctEEq/+en3hPul1SRr+QMf9bjmhLnup6ovTcipucjd+4wt4hsrQ9ZoVVBtj3cqDw2X/4yygorVahUNCXL3M2XflNezs9P32aLeH1SA68EijcvMVfRvdpWUkSSlmZJbRmtesslTb0+NSpts69LwcKY2XPooXO5tjyp+ojju01/pKjn4TdgYAijRppCc6Z7WiJBRmVM8uXO5u2PNv9HskoKbaEVlT0SlpbG3Ztq/GX1tWFnU6nFJk6xda18hZXw7BhUvQk5KVLnE3vHA56h7o9ZoZlBqCaOxQS0ukvI/at1XJJ7HEKHItFKOmWjUSEdOZMxP7qa8HhscfVLfjMG+ytsZaf3uO3v+s4//C7IW9np2Kh9z15KuLYuNk/orqm971vuN7RSkGc6r1nzrS3krh0n2r8R//YcR5JEAwKqb1dsb51MFiw7rHOMfSeO3bKxX9/smtUJt9FJM32mBlWGUCNzSaUUip7ljl7WtT2DsVKwZBqOQpsWpZa8XlzHS2xx0+fifRczIdaz9h9CsSuJB3K3XvkovnzHOe8Xilitwvlkout/g8+DPX/KZmvmPxV60zs2x8oJJn6voY617/8Vfu41Fs/sO0xM6wEoB2s3sl9OZygXCBmz3K00C1VK3rgQHe5QPV3cZGl56KHtbXh+J+EVEEBXFcXdk2Z0i0MdWDFh8k//8hRlp4fAj5xIpL5peuGsD1mh5UAqTh9OmLfpiqHMoVq+k3P+EdQy0v/e9xSWN3x7exKPZyoft7tTl12eFTP+2VFkxGaQJ/tMTtsBaDWV5YVqakpYv/veyHPnr2BomSlSrJWcmu1v/T1N4LDqP6OPe6X49fh9Uhhqv2Trcfr7e6wEl1pZKHP63ZLSl8ZsoGSZHvMDstRoIEuR6MmW57zl9EozLKlzqZrZ9jbqJVftMDZXHss7GpvD1vVYtGYfmFhd2BPmmjtOtuQuJ522IVy4YXWnqvqnj2buu5uaIzYxl5gjV5Gbtw4i3z8xOBa6YFsj9lhOQo0GOhoKQXgU+u7RsaGFqnz+uMfeOpHjOitzYmPPu7tyC6+0Rnt5CZa55LFzubYaAuJQ8GX6jMcPRruWe+cWY6eESE1NKT6m4cKTtx8k6tx/PheuYayPWYGAgyiVHhqvX/kl1+NklDdfted7jPqA1M0QhO7X1ZmCf7iPu8XdKyBjrbSiAu14nfe4T5z46LeYwWvvxEYlm76wSuvBobHpk2MHWuV7/6Rp37CBKuf1lnglcL0Hj+923uKOtMLFzjOfW+t+3S6A3FKBttjZliVQNmCAvWpp7tG3nuP9yQFGAXhvDmOc3v2BaJTD44fDztf2hMoWjjfcY7+p4Bce5f7y2Tro9Jn23a5NN37UpA+/6JcUr60e+iWDlr9/F7byWSvp3VmMs/In2Z7zAwTz7PPsU/Drv2qocLl5c4mau1j/2/d5i/dsUsuTheAdcfDzkce7TwvVUdZzYs75OIXd6ZeLz23vUYuOXgoWJCt7TEryABDYGu1XDp9uq1zRJkl6HBIyu2rXA1/+FPnmFgQVm+XSw4eDBbMnuVonTjR1lVSLIVsNkmhURYK/ENvBwve/s/AZoPGgvudwyEvzQadNNHqLyqyhGj4sqmpezYolUr19RFHNrfHrODy6MDQ4PLoAGgI+gCANRAAsAYCANZAAMAaCABYAwEAayAAYA0EAKyBAIA1EACwBgIA1mRVgKqaGWknNAGQKcniJlmcGSoDVK5trdZq3YAflRrFE0ogwBoIAFgDAQBrsi6AuoOirtvQEQZGOhMsBjIAYA0EAKzRRACUQSAfyh8CGQCwRjMBkAWA0Vt/AhkAsEZTAZAFgJFbfwIZALBGcwGQBYBRW3/dMwCODgO94yAnAiTLAgQk4I2vT/DnsvXPaQZIJQEAegS/riUQJsoBX5K6P5fkVIBUVqMU4oUvRd2fq9ZflwyA/gDw6Vz3614CQQK++AwU/Fn/iaSBcnP5mylTIjrL5sGXZv/qEfy6HwdINzKEfoE58Bk0+HXPAIkyQbo0CfILX5p9qWfwG0aATCQgIEL+4Mtg/+kd/IYSIFMJCIhgXHwZ7jMjBL/hBEgkAQERjI9vAI2VUYLfkAIMRgQCWSH3+Aa4P4wU+IYXIJkEAxkdghTZwzfE79yIwW94AbIlAtCeyjwL/LwSIJ0IBGTIPZUphqeNHvh5KUAmIsSAENmnMoPjMfkS+HktwEBEALmhKs8C3xQCqIEMuacqT4PelAIkAlJkjyoTBDs7AQBIB64LBFgDAQBrIABgDQQArIEAgDUQALAGAgDWQADAGggAWAMBAGsgAGANBACsgQCANRAAsAYCANZAAMAaCAAEZ/4POAqyRR8o4N0AAAAASUVORK5CYII=
+            </data>
+            <key>IsRemovable</key>
+            <true/>
+            <key>Label</key>
+            <string>Textil Pro CR</string>
+            <key>PayloadDescription</key>
+            <string>Acceso directo WebClip para Textil Pro CR Taller</string>
+            <key>PayloadDisplayName</key>
+            <string>Textil Pro CR</string>
+            <key>PayloadIdentifier</key>
+            <string>cr.apcr.webclip.textil</string>
+            <key>PayloadType</key>
+            <string>com.apple.webClip.managed</string>
+            <key>PayloadUUID</key>
+            <string>59991805-1DAD-44DB-B022-18B13FAAB9F1</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>Precomposed</key>
+            <true/>
+            <key>URL</key>
+            <string>https://apcr-web-oficial-tau.vercel.app/demos/crm-textil/</string>
+        </dict>
+    </array>
+    <key>PayloadDescription</key>
+    <string>Acceso directo WebClip para Textil Pro CR Taller</string>
+    <key>PayloadDisplayName</key>
+    <string>Textil Pro CR (App)</string>
+    <key>PayloadIdentifier</key>
+    <string>cr.apcr.webclip.textil.profile</string>
+    <key>PayloadOrganization</key>
+    <string>APCR Apps</string>
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>026A6852-3B2E-4579-A8C9-893981BECDDC</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+</dict>
+</plist>

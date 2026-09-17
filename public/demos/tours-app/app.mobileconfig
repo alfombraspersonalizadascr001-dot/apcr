@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>FullScreen</key>
+            <true/>
+            <key>Icon</key>
+            <data>
+            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
+            </data>
+            <key>IsRemovable</key>
+            <true/>
+            <key>Label</key>
+            <string>Tierra Pura Expediciones</string>
+            <key>PayloadDescription</key>
+            <string>Acceso directo WebClip para Tierra Pura Eco-Aventura</string>
+            <key>PayloadDisplayName</key>
+            <string>Tierra Pura Expediciones</string>
+            <key>PayloadIdentifier</key>
+            <string>cr.apcr.webclip.tours</string>
+            <key>PayloadType</key>
+            <string>com.apple.webClip.managed</string>
+            <key>PayloadUUID</key>
+            <string>FBC073A5-3A45-44A9-B888-B466819AB6D4</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>Precomposed</key>
+            <true/>
+            <key>URL</key>
+            <string>https://apcr-web-oficial-tau.vercel.app/demos/tours-app/</string>
+        </dict>
+    </array>
+    <key>PayloadDescription</key>
+    <string>Acceso directo WebClip para Tierra Pura Eco-Aventura</string>
+    <key>PayloadDisplayName</key>
+    <string>Tierra Pura Expediciones (App)</string>
+    <key>PayloadIdentifier</key>
+    <string>cr.apcr.webclip.tours.profile</string>
+    <key>PayloadOrganization</key>
+    <string>APCR Apps</string>
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>AA8C9B96-3BC2-42B7-BDB3-0A1EC56C0461</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+</dict>
+</plist>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>FullScreen</key>
+            <true/>
+            <key>Icon</key>
+            <data>
+            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
+            </data>
+            <key>IsRemovable</key>
+            <true/>
+            <key>Label</key>
+            <string>Doña Rosa Soda</string>
+            <key>PayloadDescription</key>
+            <string>Acceso directo WebClip para Soda Tradicional Doña Rosa</string>
+            <key>PayloadDisplayName</key>
+            <string>Doña Rosa Soda</string>
+            <key>PayloadIdentifier</key>
+            <string>cr.apcr.webclip.donarosa</string>
+            <key>PayloadType</key>
+            <string>com.apple.webClip.managed</string>
+            <key>PayloadUUID</key>
+            <string>EA6A3850-46E2-49D3-BAB4-5B909276FAD3</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>Precomposed</key>
+            <true/>
+            <key>URL</key>
+            <string>https://apcr-web-oficial-tau.vercel.app/demos/soda-rosa/</string>
+        </dict>
+    </array>
+    <key>PayloadDescription</key>
+    <string>Acceso directo WebClip para Soda Tradicional Doña Rosa</string>
+    <key>PayloadDisplayName</key>
+    <string>Doña Rosa Soda (App)</string>
+    <key>PayloadIdentifier</key>
+    <string>cr.apcr.webclip.donarosa.profile</string>
+    <key>PayloadOrganization</key>
+    <string>APCR Apps</string>
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>D25AA4C2-C425-44E4-A991-BF3968519E01</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+</dict>
+</plist>

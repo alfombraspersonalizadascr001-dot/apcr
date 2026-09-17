@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>FullScreen</key>
+            <true/>
+            <key>Icon</key>
+            <data>
+            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
+            </data>
+            <key>IsRemovable</key>
+            <true/>
+            <key>Label</key>
+            <string>Velvet Club & Rooftop</string>
+            <key>PayloadDescription</key>
+            <string>Acceso directo WebClip para Velvet Nightclub VIP</string>
+            <key>PayloadDisplayName</key>
+            <string>Velvet Club & Rooftop</string>
+            <key>PayloadIdentifier</key>
+            <string>cr.apcr.webclip.velvet</string>
+            <key>PayloadType</key>
+            <string>com.apple.webClip.managed</string>
+            <key>PayloadUUID</key>
+            <string>DE63291B-AACE-48D9-B390-9406BF849790</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>Precomposed</key>
+            <true/>
+            <key>URL</key>
+            <string>https://apcr-web-oficial-tau.vercel.app/demos/club-app/</string>
+        </dict>
+    </array>
+    <key>PayloadDescription</key>
+    <string>Acceso directo WebClip para Velvet Nightclub VIP</string>
+    <key>PayloadDisplayName</key>
+    <string>Velvet Club & Rooftop (App)</string>
+    <key>PayloadIdentifier</key>
+    <string>cr.apcr.webclip.velvet.profile</string>
+    <key>PayloadOrganization</key>
+    <string>APCR Apps</string>
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>41053BCF-8801-4D0E-A93B-EC15498045A5</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+</dict>
+</plist>

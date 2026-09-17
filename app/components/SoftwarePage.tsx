@@ -42,7 +42,10 @@ import {
   Stethoscope,
   Shirt,
   Hammer,
-  Beef
+  Beef,
+  Apple,
+  Download,
+  ExternalLink
 } from 'lucide-react';
 import { airlockAudio } from '../utils/airlockSound';
 
@@ -511,6 +514,10 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
   const [appFilter, setAppFilter] = useState<'all' | 'fitness' | 'gastro' | 'health' | 'taller' | 'auto' | 'travel' | 'beauty' | 'gaming' | 'nightlife'>('all');
   const [fullScreenApp, setFullScreenApp] = useState<DemoApp | null>(null);
   const [iframeKey, setIframeKey] = useState<number>(0);
+  const [installModalApp, setInstallModalApp] = useState<{
+    app: DemoApp;
+    platform: 'ios' | 'android';
+  } | null>(null);
   
   // Demo 1: Citas Simulator State
   const [clientName, setClientName] = useState('Mariana Solís');
@@ -1258,30 +1265,56 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
                   ))}
                 </div>
 
-                {/* Big Button - Easy for everyone */}
-                <div className="pt-2 flex items-center gap-2">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSelectedApp(app);
-                      setFullScreenApp(app);
-                    }}
-                    className="flex-1 py-3.5 px-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-600/40 active:scale-98 transition-all cursor-pointer"
-                  >
-                    <Play className="w-4 h-4 fill-white" />
-                    <span>TOCAR PARA PROBAR APP</span>
-                  </button>
+                {/* Action Buttons: Try Demo, iPhone, Android, WhatsApp */}
+                <div className="pt-2 space-y-2">
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedApp(app);
+                        setFullScreenApp(app);
+                      }}
+                      className="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-extrabold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-600/40 active:scale-98 transition-all cursor-pointer"
+                    >
+                      <Play className="w-4 h-4 fill-white" />
+                      <span>PROBAR DEMO EN VIVO</span>
+                    </button>
 
-                  <a
-                    href={getWhatsAppLink(`Hola APCR, me encantó el demo de "${app.name}" y deseo cotizar un sistema similar para mi negocio (Planes desde $199/mes en adelante).`)}
-                    onClick={(e) => e.stopPropagation()}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-3.5 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white flex items-center justify-center shadow-md active:scale-95"
-                    title="Cotizar por WhatsApp"
-                  >
-                    <MessageCircle className="w-4 h-4 fill-white" />
-                  </a>
+                    <a
+                      href={getWhatsAppLink(`Hola APCR, me encantó el demo de "${app.name}" y deseo cotizar un sistema similar para mi negocio (Planes desde $199/mes en adelante).`)}
+                      onClick={(e) => e.stopPropagation()}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white flex items-center justify-center shadow-md active:scale-95 shrink-0"
+                      title="Cotizar por WhatsApp"
+                    >
+                      <MessageCircle className="w-4 h-4 fill-white" />
+                    </a>
+                  </div>
+
+                  {/* 2 Direct Installation Buttons */}
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setInstallModalApp({ app, platform: 'ios' });
+                      }}
+                      className="py-2.5 px-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-blue-500/50 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 cursor-pointer shadow-sm"
+                    >
+                      <Apple className="w-3.5 h-3.5 text-slate-200" />
+                      <span>Instalar iPhone</span>
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setInstallModalApp({ app, platform: 'android' });
+                      }}
+                      className="py-2.5 px-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-emerald-500/50 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 cursor-pointer shadow-sm"
+                    >
+                      <Smartphone className="w-3.5 h-3.5 text-emerald-400" />
+                      <span>Instalar Android</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
@@ -1338,24 +1371,45 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
                         </div>
                       </div>
 
-                      <div className="flex flex-col items-end gap-2 shrink-0">
-                        <span className={`text-xs font-semibold px-2 py-1 rounded ${
-                          isSelected ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'
+                      <div className="flex flex-col items-end gap-1.5 shrink-0">
+                        <span className={`text-xs font-semibold px-2.5 py-1 rounded-lg ${
+                          isSelected ? 'bg-blue-600 text-white shadow-sm' : 'bg-slate-700/80 text-slate-300'
                         }`}>
                           {isSelected ? 'Activo en Simulador' : 'Ver Demo'}
                         </span>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedApp(app);
-                            setFullScreenApp(app);
-                          }}
-                          className="text-[11px] text-slate-400 hover:text-white flex items-center gap-1 transition-colors cursor-pointer"
-                          title="Abrir en pantalla completa"
-                        >
-                          <Maximize2 className="w-3 h-3" />
-                          <span>Expandir</span>
-                        </button>
+                        <div className="flex items-center gap-1.5 mt-0.5">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setInstallModalApp({ app, platform: 'ios' });
+                            }}
+                            className="p-1.5 rounded-lg bg-slate-900/80 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors cursor-pointer border border-slate-700/60"
+                            title="Instalar en iPhone"
+                          >
+                            <Apple className="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setInstallModalApp({ app, platform: 'android' });
+                            }}
+                            className="p-1.5 rounded-lg bg-slate-900/80 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors cursor-pointer border border-slate-700/60"
+                            title="Instalar en Android"
+                          >
+                            <Smartphone className="w-3.5 h-3.5 text-emerald-400" />
+                          </button>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedApp(app);
+                              setFullScreenApp(app);
+                            }}
+                            className="p-1.5 rounded-lg bg-slate-900/80 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors cursor-pointer border border-slate-700/60"
+                            title="Abrir en pantalla completa"
+                          >
+                            <Maximize2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
                       </div>
                     </div>
                   );
@@ -1429,18 +1483,49 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
                 </div>
               </div>
 
-              {/* Quick WhatsApp Bar below mockup */}
-              <div className="mt-4 w-[375px] flex items-center justify-between gap-3 bg-slate-800/80 p-3 rounded-xl border border-slate-700 text-xs">
-                <span className="text-slate-300">¿Te interesa este sistema?</span>
-                <a
-                  href={getWhatsAppLink(`Hola APCR, me interesa implementar la app de "${selectedApp.name}" para mi negocio (Planes desde $199/mes en adelante).`)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-3 py-1.5 rounded-lg bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold transition-colors flex items-center gap-1.5"
-                >
-                  <MessageCircle className="w-3.5 h-3.5 fill-white" />
-                  <span>Cotizar desde $199/mes</span>
-                </a>
+              {/* Installation & Inquiry Control Box below mockup */}
+              <div className="mt-4 w-[375px] bg-slate-850/95 p-4 rounded-2xl border border-slate-700 shadow-2xl space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Smartphone className="w-4 h-4 text-blue-400" />
+                    <span className="font-extrabold text-white text-xs">Instalar en tu Celular</span>
+                  </div>
+                  <span className="text-[10px] text-emerald-400 font-bold bg-emerald-500/10 border border-emerald-500/30 px-2 py-0.5 rounded-full flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    PWA + WebClip
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    onClick={() => setInstallModalApp({ app: selectedApp, platform: 'ios' })}
+                    className="py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600/80 text-white font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer shadow active:scale-95 group"
+                  >
+                    <Apple className="w-4 h-4 text-slate-100 group-hover:scale-110 transition-transform" />
+                    <span>Instalar en iPhone</span>
+                  </button>
+
+                  <button
+                    onClick={() => setInstallModalApp({ app: selectedApp, platform: 'android' })}
+                    className="py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600/80 text-white font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer shadow active:scale-95 group"
+                  >
+                    <Smartphone className="w-4 h-4 text-emerald-400 group-hover:scale-110 transition-transform" />
+                    <span>Instalar en Android</span>
+                  </button>
+                </div>
+
+                <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-xs">
+                  <span className="text-slate-400 text-[11px]">¿Deseas este sistema?</span>
+                  <a
+                    href={getWhatsAppLink(`Hola APCR, me interesa implementar la app de "${selectedApp.name}" para mi negocio (Planes desde $199/mes en adelante).`)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-3 py-1.5 rounded-lg bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-xs transition-all flex items-center gap-1.5 shadow active:scale-95"
+                  >
+                    <MessageCircle className="w-3.5 h-3.5 fill-white" />
+                    <span>Cotizar desde $199/mes</span>
+                  </a>
+                </div>
               </div>
 
             </div>
@@ -1476,16 +1561,36 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <button
+                onClick={() => setInstallModalApp({ app: fullScreenApp, platform: 'ios' })}
+                className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-blue-500/60 text-white text-xs font-bold transition-all cursor-pointer shadow-sm active:scale-95"
+                title="Instalar en iPhone"
+              >
+                <Apple className="w-3.5 h-3.5 text-slate-200" />
+                <span className="hidden sm:inline">Instalar iPhone</span>
+                <span className="sm:hidden">iPhone</span>
+              </button>
+
+              <button
+                onClick={() => setInstallModalApp({ app: fullScreenApp, platform: 'android' })}
+                className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-emerald-500/60 text-white text-xs font-bold transition-all cursor-pointer shadow-sm active:scale-95"
+                title="Instalar en Android"
+              >
+                <Smartphone className="w-3.5 h-3.5 text-emerald-400" />
+                <span className="hidden sm:inline">Instalar Android</span>
+                <span className="sm:hidden">Android</span>
+              </button>
+
               <a
                 href={getWhatsAppLink(`Hola APCR, estoy probando el demo completo de "${fullScreenApp.name}" y deseo una app para mi empresa (Planes desde $199/mes en adelante).`)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-3 sm:px-3.5 py-1.5 rounded-lg bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-xs flex items-center gap-1.5 transition-all shadow cursor-pointer active:scale-95"
+                className="px-2.5 sm:px-3.5 py-1.5 rounded-lg bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-xs flex items-center gap-1.5 transition-all shadow cursor-pointer active:scale-95 shrink-0"
               >
                 <MessageCircle className="w-3.5 h-3.5 fill-white" />
-                <span className="hidden sm:inline">Quiero esta App</span>
-                <span className="sm:hidden">Cotizar</span>
+                <span className="hidden md:inline">Quiero esta App</span>
+                <span className="md:hidden">Cotizar</span>
               </a>
             </div>
           </div>
@@ -1526,6 +1631,182 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
               <span>Siguiente</span>
               <ChevronRight className="w-4 h-4" />
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* APP INSTALLATION MODAL (IPHONE .MOBILECONFIG & ANDROID PWA) */}
+      {installModalApp && (
+        <div 
+          className="fixed inset-0 z-[70] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200"
+          onClick={() => setInstallModalApp(null)}
+        >
+          <div 
+            className="bg-slate-900 border border-slate-700/80 rounded-3xl max-w-md w-full p-5 sm:p-6 shadow-2xl relative overflow-hidden flex flex-col gap-4 text-white max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Top decorative accent */}
+            <div className={`absolute top-0 inset-x-0 h-1.5 ${
+              installModalApp.platform === 'ios'
+                ? 'bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500'
+                : 'bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500'
+            }`} />
+
+            {/* Header with App Name & Close Button */}
+            <div className="flex items-start justify-between gap-3 pt-1">
+              <div className="flex items-center gap-3">
+                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center bg-slate-950 border border-slate-800 shadow shrink-0 ${installModalApp.app.accentText}`}>
+                  {renderAppIcon(installModalApp.app.icon, "w-6 h-6")}
+                </div>
+                <div>
+                  <h3 className="font-extrabold text-sm sm:text-base text-white leading-tight">
+                    {installModalApp.app.name}
+                  </h3>
+                  <div className="flex items-center gap-1.5 mt-0.5 text-xs text-slate-400">
+                    <span className="text-blue-400 font-semibold">Centro de Instalación</span>
+                    <span>•</span>
+                    <span>100% Gratuito</span>
+                  </div>
+                </div>
+              </div>
+
+              <button
+                onClick={() => setInstallModalApp(null)}
+                className="p-1.5 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors cursor-pointer shrink-0"
+                title="Cerrar ventana"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Platform Switcher Tabs */}
+            <div className="grid grid-cols-2 p-1 bg-slate-950 rounded-2xl border border-slate-800">
+              <button
+                onClick={() => setInstallModalApp({ app: installModalApp.app, platform: 'ios' })}
+                className={`py-2 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer ${
+                  installModalApp.platform === 'ios'
+                    ? 'bg-blue-600 text-white shadow-md'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                <Apple className="w-4 h-4" />
+                <span>iPhone (iOS)</span>
+              </button>
+              <button
+                onClick={() => setInstallModalApp({ app: installModalApp.app, platform: 'android' })}
+                className={`py-2 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer ${
+                  installModalApp.platform === 'android'
+                    ? 'bg-emerald-600 text-white shadow-md'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                <Smartphone className="w-4 h-4" />
+                <span>Android (PWA)</span>
+              </button>
+            </div>
+
+            {/* Platform-Specific Content */}
+            {installModalApp.platform === 'ios' ? (
+              <div className="space-y-4">
+                {/* QR Code & Direct Download Box */}
+                <div className="bg-slate-950/70 border border-slate-800 rounded-2xl p-4 flex flex-col items-center text-center">
+                  <div className="bg-white p-2.5 rounded-2xl shadow-md mb-2.5">
+                    <img 
+                      src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(`https://apcr-web-oficial-tau.vercel.app/demos/${installModalApp.app.slug}/app.mobileconfig`)}`}
+                      alt="Código QR para instalar en iPhone"
+                      className="w-32 h-32 sm:w-36 sm:h-36 rounded-lg"
+                    />
+                  </div>
+                  <div className="text-xs font-semibold text-slate-200">
+                    Apunta con la cámara de tu iPhone
+                  </div>
+                  <p className="text-[11px] text-slate-400 mt-0.5">
+                    O si ya estás en tu iPhone, toca el botón azul:
+                  </p>
+                </div>
+
+                {/* Direct Download Button */}
+                <a
+                  href={`/demos/${installModalApp.app.slug}/app.mobileconfig`}
+                  download={`${installModalApp.app.slug}.mobileconfig`}
+                  className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-extrabold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25 transition-all active:scale-98 cursor-pointer"
+                >
+                  <Download className="w-4 h-4" />
+                  <span>Descargar Instalador iPhone (.mobileconfig)</span>
+                </a>
+
+                {/* 3 Simple Steps Guide for Apple (Zero Confusion) */}
+                <div className="bg-blue-500/10 border border-blue-500/20 rounded-2xl p-3.5 space-y-2 text-xs">
+                  <div className="font-extrabold text-blue-300 flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+                    <span>Pasos sencillos para instalar en tu iPhone:</span>
+                  </div>
+                  <ol className="space-y-1.5 text-slate-300 pl-4 list-decimal text-[11px] leading-relaxed">
+                    <li>Al tocar descargar, Safari te preguntará <em>«¿Deseas permitir la descarga de este perfil?»</em> → Toca <strong>Permitir</strong>.</li>
+                    <li>Abre los <strong>Ajustes</strong> de tu iPhone (arriba verás el aviso <strong>«Perfil descargado»</strong>).</li>
+                    <li>Toca <strong>Instalar</strong> (arriba a la derecha). ¡Y listo! La app aparecerá en tu pantalla de inicio con su icono y pantalla completa.</li>
+                  </ol>
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {/* Android QR Code & Launch Box */}
+                <div className="bg-slate-950/70 border border-slate-800 rounded-2xl p-4 flex flex-col items-center text-center">
+                  <div className="bg-white p-2.5 rounded-2xl shadow-md mb-2.5">
+                    <img 
+                      src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(`https://apcr-web-oficial-tau.vercel.app/demos/${installModalApp.app.slug}/index.html`)}`}
+                      alt="Código QR para instalar en Android"
+                      className="w-32 h-32 sm:w-36 sm:h-36 rounded-lg"
+                    />
+                  </div>
+                  <div className="text-xs font-semibold text-slate-200">
+                    Apunta con la cámara de tu Android
+                  </div>
+                  <p className="text-[11px] text-slate-400 mt-0.5">
+                    O abre la app directamente en Chrome si estás en tu móvil:
+                  </p>
+                </div>
+
+                {/* Direct Open Button */}
+                <a
+                  href={`/demos/${installModalApp.app.slug}/index.html`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/25 transition-all active:scale-98 cursor-pointer"
+                >
+                  <ExternalLink className="w-4 h-4" />
+                  <span>Abrir App en Android (PWA)</span>
+                </a>
+
+                {/* 3 Simple Steps Guide for Android */}
+                <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-2xl p-3.5 space-y-2 text-xs">
+                  <div className="font-extrabold text-emerald-300 flex items-center gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                    <span>Pasos sencillos para instalar en Android:</span>
+                  </div>
+                  <ol className="space-y-1.5 text-slate-300 pl-4 list-decimal text-[11px] leading-relaxed">
+                    <li>Abre el enlace en <strong>Google Chrome</strong>.</li>
+                    <li>Toca el aviso emergente <strong>«Instalar App»</strong> (o los 3 puntos arriba a la derecha).</li>
+                    <li>Selecciona <strong>«Añadir a pantalla de inicio»</strong>.</li>
+                  </ol>
+                </div>
+              </div>
+            )}
+
+            {/* Bottom Footer / WhatsApp Support */}
+            <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+              <span>¿Tienes dudas de instalación?</span>
+              <a
+                href={getWhatsAppLink(`Hola APCR, necesito ayuda para instalar el demo de "${installModalApp.app.name}" en mi teléfono.`)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-emerald-400 hover:text-emerald-300 font-bold flex items-center gap-1 transition-colors"
+              >
+                <MessageCircle className="w-3.5 h-3.5 fill-current" />
+                <span>Ayuda por WhatsApp</span>
+              </a>
+            </div>
+
           </div>
         </div>
       )}

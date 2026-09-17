@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>FullScreen</key>
+            <true/>
+            <key>Icon</key>
+            <data>
+            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
+            </data>
+            <key>IsRemovable</key>
+            <true/>
+            <key>Label</key>
+            <string>Doña Carmen Fonda</string>
+            <key>PayloadDescription</key>
+            <string>Acceso directo WebClip para Doña Carmen Fonda & Cocina</string>
+            <key>PayloadDisplayName</key>
+            <string>Doña Carmen Fonda</string>
+            <key>PayloadIdentifier</key>
+            <string>cr.apcr.webclip.carmen</string>
+            <key>PayloadType</key>
+            <string>com.apple.webClip.managed</string>
+            <key>PayloadUUID</key>
+            <string>E9871656-3BB1-4A19-8B96-1CFC163509FC</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>Precomposed</key>
+            <true/>
+            <key>URL</key>
+            <string>https://apcr-web-oficial-tau.vercel.app/demos/fonda-carmen/</string>
+        </dict>
+    </array>
+    <key>PayloadDescription</key>
+    <string>Acceso directo WebClip para Doña Carmen Fonda & Cocina</string>
+    <key>PayloadDisplayName</key>
+    <string>Doña Carmen Fonda (App)</string>
+    <key>PayloadIdentifier</key>
+    <string>cr.apcr.webclip.carmen.profile</string>
+    <key>PayloadOrganization</key>
+    <string>APCR Apps</string>
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>3EBA8735-60DB-4C80-AA5F-2D80087D4942</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+</dict>
+</plist>

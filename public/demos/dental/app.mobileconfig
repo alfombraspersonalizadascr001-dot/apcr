@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>FullScreen</key>
+            <true/>
+            <key>Icon</key>
+            <data>
+            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
+            </data>
+            <key>IsRemovable</key>
+            <true/>
+            <key>Label</key>
+            <string>Lumina Dental</string>
+            <key>PayloadDescription</key>
+            <string>Acceso directo WebClip para Lumina Odontología Especializada</string>
+            <key>PayloadDisplayName</key>
+            <string>Lumina Dental</string>
+            <key>PayloadIdentifier</key>
+            <string>cr.apcr.webclip.dental</string>
+            <key>PayloadType</key>
+            <string>com.apple.webClip.managed</string>
+            <key>PayloadUUID</key>
+            <string>676B10C1-0145-4905-B9CB-89BD3EF07F27</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>Precomposed</key>
+            <true/>
+            <key>URL</key>
+            <string>https://apcr-web-oficial-tau.vercel.app/demos/dental/</string>
+        </dict>
+    </array>
+    <key>PayloadDescription</key>
+    <string>Acceso directo WebClip para Lumina Odontología Especializada</string>
+    <key>PayloadDisplayName</key>
+    <string>Lumina Dental (App)</string>
+    <key>PayloadIdentifier</key>
+    <string>cr.apcr.webclip.dental.profile</string>
+    <key>PayloadOrganization</key>
+    <string>APCR Apps</string>
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>6E6C2A6E-C43F-4DD7-8165-3D1B93E0DFA0</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+</dict>
+</plist>
