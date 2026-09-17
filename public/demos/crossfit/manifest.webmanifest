@@ -1,23 +1,22 @@
 {
-  "id": "titan-crossfit-box-pwa",
-  "name": "TITAN CROSSFIT - Box & Atletas",
+  "name": "TITAN CROSSFIT - WODs & Atletas",
   "short_name": "Titan CrossFit",
-  "description": "App oficial de Titan CrossFit: Registro de WODs, PRs y reservas.",
-  "start_url": "/",
-  "scope": "/",
+  "description": "App oficial de Titan CrossFit: WOD del día, marcas personales (PRs), ranking de atletas y cronómetro de entrenamiento.",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#0A0A0A",
-  "theme_color": "#CCFF00",
+  "background_color": "#0b0c10",
+  "theme_color": "#ccff00",
   "icons": [
     {
-      "src": "/icon-192.png",
+      "src": "./icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/icon-512.png",
+      "src": "./icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
@@ -27,5 +26,6 @@
     "fitness",
     "lifestyle",
     "sports"
-  ]
+  ],
+  "id": "titan-crossfit-box-app"
 }

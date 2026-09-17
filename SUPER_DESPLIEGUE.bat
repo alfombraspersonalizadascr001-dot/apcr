@@ -11,6 +11,7 @@ echo 📦 Copiando archivos...
 xcopy /E /I /Y "app" "..\nomad_deploy_tmp\app" > nul
 xcopy /E /I /Y "lib" "..\nomad_deploy_tmp\lib" > nul
 xcopy /E /I /Y "public" "..\nomad_deploy_tmp\public" > nul
+xcopy /E /I /Y ".vercel" "..\nomad_deploy_tmp\.vercel" > nul
 copy "package.json" "..\nomad_deploy_tmp\" > nul
 copy "package-lock.json" "..\nomad_deploy_tmp\" > nul
 copy "next.config.ts" "..\nomad_deploy_tmp\" > nul
@@ -21,10 +22,9 @@ copy "eslint.config.mjs" "..\nomad_deploy_tmp\" > nul
 :: 3. Ir a la carpeta y desplegar
 cd /d "..\nomad_deploy_tmp"
 echo.
-echo 🚀 LANZANDO VERCEL...
-echo (Si te pregunta algo, selecciona tu cuenta personal jrfallas-6570)
+echo 🚀 LANZANDO VERCEL A PRODUCCION (apcr.online)...
 echo.
-call npx vercel --prod
+call npx vercel --prod --yes
 
 echo.
 echo ✅ Proceso terminado.

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>FullScreen</key>
+            <true/>
+            <key>Icon</key>
+            <data>
+            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
+            </data>
+            <key>IsRemovable</key>
+            <true/>
+            <key>Label</key>
+            <string>Aurea Clinic</string>
+            <key>PayloadDescription</key>
+            <string>Acceso directo WebClip para Aurea Cirugía Plástica & Estética</string>
+            <key>PayloadDisplayName</key>
+            <string>Aurea Clinic</string>
+            <key>PayloadIdentifier</key>
+            <string>cr.apcr.webclip.aurea</string>
+            <key>PayloadType</key>
+            <string>com.apple.webClip.managed</string>
+            <key>PayloadUUID</key>
+            <string>5D570846-EBAD-4C6A-9B98-E7C4F01A30FE</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>Precomposed</key>
+            <true/>
+            <key>URL</key>
+            <string>https://apcr-web-oficial-tau.vercel.app/demos/plastic-surgery/</string>
+        </dict>
+    </array>
+    <key>PayloadDescription</key>
+    <string>Acceso directo WebClip para Aurea Cirugía Plástica & Estética</string>
+    <key>PayloadDisplayName</key>
+    <string>Aurea Clinic (App)</string>
+    <key>PayloadIdentifier</key>
+    <string>cr.apcr.webclip.aurea.profile</string>
+    <key>PayloadOrganization</key>
+    <string>APCR Apps</string>
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>9E5DD6BA-4542-43A9-9CCE-08CFA1CFE66A</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+</dict>
+</plist>

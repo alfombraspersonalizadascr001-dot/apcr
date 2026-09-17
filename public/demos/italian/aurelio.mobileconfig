@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>FullScreen</key>
+            <true/>
+            <key>Icon</key>
+            <data>
+            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
+            </data>
+            <key>IsRemovable</key>
+            <true/>
+            <key>Label</key>
+            <string>Aurelio Ristorante</string>
+            <key>PayloadDescription</key>
+            <string>Acceso directo WebClip para Aurelio Ristorante Italiano</string>
+            <key>PayloadDisplayName</key>
+            <string>Aurelio Ristorante</string>
+            <key>PayloadIdentifier</key>
+            <string>cr.apcr.webclip.aurelio</string>
+            <key>PayloadType</key>
+            <string>com.apple.webClip.managed</string>
+            <key>PayloadUUID</key>
+            <string>1F51C519-597E-4773-AA2E-1E09E42A48E0</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>Precomposed</key>
+            <true/>
+            <key>URL</key>
+            <string>https://apcr-web-oficial-tau.vercel.app/demos/italian/</string>
+        </dict>
+    </array>
+    <key>PayloadDescription</key>
+    <string>Acceso directo WebClip para Aurelio Ristorante Italiano</string>
+    <key>PayloadDisplayName</key>
+    <string>Aurelio Ristorante (App)</string>
+    <key>PayloadIdentifier</key>
+    <string>cr.apcr.webclip.aurelio.profile</string>
+    <key>PayloadOrganization</key>
+    <string>APCR Apps</string>
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>08DC4964-EDA9-440E-B1FF-4D74881A0824</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+</dict>
+</plist>

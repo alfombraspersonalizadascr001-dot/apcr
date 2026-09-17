@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>FullScreen</key>
+            <true/>
+            <key>Icon</key>
+            <data>
+            iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAN40lEQVR4nO2dC4xU1RnHv5ndnZ3dZRdYWFjZ5S1PURREUB5NKA31QTUIEakk2DaotVQrNi3WahNrbGg0akOh0BpjNbY1QNRACaANWrUgBfFBQUB25eXCKiz7mr37as6Zndk7szM7d2buzHn9fwnZcTN75/X/ne/7zp0ZPf7KqzsJAEPxir4DAIgEAgCjgQDAaCAAMBoIAIwGAgCjgQDAaCAAMBoIAIwGAgCjgQDAaCAAMBoIAIwGAgCjgQDAaCAAMBoIAIwGAgCjgQDAaCAAMBoIAIwGAgCjyRV9B3SnY8PLaR/Du+IuV+4L6IkH3wskT9CTBWKkDwRQKPCJgBDJAwEyHHj/27soXQJz56X0dxAiMRDApdC7EfRMigEZYgMBUgy+08Bbf3uR0sW3ZLlrQkCESCCAS6F3I+huigEZnGG8AImCHy/0IgKfqhCJZPAavM1qrAC9BV+l0Lspg9dAEYwTINngqxT6ZGSACAYKEC/8ugY/HRG8hlQDIwRwGnwdQ+9UhoChImgvQKzwmxz8VETwaiyBtgI4WfVNDn5vIgQMqgZaCoBVPzV8BlYD7QRIFH6s+ulXA69GEmgjAILvPj4DRNDiE2EIf2awbDNSrK1iGd8SbpwACH9msTSXQOkWKPrJR68vriXyKtoOKVsBEH65qkGHopVASQEQfnFYmkmgnAAIv3gsjSRQagaIF37s7YufCwKKzgTKVACEX06srmqgaiVQQgCEX24shSWQXgCEXw0sRSXwqjrwAnnxKySB1ALYwUku9c8ay4i0AsRbNbDjIzdWnM9YyFoFpBQAfb/aWArNA9IJgPDrgaWIBNIJYEeVPhKo+zpKJQD6fr2wFJgHpBEArY+eWJK3QtIIYAfv8TFDAhmQQgBZVgNg3usuXAC0PmZgSdoKCRfAjowlEuj9OgsVALs+ZmFJuCskTQXA4JtZmk8eIBmwJBuIhQkguvczKfiyhF/GPEhRAbD6ZwYW/HtrLH65YOg1JAuWRFVAiABY/bOz6ofCrwodAqqA8AqA1d9dQsGXPfyWJFVAuADAPVRc9UXjFVnmRNtvQsuzfrBPqv4/FvYcZLsNkqIC4FNe+rc8sr7uWRUAw697qDroypYTYRUAw6+Zq75sw3CukFsFKRE6oeU0+Cr0/6LJWgVA+5MeOq36MuVFSAuE9sc5Ovf6MrRBaIEkRvfgy4AU26DA/fCj/5dIgFgnv2TYA5YRE1oep21QNuYAtEASYWLwRQMBFNzeBO4BATRc9dH/SzQDoP+Pjam9vmxzACqAABB8eYAAWQS9vnxAAM1WffT/yYETYVkALY+8oAJkELQ8hlcAk3eATHv3pqo7QagAGq366P+TBwK4CHp99YAALoBeX10gQJpg1VcbCKDJqo/+PzUgQAZWfRbGbMoRuj2QPBAgSXr7BjY72Trry8A3P6QOBEix5YkOvD2Emfw+fvvtIvjpAwGSWPVZ+BKtupl6f38IhN5dIEAv2FdyEUMmWpzMAwEShD+Z0Lu1+iP42QMCxEFUq4HtzOyCt0O7hBurP8KffSCAJCD8YoAALoBvcVMXCCAYrPwaC+BdcVf4cmDuPP7Tt2Q56QTeDOcuoXyE8hKdI7dBBRAIVn/xQABBqz/CLwcQQAAIvzxAgCyv/gi/XOBMcJbA2xvkxOOvvLoz0zei29ejOF398S5OuXeAGKgALtLbZwSAnECANFd/rPJqAwFSAKHXh6zMALrMAal8RgDI2/8zUAGSAMHXD5wHAEYjRABd3xgH3Gt/tBMgG/0c0AdvlvKCFggYjTAB0AYB0e1P1gVAGwRky4kULRCGYTPxSbAJknUBYn1MEphNIMsnv6SrAACIQrgAGIbNxCd4+BUqAIZhIEsuhFcABqqAWfgkWf2FCoAqAGTIgxQVgIEqYAY+iVZ/4QLEs16G/WHgPvFeV5HdgDQVQKZVAZjzOgsXINp+tEJmtT5ewe8SFi6ADE8CMPd1l0KAaFAF9MIn2eArpQBohfTEJ2nrI50ADOwK6YVPwl0fqQWIRsaSCfR6HaUTAK2QHvgkb32kFYABCdTGp0j4s/rNcG59m1y8b5Tb8egJGl/RQg++eBlt3tM3/PvC/A46sOYYFfg66FuPj6IT54JfYDt3UgO9eP8pfnnxM8Noz9HCHsccUNxOD91ynuZOaqSykja60JhDH1f76fltA+lgtb/H9Xs7Zq63k75YeyT83/b78uDNtfTQLbX88rYDxXTvhgp++ct1h/nPMT8dRy2tHn45P6+Tjj4fPM6w+8bzn4ef/Zw/zh+uq6SdH/cJ38bep47x+z3y/uD1Tqw9TDm2JS/Q6qHjNfm0cWcpbd5bEvFYxg1poZ/dXEvTxzRR38IOqq3Pod2Hiui5bQPp1Nd55KTvF/lBF6UrQCzsT2as4WpL1wt4+/RLEb+fP7mBh/+jKn84cIw7Z9WFL39/9sUexxs6sJV2PnqCls25SBWlreTL7aTBfdvoO1c10Gurqumakc09/ibRMe3MntAYvjxzXBO5wWOLavj9dIo/r5OuqAzQs3ef4Y8zxBVDA/TGL6rppin1fBHIzemk8n5tdMcNdfTPR6r4QpNM+GVGagHitUKxeP3DEursJJo5vpEG9W0L//7WaUEhtuztrgoDS9ro21c20IETBXw1u+maeirt0x5xvN8vO8uvx8S5bc1wGv/gWLp1zXB+fRYctmrbcXJMxjcNOdTW4aHZE4KhZ3JOGdlM5y+l/y2Vw8taacW8bxJej1UUVhWuW305vfxOP/67n3/vPH9cHg/RH35wht+vDz4vpBufHEHjHhhLC343gj+2voXt/LnpDRVaHyUESGYeOHMhj/YcKySvh+i2rtD3L2qnORMaeeDe2Ndd4hfPqOMtyRv7iunN/5bwVXPRjO7Vm634N4xt4m3Hj9ZX0v4TBdTU4uUB+NWr5fT2p33o6TfLIm4/0TFDNFte+qTaTzeMbeTtyPQxzZSX20nvH+nZgiXDpeYcOno2n37y3a/5ap2I9g6iry7m0q//Xs6F7VfUzqvaVcMCdHm5RQ0BL92zoYI+O+Xn95m1fOy/W9s8NHl4gMumat+vlADJSLBlTzDkC6cHg3fz1Hpevt85VERf1+eEr8dKOasWW/eX8MAyls7qbgFGDw5+///xGh+dq4tcmf/1WREtX1vJZwE7iY5ph62sxQUdNHl4M80c1xj+XTqwQD/+j0F8Fnhk4bmk/u7ImXx+eUhpKw0vCz72Q6f8dLGx+zljMGGqzgfbyFGDLOXDr4wATiXYur+YrDYPTaxs4UNcqBKE5gPGjDFNNGqwRfuOF/AX9LOTfjr+lY//7vqxkb24vZ+eP7meD6X2f0X5HUkf0x72WeObaNaEJqpryuGBi6aj6+aD42/kZSZbNP8+XETbPyrmj/va0T1nlER4PWxYT3Adb/CGPZ5O5cOvlACJJGD/WBvw1ifBXRDWCkwb3USNLV7acbB7Z2RJ16o87fLmcJBHl1sRg+vRr/J5wEaUtfJhOBFOjmnnw+MF1NbuoQXXXqKJFQH6z9HCcNjtsNaDUVLYPUv0KQhebmmza9HNE5sG8dbtiTtqeKCdMLrrvp7+Jo+qzgd3eCZWBmhA1AxTOYBViODzcWraEuXDr5wAiQZj9oKEVns2/LKBbvuB4nCQWNvBhtN43Hh1PX/Rz17IpfeOFPH2acM9p3mwdx/qQ5MfHkNLnxsa8TdOj2mHzROsp2ZVit3HeP1/aLtx1YJaPs/08XfQPV1DLgtrLE7W5tGfdpXynRz7ZkAs+ha20wM31dKIMotv8e7/ooAOVhfQl7V5/LY23nuKJg0L8IGYzQcbVpzmc86n9RVU1TxQ+fAr+z/IYE+y/RwBexFC5wnenfBjqmt6jL+4DPv+9sLr6vhOx95jhbTo6WERx9y6uoquHBagxdfX0fqdpfTLV8pp88PVfJtw06rqHveBtVtMrGVzLjg65p/f6t+jDZo6qjl8Odb25avv9aPfLK6hO2de5P/svPZB965WNGu3D6BFMy7RkP6xq1foPIKdNa+X8fMCjFUvXUZ/XXmSt1HbVldFXK++zU+rP79di/ArWQESVYLWzhzaXjeVX2YD7PtHisLXWTIzOBy/tDu49WfnL2+V8p9LZ1/kqzJbBec/OZI27irlgx9rK9gWJtsBuvuPlXTfxgretjg9ZkQjT92rPjtmaAiN5oW3+9Mjr5bT4dP5PJxsB4YN5r/dNIjW7RgQ97lhYj65OXKXKhaBVg/f5l35whB65d3u+89O4N3y1Ai+c1Z7KZfvorHnckvNFLp1/0r6X8MQLcIv/ZlgJ9grgdOzxiA5fAlOcKkafqUrQG9PfqKzxsA5Po3Dr4UADEiQGXyah1+LFigatETp4zMg+NoK4EQCBmaDnkS3i7qHX1sB4knAwIBMKb+T06tZ+LUWIASqQe/4DFz1jRLAaTUwrS1yEnzdw2+MAMmKoKsMsbaEA4YG30gBepNAZxGSCb5J4TdSgFRFUE2GeCcAEfxIjBXAiQiqyZBK6E1b8aMxXgCnIvQmgyghenubh5MPpXsNDn4ICJABGdwWw+n7mRD65IEAaYqQrBBuksxXj2C1jw0EyIAMbouR6nfsIPSJgQBZFiKTIPDJAwEUFgKBTx8IoIAYCHrmgADAaLT4RBgAqQIBgNFAAGA0EAAYDQQARgMBgNFAAGA0EAAYDQQARgMBgNFAAGA0EAAYDQQARgMBgNFAAGA0EAAYDQQARgMBgNFAAGA0EAAYDQQAZDL/B/doGqrV0YNDAAAAAElFTkSuQmCC
+            </data>
+            <key>IsRemovable</key>
+            <true/>
+            <key>Label</key>
+            <string>Vagamundo Travel</string>
+            <key>PayloadDescription</key>
+            <string>Acceso directo WebClip para Vagamundo Viajes VIP</string>
+            <key>PayloadDisplayName</key>
+            <string>Vagamundo Travel</string>
+            <key>PayloadIdentifier</key>
+            <string>cr.apcr.webclip.travel</string>
+            <key>PayloadType</key>
+            <string>com.apple.webClip.managed</string>
+            <key>PayloadUUID</key>
+            <string>938E3FE0-3458-4737-8845-FF370128CFE9</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>Precomposed</key>
+            <true/>
+            <key>URL</key>
+            <string>https://apcr-web-oficial-tau.vercel.app/demos/travel-app/</string>
+        </dict>
+    </array>
+    <key>PayloadDescription</key>
+    <string>Acceso directo WebClip para Vagamundo Viajes VIP</string>
+    <key>PayloadDisplayName</key>
+    <string>Vagamundo Travel (App)</string>
+    <key>PayloadIdentifier</key>
+    <string>cr.apcr.webclip.travel.profile</string>
+    <key>PayloadOrganization</key>
+    <string>APCR Apps</string>
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>7C9A4020-5F7A-4F4E-B16F-6E62AF96F66F</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+</dict>
+</plist>

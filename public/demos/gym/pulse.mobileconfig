@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>FullScreen</key>
+            <true/>
+            <key>Icon</key>
+            <data>
+            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
+            </data>
+            <key>IsRemovable</key>
+            <true/>
+            <key>Label</key>
+            <string>Pulse Fitness</string>
+            <key>PayloadDescription</key>
+            <string>Acceso directo WebClip para Pulse Commercial Gym</string>
+            <key>PayloadDisplayName</key>
+            <string>Pulse Fitness</string>
+            <key>PayloadIdentifier</key>
+            <string>cr.apcr.webclip.pulse</string>
+            <key>PayloadType</key>
+            <string>com.apple.webClip.managed</string>
+            <key>PayloadUUID</key>
+            <string>81973E95-C26B-4031-A3DC-DDA9003392DD</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>Precomposed</key>
+            <true/>
+            <key>URL</key>
+            <string>https://apcr-web-oficial-tau.vercel.app/demos/gym/</string>
+        </dict>
+    </array>
+    <key>PayloadDescription</key>
+    <string>Acceso directo WebClip para Pulse Commercial Gym</string>
+    <key>PayloadDisplayName</key>
+    <string>Pulse Fitness (App)</string>
+    <key>PayloadIdentifier</key>
+    <string>cr.apcr.webclip.pulse.profile</string>
+    <key>PayloadOrganization</key>
+    <string>APCR Apps</string>
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>E951942B-3ECA-4495-9BC1-A1A0EF3814CB</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+</dict>
+</plist>

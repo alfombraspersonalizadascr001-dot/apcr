@@ -12,6 +12,23 @@ const nextConfig: NextConfig = {
       { source: '/proformas/:path*', destination: '/crm/proformas/:path*', permanent: false },
     ];
   },
+  async headers() {
+    return [
+      {
+        source: '/demos/:path*.mobileconfig',
+        headers: [
+          {
+            key: 'Content-Type',
+            value: 'application/x-apple-aspen-config',
+          },
+          {
+            key: 'Content-Disposition',
+            value: 'attachment',
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;
