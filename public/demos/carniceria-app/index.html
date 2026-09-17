@@ -739,5 +739,41 @@
       updateCartTotals();
     });
   </script>
+
+<!-- SMART IOS SAFARI PWA INSTALL GUIDE (OFFICIAL APPLE METHOD) -->
+<script>
+(function() {
+  var isIos = /iPhone|iPad|iPod/.test(navigator.userAgent);
+  var isStandalone = window.navigator.standalone === true;
+  var isTopWindow = window.self === window.top;
+  
+  if (isIos && !isStandalone && isTopWindow) {
+    window.addEventListener('DOMContentLoaded', function() {
+      setTimeout(function() {
+        if (document.getElementById('ios-pwa-bar')) return;
+        var bar = document.createElement('div');
+        bar.id = 'ios-pwa-bar';
+        bar.style.cssText = 'position:fixed; bottom:14px; left:50%; transform:translateX(-50%); width:calc(100% - 28px); max-width:380px; background:rgba(15,23,42,0.96); backdrop-filter:blur(16px); border:1px solid rgba(59,130,246,0.45); border-radius:18px; padding:12px 14px; z-index:999999; box-shadow:0 12px 32px rgba(0,0,0,0.6); color:#fff; font-family:-apple-system,BlinkMacSystemFont,sans-serif; text-align:left;';
+        bar.innerHTML = '<style>@keyframes bounceDown{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}</style>' +
+          '<div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">' +
+            '<div style="display:flex; align-items:center; gap:9px;">' +
+              '<div style="width:34px; height:34px; border-radius:10px; background:#1e293b; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0;">📲</div>' +
+              '<div>' +
+                '<div style="font-weight:700; font-size:13px; color:#fff;">¿Instalar App en tu iPhone?</div>' +
+                '<div style="font-size:11px; color:#94a3b8; margin-top:2px;">' +
+                  'Toca <strong style="color:#60a5fa;">Compartir ⎋</strong> abajo y luego <strong style="color:#fff;">«Agregar a Inicio ➕»</strong>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+            '<button onclick="document.getElementById(\'ios-pwa-bar\').remove()" style="background:rgba(255,255,255,0.12); border:none; color:#cbd5e1; width:26px; height:26px; border-radius:50%; font-size:13px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0;">✕</button>' +
+          '</div>' +
+          '<div style="text-align:center; font-size:15px; margin-top:3px; color:#60a5fa; animation:bounceDown 1.5s infinite;">↓</div>';
+        document.body.appendChild(bar);
+      }, 1200);
+    });
+  }
+})();
+</script>
+
 </body>
 </html>

@@ -45,7 +45,9 @@ import {
   Beef,
   Apple,
   Download,
-  ExternalLink
+  ExternalLink,
+  Share,
+  PlusSquare
 } from 'lucide-react';
 import { airlockAudio } from '../utils/airlockSound';
 
@@ -1707,46 +1709,106 @@ export const SoftwarePage: React.FC<SoftwarePageProps> = ({
 
             {/* Platform-Specific Content */}
             {installModalApp.platform === 'ios' ? (
-              <div className="space-y-4">
-                {/* QR Code & Direct Download Box */}
-                <div className="bg-slate-950/70 border border-slate-800 rounded-2xl p-4 flex flex-col items-center text-center">
-                  <div className="bg-white p-2.5 rounded-2xl shadow-md mb-2.5">
-                    <img 
-                      src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(`https://apcr-web-oficial-tau.vercel.app/demos/${installModalApp.app.slug}/app.mobileconfig`)}`}
-                      alt="Código QR para instalar en iPhone"
-                      className="w-32 h-32 sm:w-36 sm:h-36 rounded-lg"
-                    />
+              <div className="space-y-3.5">
+                {/* 100% Safe Apple Guarantee Badge */}
+                <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-2xl p-3 flex items-start gap-2.5 text-xs text-emerald-300">
+                  <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
+                  <div className="leading-snug">
+                    <span className="font-extrabold text-white block">Instalación Oficial de Apple (100% Segura)</span>
+                    <span className="text-[11px] text-slate-300">Sin descargas sospechosas, sin perfiles en Ajustes y sin pedir tu clave secreta de iPhone.</span>
                   </div>
-                  <div className="text-xs font-semibold text-slate-200">
-                    Apunta con la cámara de tu iPhone
-                  </div>
-                  <p className="text-[11px] text-slate-400 mt-0.5">
-                    O si ya estás en tu iPhone, toca el botón azul:
-                  </p>
                 </div>
 
-                {/* Direct Download Button */}
+                {/* Primary Button to open in Safari */}
                 <a
-                  href={`/demos/${installModalApp.app.slug}/app.mobileconfig`}
-                  download={`${installModalApp.app.slug}.mobileconfig`}
+                  href={`/demos/${installModalApp.app.slug}/index.html`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-extrabold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25 transition-all active:scale-98 cursor-pointer"
                 >
-                  <Download className="w-4 h-4" />
-                  <span>Descargar Instalador iPhone (.mobileconfig)</span>
+                  <ExternalLink className="w-4 h-4" />
+                  <span>Abrir Demo en Safari (iPhone)</span>
                 </a>
 
-                {/* 3 Simple Steps Guide for Apple (Zero Confusion) */}
-                <div className="bg-blue-500/10 border border-blue-500/20 rounded-2xl p-3.5 space-y-2 text-xs">
-                  <div className="font-extrabold text-blue-300 flex items-center gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5 text-blue-400 shrink-0" />
-                    <span>Pasos sencillos para instalar en tu iPhone:</span>
+                {/* QR Code for scanning with iPhone */}
+                <div className="bg-slate-950/70 border border-slate-800 rounded-2xl p-3 flex flex-col items-center text-center">
+                  <div className="bg-white p-2 rounded-xl shadow-md mb-1.5">
+                    <img 
+                      src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(`https://apcr-web-oficial-tau.vercel.app/demos/${installModalApp.app.slug}/index.html`)}`}
+                      alt="Código QR para abrir en iPhone"
+                      className="w-24 h-24 sm:w-28 sm:h-28 rounded-lg"
+                    />
                   </div>
-                  <ol className="space-y-1.5 text-slate-300 pl-4 list-decimal text-[11px] leading-relaxed">
-                    <li>Al tocar descargar, Safari te preguntará <em>«¿Deseas permitir la descarga de este perfil?»</em> → Toca <strong>Permitir</strong>.</li>
-                    <li>Abre los <strong>Ajustes</strong> de tu iPhone (arriba verás el aviso <strong>«Perfil descargado»</strong>).</li>
-                    <li>Toca <strong>Instalar</strong> (arriba a la derecha). ¡Y listo! La app aparecerá en tu pantalla de inicio con su icono y pantalla completa.</li>
-                  </ol>
+                  <div className="text-[11px] font-semibold text-slate-200">
+                    Apunta con la cámara de tu iPhone para abrir en Safari
+                  </div>
                 </div>
+
+                {/* 3 Simple Steps Visual Guide for Apple Safari */}
+                <div className="bg-slate-950/90 border border-slate-800 rounded-2xl p-3 space-y-2 text-xs">
+                  <div className="font-extrabold text-blue-300 flex items-center gap-1.5 text-[11px] sm:text-xs">
+                    <Sparkles className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+                    <span>Pasos sencillos para tenerla en tu pantalla de inicio:</span>
+                  </div>
+
+                  <div className="flex items-start gap-2.5 bg-slate-900/90 p-2 rounded-xl border border-slate-800">
+                    <div className="w-4 h-4 rounded-full bg-blue-600 text-white font-extrabold flex items-center justify-center shrink-0 text-[10px] mt-0.5">
+                      1
+                    </div>
+                    <div className="space-y-0.5">
+                      <div className="font-bold text-white text-[11px]">Abre el demo en Safari</div>
+                      <div className="text-slate-400 text-[10px]">Toca el botón azul de arriba o escanea el QR desde tu iPhone.</div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-2.5 bg-slate-900/90 p-2 rounded-xl border border-slate-800">
+                    <div className="w-4 h-4 rounded-full bg-blue-600 text-white font-extrabold flex items-center justify-center shrink-0 text-[10px] mt-0.5">
+                      2
+                    </div>
+                    <div className="space-y-1">
+                      <div className="font-bold text-white text-[11px] flex items-center gap-1 flex-wrap">
+                        <span>Toca el botón</span>
+                        <span className="inline-flex items-center gap-1 bg-blue-500/20 text-blue-300 px-1.5 py-0.5 rounded border border-blue-500/40 text-[10px] font-bold">
+                          <Share className="w-3 h-3" /> Compartir
+                        </span>
+                      </div>
+                      <div className="text-slate-400 text-[10px]">Está abajo en el centro de tu pantalla (el cuadrito azul con la flecha hacia arriba).</div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-2.5 bg-slate-900/90 p-2 rounded-xl border border-slate-800">
+                    <div className="w-4 h-4 rounded-full bg-blue-600 text-white font-extrabold flex items-center justify-center shrink-0 text-[10px] mt-0.5">
+                      3
+                    </div>
+                    <div className="space-y-1">
+                      <div className="font-bold text-white text-[11px] flex items-center gap-1 flex-wrap">
+                        <span>Baja un poco y toca</span>
+                        <span className="inline-flex items-center gap-1 bg-slate-800 text-white px-1.5 py-0.5 rounded border border-slate-700 text-[10px] font-bold">
+                          <PlusSquare className="w-3 h-3 text-blue-400" /> Agregar a inicio
+                        </span>
+                      </div>
+                      <div className="text-slate-400 text-[10px]">Luego toca <strong>«Agregar»</strong> arriba a la derecha. ¡Listo! Queda en tu pantalla sin virus ni alertas.</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Optional Technical Profile for MDM/Admins */}
+                <details className="text-[10px] text-slate-500 border-t border-slate-800/80 pt-1.5 cursor-pointer">
+                  <summary className="hover:text-slate-400 transition-colors">
+                    ¿Eres administrador técnico y deseas el archivo .mobileconfig?
+                  </summary>
+                  <div className="mt-1.5 p-2 rounded-xl bg-slate-950 border border-slate-800 space-y-1 text-slate-400 text-[10px]">
+                    <p>Este perfil es para administración de dispositivos (MDM). Requiere ingresar tu PIN de iPhone en Ajustes:</p>
+                    <a
+                      href={`/demos/${installModalApp.app.slug}/app.mobileconfig`}
+                      download={`${installModalApp.app.slug}.mobileconfig`}
+                      className="inline-flex items-center gap-1 text-blue-400 hover:text-blue-300 font-bold underline mt-0.5"
+                    >
+                      <Download className="w-3 h-3" />
+                      <span>Descargar {installModalApp.app.slug}.mobileconfig</span>
+                    </a>
+                  </div>
+                </details>
               </div>
             ) : (
               <div className="space-y-4">
