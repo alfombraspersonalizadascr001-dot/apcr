@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <!-- 2. COMPORTAMIENTO VISUAL DE PANTALLA COMPLETA (iOS PWA CORE) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="APCR Digital" />
+  <title>Componente PWA Inteligente para iPhone — APCR Suite</title>
+
+  <style>
+    /* ==========================================================================
+       ESTILOS BASE DE PANTALLA COMPLETA Y SAFE AREA INSETS (iOS CORE)
+       ========================================================================== */
+    :root {
+      --apcr-font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+      --apcr-blue: #0071e3;
+      --apcr-blue-dark: #0058b0;
+      --apcr-emerald: #059669;
+      --apcr-bg-dark: #090d16;
+      --apcr-card-bg: #ffffff;
+      --apcr-text-main: #1d1d1f;
+      --apcr-text-muted: #6e6e73;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--apcr-font);
+      background-color: var(--apcr-bg-dark);
+      color: #f1f5f9;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px;
+      /* PROTECCIÓN ESTRICTA CONTRA NOTCH, ISLA DINÁMICA Y HOME BAR */
+      padding-top: max(24px, env(safe-area-inset-top));
+      padding-bottom: max(24px, env(safe-area-inset-bottom));
+      padding-left: max(20px, env(safe-area-inset-left));
+      padding-right: max(20px, env(safe-area-inset-right));
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Contenedor de demostración del fondo */
+    .demo-page-content {
+      max-width: 540px;
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 28px;
+      padding: 36px 28px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    .demo-logo-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 113, 227, 0.15);
+      border: 1px solid rgba(0, 113, 227, 0.35);
+      color: #60a5fa;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .demo-title {
+      font-size: 28px;
+      font-weight: 800;
+      line-height: 1.25;
+      color: #ffffff;
+      margin-bottom: 12px;
+    }
+
+    .demo-subtitle {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #94a3b8;
+      margin-bottom: 24px;
+    }
+
+    .demo-badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .demo-badge {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 8px 14px;
+      border-radius: 12px;
+      font-size: 13px;
+      color: #cbd5e1;
+      font-weight: 500;
+    }
+
+    .demo-badge strong {
+      color: #38bdf8;
+    }
+
+    /* ==========================================================================
+       3. DISEÑO DEL BANNER FLOTANTE INTERACTIVO (APCR DIGITAL SUITE)
+       ========================================================================== */
+    #apcr-ios-banner {
+      position: fixed;
+      bottom: max(16px, env(safe-area-inset-bottom));
+      left: 50%;
+      transform: translateX(-50%) translateY(130%);
+      width: calc(100% - 32px);
+      max-width: 420px;
+      background: var(--apcr-card-bg);
+      color: var(--apcr-text-main);
+      border-radius: 24px;
+      padding: 20px 18px 18px 20px;
+      box-shadow: 
+        0 20px 45px -10px rgba(0, 0, 0, 0.28),
+        0 0 0 1px rgba(0, 0, 0, 0.06),
+        0 4px 12px rgba(0, 0, 0, 0.08);
+      z-index: 999990;
+      opacity: 0;
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+      text-align: left;
+    }
+
+    #apcr-ios-banner.apcr-visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    .apcr-banner-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #f2f2f7;
+      border: none;
+      color: #8e8e93;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background-color 0.2s, color 0.2s;
+    }
+
+    .apcr-banner-close:hover {
+      background: #e5e5ea;
+      color: #1d1d1f;
+    }
+
+    .apcr-banner-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+      padding-right: 28px;
+    }
+
+    .apcr-shield-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #ecfdf5;
+      color: var(--apcr-emerald);
+      border: 1px solid #a7f3d0;
+      padding: 3px 9px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    .apcr-shield-icon {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+    }
+
+    .apcr-banner-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.2px;
+    }
+
+    .apcr-banner-desc {
+      font-size: 12.5px;
+      line-height: 1.45;
+      color: var(--apcr-text-muted);
+      margin-bottom: 14px;
+    }
+
+    .apcr-btn-install {
+      width: 100%;
+      background: #000000;
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 14px;
+      padding: 13px 16px;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.25);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s;
+    }
+
+    .apcr-btn-install:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.35);
+      background: linear-gradient(180deg, #334155 0%, #1e293b 100%);
+    }
+
+    .apcr-btn-install:active {
+      transform: scale(0.98);
+    }
+
+    .apcr-apple-logo {
+      width: 15px;
+      height: 15px;
+      fill: #ffffff;
+    }
+
+    /* ==========================================================================
+       4. POP-UP INSTRUCCIONAL (EL HACK DEL PROMPT DE SAFARI)
+       ========================================================================== */
+    .apcr-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(9, 13, 22, 0.72);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 999995;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 16px;
+      padding-bottom: max(16px, env(safe-area-inset-bottom));
+    }
+
+    .apcr-modal-overlay.apcr-modal-active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .apcr-popup-card {
+      background: #ffffff;
+      color: var(--apcr-text-main);
+      width: 100%;
+      max-width: 410px;
+      border-radius: 28px;
+      padding: 24px 20px 20px 20px;
+      box-shadow: 
+        0 25px 60px -15px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(0, 0, 0, 0.08);
+      position: relative;
+      transform: translateY(30px) scale(0.96);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      text-align: left;
+    }
+
+    .apcr-modal-overlay.apcr-modal-active .apcr-popup-card {
+      transform: translateY(0) scale(1);
+    }
+
+    .apcr-popup-pill-handle {
+      width: 38px;
+      height: 4px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      margin: 0 auto 16px auto;
+    }
+
+    .apcr-popup-badge-guarantee {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #166534;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+
+    .apcr-popup-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.3px;
+      margin-bottom: 4px;
+    }
+
+    .apcr-popup-sub {
+      font-size: 12.5px;
+      color: #64748b;
+      margin-bottom: 18px;
+      line-height: 1.4;
+    }
+
+    .apcr-steps-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .apcr-step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 12px 14px;
+      transition: border-color 0.2s;
+    }
+
+    .apcr-step-item:hover {
+      border-color: #cbd5e1;
+    }
+
+    .apcr-step-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--apcr-blue);
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .apcr-step-content {
+      flex: 1;
+      font-size: 13px;
+      line-height: 1.45;
+      color: #334155;
+    }
+
+    .apcr-step-content strong {
+      color: #0f172a;
+    }
+
+    .apcr-inline-share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1d4ed8;
+      padding: 2px 7px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 11.5px;
+      vertical-align: middle;
+      margin: 0 2px;
+    }
+
+    .apcr-inline-share-icon {
+      width: 13px;
+      height: 13px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .apcr-inline-add-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      color: #0f172a;
+      padding: 2px 7px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 11.5px;
+      vertical-align: middle;
+      margin: 0 2px;
+    }
+
+    .apcr-pointer-zone {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding-top: 4px;
+      padding-bottom: 2px;
+    }
+
+    .apcr-pointer-label {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--apcr-blue);
+      letter-spacing: 0.1px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: #eff6ff;
+      border: 1px solid #dbeafe;
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 8px;
+    }
+
+    .apcr-animated-arrow {
+      width: 28px;
+      height: 28px;
+      color: var(--apcr-blue);
+      animation: apcrBounceDown 1.4s ease-in-out infinite;
+    }
+
+    @keyframes apcrBounceDown {
+      0%, 100% {
+        transform: translateY(0);
+        opacity: 0.9;
+      }
+      50% {
+        transform: translateY(9px);
+        opacity: 1;
+      }
+    }
+
+    .apcr-popup-close-btn {
+      width: 100%;
+      background: #f1f5f9;
+      color: #475569;
+      border: none;
+      border-radius: 12px;
+      padding: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .apcr-popup-close-btn:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="demo-page-content">
+    <div class="demo-logo-pill">
+      <span>●</span>
+      <span>APCR Software Studio 2026</span>
+    </div>
+    <h1 class="demo-title">Componente PWA Nativo para iPhone</h1>
+    <p class="demo-subtitle">
+      Guía visual interactiva de instalación instantánea en Safari. Diseñado para erradicar el miedo al virus y lograr que los clientes de iOS añadan la app a su pantalla de inicio en 2 toques.
+    </p>
+
+    <div class="demo-badge-row">
+      <div class="demo-badge">Modo Debug: <strong id="debug-status-label">Verificando...</strong></div>
+      <div class="demo-badge">Safe Areas: <strong>Protegidas</strong></div>
+      <div class="demo-badge">Persistencia: <strong>48 Horas</strong></div>
+    </div>
+  </main>
+
+  <!-- BANNER FLOTANTE INTERACTIVO -->
+  <aside id="apcr-ios-banner" aria-label="Instalar aplicación en iPhone" role="dialog" aria-modal="false">
+    <button class="apcr-banner-close" id="apcr-btn-close-banner" aria-label="Cerrar aviso de instalación">✕</button>
+
+    <div class="apcr-banner-header">
+      <div class="apcr-shield-badge">
+        <svg class="apcr-shield-icon" viewBox="0 0 24 24">
+          <path d="M12 2L3 6v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V6l-9-4zm-2 16l-4-4 1.41-1.41L10 15.17l6.59-6.59L18 10l-8 8z"/>
+        </svg>
+        <span>Conexión Segura APCR</span>
+      </div>
+    </div>
+
+    <div class="apcr-banner-title">Acceso Directo Oficial</div>
+    <p class="apcr-banner-desc">
+      Esta aplicación web está verificada. No consume espacio en tu memoria ni requiere descargas externas de riesgo.
+    </p>
+
+    <button class="apcr-btn-install" id="apcr-btn-trigger-popup">
+      <svg class="apcr-apple-logo" viewBox="0 0 170 170">
+        <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.69-3.04-7.69-7.85-12-14.44-6.1-9.37-10.83-19.8-14.18-31.3-3.36-11.5-5.04-22.6-5.04-33.3 0-14.18 3.57-26.04 10.71-35.58 7.14-9.54 16.27-14.42 27.38-14.64 4.58 0 9.77 1.25 15.57 3.75 5.8 2.5 9.77 3.86 11.91 4.09 1.74-.23 5.86-1.65 12.35-4.26 6.5-2.61 12.08-3.8 16.76-3.58 12.52.65 22.37 5.12 29.56 13.4-10.99 6.64-16.38 15.69-16.16 27.14.22 9.04 3.74 16.71 10.57 23.01 6.83 6.3 14.86 9.87 24.1 10.72-2.18 6.74-4.89 13.37-8.15 19.88zM119.22 31.84c0-7.39 2.66-14.4 7.99-21.03 5.33-6.63 11.86-10.81 19.59-12.54.33 1.3.49 2.5.49 3.59 0 7.39-2.77 14.39-8.32 21-5.55 6.61-12.19 10.6-19.92 11.97-.22-1.09-.33-2.1-.33-3.03l.5-.06z"/>
+      </svg>
+      <span>Instalar en iPhone (Gratis)</span>
+    </button>
+  </aside>
+
+  <!-- POP-UP INSTRUCCIONAL (EL HACK DEL PROMPT DE SAFARI) -->
+  <div class="apcr-modal-overlay" id="apcr-instruction-modal" role="dialog" aria-modal="true" aria-labelledby="apcr-popup-title">
+    <div class="apcr-popup-card">
+      <div class="apcr-popup-pill-handle"></div>
+
+      <div class="apcr-popup-badge-guarantee">
+        <span>✓</span>
+        <span>Método Oficial de Apple (Sin Riesgos)</span>
+      </div>
+
+      <h2 class="apcr-popup-title" id="apcr-popup-title">Añadir a la Pantalla de Inicio</h2>
+      <p class="apcr-popup-sub">
+        Sigue estos 2 pasos en Safari para instalar el acceso directo sin ingresar claves ni descargar archivos:
+      </p>
+
+      <div class="apcr-steps-list">
+        <!-- PASO 1 -->
+        <div class="apcr-step-item">
+          <div class="apcr-step-num">1</div>
+          <div class="apcr-step-content">
+            Presiona el botón de <strong>Compartir</strong>
+            <span class="apcr-inline-share-btn">
+              <svg class="apcr-inline-share-icon" viewBox="0 0 24 24">
+                <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+                <polyline points="16 6 12 2 8 6"></polyline>
+                <line x1="12" y1="2" x2="12" y2="15"></line>
+              </svg>
+              <span>Compartir</span>
+            </span>
+            en la barra inferior de Safari.
+          </div>
+        </div>
+
+        <!-- PASO 2 -->
+        <div class="apcr-step-item">
+          <div class="apcr-step-num">2</div>
+          <div class="apcr-step-content">
+            Desliza hacia abajo y selecciona
+            <span class="apcr-inline-add-btn">
+              <span style="font-size: 13px; font-weight: 800; color: #0071e3;">+</span>
+              <span>Añadir a pantalla de inicio</span>
+            </span>. Luego toca <strong>Añadir</strong> arriba a la derecha.
+          </div>
+        </div>
+      </div>
+
+      <!-- FLECHA ANIMADA HACIA LA BARRA DE SAFARI -->
+      <div class="apcr-pointer-zone">
+        <div class="apcr-pointer-label">
+          <span>El botón Compartir está aquí abajo</span>
+        </div>
+        <svg class="apcr-animated-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="4" x2="12" y2="19"></line>
+          <polyline points="19 12 12 19 5 12"></polyline>
+        </svg>
+      </div>
+
+      <button class="apcr-popup-close-btn" id="apcr-btn-close-modal">Entendido, cerrar guía</button>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT NATIVO: DETECCIÓN, PERSISTENCIA Y EVENTOS -->
+  <script>
+    (function() {
+      'use strict';
+
+      const STORAGE_KEY = 'apcr_ios_pwa_dismissed_at';
+      const DISMISS_DURATION_MS = 48 * 60 * 60 * 1000; // 48 Horas
+      const DELAY_SHOW_BANNER_MS = 900; // Delay elegante
+
+      const banner = document.getElementById('apcr-ios-banner');
+      const btnCloseBanner = document.getElementById('apcr-btn-close-banner');
+      const btnTriggerPopup = document.getElementById('apcr-btn-trigger-popup');
+      const modalOverlay = document.getElementById('apcr-instruction-modal');
+      const btnCloseModal = document.getElementById('apcr-btn-close-modal');
+      const debugLabel = document.getElementById('debug-status-label');
+
+      /* 1. SIMULACION Y DETECCION */
+      function checkIsIos() {
+        const userAgent = (window.navigator.userAgent || window.navigator.vendor || window.opera).toLowerCase();
+        const isStandardIos = /iphone|ipad|ipod/.test(userAgent);
+        const isIpadOs = userAgent.includes('macintosh') && (navigator.maxTouchPoints && navigator.maxTouchPoints > 1);
+        return isStandardIos || isIpadOs;
+      }
+
+      function checkIsStandalone() {
+        const isAppleStandalone = window.navigator.standalone === true;
+        const isW3cStandalone = window.matchMedia && window.matchMedia('(display-mode: standalone)').matches;
+        return isAppleStandalone || isW3cStandalone;
+      }
+
+      function checkIsDebugMode() {
+        try {
+          const urlParams = new URLSearchParams(window.location.search);
+          const hasDebugParam = urlParams.get('debug_ios') === 'true';
+          const hasGlobalFlag = window.DEBUG_IOS === true;
+          return hasDebugParam || hasGlobalFlag;
+        } catch (e) {
+          return false;
+        }
+      }
+
+      /* 5. PERSISTENCIA EN LOCALSTORAGE (48 HORAS) */
+      function isDismissedWithin48h() {
+        try {
+          const storedTime = localStorage.getItem(STORAGE_KEY);
+          if (!storedTime) return false;
+          const timePassed = Date.now() - parseInt(storedTime, 10);
+          return timePassed < DISMISS_DURATION_MS;
+        } catch (e) {
+          return false;
+        }
+      }
+
+      function recordDismissal() {
+        try {
+          localStorage.setItem(STORAGE_KEY, Date.now().toString());
+        } catch (e) {}
+      }
+
+      /* CONTROLADORES DE INTERFAZ */
+      function showBanner() {
+        if (!banner) return;
+        banner.style.display = 'block';
+        requestAnimationFrame(function() {
+          banner.classList.add('apcr-visible');
+        });
+      }
+
+      function hideBanner(saveToStorage) {
+        if (!banner) return;
+        banner.classList.remove('apcr-visible');
+        if (saveToStorage) {
+          recordDismissal();
+        }
+        setTimeout(function() {
+          banner.style.display = 'none';
+        }, 450);
+      }
+
+      function openInstructionsModal() {
+        if (!modalOverlay) return;
+        modalOverlay.classList.add('apcr-modal-active');
+      }
+
+      function closeInstructionsModal() {
+        if (!modalOverlay) return;
+        modalOverlay.classList.remove('apcr-modal-active');
+      }
+
+      /* EVENTOS */
+      if (btnCloseBanner) {
+        btnCloseBanner.addEventListener('click', function(e) {
+          e.stopPropagation();
+          hideBanner(true);
+        });
+      }
+
+      if (btnTriggerPopup) {
+        btnTriggerPopup.addEventListener('click', function(e) {
+          e.stopPropagation();
+          openInstructionsModal();
+        });
+      }
+
+      if (btnCloseModal) {
+        btnCloseModal.addEventListener('click', function() {
+          closeInstructionsModal();
+        });
+      }
+
+      if (modalOverlay) {
+        modalOverlay.addEventListener('click', function(e) {
+          if (e.target === modalOverlay) {
+            closeInstructionsModal();
+          }
+        });
+      }
+
+      // Siempre definimos los metodos publicos en window para facilitar pruebas
+      window.APCR_IOS_PWA = {
+        showBanner: showBanner,
+        hideBanner: hideBanner,
+        openModal: openInstructionsModal,
+        closeModal: closeInstructionsModal,
+        isIos: checkIsIos,
+        isStandalone: checkIsStandalone,
+        isDebug: checkIsDebugMode,
+        clearStorage: function() {
+          localStorage.removeItem(STORAGE_KEY);
+          console.log('[APCR PWA] Persistencia de 48h limpiada.');
+        }
+      };
+
+      /* INICIALIZACION AUTOMATICA */
+      const isIos = checkIsIos();
+      const isStandalone = checkIsStandalone();
+      const isDebug = checkIsDebugMode();
+      const isDismissed = isDismissedWithin48h();
+
+      if (debugLabel) {
+        if (isDebug) {
+          debugLabel.textContent = 'ACTIVO (?debug_ios=true)';
+          debugLabel.style.color = '#38bdf8';
+        } else if (isIos) {
+          debugLabel.textContent = 'iOS Real Detectado';
+          debugLabel.style.color = '#4ade80';
+        } else {
+          debugLabel.textContent = 'Inactivo (No es iOS)';
+          debugLabel.style.color = '#94a3b8';
+        }
+      }
+
+      // Regla 1: Si ya esta instalada en Home Screen, ocultar siempre
+      if (isStandalone && !isDebug) {
+        return;
+      }
+
+      // Regla 2: Si el usuario cerro el banner hace menos de 48h, no molestar
+      if (isDismissed && !isDebug) {
+        return;
+      }
+
+      // Regla 3: Si es iOS real O modo debug activo, mostrar banner con delay
+      if (isIos || isDebug) {
+        setTimeout(showBanner, DELAY_SHOW_BANNER_MS);
+      }
+
+    })();
+  </script>
+</body>
+</html>
