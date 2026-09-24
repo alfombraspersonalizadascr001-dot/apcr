@@ -48,8 +48,32 @@ export default function SimuladorPublicPage() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-border py-6 px-6 text-center text-xs text-muted-foreground font-mono">
-        © {new Date().getFullYear()} APCR® Alfombras Personalizadas CR. Todos los derechos reservados.
+      <footer className="border-t border-border py-6 px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground font-mono max-w-7xl mx-auto w-full">
+        <div>
+          © {new Date().getFullYear()} APCR® Alfombras Personalizadas CR.
+        </div>
+        <div className="flex flex-wrap items-center justify-center gap-4">
+          <Link href="/privacidad" className="hover:text-foreground transition-colors underline underline-offset-2">
+            Privacidad (Ley N° 8968)
+          </Link>
+          <span>•</span>
+          <Link href="/terminos" className="hover:text-foreground transition-colors underline underline-offset-2">
+            Términos del Servicio
+          </Link>
+          <span>•</span>
+          <Link href="/reembolsos" className="hover:text-foreground transition-colors underline underline-offset-2">
+            Garantías y Reembolsos
+          </Link>
+          <span>•</span>
+          <a
+            href="https://gazestudio.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-amber-500 hover:text-amber-400 font-bold transition-colors"
+          >
+            Gaze Studio ↗
+          </a>
+        </div>
       </footer>
     </div>
   );

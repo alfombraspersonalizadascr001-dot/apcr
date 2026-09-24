@@ -295,17 +295,41 @@ export const MinimalistPortal: React.FC<MinimalistPortalProps> = ({
       </main>
 
       {/* FOOTER */}
-      <footer className={`w-full max-w-7xl mx-auto px-6 sm:px-14 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 z-20 text-[11px] tracking-[0.18em] uppercase font-medium ${
+      <footer className={`w-full max-w-7xl mx-auto px-6 sm:px-14 py-6 flex flex-col md:flex-row items-center justify-between gap-4 z-20 text-[11px] tracking-[0.14em] uppercase font-medium ${
         isDark ? 'text-neutral-500' : 'text-neutral-500'
       }`}>
-        <span>© 2026 APCR COSTA RICA. TODOS LOS DERECHOS RESERVADOS.</span>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-center sm:text-left">
+          <span>© 2026 APCR COSTA RICA.</span>
+          <span className="hidden sm:inline">•</span>
+          <a
+            href="https://gazestudio.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`transition-colors font-semibold ${isDark ? 'text-amber-400 hover:text-white' : 'text-amber-600 hover:text-black'}`}
+          >
+            SOFTWARE: GAZE STUDIO ↗
+          </a>
+        </div>
+
+        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+          <Link href="/privacidad" className={`transition-colors ${isDark ? 'hover:text-white' : 'hover:text-black'}`}>
+            PRIVACIDAD
+          </Link>
+          <span>•</span>
+          <Link href="/terminos" className={`transition-colors ${isDark ? 'hover:text-white' : 'hover:text-black'}`}>
+            TÉRMINOS
+          </Link>
+          <span>•</span>
+          <Link href="/reembolsos" className={`transition-colors ${isDark ? 'hover:text-white' : 'hover:text-black'}`}>
+            GARANTÍA
+          </Link>
+          <span>•</span>
           <Link href="/simulador" className={`transition-colors ${isDark ? 'hover:text-white' : 'hover:text-black'}`}>
             SIMULADOR
           </Link>
           <span>•</span>
           <Link href="/portadas" className={`transition-colors font-bold ${isDark ? 'text-amber-400 hover:text-white' : 'text-amber-600 hover:text-black'}`}>
-            GALERÍA DE PORTADAS
+            PORTADAS
           </Link>
         </div>
       </footer>

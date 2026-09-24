@@ -104,8 +104,33 @@ export default function ContactPage() {
                 <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8 text-slate-600 text-sm">
 
                     <div className="text-center md:text-left space-y-3">
-                        <p>© 2026 Alfombras Personalizadas CR.</p>
-                        <p>San José, Costa Rica. Todos los derechos reservados.</p>
+                        <p>© 2026 Alfombras Personalizadas CR (APCR).</p>
+                        <p>San José, Costa Rica. Dualidad Físico & Virtual — Alfombras Personalizadas & Software Costa Rica.</p>
+                        
+                        {/* Enlaces Legales */}
+                        <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 text-xs text-slate-500 pt-1 font-medium">
+                            <Link href="/privacidad" className="hover:text-slate-900 underline underline-offset-2">
+                                Privacidad (Ley N° 8968)
+                            </Link>
+                            <span>•</span>
+                            <Link href="/terminos" className="hover:text-slate-900 underline underline-offset-2">
+                                Términos del Servicio
+                            </Link>
+                            <span>•</span>
+                            <Link href="/reembolsos" className="hover:text-slate-900 underline underline-offset-2">
+                                Garantías y Reembolsos
+                            </Link>
+                            <span>•</span>
+                            <a
+                                href="https://gazestudio.dev"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-amber-600 hover:text-amber-700 font-bold"
+                            >
+                                Software: Gaze Studio ↗
+                            </a>
+                        </div>
+
                         <div className="flex gap-3 justify-center md:justify-start mt-3">
                             <a href="https://www.instagram.com/alfombraspersonalizadas.cr/" target="_blank" rel="noopener noreferrer" className="p-3 bg-white rounded-lg border border-slate-200 hover:border-tropical-pink hover:bg-tropical-pink/10 transition-all group shadow-sm">
                                 <Instagram className="w-6 h-6 text-slate-600 group-hover:text-tropical-pink transition-colors" />

@@ -60,6 +60,7 @@ export function MatSimulator() {
 
   // Datos del cliente para el cajetín
   const [clientName, setClientName] = useState<string>('');
+  const [legalConsent, setLegalConsent] = useState<boolean>(false);
 
   // Pestañas de visualización
   const [activeTab, setActiveTab] = useState<'blueprint' | '3d' | 'xray' | 'ai'>('blueprint');
@@ -185,6 +186,10 @@ export function MatSimulator() {
 
   // Descargar Ficha Técnica con Cajetín
   const handleDownloadBlueprint = () => {
+    if (!legalConsent) {
+      alert("Debe marcar la casilla de aceptación de los Términos del Servicio y autorizar el tratamiento de datos conforme a la Política de Privacidad (Ley N° 8968 / PRODHAB) para descargar la Ficha Técnica.");
+      return;
+    }
     if (!canvasRef.current) return;
     const dataUrl = canvasRef.current.toDataURL('image/png', 1.0);
     const link = document.createElement('a');
@@ -754,8 +759,8 @@ export function MatSimulator() {
             </div>
           </div>
 
-          {/* 4. Datos del Cliente / Proyecto */}
-          <div className="space-y-2 pt-4 border-t border-border">
+          {/* 4. Datos del Cliente / Proyecto & Consentimiento Legal */}
+          <div className="space-y-3 pt-4 border-t border-border">
             <label className="text-xs font-bold uppercase tracking-wider text-foreground block">
               4. Nombre del Cliente / Proyecto (Para el cajetín)
             </label>
@@ -766,22 +771,46 @@ export function MatSimulator() {
               onChange={(e) => setClientName(e.target.value)}
               className="w-full px-3 py-2 rounded-xl border border-input bg-background text-foreground font-sans text-xs focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
+
+            {/* Checkbox Obligatorio Ley N° 8968 / PRODHAB */}
+            <div className="p-2.5 rounded-xl bg-secondary/50 border border-border">
+              <label className="flex items-start gap-2.5 cursor-pointer text-left select-none group">
+                <input
+                  type="checkbox"
+                  required
+                  checked={legalConsent}
+                  onChange={(e) => setLegalConsent(e.target.checked)}
+                  className="mt-0.5 w-4 h-4 rounded border-border text-blue-600 focus:ring-blue-500 cursor-pointer accent-blue-600 shrink-0"
+                />
+                <span className="text-[11px] text-muted-foreground leading-snug group-hover:text-foreground transition-colors">
+                  Acepto los <a href="/terminos" target="_blank" className="text-blue-500 underline underline-offset-2 hover:text-blue-600 font-semibold">Términos del Servicio</a> y autorizo el tratamiento de mis datos de contacto conforme a la <a href="/privacidad" target="_blank" className="text-blue-500 underline underline-offset-2 hover:text-blue-600 font-semibold">Política de Privacidad</a> (Ley N° 8968 / PRODHAB).
+                </span>
+              </label>
+            </div>
           </div>
 
           {/* 5. Botones de Acción */}
           <div className="space-y-2 pt-4 border-t border-border">
             <button
               onClick={handleDownloadBlueprint}
-              disabled={!dimensionValidation.valid}
-              className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-md shadow-blue-600/20 active:scale-95 disabled:opacity-50"
+              disabled={!dimensionValidation.valid || !legalConsent}
+              className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-md shadow-blue-600/20 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed"
             >
               <Download className="w-4 h-4" />
               Descargar Ficha Técnica con Cajetín
             </button>
 
             <a
-              href={`/crm/cotizador?width=${widthCm}&height=${heightCm}&color=${encodeURIComponent(selectedColor.name)}`}
-              className="w-full py-2.5 rounded-xl border border-border bg-secondary hover:bg-secondary/80 text-secondary-foreground font-semibold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-colors text-center"
+              href={legalConsent ? `/crm/cotizador?width=${widthCm}&height=${heightCm}&color=${encodeURIComponent(selectedColor.name)}` : '#'}
+              onClick={(e) => {
+                if (!legalConsent) {
+                  e.preventDefault();
+                  alert("Debe marcar la casilla de aceptación de los Términos del Servicio y autorizar el tratamiento de datos conforme a la Política de Privacidad (Ley N° 8968 / PRODHAB).");
+                }
+              }}
+              className={`w-full py-2.5 rounded-xl border border-border bg-secondary hover:bg-secondary/80 text-secondary-foreground font-semibold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-colors text-center ${
+                !legalConsent ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
             >
               <Send className="w-3.5 h-3.5" />
               Crear Cotización en CRM

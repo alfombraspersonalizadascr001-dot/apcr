@@ -68,9 +68,11 @@ export default function PortfolioPage() {
                                 <div className="relative w-full">
                                     <Image
                                         src={item.image}
-                                        alt="Alfombra Personalizada"
+                                        alt={`Alfombra Personalizada de Alto Tránsito APCR - Proyecto ${item.id + 1}`}
                                         width={500}
                                         height={500}
+                                        loading="lazy"
+                                        sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
                                         className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105 group-hover:brightness-110"
                                     />
                                     {/* Brillo sutil al hover */}
@@ -100,6 +102,37 @@ export default function PortfolioPage() {
                 </section>
 
             </main>
+
+            {/* Footer Corporativo con Cumplimiento Legal */}
+            <footer className="border-t border-slate-200 bg-white py-8 px-6">
+                <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+                    <div>
+                        © 2026 APCR Costa Rica. Dualidad Físico & Virtual — Alfombras Personalizadas & Software Costa Rica.
+                    </div>
+                    <div className="flex flex-wrap items-center justify-center gap-4 font-medium">
+                        <a href="/privacidad" className="hover:text-slate-900 underline underline-offset-2">
+                            Privacidad (Ley N° 8968)
+                        </a>
+                        <span>•</span>
+                        <a href="/terminos" className="hover:text-slate-900 underline underline-offset-2">
+                            Términos del Servicio
+                        </a>
+                        <span>•</span>
+                        <a href="/reembolsos" className="hover:text-slate-900 underline underline-offset-2">
+                            Garantías y Reembolsos
+                        </a>
+                        <span>•</span>
+                        <a
+                            href="https://gazestudio.dev"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-amber-600 hover:text-amber-700 font-bold"
+                        >
+                            Software: Gaze Studio ↗
+                        </a>
+                    </div>
+                </div>
+            </footer>
 
             <FloatingWhatsApp />
         </div>

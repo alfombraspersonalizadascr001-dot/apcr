@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { 
   ArrowLeft, 
   ChevronLeft, 
@@ -1328,18 +1329,46 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({
         </div>
       </section>
 
-      {/* 9. FOOTER // EXACTAMENTE IGUAL AL DE APCR.ONLINE SOLICITADO */}
+      {/* 9. FOOTER // CUMPLIMIENTO LEGAL LEY N° 8968 & SINERGIA CORPORATIVA */}
       <footer className="mt-12 border-t border-slate-200 bg-white/95 py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           
-          {/* Lado izquierdo: Derechos, ubicación y redes */}
-          <div className="text-center md:text-left space-y-2">
-            <p className="text-sm font-semibold text-slate-800">
-              © 2026 Alfombras Personalizadas CR.
-            </p>
-            <p className="text-xs text-slate-500">
-              San José, Costa Rica. Todos los derechos reservados.
-            </p>
+          {/* Lado izquierdo: Derechos, ubicación, enlaces legales y redes */}
+          <div className="text-center md:text-left space-y-2.5">
+            <div>
+              <p className="text-sm font-semibold text-slate-800">
+                © 2026 Alfombras Personalizadas CR (APCR).
+              </p>
+              <p className="text-xs text-slate-500">
+                San José, Costa Rica. Dualidad Físico & Virtual — Alfombras Personalizadas & Software Costa Rica.
+              </p>
+            </div>
+
+            {/* Enlaces Legales Mandatorios */}
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-1 text-xs text-slate-600 font-medium">
+              <Link href="/privacidad" className="hover:text-blue-600 underline underline-offset-2 transition-colors">
+                Privacidad (Ley N° 8968)
+              </Link>
+              <span className="text-slate-300">•</span>
+              <Link href="/terminos" className="hover:text-blue-600 underline underline-offset-2 transition-colors">
+                Términos del Servicio
+              </Link>
+              <span className="text-slate-300">•</span>
+              <Link href="/reembolsos" className="hover:text-blue-600 underline underline-offset-2 transition-colors">
+                Garantías y Reembolsos (1 Año)
+              </Link>
+              <span className="text-slate-300">•</span>
+              <a 
+                href="https://gazestudio.dev" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-amber-600 hover:text-amber-700 font-bold inline-flex items-center gap-1 transition-colors"
+              >
+                <span>División Software: Gaze Studio</span>
+                <span>↗</span>
+              </a>
+            </div>
+
             <div className="flex items-center gap-2.5 pt-1 justify-center md:justify-start">
               <a 
                 href="https://www.instagram.com/alfombraspersonalizadas.cr/" 

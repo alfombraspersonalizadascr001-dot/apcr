@@ -9,8 +9,13 @@ export default function MatConfigurator() {
     const [loading, setLoading] = useState(false);
     const [image, setImage] = useState<string | null>(null);
     const [error, setError] = useState('');
+    const [legalConsent, setLegalConsent] = useState(false);
 
     async function handleSubmit(formData: FormData) {
+        if (!legalConsent) {
+            setError('Debe aceptar los Términos del Servicio y autorizar el tratamiento de datos conforme a la Política de Privacidad (Ley N° 8968 / PRODHAB).');
+            return;
+        }
         setLoading(true);
         setError('');
         setImage(null);
@@ -80,9 +85,25 @@ export default function MatConfigurator() {
                         />
                     </div>
 
+                    {/* Checkbox Obligatorio Ley N° 8968 / PRODHAB */}
+                    <div className="pt-2">
+                        <label className="flex items-start gap-2.5 cursor-pointer text-left select-none group">
+                            <input
+                                type="checkbox"
+                                required
+                                checked={legalConsent}
+                                onChange={(e) => setLegalConsent(e.target.checked)}
+                                className="mt-1 w-4 h-4 rounded border-slate-300 text-orange-600 focus:ring-orange-500 cursor-pointer accent-orange-600 shrink-0"
+                            />
+                            <span className="text-xs text-slate-500 leading-tight group-hover:text-slate-700 transition-colors">
+                                Acepto los <a href="/terminos" target="_blank" className="text-orange-600 underline font-semibold">Términos del Servicio</a> y autorizo el tratamiento de mis datos de contacto conforme a la <a href="/privacidad" target="_blank" className="text-orange-600 underline font-semibold">Política de Privacidad</a> (Ley N° 8968 / PRODHAB).
+                            </span>
+                        </label>
+                    </div>
+
                     <button
-                        disabled={loading}
-                        className="mt-4 w-full bg-industrial-orange hover:bg-orange-600 text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-[0_0_20px_rgba(249,115,22,0.3)] hover:shadow-[0_0_30px_rgba(249,115,22,0.5)] disabled:opacity-50 disabled:cursor-not-allowed"
+                        disabled={loading || !legalConsent}
+                        className="mt-2 w-full bg-industrial-orange hover:bg-orange-600 text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-[0_0_20px_rgba(249,115,22,0.3)] hover:shadow-[0_0_30px_rgba(249,115,22,0.5)] disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {loading ? <Loader2 className="animate-spin" /> : <Sparkles />}
                         {loading ? 'Fabricando...' : 'Generar Render'}
