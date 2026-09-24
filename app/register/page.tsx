@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { User, Building2, Briefcase, Mail, Phone, MapPin, Loader2, ArrowRight, Lock } from 'lucide-react';
 import Image from "next/image";
-import FloatingWhatsApp from "../components/FloatingWhatsApp";
 
 export default function RegisterPage() {
     const router = useRouter();
@@ -269,9 +268,6 @@ export default function RegisterPage() {
                     </form>
                 </motion.div>
             </main>
-
-            {/* Floating WhatsApp Button */}
-            <FloatingWhatsApp />
         </>
     );
 }

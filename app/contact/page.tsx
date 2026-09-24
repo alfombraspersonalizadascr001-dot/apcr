@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { Mail, Phone, MapPin, ArrowLeft, Instagram, Facebook, Linkedin, Music } from "lucide-react";
 import Link from "next/link";
-import FloatingWhatsApp from "../components/FloatingWhatsApp";
 import Header from "../components/Header";
 
 export default function ContactPage() {
@@ -153,9 +152,6 @@ export default function ContactPage() {
                     </div>
                 </div>
             </footer>
-
-            {/* Floating WhatsApp Button */}
-            <FloatingWhatsApp />
         </main>
     )
 }

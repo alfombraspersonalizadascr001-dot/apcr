@@ -1,7 +1,6 @@
 "use client";
 
 import Header from "../components/Header";
-import FloatingWhatsApp from "../components/FloatingWhatsApp";
 import { ArrowRight, Star } from "lucide-react";
 import Image from "next/image";
 
@@ -133,8 +132,6 @@ export default function PortfolioPage() {
                     </div>
                 </div>
             </footer>
-
-            <FloatingWhatsApp />
         </div>
     );
 }

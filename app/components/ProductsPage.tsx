@@ -1420,26 +1420,6 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({
         </div>
       </footer>
 
-      {/* 9. BOTÓN FLOTANTE DE WHATSAPP DIRECTO (+506 6063-8062) */}
-      <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3 group">
-        <div className="hidden sm:block bg-slate-900 text-white text-xs font-semibold py-1.5 px-3.5 rounded-full shadow-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-slate-800">
-          {lang === 'es' ? 'Chatea al ' : 'Chat at '} {whatsappNumber}
-        </div>
-        <a
-          href={whatsappUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white shadow-xl shadow-[#25D366]/40 flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer relative"
-          aria-label="Contactar por WhatsApp"
-        >
-          <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500"></span>
-          </span>
-          <MessageCircle className="w-7 h-7 text-white fill-white" />
-        </a>
-      </div>
-
     </div>
   );
 };

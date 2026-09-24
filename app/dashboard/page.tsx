@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import Header from "../components/Header";
-import FloatingWhatsApp from "../components/FloatingWhatsApp";
 import {
     Package,
     FileText,
@@ -395,8 +394,6 @@ export default function DashboardPage() {
                     </div>
                 </div>
             )}
-
-            <FloatingWhatsApp />
         </div>
     );
 }
