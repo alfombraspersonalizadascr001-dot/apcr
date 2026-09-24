@@ -5,13 +5,13 @@ import Link from "next/link";
 import { ShieldCheck, X } from "lucide-react";
 
 export default function CookieBanner() {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
 
   useEffect(() => {
     try {
       const consent = localStorage.getItem("apcr_cookie_consent_v1");
-      if (!consent) {
-        setShow(true);
+      if (consent === "accepted") {
+        setShow(false);
       }
     } catch {
       // In case localStorage is disabled

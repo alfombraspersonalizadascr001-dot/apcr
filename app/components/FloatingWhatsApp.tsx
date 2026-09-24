@@ -1,36 +1,34 @@
 "use client";
 
 export default function FloatingWhatsApp() {
-    const link = "https://wa.me/50660638062?text=Hola%20APCR%2C%20quisiera%20cotizar%20productos%20y%20alfombras";
+  const link = "https://wa.me/50660638062?text=Hola%20APCR%2C%20quisiera%20cotizar%20productos%20y%20alfombras";
 
-    return (
-        <div className="fixed bottom-8 right-8 z-50">
-            <a
-                href={link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative block"
-            >
+  return (
+    <div className="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-50">
+      <a
+        href={link}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Contactar a APCR por WhatsApp"
+        className="group relative flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#25D366] text-white shadow-[0_10px_25px_-5px_rgba(37,211,102,0.6)] hover:shadow-[0_15px_35px_-5px_rgba(37,211,102,0.8)] hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer"
+      >
+        {/* Halo de pulso continuo verde WhatsApp */}
+        <span className="absolute inset-0 rounded-full bg-[#25D366] opacity-75 animate-ping pointer-events-none"></span>
 
+        {/* Logo SVG Oficial WhatsApp */}
+        <svg
+          className="w-8 h-8 sm:w-9 sm:h-9 relative z-10 fill-current"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.888 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.456 5.711 1.457h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+        </svg>
 
-                {/* WhatsApp Logo - Floating */}
-                <svg
-                    width="64"
-                    height="64"
-                    viewBox="0 0 175.216 175.552"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="relative animate-float-ghost"
-                >
-                    <defs>
-                        <linearGradient id="whatsapp-float-gradient" x1="85.915" x2="86.535" y1="32.567" y2="137.092" gradientUnits="userSpaceOnUse">
-                            <stop offset="0" stopColor="#57d163" />
-                            <stop offset="1" stopColor="#23b33a" />
-                        </linearGradient>
-                    </defs>
-                    <path fill="url(#whatsapp-float-gradient)" d="M87.184 25.227c-33.733 0-61.166 27.423-61.178 61.13a60.98 60.98 0 0 0 9.349 32.535l1.455 2.312-6.179 22.559 23.146-6.069 2.235 1.324c9.387 5.571 20.15 8.518 31.126 8.524h.023c33.707 0 61.14-27.426 61.153-61.135a60.75 60.75 0 0 0-17.895-43.251 60.75 60.75 0 0 0-43.235-17.929z" />
-                    <path fill="#FFF" fillRule="evenodd" d="M68.772 55.603c-1.378-3.061-2.828-3.123-4.137-3.176l-3.524-.043c-1.226 0-3.218.46-4.902 2.3s-6.435 6.287-6.435 15.332 6.588 17.785 7.506 19.013 12.718 20.381 31.405 27.75c15.529 6.124 18.689 4.906 22.061 4.6s10.877-4.447 12.408-8.74 1.532-7.971 1.073-8.74-1.685-1.226-3.525-2.146-10.877-5.367-12.562-5.981-2.91-.919-4.137.921-4.746 5.979-5.819 7.206-2.144 1.381-3.984.462-7.76-2.861-14.784-9.124c-5.465-4.873-9.154-10.891-10.228-12.73s-.114-2.835.808-3.751c.825-.824 1.838-2.147 2.759-3.22s1.224-1.84 1.836-3.065.307-2.301-.153-3.22-4.032-10.011-5.666-13.647" />
-                </svg>
-            </a>
-        </div>
-    );
+        {/* Micro-Tooltip al pasar el cursor */}
+        <span className="absolute right-full mr-3 px-3 py-1.5 rounded-xl bg-slate-900/90 text-white text-[11px] font-mono font-medium tracking-wide whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none shadow-lg border border-slate-700">
+          WhatsApp Directo APCR
+        </span>
+      </a>
+    </div>
+  );
 }

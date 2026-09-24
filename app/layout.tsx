@@ -25,6 +25,7 @@ export const metadata: Metadata = {
 import { Suspense } from "react";
 import AnalyticsTracker from "./components/AnalyticsTracker";
 import CookieBanner from "./components/CookieBanner";
+import FloatingWhatsApp from "./components/FloatingWhatsApp";
 
 export default function RootLayout({
   children,
@@ -40,6 +41,7 @@ export default function RootLayout({
           <AnalyticsTracker />
         </Suspense>
         {children}
+        <FloatingWhatsApp />
         <CookieBanner />
       </body>
     </html>
