@@ -437,6 +437,24 @@ const ReceiptModal = ({
 
         <div className="p-8 space-y-6">
           <div className="space-y-2">
+            <div className="flex justify-between items-center">
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">
+                Número de Recibo (Consecutivo)
+              </label>
+              <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-wider">
+                {isEditMode ? "Modificar Consecutivo" : "Consecutivo Activo"}
+              </span>
+            </div>
+            <input 
+              type="text" 
+              value={receiptData.receipt_number || ''}
+              onChange={e => setReceiptData({...receiptData, receipt_number: e.target.value})}
+              placeholder="REC-0655"
+              className="w-full bg-slate-50 dark:bg-zinc-950 border border-zinc-800/40 p-4 rounded-xl font-mono font-black text-xl text-emerald-600 dark:text-emerald-400 outline-none focus:border-emerald-500 transition-colors"
+            />
+          </div>
+
+          <div className="space-y-2">
             <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Monto del Recibo (₡)</label>
             <input 
               type="number" 
@@ -647,8 +665,59 @@ function AdminDashboardInternal() {
     amount: 0,
     description: "",
     payment_method: "Transferencia",
-    date: new Date().toISOString().split('T')[0]
+    date: new Date().toISOString().split('T')[0],
+    receipt_number: "REC-0655"
   });
+
+  const fetchNextReceiptNumber = async () => {
+    let maxRecNum = 654; // Consecutivo base 654 para que el siguiente emitido sea REC-0655
+    try {
+      if (typeof window !== 'undefined') {
+        const localBase = localStorage.getItem('crm_receipt_consecutive_base');
+        if (localBase) {
+          const lb = parseInt(localBase, 10);
+          if (!isNaN(lb) && lb > maxRecNum) maxRecNum = lb;
+        }
+      }
+    } catch (e) {}
+
+    try {
+      // 1. Escanear proformas reales
+      const { data: profs } = await supabase.from('proformas').select('production_history');
+      if (profs) {
+        profs.forEach(p => {
+          (p.production_history || []).forEach((h: any) => {
+            if (h && (h.type === 'RECEIPT' || h.receipt_number)) {
+              const match = String(h.receipt_number).match(/\d+/);
+              if (match) {
+                const n = parseInt(match[0], 10);
+                if (!isNaN(n) && n > maxRecNum) maxRecNum = n;
+              }
+            }
+          });
+        });
+      }
+    } catch (e) {
+      console.error("Error al obtener consecutivo de recibos de proformas:", e);
+    }
+
+    try {
+      // 2. Escanear tabla receipts si existe
+      const { data: allRecs } = await supabase.from('receipts').select('receipt_number');
+      (allRecs || []).forEach((r: any) => {
+        if (r && r.receipt_number) {
+          const match = String(r.receipt_number).match(/\d+/);
+          if (match) {
+            const n = parseInt(match[0], 10);
+            if (!isNaN(n) && n > maxRecNum) maxRecNum = n;
+          }
+        }
+      });
+    } catch (e) {}
+
+    const nextNum = maxRecNum + 1;
+    return `REC-${String(nextNum).padStart(4, '0')}`;
+  };
   const [activitySearch, setActivitySearch] = useState<string>("");
   const [showActivityDropdown, setShowActivityDropdown] = useState(false);
   const [BUSINESS_TYPES, setBUSINESS_TYPES] = useState<string[]>(() => {
@@ -3029,13 +3098,15 @@ function AdminDashboardInternal() {
                               <td className="px-4 py-3 text-center">
                                 <div className="flex items-center justify-center gap-1.5">
                                   <button
-                                    onClick={() => {
+                                    onClick={async () => {
                                       const autoAbono = Math.round(Number(p.total || 0) * 0.5);
+                                      const nextRec = await fetchNextReceiptNumber();
                                       setReceiptData({
                                         amount: autoAbono,
                                         description: `Abono 50% de Proforma #${p.proforma_number}`,
                                         payment_method: 'SINPE Móvil',
-                                        date: new Date().toISOString().split('T')[0]
+                                        date: new Date().toISOString().split('T')[0],
+                                        receipt_number: nextRec
                                       });
                                       setIsCreatingReceipt(p);
                                     }}
@@ -3079,21 +3150,26 @@ function AdminDashboardInternal() {
               {activeTab === "receipts" && (
                 <div className="animate-in fade-in slide-in-from-bottom-2 duration-300 space-y-4">
                   <div className="flex justify-between items-center bg-slate-50 dark:bg-zinc-950 p-3 rounded-2xl border border-slate-200 dark:border-zinc-800">
-                    <div>
+                    <div className="flex items-center gap-3">
                       <span className="text-xs font-black uppercase tracking-wider text-slate-800 dark:text-zinc-200">
                         Historial de Recibos ({clientReceipts.length})
+                      </span>
+                      <span className="text-[10px] bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400 font-bold px-2.5 py-1 rounded-full border border-emerald-300 dark:border-emerald-800 flex items-center gap-1">
+                        <Calculator className="w-3 h-3" /> Consecutivo: {receiptData.receipt_number || 'REC-0655'}
                       </span>
                     </div>
                     {clientProformas.length > 0 ? (
                       <button
-                        onClick={() => {
+                        onClick={async () => {
                           const latestProf = clientProformas[0];
                           const autoAbono = Math.round(Number(latestProf.total || 0) * 0.5);
+                          const nextRec = await fetchNextReceiptNumber();
                           setReceiptData({
                             amount: autoAbono,
                             description: `Abono 50% de Proforma #${latestProf.proforma_number}`,
                             payment_method: 'SINPE Móvil',
-                            date: new Date().toISOString().split('T')[0]
+                            date: new Date().toISOString().split('T')[0],
+                            receipt_number: nextRec
                           });
                           setIsCreatingReceipt(latestProf);
                         }}
@@ -3157,7 +3233,8 @@ function AdminDashboardInternal() {
                                     amount: r.amount,
                                     description: r.description,
                                     payment_method: r.payment_method,
-                                    date: r.date || r.created_at?.split('T')[0] || new Date().toISOString().split('T')[0]
+                                    date: r.date || r.created_at?.split('T')[0] || new Date().toISOString().split('T')[0],
+                                    receipt_number: r.receipt_number || ''
                                   });
                                   setEditingReceipt(r);
                                 }}
@@ -3527,12 +3604,14 @@ function AdminDashboardInternal() {
 
                   <button 
                     type="button"
-                    onClick={() => {
+                    onClick={async () => {
+                      const nextRec = await fetchNextReceiptNumber();
                       setReceiptData({
                         amount: viewingProforma.total,
                         description: `Pago por Proforma Nº ${viewingProforma.proforma_number}`,
                         payment_method: "Transferencia",
-                        date: new Date().toISOString().split('T')[0]
+                        date: new Date().toISOString().split('T')[0],
+                        receipt_number: nextRec
                       });
                       setIsCreatingReceipt(viewingProforma);
                     }}
@@ -3763,20 +3842,22 @@ function AdminDashboardInternal() {
             onSave={async () => {
               setIsSavingReceipt(true);
               try {
-                // Generar número consecutivo global real
-                const { data: allRecs } = await supabase.from('receipts').select('receipt_number');
-                let maxRecNum = 0;
-                (allRecs || []).forEach((r: any) => {
-                  if (r.receipt_number) {
-                    const match = String(r.receipt_number).match(/\d+/);
-                    if (match) {
-                      const n = parseInt(match[0], 10);
-                      if (n > maxRecNum) maxRecNum = n;
+                // Respetar el consecutivo ingresado o generar el siguiente a partir de la base 655
+                let receiptNum = (receiptData.receipt_number || '').trim();
+                if (!receiptNum) {
+                  receiptNum = await fetchNextReceiptNumber();
+                }
+
+                // Guardar como referencia en localStorage si es un número válido
+                try {
+                  const match = receiptNum.match(/\d+/);
+                  if (match) {
+                    const numVal = parseInt(match[0], 10);
+                    if (!isNaN(numVal)) {
+                      localStorage.setItem('crm_receipt_consecutive_base', String(numVal));
                     }
                   }
-                });
-                const nextNum = maxRecNum + 1;
-                const receiptNum = `REC-${String(nextNum).padStart(4, '0')}`;
+                } catch (e) {}
                 const approvedTime = new Date().toISOString();
                 
                 const newReceipt = {
@@ -3897,9 +3978,12 @@ function AdminDashboardInternal() {
             onSave={async () => {
               setIsSavingReceipt(true);
               try {
+                const finalRecNum = (receiptData.receipt_number || '').trim() || editingReceipt.receipt_number;
                 const auditEntry = {
                    agent: loggedInAgent || 'Administrador',
                    date: new Date().toISOString(),
+                   previous_number: editingReceipt.receipt_number,
+                   new_number: finalRecNum,
                    previous_total: editingReceipt.amount,
                    new_total: Number(receiptData.amount),
                    previous_date: editingReceipt.date,
@@ -3915,6 +3999,7 @@ function AdminDashboardInternal() {
                 
                 const updatedReceiptData = {
                   ...editingReceipt,
+                  receipt_number: finalRecNum,
                   amount: Number(receiptData.amount),
                   date: receiptData.date,
                   payment_method: receiptData.payment_method,
@@ -3928,9 +4013,10 @@ function AdminDashboardInternal() {
                   const { data: pData } = await supabase.from('proformas').select('*').eq('id', editingReceipt.proforma_id).single();
                   if (pData && Array.isArray(pData.production_history)) {
                     const updatedHistory = pData.production_history.map((h: any) => {
-                      if (h.receipt_number === editingReceipt.receipt_number || h.id === editingReceipt.id || h.type === 'RECEIPT') {
+                      if ((editingReceipt.id && h.id === editingReceipt.id) || (editingReceipt.receipt_number && h.receipt_number === editingReceipt.receipt_number) || (!editingReceipt.receipt_number && h.type === 'RECEIPT')) {
                         return {
                           ...h,
+                          receipt_number: finalRecNum,
                           amount: Number(receiptData.amount),
                           date: receiptData.date,
                           payment_method: receiptData.payment_method,
@@ -3955,6 +4041,7 @@ function AdminDashboardInternal() {
                   await supabase
                     .from('receipts')
                     .update({
+                      receipt_number: finalRecNum,
                       amount: Number(receiptData.amount),
                       date: receiptData.date,
                       payment_method: receiptData.payment_method,
@@ -3966,7 +4053,7 @@ function AdminDashboardInternal() {
                 
                 setClientReceipts(prev => prev.map(rec => (rec.id === editingReceipt.id || rec.receipt_number === editingReceipt.receipt_number) ? updatedReceiptData : rec));
                 setEditingReceipt(null);
-                alert(`Recibo ${editingReceipt.receipt_number} actualizado con registro de auditoría.`);
+                alert(`Recibo ${finalRecNum} actualizado con registro de auditoría.`);
               } catch (err) {
                 console.error(err);
                 alert("Error técnico al actualizar recibo");
