@@ -90,10 +90,16 @@ export default function SidebarLayout({
     }
     
     // Load saved theme
-    const savedTheme = (localStorage.getItem('crm_theme') as 'light' | 'dark') || 'light';
-    setTheme(savedTheme);
-    document.documentElement.classList.remove('light', 'dark');
-    document.documentElement.classList.add(savedTheme);
+    const handleThemeSync = () => {
+      const savedTheme = (localStorage.getItem('crm_theme') as 'light' | 'dark') || 'light';
+      setTheme(savedTheme);
+      document.documentElement.classList.remove('light', 'dark');
+      document.documentElement.classList.add(savedTheme);
+    };
+
+    handleThemeSync();
+    window.addEventListener('themechange', handleThemeSync);
+    return () => window.removeEventListener('themechange', handleThemeSync);
   }, []);
 
   const toggleTheme = () => {
@@ -231,8 +237,8 @@ export default function SidebarLayout({
 
   return (
     <div className={cn(
-      "min-h-screen flex font-sans transition-colors duration-300 selection:bg-blue-600/30",
-      theme === 'dark' ? "bg-zinc-950 text-zinc-100 dark" : "bg-slate-50 text-slate-900"
+      "min-h-screen flex font-sans transition-colors duration-300 selection:bg-blue-600/30 bg-slate-50 dark:bg-zinc-950 text-slate-900 dark:text-zinc-100",
+      theme === 'dark' ? "dark" : ""
     )}>
       {/* --- DESKTOP SIDEBAR --- */}
       <aside className="hidden md:flex w-64 border-r border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 flex-col transition-colors duration-300 sticky top-0 h-screen z-20 print:hidden">
@@ -317,7 +323,7 @@ export default function SidebarLayout({
       )}
 
       {/* --- MAIN CONTENT --- */}
-      <main className="flex-1 flex flex-col h-screen overflow-hidden">
+      <main className="flex-1 flex flex-col h-screen overflow-hidden bg-slate-50 dark:bg-zinc-950 transition-colors duration-300">
         <header className="h-20 border-b border-slate-200 dark:border-zinc-800 flex items-center justify-between px-4 sm:px-8 bg-white/95 dark:bg-zinc-900/90 backdrop-blur-sm sticky top-0 z-10 transition-colors duration-300 print:hidden gap-2">
           <div className="flex items-center gap-2 sm:gap-3">
             <button
@@ -370,7 +376,7 @@ export default function SidebarLayout({
           </div>
         </header>
 
-        <div className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 custom-scrollbar">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 custom-scrollbar bg-slate-50 dark:bg-zinc-950 transition-colors duration-300">
           <div className="w-full max-w-[1680px] mx-auto">
             {children}
           </div>
