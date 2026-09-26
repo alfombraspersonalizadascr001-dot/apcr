@@ -232,10 +232,10 @@ export default function SidebarLayout({
   return (
     <div className={cn(
       "min-h-screen flex font-sans transition-colors duration-300 selection:bg-blue-600/30",
-      theme === 'dark' ? "bg-zinc-950 dark" : "bg-card"
+      theme === 'dark' ? "bg-zinc-950 text-zinc-100 dark" : "bg-slate-50 text-slate-900"
     )}>
       {/* --- DESKTOP SIDEBAR --- */}
-      <aside className="hidden md:flex w-64 border-r border-slate-200 dark:border-zinc-800 bg-background flex-col transition-colors duration-300 sticky top-0 h-screen z-20 print:hidden">
+      <aside className="hidden md:flex w-64 border-r border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 flex-col transition-colors duration-300 sticky top-0 h-screen z-20 print:hidden">
         <div className="h-20 flex items-center px-6 border-b border-slate-200 dark:border-zinc-800 gap-3">
           <div className="relative w-10 h-10 flex-shrink-0">
             <Image
@@ -258,10 +258,10 @@ export default function SidebarLayout({
           {renderNavLinks(false)}
         </nav>
 
-        <div className="p-4 border-t border-zinc-800/30">
+        <div className="p-4 border-t border-slate-200 dark:border-zinc-800/50">
           <button
             onClick={handleLogout}
-            className="flex items-center gap-3 text-muted-foreground hover:text-red-500 transition-colors px-3 py-2 w-full rounded-lg text-sm font-medium hover:bg-red-500/10"
+            className="flex items-center gap-3 text-slate-500 hover:text-red-500 dark:text-zinc-400 dark:hover:text-red-400 transition-colors px-3 py-2 w-full rounded-lg text-sm font-medium hover:bg-red-50 dark:hover:bg-red-500/10"
           >
             <LogOut className="w-4 h-4" /> Cerrar Sesión
           </button>
@@ -275,7 +275,7 @@ export default function SidebarLayout({
           onClick={() => setMobileMenuOpen(false)}
         >
           <aside 
-            className="w-72 h-full bg-background dark:bg-zinc-900 border-r border-slate-200 dark:border-zinc-800 flex flex-col animate-in slide-in-from-left duration-250 shadow-2xl"
+            className="w-72 h-full bg-white dark:bg-zinc-900 border-r border-slate-200 dark:border-zinc-800 flex flex-col animate-in slide-in-from-left duration-250 shadow-2xl"
             onClick={e => e.stopPropagation()}
           >
             <div className="h-20 flex items-center justify-between px-6 border-b border-slate-200 dark:border-zinc-800">
@@ -304,10 +304,10 @@ export default function SidebarLayout({
               {renderNavLinks(true)}
             </nav>
 
-            <div className="p-4 border-t border-zinc-800/30">
+            <div className="p-4 border-t border-slate-200 dark:border-zinc-800/50">
               <button
                 onClick={handleLogout}
-                className="flex items-center gap-3 text-muted-foreground hover:text-red-500 transition-colors px-3 py-2 w-full rounded-lg text-sm font-medium hover:bg-red-500/10"
+                className="flex items-center gap-3 text-slate-500 hover:text-red-500 dark:text-zinc-400 dark:hover:text-red-400 transition-colors px-3 py-2 w-full rounded-lg text-sm font-medium hover:bg-red-50 dark:hover:bg-red-500/10"
               >
                 <LogOut className="w-4 h-4" /> Cerrar Sesión
               </button>
@@ -318,7 +318,7 @@ export default function SidebarLayout({
 
       {/* --- MAIN CONTENT --- */}
       <main className="flex-1 flex flex-col h-screen overflow-hidden">
-        <header className="h-20 border-b border-zinc-800/30 flex items-center justify-between px-4 sm:px-8 bg-background/80 dark:bg-zinc-900/80 backdrop-blur-sm sticky top-0 z-10 transition-colors duration-300 print:hidden gap-2">
+        <header className="h-20 border-b border-slate-200 dark:border-zinc-800 flex items-center justify-between px-4 sm:px-8 bg-white/95 dark:bg-zinc-900/90 backdrop-blur-sm sticky top-0 z-10 transition-colors duration-300 print:hidden gap-2">
           <div className="flex items-center gap-2 sm:gap-3">
             <button
               onClick={() => setMobileMenuOpen(true)}
@@ -327,14 +327,14 @@ export default function SidebarLayout({
             >
               <Menu className="w-6 h-6" />
             </button>
-            <h1 className="text-lg sm:text-xl font-black tracking-tight dark:text-white uppercase line-clamp-1">
+            <h1 className="text-lg sm:text-xl font-black tracking-tight text-slate-900 dark:text-white uppercase line-clamp-1">
               {title}
             </h1>
             <span className={cn(
               "px-2 py-0.5 text-[10px] font-black rounded-full border hidden sm:inline-block",
               badgeColor === 'amber' 
-                ? "bg-blue-50 text-blue-600 border-blue-200"
-                : "bg-indigo-50 text-indigo-600 border-indigo-200"
+                ? "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/40 dark:text-amber-400 dark:border-amber-800/40" 
+                : "bg-indigo-50 text-indigo-700 border-indigo-200 dark:bg-indigo-950/40 dark:text-indigo-400 dark:border-indigo-800/40"
             )}>
               {badge}
             </span>
@@ -343,17 +343,18 @@ export default function SidebarLayout({
           <div className="flex items-center gap-2 sm:gap-4">
             {headerContent}
             
-            <div className="flex items-center gap-2 bg-background dark:bg-zinc-900/50 p-1 rounded-2xl border border-zinc-800/40">
+            <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-zinc-800/80 p-1 rounded-2xl border border-slate-200 dark:border-zinc-700/60 shadow-inner">
               <button
                 onClick={toggleTheme}
-                className="w-9 h-9 flex items-center justify-center rounded-xl text-slate-400 hover:text-amber-500 hover:bg-background dark:hover:bg-zinc-900 transition-all"
-                title={theme === 'dark' ? 'Modo Día' : 'Modo Noche'}
+                className="w-9 h-9 flex items-center justify-center rounded-xl text-slate-600 hover:text-amber-600 hover:bg-white dark:text-zinc-300 dark:hover:text-amber-400 dark:hover:bg-zinc-700 transition-all shadow-sm"
+                title={theme === 'dark' ? 'Cambiar a Modo Día (Luz)' : 'Cambiar a Modo Noche (Oscuro)'}
               >
-                {theme === 'dark' ? <Sun className="w-5 h-5 text-amber-500" /> : <Moon className="w-5 h-5 text-slate-600" />}
+                {theme === 'dark' ? <Sun className="w-5 h-5 text-amber-400 fill-amber-400/20" /> : <Moon className="w-5 h-5 text-indigo-600 fill-indigo-600/20" />}
               </button>
               <button
                 onClick={() => alert("Configuraciones próximamente...")}
-                className="w-9 h-9 flex items-center justify-center rounded-xl text-slate-400 hover:text-amber-500 hover:bg-background dark:hover:bg-zinc-900 transition-all"
+                className="w-9 h-9 flex items-center justify-center rounded-xl text-slate-500 hover:text-slate-800 hover:bg-white dark:text-zinc-400 dark:hover:text-zinc-200 dark:hover:bg-zinc-700 transition-all"
+                title="Configuración"
               >
                 <Settings className="w-5 h-5" />
               </button>
@@ -361,7 +362,7 @@ export default function SidebarLayout({
 
             <button 
               onClick={handleLogout}
-              className="hidden sm:flex h-10 px-4 rounded-xl border border-red-900/30 hover:bg-red-900/10 items-center justify-center gap-2 transition-all text-red-600 dark:text-red-400 font-bold text-[10px] uppercase tracking-widest bg-background dark:bg-zinc-900 shadow-sm"
+              className="hidden sm:flex h-10 px-4 rounded-xl border border-red-200 hover:border-red-300 hover:bg-red-50 dark:border-red-900/30 dark:hover:bg-red-900/10 items-center justify-center gap-2 transition-all text-red-600 dark:text-red-400 font-bold text-[10px] uppercase tracking-widest bg-white dark:bg-zinc-900 shadow-sm"
             >
               <LogOut className="w-4 h-4" />
               <span>Salir</span>

@@ -350,7 +350,7 @@ ${pdfLink}
                 className={`px-3 py-1 rounded-full text-xs font-bold transition-all border ${
                   activeTag === 'all'
                     ? 'bg-blue-600 text-white border-blue-700 shadow-sm scale-105'
-                    : 'bg-slate-50 text-slate-600 border-slate-200 dark:bg-zinc-950 dark:text-zinc-400 dark:border-zinc-850 hover:bg-slate-100'
+                    : 'bg-slate-50 text-slate-600 border-slate-200 dark:bg-zinc-950 dark:text-zinc-400 dark:border-zinc-800 hover:bg-slate-100 dark:hover:bg-zinc-900'
                 }`}
               >
                 Todas ({proformas.length})
@@ -376,8 +376,8 @@ ${pdfLink}
                 onClick={() => setActiveTag('none')}
                 className={`px-3 py-1 rounded-full text-xs font-bold transition-all border ${
                   activeTag === 'none'
-                    ? 'bg-slate-800 text-white border-slate-900 shadow-sm scale-105'
-                    : 'bg-slate-50 text-slate-600 border-slate-200 dark:bg-zinc-950 dark:text-zinc-400 dark:border-zinc-850 hover:bg-slate-100'
+                    ? 'bg-slate-900 text-white border-slate-900 dark:bg-white dark:text-zinc-900 dark:border-white shadow-sm scale-105'
+                    : 'bg-slate-50 text-slate-600 border-slate-200 dark:bg-zinc-950 dark:text-zinc-400 dark:border-zinc-800 hover:bg-slate-100 dark:hover:bg-zinc-900'
                 }`}
               >
                 Sin etiqueta ({proformas.filter(p => !p.crm_users?.tags || p.crm_users.tags.length === 0).length})
@@ -391,7 +391,7 @@ ${pdfLink}
                     className={`px-3 py-1 rounded-full text-xs font-bold transition-all border ${
                       activeTag === t.id
                         ? `${t.color.split(' ')[0]} ${t.color.split(' ')[1]} ring-2 ring-offset-2 ring-blue-500/50 scale-105`
-                        : 'bg-slate-50 text-slate-600 border-slate-200 dark:bg-zinc-950 dark:text-zinc-400 dark:border-zinc-850 hover:bg-slate-100'
+                        : 'bg-slate-50 text-slate-600 border-slate-200 dark:bg-zinc-950 dark:text-zinc-400 dark:border-zinc-800 hover:bg-slate-100 dark:hover:bg-zinc-900'
                     }`}
                   >
                     {t.label} ({count})

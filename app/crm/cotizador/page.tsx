@@ -723,7 +723,7 @@ ${pdfLink}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 print:hidden">
                     <div>
                         <div className="flex items-center gap-3">
-                            <h1 className="text-3xl font-black text-foreground tracking-tight flex items-center gap-3">
+                            <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-3">
                                 <Calculator className="w-8 h-8 text-amber-500" /> Generador de Proformas
                             </h1>
                         </div>
@@ -731,12 +731,15 @@ ${pdfLink}
                     </div>
                     <div className="flex flex-wrap gap-2">
                         {/* Theme toggle removed */}
-                        <button onClick={() => setShowConfig(!showConfig)} className="px-4 py-2 bg-slate-700 dark:bg-zinc-800 text-white rounded-lg hover:bg-slate-800 dark:hover:bg-zinc-700 text-sm flex items-center gap-2 font-medium">
-                            <Settings className="w-4 h-4" /> {showConfig ? 'Cerrar Ajustes' : 'Ajustes'}
+                        <button 
+                            onClick={() => setShowConfig(!showConfig)} 
+                            className="px-4 py-2 bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-slate-700 dark:text-zinc-200 rounded-xl hover:bg-slate-50 dark:hover:bg-zinc-700 text-sm flex items-center gap-2 font-bold shadow-sm transition-all"
+                        >
+                            <Settings className="w-4 h-4 text-slate-500 dark:text-zinc-400" /> {showConfig ? 'Cerrar Ajustes' : 'Ajustes'}
                         </button>
                         <Link
                             href="/crm/admin"
-                            className="px-4 py-2 bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-900/30 text-indigo-700 dark:text-indigo-400 rounded-lg hover:bg-indigo-100 dark:hover:bg-indigo-900/30 flex items-center gap-2 text-sm font-bold transition-all shadow-sm"
+                            className="px-4 py-2 bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-900/30 text-indigo-700 dark:text-indigo-400 rounded-xl hover:bg-indigo-100 dark:hover:bg-indigo-900/30 flex items-center gap-2 text-sm font-bold transition-all shadow-sm"
                             title="Ver base de datos de Clientes / Admin"
                         >
                             <Users className="w-4 h-4" /> Clientes
@@ -744,14 +747,14 @@ ${pdfLink}
                         <button
                             onClick={saveQuotation}
                             disabled={saving || (isSaved && !editMode)}
-                            className={`px-4 py-2 rounded-lg text-sm flex items-center gap-2 font-bold transition-all ${isSaved && !editMode ? 'bg-slate-400 cursor-not-allowed' : (editMode ? 'bg-amber-600 hover:bg-amber-700 text-white' : 'bg-green-600 hover:bg-green-700 text-white')} shadow-lg`}
+                            className={`px-4 py-2 rounded-xl text-sm flex items-center gap-2 font-bold transition-all ${isSaved && !editMode ? 'bg-slate-400 cursor-not-allowed' : (editMode ? 'bg-amber-600 hover:bg-amber-700 text-white' : 'bg-green-600 hover:bg-green-700 text-white')} shadow-lg`}
                         >
                             <User className="w-4 h-4" /> {saving ? 'Guardando...' : (isSaved && !editMode ? 'Guardado ✓' : (editMode ? 'Actualizar Proforma' : 'Guardar en Nube'))}
                         </button>
                         {(isSaved || editMode) && (
                             <button
                                 onClick={resetQuotation}
-                                className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-sm flex items-center gap-2 font-bold shadow-md transition-all active:scale-95"
+                                className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-xl text-sm flex items-center gap-2 font-bold shadow-md transition-all active:scale-95"
                                 title="Limpiar formulario para crear una nueva cotización"
                             >
                                 <Plus className="w-4 h-4" /> Nueva Cotización
@@ -796,35 +799,35 @@ ${pdfLink}
 
                 {/* Panel de Configuración */}
                 {showConfig && (
-                    <div className="bg-card p-6 rounded-2xl shadow-xl border border-border mb-8 grid grid-cols-1 md:grid-cols-3 gap-6 animate-in fade-in slide-in-from-top-4 duration-300">
+                    <div className="bg-white dark:bg-zinc-900 p-6 rounded-2xl shadow-xl border border-slate-200 dark:border-zinc-800 mb-8 grid grid-cols-1 md:grid-cols-3 gap-6 animate-in fade-in slide-in-from-top-4 duration-300">
                         <div>
-                            <label className="text-xs font-bold text-slate-500 dark:text-zinc-500 uppercase block mb-2">Precio por M² (CRC)</label>
+                            <label className="text-xs font-bold text-slate-600 dark:text-zinc-400 uppercase block mb-2">Precio por M² (CRC)</label>
                             <div className="relative">
-                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-zinc-600 font-bold">₡</span>
+                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-zinc-500 font-bold">₡</span>
                                 <input
                                     type="number"
                                     value={pricePerM2}
                                     onChange={e => setPricePerM2(Number(e.target.value))}
-                                    className="w-full bg-white border border-slate-200 text-slate-800 p-2 pl-7 rounded-lg outline-none focus:ring-2 focus:ring-amber-500 transition-all"
+                                    className="w-full bg-slate-50 dark:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700 text-slate-900 dark:text-white p-2 pl-7 rounded-lg outline-none focus:ring-2 focus:ring-amber-500 transition-all font-mono"
                                 />
                             </div>
                         </div>
                         <div>
-                            <label className="text-xs font-bold text-slate-500 dark:text-zinc-500 uppercase block mb-2">IVA (%)</label>
+                            <label className="text-xs font-bold text-slate-600 dark:text-zinc-400 uppercase block mb-2">IVA (%)</label>
                             <input
                                 type="number"
                                 value={ivaRate * 100}
                                 onChange={e => setIvaRate(Number(e.target.value) / 100)}
-                                className="w-full bg-white border border-slate-200 text-slate-800 p-2 rounded-lg outline-none focus:ring-2 focus:ring-amber-500 transition-all"
+                                className="w-full bg-slate-50 dark:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700 text-slate-900 dark:text-white p-2 rounded-lg outline-none focus:ring-2 focus:ring-amber-500 transition-all font-mono"
                             />
                         </div>
                         <div>
-                            <label className="text-xs font-bold text-slate-500 dark:text-zinc-500 uppercase block mb-2">Número Proforma Actual</label>
+                            <label className="text-xs font-bold text-slate-600 dark:text-zinc-400 uppercase block mb-2">Número Proforma Actual</label>
                             <input
                                 type="text"
                                 value={proformaNumber}
                                 onChange={e => setProformaNumber(e.target.value)}
-                                className="w-full bg-white border border-slate-200 text-slate-800 p-2 rounded-lg outline-none focus:ring-2 focus:ring-amber-500 font-mono transition-all"
+                                className="w-full bg-slate-50 dark:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700 text-slate-900 dark:text-white p-2 rounded-lg outline-none focus:ring-2 focus:ring-amber-500 font-mono transition-all"
                                 title="Número consecutivo editable"
                             />
                         </div>
@@ -964,44 +967,44 @@ ${pdfLink}
                                 </div>
                                 <div className="grid grid-cols-2 gap-3">
                                     <div>
-                                        <label className="text-[10px] font-bold text-slate-500 dark:text-zinc-400 uppercase block mb-1">Cédula</label>
-                                        <input value={client.idNumber} onChange={e => setClient({ ...client, idNumber: e.target.value })} className="w-full border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-900 dark:text-white p-2 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none transition-all" placeholder="0-0000-0000" />
+                                        <label className="text-[10px] font-bold text-slate-600 dark:text-zinc-400 uppercase block mb-1">Cédula</label>
+                                        <input value={client.idNumber} onChange={e => setClient({ ...client, idNumber: e.target.value })} className="w-full border border-slate-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-900 dark:text-white p-2 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none transition-all" placeholder="0-0000-0000" />
                                     </div>
                                     <div>
-                                        <label className="text-[10px] font-bold text-slate-500 dark:text-zinc-400 uppercase block mb-1">Teléfono</label>
-                                        <input value={client.phone} onChange={e => setClient({ ...client, phone: e.target.value })} className="w-full border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-900 dark:text-white p-2 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none transition-all" placeholder="8888-8888" />
+                                        <label className="text-[10px] font-bold text-slate-600 dark:text-zinc-400 uppercase block mb-1">Teléfono</label>
+                                        <input value={client.phone} onChange={e => setClient({ ...client, phone: e.target.value })} className="w-full border border-slate-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-900 dark:text-white p-2 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none transition-all" placeholder="8888-8888" />
                                     </div>
                                 </div>
                                 <div className="grid grid-cols-2 gap-3">
                                     <div>
-                                        <label className="text-[10px] font-bold text-slate-500 dark:text-zinc-400 uppercase block mb-1">Medio de Pago</label>
+                                        <label className="text-[10px] font-bold text-slate-600 dark:text-zinc-400 uppercase block mb-1">Medio de Pago</label>
                                         <select
                                             value={paymentMethod}
                                             onChange={e => setPaymentMethod(e.target.value)}
-                                            className="w-full border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-900 dark:text-white p-2 rounded-lg text-sm outline-none focus:ring-2 focus:ring-amber-500 transition-all appearance-none"
+                                            className="w-full border border-slate-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-900 dark:text-white p-2 rounded-lg text-sm outline-none focus:ring-2 focus:ring-amber-500 transition-all appearance-none cursor-pointer"
                                         >
-                                            <option value="Transferencia-Depósito Bancario">Transferencia</option>
-                                            <option value="Pago con SINPE Móvil">SINPE Móvil</option>
-                                            <option value="En efectivo">Efectivo</option>
+                                            <option value="Transferencia-Depósito Bancario" className="bg-white text-slate-900 dark:bg-zinc-900 dark:text-white">Transferencia</option>
+                                            <option value="Pago con SINPE Móvil" className="bg-white text-slate-900 dark:bg-zinc-900 dark:text-white">SINPE Móvil</option>
+                                            <option value="En efectivo" className="bg-white text-slate-900 dark:bg-zinc-900 dark:text-white">Efectivo</option>
                                         </select>
                                     </div>
                                     <div>
-                                        <label className="text-[10px] font-bold text-slate-500 dark:text-zinc-400 uppercase block mb-1">Entrega (Días Nat.)</label>
+                                        <label className="text-[10px] font-bold text-slate-600 dark:text-zinc-400 uppercase block mb-1">Entrega (Días Nat.)</label>
                                         <input
                                             type="number"
                                             min="1"
                                             value={deliveryTimeDays}
                                             onChange={e => setDeliveryTimeDays(Number(e.target.value))}
-                                            className="w-full border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-900 dark:text-white p-2 rounded-lg text-sm outline-none focus:ring-2 focus:ring-amber-500 transition-all font-mono"
+                                            className="w-full border border-slate-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-900 dark:text-white p-2 rounded-lg text-sm outline-none focus:ring-2 focus:ring-amber-500 transition-all font-mono"
                                         />
                                     </div>
                                 </div>
                                 <div className="pt-2">
-                                    <label className="text-[10px] font-bold text-slate-500 dark:text-zinc-400 uppercase block mb-2 flex items-center gap-1"><MessageSquare className="w-3 h-3 text-purple-500" /> Notas</label>
+                                    <label className="text-[10px] font-bold text-slate-600 dark:text-zinc-400 uppercase block mb-2 flex items-center gap-1"><MessageSquare className="w-3 h-3 text-purple-500" /> Notas</label>
                                     <textarea
                                         value={comments}
                                         onChange={e => setComments(e.target.value)}
-                                        className="w-full border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-900 dark:text-white p-3 rounded-lg text-xs h-32 outline-none resize-none focus:ring-2 focus:ring-amber-500 transition-all"
+                                        className="w-full border border-slate-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-900 dark:text-white p-3 rounded-lg text-xs h-32 outline-none resize-none focus:ring-2 focus:ring-amber-500 transition-all"
                                     />
                                 </div>
                             </div>
@@ -1009,10 +1012,10 @@ ${pdfLink}
                     </div>
 
                     {/* Agregar Productos */}
-                    <div className="bg-card p-6 rounded-2xl shadow-sm border border-border lg:col-span-2">
+                    <div className="bg-white dark:bg-zinc-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-zinc-800 lg:col-span-2">
                         <div className="grid grid-cols-1 md:grid-cols-6 gap-4 items-end">
                             <div className="md:col-span-3">
-                                <label className="text-[10px] font-bold text-slate-500 dark:text-zinc-500 uppercase block mb-1">Producto</label>
+                                <label className="text-[10px] font-bold text-slate-600 dark:text-zinc-400 uppercase block mb-1">Producto</label>
                                 <select
                                     value={selectedProductCode}
                                     onChange={e => {
@@ -1024,56 +1027,56 @@ ${pdfLink}
                                             setTempHeight('');
                                         }
                                     }}
-                                    className="w-full border border-slate-200 bg-white text-slate-800 p-2 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none transition-all appearance-none"
+                                    className="w-full border border-slate-300 dark:border-zinc-700 bg-slate-50 dark:bg-zinc-800 text-slate-900 dark:text-white p-2.5 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 outline-none transition-all appearance-none cursor-pointer font-medium"
                                 >
                                     {inventoryProducts.map(p => (
-                                        <option key={p.code} value={p.code} className="dark:bg-zinc-900">{p.code} - {p.name}</option>
+                                        <option key={p.code} value={p.code} className="bg-white text-slate-900 dark:bg-zinc-900 dark:text-white">{p.code} - {p.name}</option>
                                     ))}
-                                    <option value="CUSTOM" className="dark:bg-zinc-900 font-bold text-amber-500">OTRO / PERSONALIZADO...</option>
+                                    <option value="CUSTOM" className="bg-white text-amber-600 font-bold dark:bg-zinc-900 dark:text-amber-400">OTRO / PERSONALIZADO...</option>
                                 </select>
                             </div>
                             
                             {selectedProductCode === 'CUSTOM' && (
                                 <>
                                     <div className="md:col-span-1">
-                                        <label className="text-[10px] font-bold text-slate-500 dark:text-zinc-500 uppercase block mb-1">Cód. Personalizado</label>
-                                        <input type="text" value={customProductCode} onChange={e => setCustomProductCode(e.target.value)} className="w-full border border-slate-200 bg-white text-slate-800 p-2 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none transition-all" />
+                                        <label className="text-[10px] font-bold text-slate-600 dark:text-zinc-400 uppercase block mb-1">Cód. Personalizado</label>
+                                        <input type="text" value={customProductCode} onChange={e => setCustomProductCode(e.target.value)} className="w-full border border-slate-300 dark:border-zinc-700 bg-slate-50 dark:bg-zinc-800 text-slate-900 dark:text-white p-2.5 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 outline-none transition-all font-mono" />
                                     </div>
                                     <div className="md:col-span-2">
-                                        <label className="text-[10px] font-bold text-slate-500 dark:text-zinc-500 uppercase block mb-1">Nom. Personalizado</label>
-                                        <input type="text" value={customProductName} onChange={e => setCustomProductName(e.target.value)} className="w-full border border-slate-200 bg-white text-slate-800 p-2 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none transition-all" />
+                                        <label className="text-[10px] font-bold text-slate-600 dark:text-zinc-400 uppercase block mb-1">Nom. Personalizado</label>
+                                        <input type="text" value={customProductName} onChange={e => setCustomProductName(e.target.value)} className="w-full border border-slate-300 dark:border-zinc-700 bg-slate-50 dark:bg-zinc-800 text-slate-900 dark:text-white p-2.5 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 outline-none transition-all font-medium" />
                                     </div>
                                 </>
                             )}
 
                             <div>
-                                <label className="text-[10px] font-bold text-slate-500 dark:text-zinc-500 uppercase block mb-1">Ancho (cm)</label>
+                                <label className="text-[10px] font-bold text-slate-600 dark:text-zinc-400 uppercase block mb-1">Ancho (cm)</label>
                                 <input 
                                     type="number" 
                                     value={tempWidth} 
                                     onChange={e => setTempWidth(e.target.value === '' ? '' : Number(e.target.value))} 
                                     disabled={inventoryProducts.find(p => p.code === selectedProductCode)?.price_calculation_method === 'fixed'}
-                                    className="w-full border border-slate-200 bg-white text-slate-800 p-2 rounded-lg text-sm outline-none focus:ring-2 focus:ring-amber-500 transition-all disabled:opacity-50" 
+                                    className="w-full border border-slate-300 dark:border-zinc-700 bg-slate-50 dark:bg-zinc-800 text-slate-900 dark:text-white p-2.5 rounded-xl text-sm outline-none focus:ring-2 focus:ring-amber-500 transition-all disabled:opacity-40 disabled:bg-slate-100 dark:disabled:bg-zinc-900 font-mono" 
                                 />
                             </div>
                             <div>
-                                <label className="text-[10px] font-bold text-slate-500 dark:text-zinc-500 uppercase block mb-1">Alto (cm)</label>
+                                <label className="text-[10px] font-bold text-slate-600 dark:text-zinc-400 uppercase block mb-1">Alto (cm)</label>
                                 <input 
                                     type="number" 
                                     value={tempHeight} 
                                     onChange={e => setTempHeight(e.target.value === '' ? '' : Number(e.target.value))} 
                                     disabled={inventoryProducts.find(p => p.code === selectedProductCode)?.price_calculation_method === 'fixed'}
-                                    className="w-full border border-slate-200 bg-white text-slate-800 p-2 rounded-lg text-sm outline-none focus:ring-2 focus:ring-amber-500 transition-all disabled:opacity-50" 
+                                    className="w-full border border-slate-300 dark:border-zinc-700 bg-slate-50 dark:bg-zinc-800 text-slate-900 dark:text-white p-2.5 rounded-xl text-sm outline-none focus:ring-2 focus:ring-amber-500 transition-all disabled:opacity-40 disabled:bg-slate-100 dark:disabled:bg-zinc-900 font-mono" 
                                 />
                             </div>
                             <div>
-                                <label className="text-[10px] font-bold text-slate-500 dark:text-zinc-500 uppercase block mb-1">Cant.</label>
-                                <input type="number" value={tempQty} onChange={e => setTempQty(Number(e.target.value))} className="w-full border border-slate-200 bg-white text-slate-800 p-2 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none transition-all" />
+                                <label className="text-[10px] font-bold text-slate-600 dark:text-zinc-400 uppercase block mb-1">Cant.</label>
+                                <input type="number" value={tempQty} onChange={e => setTempQty(Number(e.target.value))} className="w-full border border-slate-300 dark:border-zinc-700 bg-slate-50 dark:bg-zinc-800 text-slate-900 dark:text-white p-2.5 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 outline-none transition-all font-mono" />
                             </div>
                             <div className="md:col-span-3">
                                 <div className="flex justify-between items-center mb-1">
-                                    <label className="text-[10px] font-bold text-slate-500 uppercase block">Precio Unitario (₡)</label>
-                                    <button onClick={() => setAutoPrice(!autoPrice)} className={`text-[9px] font-bold px-1.5 py-0.5 rounded transition-colors ${autoPrice ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>
+                                    <label className="text-[10px] font-bold text-slate-600 dark:text-zinc-400 uppercase block">Precio Unitario (₡)</label>
+                                    <button onClick={() => setAutoPrice(!autoPrice)} className={`text-[9px] font-bold px-2 py-0.5 rounded-md transition-all ${autoPrice ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-400 dark:border dark:border-emerald-800/40' : 'bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-400 dark:border dark:border-amber-800/40'}`}>
                                         {autoPrice ? 'AUTO' : 'MANUAL'}
                                     </button>
                                 </div>
@@ -1081,17 +1084,17 @@ ${pdfLink}
                                     type="number"
                                     value={tempUnitPrice}
                                     onChange={e => { setTempUnitPrice(Number(e.target.value)); setAutoPrice(false); }}
-                                    className={`w-full border p-2 rounded-lg text-sm font-bold outline-none transition-all ${autoPrice ? 'bg-slate-50 text-slate-500 border-slate-200' : 'bg-white text-amber-600 border-amber-500 focus:ring-2 focus:ring-amber-500'}`}
+                                    className={`w-full border p-2.5 rounded-xl text-sm font-bold outline-none transition-all font-mono ${autoPrice ? 'bg-slate-100 dark:bg-zinc-800/50 text-slate-500 dark:text-zinc-400 border-slate-200 dark:border-zinc-700 cursor-not-allowed' : 'bg-slate-50 dark:bg-zinc-800 text-amber-600 dark:text-amber-400 border-amber-500 focus:ring-2 focus:ring-amber-500'}`}
                                 />
                             </div>
                             <div className="md:col-span-2">
-                                <label className="text-[10px] font-bold text-slate-500 uppercase block mb-1">¿Borde de Hule?</label>
-                                <div className="flex bg-slate-100 p-1 rounded-lg border border-slate-200">
+                                <label className="text-[10px] font-bold text-slate-600 dark:text-zinc-400 uppercase block mb-1">¿Borde de Hule?</label>
+                                <div className="flex bg-slate-100 dark:bg-zinc-800 p-1 rounded-xl border border-slate-200 dark:border-zinc-700">
                                     <button
                                         onClick={() => setHasRubberBorder(true)}
                                         className={cn(
-                                            "flex-1 py-1.5 rounded-md text-xs font-bold transition-all",
-                                            hasRubberBorder ? "bg-white text-amber-600 shadow-sm" : "text-slate-400 hover:text-slate-600"
+                                            "flex-1 py-1.5 rounded-lg text-xs font-bold transition-all",
+                                            hasRubberBorder ? "bg-white dark:bg-zinc-700 text-amber-600 dark:text-amber-400 shadow-sm" : "text-slate-500 dark:text-zinc-400 hover:text-slate-800 dark:hover:text-zinc-200"
                                         )}
                                     >
                                         SÍ
@@ -1099,8 +1102,8 @@ ${pdfLink}
                                     <button
                                         onClick={() => setHasRubberBorder(false)}
                                         className={cn(
-                                            "flex-1 py-1.5 rounded-md text-xs font-bold transition-all",
-                                            !hasRubberBorder ? "bg-white text-slate-600 shadow-sm" : "text-slate-400 hover:text-slate-600"
+                                            "flex-1 py-1.5 rounded-lg text-xs font-bold transition-all",
+                                            !hasRubberBorder ? "bg-white dark:bg-zinc-700 text-slate-800 dark:text-zinc-100 shadow-sm" : "text-slate-500 dark:text-zinc-400 hover:text-slate-800 dark:hover:text-zinc-200"
                                         )}
                                     >
                                         NO
@@ -1108,48 +1111,48 @@ ${pdfLink}
                                 </div>
                             </div>
                             <div className="md:col-span-2">
-                                <label className="text-[10px] font-bold text-slate-500 uppercase block mb-1">Color de Fondo</label>
+                                <label className="text-[10px] font-bold text-slate-600 dark:text-zinc-400 uppercase block mb-1">Color de Fondo</label>
                                 <select
                                     value={backgroundColor}
                                     onChange={e => setBackgroundColor(e.target.value)}
-                                    className="w-full border border-slate-200 bg-white text-slate-800 p-2 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none transition-all appearance-none"
+                                    className="w-full border border-slate-300 dark:border-zinc-700 bg-slate-50 dark:bg-zinc-800 text-slate-900 dark:text-white p-2.5 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 outline-none transition-all cursor-pointer font-medium appearance-none"
                                 >
                                     {['Negro', 'Gris oscuro', 'Gris claro', 'Café oscuro', 'Amarillo', 'Azul oscuro', 'Azul rey', 'Celeste', 'Rosa', 'Fucsia', 'Rojo', 'Color vino', 'Naranja', 'Morado', 'Color Beige', 'Color verde lima', 'Color verde encendido', 'Color verde navidad', 'Color verde oscuro'].map(color => (
-                                        <option key={color} value={color}>{color}</option>
+                                        <option key={color} value={color} className="bg-white text-slate-900 dark:bg-zinc-900 dark:text-white">{color}</option>
                                     ))}
                                 </select>
                             </div>
                             <div className="md:col-span-2">
-                                <button onClick={addItem} className="w-full bg-amber-500 hover:bg-amber-600 text-black rounded-xl p-3 flex items-center justify-center transition-all font-black text-sm shadow-lg shadow-amber-500/20 uppercase tracking-tighter">
+                                <button onClick={addItem} className="w-full bg-amber-500 hover:bg-amber-600 active:scale-[0.98] text-slate-950 rounded-xl p-3 flex items-center justify-center transition-all font-black text-sm shadow-md shadow-amber-500/20 uppercase tracking-wider">
                                     <Plus className="w-4 h-4 mr-2 stroke-[3]" /> Añadir Item
                                 </button>
                             </div>
                         </div>
 
                         {/* Tabla Visual (Solo Pantalla) */}
-                        <div className="mt-8 overflow-x-auto">
+                        <div className="mt-8 overflow-x-auto rounded-xl border border-slate-200 dark:border-zinc-800">
                             <table className="w-full text-xs text-left">
-                                <thead className="bg-slate-800 text-slate-200 font-bold uppercase text-[10px]">
+                                <thead className="bg-slate-100 dark:bg-zinc-800/90 text-slate-700 dark:text-zinc-300 font-bold uppercase text-[10px] border-b border-slate-200 dark:border-zinc-700">
                                     <tr>
-                                        <th className="py-3 px-4 rounded-tl-lg">Producto</th>
+                                        <th className="py-3 px-4">Producto</th>
                                         <th className="py-3 px-4 text-center">Medida</th>
                                         <th className="py-3 px-4 text-right">Cant.</th>
                                         <th className="py-3 px-4 text-right">Total</th>
-                                        <th className="py-3 px-4 w-10 text-center rounded-tr-lg"></th>
+                                        <th className="py-3 px-4 w-10 text-center"></th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-slate-100">
+                                <tbody className="divide-y divide-slate-100 dark:divide-zinc-800">
                                     {items.length === 0 && (
-                                        <tr><td colSpan={5} className="py-8 text-center text-slate-400 italic border-b border-slate-200">No hay items agregados</td></tr>
+                                        <tr><td colSpan={5} className="py-8 text-center text-slate-400 dark:text-zinc-500 italic">No hay items agregados</td></tr>
                                     )}
                                     {items.map(item => (
-                                        <tr key={item.id} className="text-slate-800 hover:bg-slate-50 transition-colors">
-                                            <td className="py-3 px-4 font-medium">{item.productName}</td>
-                                            <td className="py-3 px-4 text-center font-mono text-slate-500">{item.width}x{item.height}</td>
-                                            <td className="py-3 px-4 text-right text-slate-500">{item.quantity}</td>
-                                            <td className="py-3 px-4 text-right font-bold text-slate-900">{fmt(item.total)}</td>
+                                        <tr key={item.id} className="text-slate-800 dark:text-zinc-200 hover:bg-slate-50 dark:hover:bg-zinc-800/50 transition-colors">
+                                            <td className="py-3 px-4 font-bold text-slate-900 dark:text-white">{item.productName}</td>
+                                            <td className="py-3 px-4 text-center font-mono text-slate-600 dark:text-zinc-400">{item.width}x{item.height}</td>
+                                            <td className="py-3 px-4 text-right font-mono text-slate-600 dark:text-zinc-400">{item.quantity}</td>
+                                            <td className="py-3 px-4 text-right font-black font-mono text-slate-900 dark:text-white">{fmt(item.total)}</td>
                                             <td className="py-3 px-4 text-center">
-                                                <button onClick={() => removeItem(item.id)} className="text-red-400 hover:text-red-600 transition-colors p-1 rounded-md hover:bg-red-50">
+                                                <button onClick={() => removeItem(item.id)} className="text-red-400 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300 transition-colors p-1.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-950/40">
                                                     <Trash2 className="w-4 h-4" />
                                                 </button>
                                             </td>
