@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter, usePathname } from 'next/navigation';
 import { 
-  Users, Calculator, Globe, Book, MessageCircle, 
+  Users, Calculator, Globe, Book, MessageCircle, MessageSquare,
   BarChart3, Mail, Calendar, LogOut, Settings, Package,
   Sun, Moon, Layers, FileText, Menu, X, SlidersHorizontal, Sparkles
 } from 'lucide-react';
@@ -127,6 +127,7 @@ export default function SidebarLayout({
     if (pathname.includes('/landing-pages')) return 'landing-pages';
     if (pathname.includes('/simulador')) return 'simulador';
     if (pathname.includes('/knowledge')) return 'knowledge';
+    if (pathname.includes('/whatsapp')) return 'whatsapp';
     return '';
   };
 
@@ -144,6 +145,14 @@ export default function SidebarLayout({
 
       <div className="pt-4 pb-2 px-3 text-xs font-bold text-muted-foreground dark:text-zinc-500 uppercase tracking-widest">Herramientas</div>
       
+      <NavItem 
+        icon={<MessageCircle className="w-4 h-4 text-emerald-500" />} 
+        label="WhatsApp Leads" 
+        href="/crm/whatsapp" 
+        active={currentModule === 'whatsapp'} 
+        onClick={isMobile ? () => setMobileMenuOpen(false) : undefined}
+      />
+
       <NavItem 
         icon={<Sparkles className="w-4 h-4 text-emerald-500" />} 
         label="Simulador & Ficha" 

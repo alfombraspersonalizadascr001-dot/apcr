@@ -10,7 +10,8 @@ import {
   ArrowRight, MousePointer2, GripVertical, Trash2, Package, Menu, Printer,
   ShoppingBag, Store, Sparkles, Percent, ExternalLink, Tag, Phone, ShieldCheck,
   Award, MapPin, Gift, Bell, Clock, CheckCircle, Building2, UtensilsCrossed,
-  Stethoscope, Wrench, Dumbbell, Shirt, Truck, Headphones, Receipt, SlidersHorizontal
+  Stethoscope, Wrench, Dumbbell, Shirt, Truck, Headphones, Receipt, SlidersHorizontal,
+  MessageSquare
 } from 'lucide-react';
 import Link from 'next/link';
 import ChatImporter from './components/ChatImporter';
@@ -265,6 +266,10 @@ export default function Dashboard() {
             <>
               <div className="pt-4 pb-2 px-3 text-xs font-bold text-muted-foreground uppercase tracking-widest">Herramientas</div>
               
+              <Link href="/crm/whatsapp">
+                <NavItem icon={<MessageCircle className="text-emerald-500" />} label="WhatsApp Leads" />
+              </Link>
+
               <Link href="/crm/simulador">
                 <NavItem icon={<Sparkles className="text-emerald-500" />} label="Simulador & Ficha" />
               </Link>
@@ -517,6 +522,14 @@ export default function Dashboard() {
                     <p className="text-muted-foreground font-medium">Gestiona conversaciones y prospectos en tiempo real.</p>
                   </div>
                   <div className="flex items-center gap-3">
+                    <Link
+                      href="/crm/whatsapp"
+                      className="flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-black text-xs uppercase tracking-wider shadow-lg shadow-emerald-600/25 transition-all active:scale-95 border border-emerald-500/30"
+                    >
+                      <MessageSquare className="w-4 h-4 text-emerald-100" />
+                      <span>Bandeja WhatsApp CRM</span>
+                      <ArrowRight className="w-3.5 h-3.5 ml-1 text-emerald-100" />
+                    </Link>
                     <div className="hidden md:block text-right">
                       <p className="text-xs font-black text-amber-500 uppercase tracking-widest">Estado del Sistema</p>
                       <p className="text-[10px] text-muted-foreground font-bold">Resincronizado hace 2m</p>
