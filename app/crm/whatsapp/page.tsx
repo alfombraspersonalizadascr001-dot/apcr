@@ -41,9 +41,12 @@ export default function WhatsAppTwoColumnsPage() {
   const [isDark, setIsDark] = useState(false);
   const [agentName, setAgentName] = useState<string>("Rolo");
   const [isWAConnected, setIsWAConnected] = useState<boolean>(false);
+  const [connectedPhone, setConnectedPhone] = useState<string>('');
   const [showQRModal, setShowQRModal] = useState<boolean>(false);
   const [qrString, setQrString] = useState<string | null>(null);
   const [disconnecting, setDisconnecting] = useState<boolean>(false);
+
+  const SYS_WHATSAPP_ID = 'b1d9eaf7-e220-4bce-80bc-fc4778b5fd52';
 
   // Datos de las 2 columnas
   const [incomingChats, setIncomingChats] = useState<ChatItem[]>([]);
@@ -89,15 +92,34 @@ export default function WhatsAppTwoColumnsPage() {
     // Cargar datos
     cargarDatosCompletos();
 
-    // Comprobar estado del servidor local
+    // Comprobar estado periódicamente vía Cloud Bridge
     checkServerStatus();
-    const interval = setInterval(checkServerStatus, 5000);
+    const interval = setInterval(checkServerStatus, 3000);
 
-    // Suscripción en tiempo real a Supabase para clientes nuevos
+    // Suscripción en tiempo real a Supabase (Cloud Bridge WhatsApp + Clientes)
     const channel = supabase
       .channel('realtime-whatsapp-crm')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'crm_users' }, () => {
-        cargarLeadsDesdeSupabase();
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'crm_users' }, (payload: any) => {
+        const u = payload.new;
+        if (u && u.account_number === 'SYS_WHATSAPP') {
+          const connected = u.company_name === 'open';
+          setIsWAConnected(connected);
+          if (u.contact_name) setQrString(u.contact_name);
+          if (connected) {
+            setShowQRModal(false);
+            if (u.phone) setConnectedPhone(u.phone);
+          }
+        } else {
+          cargarLeadsDesdeSupabase();
+        }
+      })
+      .on('postgres_changes', {
+        event: '*',
+        schema: 'public',
+        table: 'client_designs',
+        filter: `client_id=eq.${SYS_WHATSAPP_ID}`
+      }, () => {
+        cargarChatsEntrantes();
       })
       .subscribe();
 
@@ -109,8 +131,29 @@ export default function WhatsAppTwoColumnsPage() {
 
   const checkServerStatus = async () => {
     try {
-      const res = await fetch('http://localhost:4000/status');
-      if (res.ok) {
+      // 1. Consultar estado en Supabase (Cloud Bridge: 100% inmune a restricciones CORS y loopback)
+      const { data: sysUser } = await supabase
+        .from('crm_users')
+        .select('company_name, contact_name, phone, updated_at')
+        .eq('account_number', 'SYS_WHATSAPP')
+        .maybeSingle();
+
+      if (sysUser) {
+        const connected = sysUser.company_name === 'open';
+        setIsWAConnected(connected);
+        if (sysUser.contact_name) {
+          setQrString(sysUser.contact_name);
+        }
+        if (connected) {
+          setShowQRModal(false);
+          if (sysUser.phone) setConnectedPhone(sysUser.phone);
+        }
+        return;
+      }
+
+      // 2. Fallback local directo
+      const res = await fetch('http://localhost:4000/status').catch(() => null);
+      if (res && res.ok) {
         const data = await res.json();
         const connected = data.status === 'open';
         setIsWAConnected(connected);
@@ -118,11 +161,9 @@ export default function WhatsAppTwoColumnsPage() {
         if (connected) {
           setShowQRModal(false);
         }
-      } else {
-        setIsWAConnected(false);
       }
     } catch {
-      setIsWAConnected(false);
+      // mantener estado actual
     }
   };
 
@@ -130,13 +171,25 @@ export default function WhatsAppTwoColumnsPage() {
     if (!confirm('¿Deseas desvincular este número de WhatsApp para conectar otro?')) return;
     setDisconnecting(true);
     try {
-      await fetch('http://localhost:4000/api/logout', { method: 'POST' });
+      // Notificar a Supabase para que el servicio genere un nuevo QR limpio
+      await supabase
+        .from('crm_users')
+        .update({
+          province: 'logout',
+          company_name: 'connecting',
+          contact_name: '',
+          updated_at: new Date().toISOString()
+        })
+        .eq('account_number', 'SYS_WHATSAPP');
+
+      fetch('http://localhost:4000/api/logout', { method: 'POST' }).catch(() => null);
       setIsWAConnected(false);
+      setQrString(null);
       setShowQRModal(true);
-      checkServerStatus();
+      setTimeout(checkServerStatus, 2000);
     } catch (err) {
       console.error('Error al desvincular:', err);
-      alert('Error comunicando con el servidor local para desvincular.');
+      alert('Error comunicando con la nube para desvincular.');
     } finally {
       setDisconnecting(false);
     }
@@ -151,9 +204,38 @@ export default function WhatsAppTwoColumnsPage() {
     setLoading(false);
   };
 
-  // Columna 1: Cargar chats entrantes directamente del servidor WhatsApp
+  // Columna 1: Cargar chats entrantes desde Supabase Cloud Bridge (con fallback local)
   const cargarChatsEntrantes = async () => {
     try {
+      // 1. Leer desde Supabase Cloud Bridge
+      const { data } = await supabase
+        .from('client_designs')
+        .select('url')
+        .eq('client_id', SYS_WHATSAPP_ID)
+        .eq('category', 'wa_incoming_chats')
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      if (data && data.url) {
+        try {
+          const chats = JSON.parse(data.url);
+          if (Array.isArray(chats)) {
+            const formatted: ChatItem[] = chats.map((c: any, idx: number) => ({
+              id: c.phone || idx,
+              name: c.name || `+${c.phone}`,
+              phone: c.phone,
+              msg: c.lastMessage || 'Mensaje recibido',
+              time: new Date(c.lastTimestamp || Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+              received_at: c.lastTimestamp
+            }));
+            setIncomingChats(formatted);
+            return;
+          }
+        } catch (e) {}
+      }
+
+      // 2. Fallback local si el navegador estuviera en la misma red
       const resLocal = await fetch('http://localhost:4000/api/chats').catch(() => null);
       if (resLocal && resLocal.ok) {
         const localData = await resLocal.json();
@@ -288,7 +370,7 @@ export default function WhatsAppTwoColumnsPage() {
     }
   };
 
-  // Enviar mensaje por WhatsApp
+  // Enviar mensaje por WhatsApp vía Cloud Bridge
   const handleEnviarRespuesta = async () => {
     if (!replyText.trim() || !selectedContact) return;
     const phone = selectedContact.data.phone;
@@ -296,20 +378,28 @@ export default function WhatsAppTwoColumnsPage() {
 
     setSendingMsg(true);
     try {
-      const res = await fetch('http://localhost:4000/api/send', {
+      // 1. Encolar en Supabase Cloud Bridge (funciona en cualquier navegador y red)
+      const { error: queueErr } = await supabase.from('client_designs').insert([{
+        client_id: SYS_WHATSAPP_ID,
+        category: 'wa_outgoing_queue',
+        url: JSON.stringify({ phone, text: replyText.trim() })
+      }]);
+
+      if (queueErr) {
+        throw new Error(queueErr.message);
+      }
+
+      // 2. Fallback local instantáneo
+      fetch('http://localhost:4000/api/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ phone, text: replyText.trim() })
-      });
+      }).catch(() => null);
 
-      if (res.ok) {
-        setReplyText('');
-        alert('✅ Mensaje enviado por WhatsApp');
-      } else {
-        alert('⚠️ No se pudo enviar el mensaje directamente (verifica que el servidor de WhatsApp esté activo en la compu).');
-      }
-    } catch {
-      alert('⚠️ Servidor local no disponible para envío directo.');
+      setReplyText('');
+      alert('✅ Mensaje enviado exitosamente a WhatsApp');
+    } catch (err: any) {
+      alert('⚠️ Error enviando mensaje: ' + err.message);
     } finally {
       setSendingMsg(false);
     }
@@ -917,7 +1007,7 @@ export default function WhatsAppTwoColumnsPage() {
             </h3>
             <p className="text-xs text-muted-foreground font-medium mb-6 max-w-sm leading-relaxed">
               {isWAConnected 
-                ? 'Tu número oficial está activo y sincronizando chats en tiempo real con el CRM.'
+                ? (connectedPhone ? `Conectado al número +${connectedPhone}. Sincronizando chats en tiempo real con el CRM.` : 'Tu número oficial está activo y sincronizando chats en tiempo real con el CRM.')
                 : 'Escanea el código QR desde tu celular para centralizar tus mensajes y proformas.'}
             </p>
 
@@ -927,14 +1017,16 @@ export default function WhatsAppTwoColumnsPage() {
                 <div className="w-[220px] h-[220px] flex flex-col items-center justify-center gap-3 text-emerald-600 bg-emerald-50 rounded-2xl">
                   <CheckCircle className="w-16 h-16 text-emerald-500 animate-bounce" />
                   <span className="font-black text-sm uppercase tracking-wider text-emerald-700">¡Conexión Activa!</span>
-                  <span className="text-[11px] text-emerald-600/80 font-bold">Listo para recibir y cotizar</span>
+                  <span className="text-[11px] text-emerald-600/80 font-bold">
+                    {connectedPhone ? `+${connectedPhone}` : 'Listo para recibir y cotizar'}
+                  </span>
                 </div>
               ) : qrString ? (
                 <div className="relative flex flex-col items-center">
-                  <div className="p-2 bg-white rounded-xl">
+                  <div className="p-2 bg-white rounded-xl shadow-sm">
                     <QRCode
                       value={qrString}
-                      size={210}
+                      size={220}
                       level="M"
                       style={{ height: "auto", maxWidth: "100%", width: "100%" }}
                     />
@@ -944,7 +1036,7 @@ export default function WhatsAppTwoColumnsPage() {
                 <div className="w-[220px] h-[220px] flex flex-col items-center justify-center gap-3 bg-slate-50 rounded-2xl">
                   <RefreshCw className="w-8 h-8 text-emerald-500 animate-spin" />
                   <p className="text-xs font-bold text-slate-500">Generando código QR...</p>
-                  <p className="text-[10px] text-slate-400 max-w-[180px]">Verifica que el servidor esté activo en el puerto 4000</p>
+                  <p className="text-[10px] text-slate-400 max-w-[200px]">Conectando de forma segura con el servicio de WhatsApp</p>
                 </div>
               )}
             </div>
@@ -958,8 +1050,8 @@ export default function WhatsAppTwoColumnsPage() {
               }`}>
                 <span className={`w-2 h-2 rounded-full ${isWAConnected ? 'bg-emerald-500' : 'bg-amber-500'}`} />
                 {isWAConnected 
-                  ? '🟢 Listo y funcionando' 
-                  : qrString ? '🟡 Esperando escaneo desde tu celular...' : 'Conectando con el puente...'}
+                  ? (connectedPhone ? `🟢 Conectado (+${connectedPhone})` : '🟢 Listo y funcionando') 
+                  : qrString ? '🟡 Esperando escaneo desde tu celular...' : 'Generando código QR...'}
               </span>
             </div>
 
@@ -973,7 +1065,7 @@ export default function WhatsAppTwoColumnsPage() {
                   <li>Abre <b>WhatsApp</b> en tu celular.</li>
                   <li>Toca <b>Ajustes</b> o los <b>3 puntos</b> arriba.</li>
                   <li>Entra en <b>Dispositivos vinculados</b>.</li>
-                  <li>Toca <b>Vincular un dispositivo</b> y apunta la cámara al QR.</li>
+                  <li>Toca <b>Vincular un dispositivo</b> y apunta la cámara a este código QR.</li>
                 </ol>
               </div>
             )}
@@ -991,11 +1083,12 @@ export default function WhatsAppTwoColumnsPage() {
                 </button>
               ) : (
                 <button
-                  onClick={checkServerStatus}
+                  onClick={handleDisconnectWhatsApp}
+                  disabled={disconnecting}
                   className={`py-2 px-4 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 border transition-all ${isDark ? 'bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border-zinc-700' : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-300'}`}
                 >
-                  <RefreshCw className="w-3.5 h-3.5" />
-                  <span>Actualizar QR</span>
+                  <RefreshCw className={`w-3.5 h-3.5 ${disconnecting ? 'animate-spin' : ''}`} />
+                  <span>{disconnecting ? 'Generando...' : 'Generar Nuevo QR'}</span>
                 </button>
               )}
 

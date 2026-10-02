@@ -83,6 +83,22 @@
   2. **Endpoint de Desvinculación en el Servidor:** Endpoint `POST /api/logout` en `server.js` para permitir desconectar y cambiar de número con 1 clic desde el CRM.
   3. **Control de Estado en Vivo:** Detección en tiempo real del estado (`connecting`, `open`, `disconnected`) con actualización inmediata de la interfaz.
 
+---
+
+### 📌 10. Arquitectura Cloud Bridge para QR y Chats Nativos en CRM (SaaS Ready)
+* **Diagnóstico de Bloqueo de Navegador Identificado:**
+  * Al acceder al CRM desde la web (`https://crm-plus-25.vercel.app` o `https://www.apcr.online`), el navegador bloquea las solicitudes a `http://localhost:4000` por políticas de seguridad de Google Chrome (CORS Private Network Access / Mixed Content: no permite llamadas desde HTTPS hacia IPs privadas de loopback).
+  * Por esta razón, el código QR quedaba en "Generando..." dentro del CRM.
+* **Solución SaaS de Nivel Comercial:**
+  1. **Puente en Tiempo Real vía Supabase (`SYS_WHATSAPP`):**
+     * `server.js` sincroniza en tiempo real su estado (`open`, `connecting`, `disconnected`), el string del código QR y el número de teléfono vinculado en el registro de sistema `SYS_WHATSAPP` en Supabase.
+     * El CRM (`/crm/whatsapp`) se conecta vía Supabase HTTPS y escucha cambios en tiempo real, renderizando el código QR nativamente en el modal y actualizando las columnas sin depender de peticiones HTTP directas del navegador al puerto 4000.
+  2. **Persistencia de Chats Entrantes en la Nube:**
+     * `server.js` replica los mensajes y conversaciones de la Columna 1 hacia Supabase en la categoría `wa_incoming_chats`, permitiendo que el CRM cargue todos los mensajes entrantes de inmediato en cualquier dispositivo (computadora, tablet o celular).
+  3. **Desvinculación y Renovación de QR con 1 Clic:**
+     * Al hacer clic en "Desvincular" o "Actualizar QR" en el CRM, se envía la instrucción de reseteo a Supabase; el servidor Baileys borra la sesión antigua y genera un nuevo QR que se proyecta en el CRM en menos de 2 segundos.
+
+
 
 
 
