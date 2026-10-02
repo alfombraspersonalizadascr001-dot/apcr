@@ -64,12 +64,27 @@
 ---
 
 ### 📌 7. Diagnóstico de www.apcr.online y Corrección de Diseño
-* **Hallazgo Clave:** La página en producción real del usuario es `www.apcr.online`, la cual se despliega automáticamente desde el repositorio de GitHub (`origin/main`). Al no haberse hecho `git commit` y `git push` a `origin/main`, `www.apcr.online` no reflejaba los cambios.
-* **Corrección de la "animalada" de diseño:**
-  * Se restaura `app/crm/cotizador/page.tsx` a su estado original para eliminar los botones redundantes y dejar la botonera de cotizar limpia en una sola fila.
-  * Se elimina el botón extra de la cabecera superior en `SidebarLayout.tsx`.
-  * El acceso a **WhatsApp Leads** se mantiene estrictamente y de forma limpia en el **Menú Lateral Izquierdo** (sección *Herramientas*).
-* **Acción para www.apcr.online:** Se procederá a hacer commit y push a GitHub (`main`) para que `www.apcr.online` reciba la actualización oficial limpia.
+* **Causa Raíz Resuelta:** `www.apcr.online` se despliega desde GitHub `main`. Se sincronizó el repositorio local mediante el commit `76f06f2` y se ejecutó `git push origin main` hacia `https://github.com/alfombraspersonalizadascr001-dot/apcr.git`.
+* **Corrección de Diseño en Cotizador:**
+  * Se restauró `app/crm/cotizador/page.tsx` a su estado original: la botonera vuelve a estar en una sola fila limpia, sin botones de WhatsApp repetidos ni descuadres.
+  * Se retiró el botón de WhatsApp flotante de la barra superior.
+  * El acceso a **WhatsApp Leads** queda establecido limpia y exclusivamente en el **Menú Lateral Izquierdo** (sección *Herramientas*).
+* **Despliegue de Producción:**
+  * Despliegue en Vercel completado: `https://apcr-web-oficial-3pg6gud8e-crm-21.vercel.app`.
+### 📌 8. Actualización de WhatsApp Server (Baileys) y Filtro Antispam
+* **Corrección de Creación Automática de Leads:**
+  * Se eliminó el lead de prueba creado automáticamente por un canal de noticias de la BBC (`120363172997847444`).
+  * Se confirmó que **ningún mensaje entrante crea leads en Supabase** de forma automática; los prospectos permanecen en la Columna 1 hasta acción manual del usuario.
+  * Se añadieron filtros estrictos para ignorar canales (`@newsletter`), transmisiones (`@broadcast`), estados y grupos (`@g.us`).
+### 📌 9. Módulo Comercial de Vinculación de WhatsApp (SaaS Ready)
+* **Requerimiento del Usuario:** Integrar el código QR de vinculación de WhatsApp directamente dentro de la interfaz del CRM (diseñado a nivel de producto comercializable para venta), eliminando la necesidad de abrir localhost:4000.
+* **Componentes a Implementar:**
+  1. **Renderizado de QR Nativo en el CRM:** Uso de `react-qr-code` en `app/crm/whatsapp/page.tsx` para mostrar el código QR dinámico en una tarjeta de bienvenida profesional.
+  2. **Endpoint de Desvinculación en el Servidor:** Endpoint `POST /api/logout` en `server.js` para permitir desconectar y cambiar de número con 1 clic desde el CRM.
+  3. **Control de Estado en Vivo:** Detección en tiempo real del estado (`connecting`, `open`, `disconnected`) con actualización inmediata de la interfaz.
+
+
+
 
 
 

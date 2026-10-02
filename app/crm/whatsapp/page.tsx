@@ -8,8 +8,10 @@ import {
   Send, Calculator, Edit3, Trash2, CheckCircle2, 
   User, Phone, Clock, ArrowRight, ShieldCheck, 
   Sparkles, RefreshCw, X, Check, ExternalLink,
-  ChevronRight, Smartphone, AlertCircle, MessageSquare
+  ChevronRight, Smartphone, AlertCircle, MessageSquare,
+  QrCode, Wifi, LogOut, CheckCircle
 } from 'lucide-react';
+import QRCode from 'react-qr-code';
 import { supabase } from "@/lib/supabase";
 
 interface ChatItem {
@@ -38,7 +40,10 @@ export default function WhatsAppTwoColumnsPage() {
   const router = useRouter();
   const [isDark, setIsDark] = useState(false);
   const [agentName, setAgentName] = useState<string>("Rolo");
-  const [isWAConnected, setIsWAConnected] = useState<boolean>(true);
+  const [isWAConnected, setIsWAConnected] = useState<boolean>(false);
+  const [showQRModal, setShowQRModal] = useState<boolean>(false);
+  const [qrString, setQrString] = useState<string | null>(null);
+  const [disconnecting, setDisconnecting] = useState<boolean>(false);
 
   // Datos de las 2 columnas
   const [incomingChats, setIncomingChats] = useState<ChatItem[]>([]);
@@ -107,10 +112,33 @@ export default function WhatsAppTwoColumnsPage() {
       const res = await fetch('http://localhost:4000/status');
       if (res.ok) {
         const data = await res.json();
-        setIsWAConnected(data.status === 'open');
+        const connected = data.status === 'open';
+        setIsWAConnected(connected);
+        setQrString(data.qr || null);
+        if (connected) {
+          setShowQRModal(false);
+        }
+      } else {
+        setIsWAConnected(false);
       }
     } catch {
-      // Si no responde el server local, mantenemos activo el estado por Supabase
+      setIsWAConnected(false);
+    }
+  };
+
+  const handleDisconnectWhatsApp = async () => {
+    if (!confirm('¿Deseas desvincular este número de WhatsApp para conectar otro?')) return;
+    setDisconnecting(true);
+    try {
+      await fetch('http://localhost:4000/api/logout', { method: 'POST' });
+      setIsWAConnected(false);
+      setShowQRModal(true);
+      checkServerStatus();
+    } catch (err) {
+      console.error('Error al desvincular:', err);
+      alert('Error comunicando con el servidor local para desvincular.');
+    } finally {
+      setDisconnecting(false);
     }
   };
 
@@ -400,6 +428,20 @@ export default function WhatsAppTwoColumnsPage() {
         </div>
 
         <div className="flex items-center gap-3">
+          {/* BOTÓN VINCULACIÓN NATIVA QR */}
+          <button
+            onClick={() => setShowQRModal(true)}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-2 border transition-all ${
+              isWAConnected 
+                ? (isDark ? 'bg-emerald-500/20 text-emerald-300 border-emerald-400/40 hover:bg-emerald-500/30' : 'bg-white/20 text-white border-white/40 hover:bg-white/30') 
+                : 'bg-amber-400 text-black border-amber-300 hover:bg-amber-300 shadow-md font-black animate-pulse'
+            }`}
+            title={isWAConnected ? "Gestionar o cambiar número de WhatsApp" : "Vincular WhatsApp con código QR"}
+          >
+            <QrCode className="w-4 h-4" />
+            <span className="hidden sm:inline">{isWAConnected ? 'Dispositivo Vinculado' : 'Vincular WhatsApp (QR)'}</span>
+          </button>
+
           <button 
             onClick={cargarDatosCompletos} 
             title="Refrescar datos"
@@ -453,6 +495,25 @@ export default function WhatsAppTwoColumnsPage() {
               )}
             </div>
           </div>
+
+          {/* Banner de alerta si WhatsApp no está conectado */}
+          {!isWAConnected && (
+            <div 
+              onClick={() => setShowQRModal(true)}
+              className="m-3 p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-between cursor-pointer hover:bg-amber-500/20 transition-all text-amber-300 shadow-sm"
+            >
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center flex-shrink-0">
+                  <QrCode className="w-4 h-4 text-amber-400" />
+                </div>
+                <div>
+                  <p className="text-xs font-bold text-amber-400">WhatsApp no vinculado</p>
+                  <p className="text-[11px] text-muted-foreground dark:text-zinc-400">Toca aquí para escanear el código QR nativo</p>
+                </div>
+              </div>
+              <span className="px-2.5 py-1 rounded-lg bg-amber-500 text-black font-black text-[11px]">Escanear QR</span>
+            </div>
+          )}
 
           {/* Lista Compacta de Chats (Estilo WhatsApp Web: ~68px de alto) */}
           <div className="flex-1 overflow-y-auto divide-y divide-slate-100 dark:divide-zinc-800/60 custom-scrollbar">
@@ -825,6 +886,127 @@ export default function WhatsAppTwoColumnsPage() {
                 {savingEdit ? 'Guardando...' : 'Guardar Cambios'}
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================ */}
+      {/* MODAL NATIVO COMERCIAL: VINCULAR WHATSAPP (SAAS READY)         */}
+      {/* ============================================================ */}
+      {showQRModal && (
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-xl animate-in fade-in zoom-in-95 duration-200">
+          <div className={`w-full max-w-lg rounded-[2.5rem] border shadow-2xl p-6 sm:p-8 text-center flex flex-col items-center relative overflow-hidden ${isDark ? 'bg-zinc-900 border-zinc-800 text-white' : 'bg-white border-slate-200 text-slate-900'}`}>
+            
+            {/* Botón cerrar */}
+            <div className="absolute top-4 right-4">
+              <button 
+                onClick={() => setShowQRModal(false)} 
+                className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-800 rounded-full text-slate-400 hover:text-slate-600 dark:hover:text-zinc-200 transition-colors"
+              >
+                <X className="w-5 h-5"/>
+              </button>
+            </div>
+
+            {/* Icono Cabecera */}
+            <div className="w-16 h-16 bg-emerald-500/10 rounded-2xl flex items-center justify-center mb-4 border border-emerald-500/20">
+              <MessageCircle className="w-9 h-9 text-emerald-500" />
+            </div>
+
+            <h3 className="text-2xl font-black tracking-tight mb-2">
+              {isWAConnected ? 'WhatsApp Conectado' : 'Vincular WhatsApp Oficial'}
+            </h3>
+            <p className="text-xs text-muted-foreground font-medium mb-6 max-w-sm leading-relaxed">
+              {isWAConnected 
+                ? 'Tu número oficial está activo y sincronizando chats en tiempo real con el CRM.'
+                : 'Escanea el código QR desde tu celular para centralizar tus mensajes y proformas.'}
+            </p>
+
+            {/* Contenedor del Código QR o Estado */}
+            <div className="relative p-5 bg-white rounded-3xl border-2 border-slate-100 shadow-inner flex items-center justify-center">
+              {isWAConnected ? (
+                <div className="w-[220px] h-[220px] flex flex-col items-center justify-center gap-3 text-emerald-600 bg-emerald-50 rounded-2xl">
+                  <CheckCircle className="w-16 h-16 text-emerald-500 animate-bounce" />
+                  <span className="font-black text-sm uppercase tracking-wider text-emerald-700">¡Conexión Activa!</span>
+                  <span className="text-[11px] text-emerald-600/80 font-bold">Listo para recibir y cotizar</span>
+                </div>
+              ) : qrString ? (
+                <div className="relative flex flex-col items-center">
+                  <div className="p-2 bg-white rounded-xl">
+                    <QRCode
+                      value={qrString}
+                      size={210}
+                      level="M"
+                      style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+                    />
+                  </div>
+                </div>
+              ) : (
+                <div className="w-[220px] h-[220px] flex flex-col items-center justify-center gap-3 bg-slate-50 rounded-2xl">
+                  <RefreshCw className="w-8 h-8 text-emerald-500 animate-spin" />
+                  <p className="text-xs font-bold text-slate-500">Generando código QR...</p>
+                  <p className="text-[10px] text-slate-400 max-w-[180px]">Verifica que el servidor esté activo en el puerto 4000</p>
+                </div>
+              )}
+            </div>
+
+            {/* Badge de estado en tiempo real */}
+            <div className="mt-5">
+              <span className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold ${
+                isWAConnected 
+                  ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' 
+                  : 'bg-amber-500/10 text-amber-500 border border-amber-500/20 animate-pulse'
+              }`}>
+                <span className={`w-2 h-2 rounded-full ${isWAConnected ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+                {isWAConnected 
+                  ? '🟢 Listo y funcionando' 
+                  : qrString ? '🟡 Esperando escaneo desde tu celular...' : 'Conectando con el puente...'}
+              </span>
+            </div>
+
+            {/* Pasos para el usuario */}
+            {!isWAConnected && (
+              <div className={`text-left mt-6 p-4 rounded-2xl text-xs w-full max-w-sm ${isDark ? 'bg-zinc-800/60 text-zinc-300' : 'bg-slate-50 text-slate-600'}`}>
+                <p className="font-bold text-slate-900 dark:text-zinc-100 mb-2 uppercase text-[10px] tracking-widest">
+                  Pasos sencillos:
+                </p>
+                <ol className="list-decimal pl-4 space-y-1.5 text-[11px] leading-relaxed">
+                  <li>Abre <b>WhatsApp</b> en tu celular.</li>
+                  <li>Toca <b>Ajustes</b> o los <b>3 puntos</b> arriba.</li>
+                  <li>Entra en <b>Dispositivos vinculados</b>.</li>
+                  <li>Toca <b>Vincular un dispositivo</b> y apunta la cámara al QR.</li>
+                </ol>
+              </div>
+            )}
+
+            {/* Botones de acción */}
+            <div className="mt-6 flex items-center gap-3 w-full max-w-sm justify-center">
+              {isWAConnected ? (
+                <button
+                  onClick={handleDisconnectWhatsApp}
+                  disabled={disconnecting}
+                  className="w-full py-2.5 px-4 rounded-xl text-xs font-bold text-rose-500 hover:text-white bg-rose-500/10 hover:bg-rose-600 border border-rose-500/30 transition-all flex items-center justify-center gap-2"
+                >
+                  <LogOut className="w-4 h-4" />
+                  <span>{disconnecting ? 'Desvinculando...' : 'Desvincular / Cambiar Teléfono'}</span>
+                </button>
+              ) : (
+                <button
+                  onClick={checkServerStatus}
+                  className={`py-2 px-4 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 border transition-all ${isDark ? 'bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border-zinc-700' : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-300'}`}
+                >
+                  <RefreshCw className="w-3.5 h-3.5" />
+                  <span>Actualizar QR</span>
+                </button>
+              )}
+
+              <button
+                onClick={() => setShowQRModal(false)}
+                className="py-2 px-5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-md transition-all"
+              >
+                {isWAConnected ? 'Continuar al CRM' : 'Cerrar'}
+              </button>
+            </div>
+
           </div>
         </div>
       )}
