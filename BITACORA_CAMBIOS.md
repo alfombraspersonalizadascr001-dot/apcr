@@ -123,6 +123,15 @@
   * Botonera accesible en el drawer de conversación con respuestas preconfiguradas para cotizaciones, solicitud de dimensiones y logo, cuentas bancarias y garantía.
 * **4. Sistema de Etiquetas Visuales (Labels / Tags):**
   * Gestión de estados comerciales para prospectos y clientes: *Nuevo Prospecto*, *Cotizado*, *En Negociación*, *Pago Pendiente*, *En Producción* y *Cliente VIP*, con filtro instantáneo en la barra de búsqueda.
+* **5. Verificación en Producción y Despliegue en Vivo:**
+  * Despliegue exitoso en Vercel con ID `dpl_BdcNC5V9E7io5Cjf1uSEDAjPz1xr` apuntado a `https://crm-plus-25.vercel.app` y `https://apcr-web-oficial-tau.vercel.app`.
+  * Verificación visual vía Chrome DevTools de:
+    - Auto-actualización continua en segundo plano cada 2.5s.
+    - Barra de respuestas rápidas con 1 clic (`Saludo & Logo`, `Alfombra 124x75`, `Cuentas / SINPE`, etc.).
+    - Menú desplegable nativo de WhatsApp con opciones interactivas de catálogo, pagos y plazos.
+    - Selector interactivo de etiquetas de colores con persistencia en Supabase.
+    - Modal de escaneo de código QR integrado con auto-sincronización instantánea.
+
 
 
 
