@@ -107,6 +107,24 @@
   * Captura visual de pantalla verificada: el modal abre en el CRM con el código QR renderizado con nitidez, badge de estado dinámico y pasos de escaneo.
   * Todo listo para que el usuario o sus clientes escaneen directamente desde la pantalla del CRM.
 
+---
+
+### 📌 12. Auto-Actualización Continua y Suite de Mensajes Interactivos de Lista y Etiquetas
+* **1. Diagnóstico y Optimización de la Auto-Actualización:**
+  * Se identificó que el sondeo automático de la interfaz en Next.js sólo invocaba `checkServerStatus()`, sin re-sincronizar automáticamente la lista de chats entrantes ni la conversación activa en caso de reconexión de WebSocket.
+  * Se implementa un ciclo de auto-actualización continuo e imperceptible cada 2.5 segundos que refresca de forma paralela el estado del QR, los chats entrantes de la Columna 1 y el historial de conversación en pantalla sin parpadeos.
+* **2. Mensajes de Lista Interactivos Nativos de WhatsApp (`listMessage`):**
+  * Soporte en el motor Baileys y en la cola de Supabase para enviar menús interactivos desplegables con secciones y filas seleccionables desde el celular del cliente:
+    * **Menú de Catálogo & Cotizaciones:** Modelos estándar (124x75cm, 60x40cm), Rizo Vinilo a la Medida, y Solicitud de Proforma PDF.
+    * **Menú de Pagos y Cuentas:** Datos oficiales de SINPE Móvil y cuentas IBAN bancarias.
+    * **Menú de Logística:** Tiempos de confección (10 a 12 días) y Garantía de 2 años.
+  * Recepción de respuestas interactivas: captura de eventos `listResponseMessage` para visualizar en el CRM la opción exacta seleccionada por el cliente.
+* **3. Barra de Plantillas Rápidas con 1 Clic (Canned Responses):**
+  * Botonera accesible en el drawer de conversación con respuestas preconfiguradas para cotizaciones, solicitud de dimensiones y logo, cuentas bancarias y garantía.
+* **4. Sistema de Etiquetas Visuales (Labels / Tags):**
+  * Gestión de estados comerciales para prospectos y clientes: *Nuevo Prospecto*, *Cotizado*, *En Negociación*, *Pago Pendiente*, *En Producción* y *Cliente VIP*, con filtro instantáneo en la barra de búsqueda.
+
+
 
 
 

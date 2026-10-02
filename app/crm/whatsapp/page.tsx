@@ -9,7 +9,8 @@ import {
   User, Phone, Clock, ArrowRight, ShieldCheck, 
   Sparkles, RefreshCw, X, Check, ExternalLink,
   ChevronRight, Smartphone, AlertCircle, MessageSquare,
-  QrCode, Wifi, LogOut, CheckCircle
+  QrCode, Wifi, LogOut, CheckCircle, ListFilter, Tag,
+  ChevronDown
 } from 'lucide-react';
 import QRCode from 'react-qr-code';
 import { supabase } from "@/lib/supabase";
@@ -35,6 +36,23 @@ interface LeadItem {
   created_at: string;
   notes?: string;
 }
+
+export const AVAILABLE_TAGS = [
+  { id: 'nuevo_prospecto', label: 'Nuevo', emoji: '🟢', activeBg: 'bg-emerald-500/20', activeText: 'text-emerald-700 dark:text-emerald-300', activeBorder: 'border-emerald-500/40' },
+  { id: 'cotizado', label: 'Cotizado', emoji: '🟡', activeBg: 'bg-amber-500/20', activeText: 'text-amber-700 dark:text-amber-300', activeBorder: 'border-amber-500/40' },
+  { id: 'en_negociacion', label: 'En Negociación', emoji: '🔵', activeBg: 'bg-blue-500/20', activeText: 'text-blue-700 dark:text-blue-300', activeBorder: 'border-blue-500/40' },
+  { id: 'pago_pendiente', label: 'Pago Pendiente', emoji: '🟠', activeBg: 'bg-orange-500/20', activeText: 'text-orange-700 dark:text-orange-300', activeBorder: 'border-orange-500/40' },
+  { id: 'en_produccion', label: 'En Confección', emoji: '🟣', activeBg: 'bg-purple-500/20', activeText: 'text-purple-700 dark:text-purple-300', activeBorder: 'border-purple-500/40' },
+  { id: 'cliente_vip', label: 'VIP', emoji: '⭐', activeBg: 'bg-yellow-500/20', activeText: 'text-yellow-700 dark:text-yellow-300', activeBorder: 'border-yellow-500/40' }
+];
+
+export const QUICK_REPLIES = [
+  { label: 'Saludo & Logo', emoji: '👋', text: '¡Hola! Gracias por comunicarte con Alfombras Personalizadas CR. ¿Con qué medidas (ancho x largo) deseas cotizar y cuentas con el logo en imagen o vector?' },
+  { label: 'Alfombra 124x75', emoji: '📐', text: 'Nuestra medida más vendida para entradas principales es de 124cm x 75cm en rizo vinilo atrapamugre con base de hule antiderrapante y logo personalizado.' },
+  { label: 'Cuentas / SINPE', emoji: '💳', text: 'Para iniciar la confección requerimos el 50% de anticipo. Nuestro SINPE Móvil oficial es 6063-8062 a nombre de Alfombras Personalizadas CR.' },
+  { label: 'Tiempos & Garantía', emoji: '🚚', text: 'El tiempo de confección es de 10 a 12 días hábiles y entregamos con 2 años de garantía contra defectos de fábrica.' },
+  { label: 'Proforma Lista', emoji: '📄', text: 'Tu cotización formal ya fue generada. Puedes revisarla para confirmar los detalles y proceder con el pedido.' }
+];
 
 export default function WhatsAppTwoColumnsPage() {
   const router = useRouter();
@@ -66,6 +84,7 @@ export default function WhatsAppTwoColumnsPage() {
   // Estado para responder mensaje por WhatsApp
   const [replyText, setReplyText] = useState('');
   const [sendingMsg, setSendingMsg] = useState(false);
+  const [showListMenuDropdown, setShowListMenuDropdown] = useState(false);
 
   // Modal para editar cliente
   const [editingLead, setEditingLead] = useState<LeadItem | null>(null);
@@ -89,12 +108,14 @@ export default function WhatsAppTwoColumnsPage() {
     const agent = document.cookie.split('; ').find(row => row.startsWith('crm_agent_name='))?.split('=')[1];
     if (agent) setAgentName(decodeURIComponent(agent));
 
-    // Cargar datos
+    // Cargar datos completos iniciales
     cargarDatosCompletos();
 
-    // Comprobar estado periódicamente vía Cloud Bridge
-    checkServerStatus();
-    const interval = setInterval(checkServerStatus, 3000);
+    // Auto-actualización continua en segundo plano cada 2.5s (100% automático sin parpadeos ni botones)
+    const interval = setInterval(async () => {
+      await checkServerStatus();
+      await cargarChatsEntrantes();
+    }, 2500);
 
     // Suscripción en tiempo real a Supabase (Cloud Bridge WhatsApp + Clientes)
     const channel = supabase
@@ -405,6 +426,116 @@ export default function WhatsAppTwoColumnsPage() {
     }
   };
 
+  // Asignar o remover etiquetas interactivas de un contacto
+  const handleToggleTag = async (tagId: string) => {
+    if (!selectedContact?.data) return;
+    const currentTags: string[] = Array.isArray(selectedContact.data.tags) ? selectedContact.data.tags : [];
+    const newTags = currentTags.includes(tagId)
+      ? currentTags.filter(t => t !== tagId)
+      : [...currentTags, tagId];
+
+    // Actualizar en el estado de selectedContact
+    setSelectedContact(prev => prev ? {
+      ...prev,
+      data: { ...prev.data, tags: newTags }
+    } : null);
+
+    // Si es lead en Supabase, guardar en base de datos
+    if (selectedContact.data.id && selectedContact.tipo === 'lead') {
+      try {
+        await supabase
+          .from('crm_users')
+          .update({ tags: newTags, updated_at: new Date().toISOString() })
+          .eq('id', selectedContact.data.id);
+
+        setCrmLeads(prev => prev.map(l => l.id === selectedContact.data.id ? { ...l, tags: newTags } : l));
+      } catch (e) {
+        console.error('Error actualizando etiqueta en Supabase:', e);
+      }
+    }
+  };
+
+  // Enviar mensaje de lista interactivo nativo de WhatsApp
+  const handleSendInteractiveList = async (listType: 'catalogo' | 'pagos' | 'logistica') => {
+    if (!selectedContact?.data?.phone) return;
+    const phone = selectedContact.data.phone;
+
+    let listData: any = null;
+
+    if (listType === 'catalogo') {
+      listData = {
+        title: "Catálogo Oficial • Alfombras Personalizadas CR",
+        text: "Estimado cliente, seleccione una de las opciones para brindarle atención inmediata sobre modelos y medidas:",
+        footer: "Garantía de Fábrica 2 Años • APCR Costa Rica",
+        buttonText: "📋 Ver Opciones",
+        sections: [
+          {
+            title: "Modelos Más Cotizados",
+            rows: [
+              { title: "Atrapamugre 124x75cm", rowId: "mat_124_75", description: "Medida comercial para entradas de alto tránsito con borde de hule" },
+              { title: "Atrapamugre 60x40cm", rowId: "mat_60_40", description: "Medida estándar para oficinas o residencias" },
+              { title: "Rizo Vinilo a la Medida", rowId: "mat_custom", description: "Confección en cualquier medida personalizada con logo" }
+            ]
+          },
+          {
+            title: "Gestión Comercial",
+            rows: [
+              { title: "Solicitar Proforma Oficial PDF", rowId: "cmd_proforma", description: "Documento formal con desglose de IVA y tiempos" },
+              { title: "Cuentas Bancarias y SINPE", rowId: "cmd_pago", description: "Datos para pago de anticipo del 50%" },
+              { title: "Tiempos de Entrega & Envío", rowId: "cmd_entrega", description: "10 a 12 días hábiles a todo Costa Rica" }
+            ]
+          }
+        ]
+      };
+    } else if (listType === 'pagos') {
+      listData = {
+        title: "Información de Pagos y Facturación",
+        text: "Para iniciar la confección se requiere un 50% de anticipo. Seleccione la opción de su preferencia:",
+        footer: "Alfombras Personalizadas CR",
+        buttonText: "💳 Ver Cuentas",
+        sections: [
+          {
+            title: "Métodos Oficiales de Pago",
+            rows: [
+              { title: "SINPE Móvil 6063-8062", rowId: "pay_sinpe", description: "A nombre de Alfombras Personalizadas CR" },
+              { title: "Cuenta IBAN BAC Credomatic", rowId: "pay_bac", description: "Transferencia bancaria en colones" },
+              { title: "Cuenta IBAN Banco Nacional", rowId: "pay_bn", description: "Transferencia bancaria en colones" },
+              { title: "Factura Electrónica", rowId: "pay_factura", description: "Solicitar envío de factura con cédula jurídica" }
+            ]
+          }
+        ]
+      };
+    } else if (listType === 'logistica') {
+      listData = {
+        title: "Plazos, Envíos y Respaldo",
+        text: "Detalles sobre nuestros plazos de producción, garantía y cobertura:",
+        footer: "Alfombras Personalizadas CR",
+        buttonText: "🚚 Ver Información",
+        sections: [
+          {
+            title: "Entrega y Garantía",
+            rows: [
+              { title: "Tiempos de Producción", rowId: "info_tiempos", description: "10 a 12 días hábiles de confección especializada" },
+              { title: "Envíos a Todo Costa Rica", rowId: "info_envios", description: "Por Correos de CR o servicio de encomienda" },
+              { title: "Garantía de 2 Años", rowId: "info_garantia", description: "Respaldo contra defectos y desgaste prematuro" }
+            ]
+          }
+        ]
+      };
+    }
+
+    try {
+      await supabase.from('client_designs').insert([{
+        client_id: SYS_WHATSAPP_ID,
+        category: 'wa_outgoing_queue',
+        url: JSON.stringify({ phone, type: 'list', listData })
+      }]);
+      alert(`✅ Lista interactiva "${listData.title}" enviada exitosamente al cliente por WhatsApp`);
+    } catch (err: any) {
+      alert("Error enviando lista: " + err.message);
+    }
+  };
+
   // Guardar edición de datos de cliente
   const handleGuardarEdicion = async () => {
     if (!editingLead) return;
@@ -478,12 +609,13 @@ export default function WhatsAppTwoColumnsPage() {
 
   const filteredLeads = useMemo(() => {
     if (!searchLeads.trim()) return crmLeads;
-    const q = searchLeads.toLowerCase();
+    const q = searchLeads.toLowerCase().replace('#', '');
     return crmLeads.filter(l => 
       (l.company_name && l.company_name.toLowerCase().includes(q)) ||
       (l.contact_name && l.contact_name.toLowerCase().includes(q)) ||
       (l.account_number && l.account_number.toLowerCase().includes(q)) ||
-      (l.phone && l.phone.includes(q))
+      (l.phone && l.phone.includes(q)) ||
+      (Array.isArray(l.tags) && l.tags.some(t => t.toLowerCase().includes(q)))
     );
   }, [crmLeads, searchLeads]);
 
@@ -766,9 +898,19 @@ export default function WhatsAppTwoColumnsPage() {
                           {lead.phone ? `+${lead.phone}` : ''}
                         </span>
                       </div>
-                      <p className="text-[11px] text-slate-500 dark:text-zinc-400 truncate leading-snug">
-                        {lead.province || 'En seguimiento para cotización'}
-                      </p>
+                      <div className="flex items-center gap-1.5 truncate">
+                        <p className="text-[11px] text-slate-500 dark:text-zinc-400 truncate leading-snug flex-1">
+                          {lead.province || 'En seguimiento para cotización'}
+                        </p>
+                        {Array.isArray(lead.tags) && lead.tags.filter(t => !['vía_whatsapp', 'en_atencion', 'nuevo_prospecto'].includes(t)).slice(0, 2).map(tid => {
+                          const tagObj = AVAILABLE_TAGS.find(at => at.id === tid);
+                          return tagObj ? (
+                            <span key={tid} className={`text-[9px] font-bold px-1.5 py-0.2 rounded-full border flex-shrink-0 ${tagObj.activeBg} ${tagObj.activeText} ${tagObj.activeBorder}`}>
+                              {tagObj.emoji} {tagObj.label}
+                            </span>
+                          ) : null;
+                        })}
+                      </div>
                     </div>
 
                     {/* BOTONES DE ACCIÓN RÁPIDA (COTIZAR & EDITAR) */}
@@ -851,20 +993,122 @@ export default function WhatsAppTwoColumnsPage() {
               </div>
             </div>
 
-            {/* Ficha rápida de datos */}
-            <div className={`p-3 rounded-xl border text-[11px] space-y-1.5 my-3 ${isDark ? 'bg-[#182229] border-zinc-800 text-zinc-300' : 'bg-white/90 border-slate-200 text-slate-700'}`}>
+            {/* Ficha rápida de datos con etiquetas interactivas */}
+            <div className={`p-3 rounded-xl border text-[11px] space-y-2 my-3 ${isDark ? 'bg-[#182229] border-zinc-800 text-zinc-300' : 'bg-white/90 border-slate-200 text-slate-700'}`}>
               <div className="flex justify-between font-bold text-[10px] uppercase text-emerald-600 pb-1 border-b border-slate-100 dark:border-zinc-800">
                 <span>Ficha del Prospecto</span>
                 <span>{selectedContact.data.account_number || 'Por calificar'}</span>
               </div>
               <p><b>Teléfono:</b> +{selectedContact.data.phone || 'No indicado'}</p>
               <p><b>Estado:</b> {selectedContact.tipo === 'lead' ? 'Calificado en Atención' : 'Entrante por calificar'}</p>
+
+              {/* Selector de Etiquetas / Labels */}
+              <div className="pt-2 border-t border-slate-100 dark:border-zinc-800">
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="font-bold text-[10px] uppercase text-slate-500 dark:text-zinc-400 flex items-center gap-1">
+                    <Tag className="w-3 h-3 text-emerald-500" />
+                    <span>Etiquetas de Estado:</span>
+                  </span>
+                  <span className="text-[9px] text-slate-400">1 clic para alternar</span>
+                </div>
+                <div className="flex flex-wrap gap-1">
+                  {AVAILABLE_TAGS.map(t => {
+                    const active = Array.isArray(selectedContact.data.tags) && selectedContact.data.tags.includes(t.id);
+                    return (
+                      <button
+                        key={t.id}
+                        type="button"
+                        onClick={() => handleToggleTag(t.id)}
+                        className={`px-2 py-0.5 rounded-full text-[10px] font-bold border transition-all ${
+                          active
+                            ? `${t.activeBg} ${t.activeText} ${t.activeBorder} shadow-xs scale-102`
+                            : 'bg-transparent text-slate-400 border-slate-200 dark:border-zinc-700 hover:border-slate-400'
+                        }`}
+                        title={`Alternar etiqueta ${t.label}`}
+                      >
+                        {t.emoji} {t.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
           </div>
 
           {/* Barra inferior para responder WhatsApp o Cotizar */}
           <div className={`p-3 border-t flex flex-col gap-2 ${isDark ? 'bg-[#202c33] border-[#222e35]' : 'bg-[#f0f2f5] border-slate-200'}`}>
-            <div className="flex items-center gap-2">
+            
+            {/* Barra de Respuestas Rápidas (Canned Responses) */}
+            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 custom-scrollbar text-[11px]">
+              <span className="text-[10px] font-bold text-slate-400 dark:text-zinc-500 flex-shrink-0 flex items-center gap-0.5">
+                <Sparkles className="w-3 h-3 text-amber-500" />
+                <span>Rápidas:</span>
+              </span>
+              {QUICK_REPLIES.map((qr, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => setReplyText(qr.text)}
+                  className={`flex-shrink-0 px-2 py-1 rounded-lg border font-medium text-[10px] flex items-center gap-1 transition-all ${
+                    isDark 
+                      ? 'bg-zinc-800/80 hover:bg-zinc-700 border-zinc-700 text-zinc-300 hover:text-white' 
+                      : 'bg-white hover:bg-slate-100 border-slate-200 text-slate-700 shadow-xs'
+                  }`}
+                  title={qr.text}
+                >
+                  <span>{qr.emoji}</span>
+                  <span>{qr.label}</span>
+                </button>
+              ))}
+            </div>
+
+            <div className="flex items-center gap-2 relative">
+              {/* Botón de Menús de Lista Interactivos */}
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setShowListMenuDropdown(!showListMenuDropdown)}
+                  className="px-2.5 py-2 rounded-xl border font-bold text-xs flex items-center gap-1.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 border-emerald-500/30 transition-all flex-shrink-0"
+                  title="Enviar menú interactivo de opciones a WhatsApp del cliente"
+                >
+                  <ListFilter className="w-4 h-4 text-emerald-600" />
+                  <span className="hidden sm:inline">Menú Lista</span>
+                  <ChevronDown className="w-3 h-3 opacity-60" />
+                </button>
+
+                {showListMenuDropdown && (
+                  <div className={`absolute bottom-full mb-2 left-0 w-72 rounded-2xl shadow-2xl border p-2 z-50 flex flex-col gap-1 ${isDark ? 'bg-zinc-900 border-zinc-700 text-white' : 'bg-white border-slate-200 text-slate-900'}`}>
+                    <div className="px-2 py-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                      Listas Interactivas de WhatsApp
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => { handleSendInteractiveList('catalogo'); setShowListMenuDropdown(false); }}
+                      className="text-left px-3 py-2 rounded-xl text-xs hover:bg-emerald-500/10 hover:text-emerald-500 font-semibold flex flex-col gap-0.5 transition-colors"
+                    >
+                      <span className="font-bold flex items-center gap-1.5">📋 Catálogo & Modelos Oficiales</span>
+                      <span className="text-[10px] font-normal text-muted-foreground">Medidas 124x75, 60x40 y personalizadas</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => { handleSendInteractiveList('pagos'); setShowListMenuDropdown(false); }}
+                      className="text-left px-3 py-2 rounded-xl text-xs hover:bg-emerald-500/10 hover:text-emerald-500 font-semibold flex flex-col gap-0.5 transition-colors"
+                    >
+                      <span className="font-bold flex items-center gap-1.5">💳 Métodos de Pago & SINPE</span>
+                      <span className="text-[10px] font-normal text-muted-foreground">Cuentas BAC, BN y SINPE 6063-8062</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => { handleSendInteractiveList('logistica'); setShowListMenuDropdown(false); }}
+                      className="text-left px-3 py-2 rounded-xl text-xs hover:bg-emerald-500/10 hover:text-emerald-500 font-semibold flex flex-col gap-0.5 transition-colors"
+                    >
+                      <span className="font-bold flex items-center gap-1.5">🚚 Plazos de Entrega & Garantía</span>
+                      <span className="text-[10px] font-normal text-muted-foreground">10 a 12 días confección y 2 años garantía</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+
               <input
                 type="text"
                 value={replyText}
@@ -876,7 +1120,7 @@ export default function WhatsAppTwoColumnsPage() {
               <button
                 onClick={handleEnviarRespuesta}
                 disabled={sendingMsg || !replyText.trim()}
-                className="p-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white transition-all shadow"
+                className="p-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white transition-all shadow flex-shrink-0"
                 title="Enviar por WhatsApp"
               >
                 <Send className="w-4 h-4" />
