@@ -96,7 +96,17 @@
   2. **Persistencia de Chats Entrantes en la Nube:**
      * `server.js` replica los mensajes y conversaciones de la Columna 1 hacia Supabase en la categoría `wa_incoming_chats`, permitiendo que el CRM cargue todos los mensajes entrantes de inmediato en cualquier dispositivo (computadora, tablet o celular).
   3. **Desvinculación y Renovación de QR con 1 Clic:**
-     * Al hacer clic en "Desvincular" o "Actualizar QR" en el CRM, se envía la instrucción de reseteo a Supabase; el servidor Baileys borra la sesión antigua y genera un nuevo QR que se proyecta en el CRM en menos de 2 segundos.
+     * Al hacer clic en "Desvincular" o "Generar Nuevo QR" en el CRM, se envía la instrucción de reseteo a Supabase; el servidor Baileys borra la sesión antigua y genera un nuevo QR que se proyecta en el CRM en menos de 2 segundos.
+
+---
+
+### 📌 11. Verificación Visual Exitosa y Entrega Final (SaaS Ready)
+* **Despliegue y Validación:**
+  * Servidor de WhatsApp Cloud Bridge activo y sincronizado con Supabase (`task-11535`).
+  * Despliegue en producción completado en Vercel (`dpl_2j1vo1qKkk5yp5wbpoiaEs12CWx9`) asociado a `https://crm-plus-25.vercel.app/crm/whatsapp` y al repositorio principal de `www.apcr.online`.
+  * Captura visual de pantalla verificada: el modal abre en el CRM con el código QR renderizado con nitidez, badge de estado dinámico y pasos de escaneo.
+  * Todo listo para que el usuario o sus clientes escaneen directamente desde la pantalla del CRM.
+
 
 
 
