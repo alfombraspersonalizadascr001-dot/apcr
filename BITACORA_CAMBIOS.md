@@ -143,3 +143,10 @@
 * **Archivos Afectados:**
   * `D:\APCR-WEB-OFICIAL\app\reembolsos\page.tsx`: Actualización de la Sección 02 con desglose de la no devolución en personalizados y la cláusula formal de resolución por mutuo acuerdo con límite estricto de 30 días.
   * `D:\APCR-WEB-OFICIAL\app\terminos\page.tsx`: Actualización de la Sección 04 con la política armónica de entregas, contingencias de tiempo y caducidad de resoluciones a 30 días.
+* **Verificación y Despliegue en Vivo:**
+  * Compilación exitosa en Next.js local (`npx next build`) con 26 páginas estáticas optimizadas.
+  * Despliegue en producción en Vercel completado con ID `dpl_2xQ62zP17Mi9x938FUunkB8xUxVS`.
+  * Alias asignado con éxito a `https://crm-plus-25.vercel.app` y `https://apcr-web-oficial-tau.vercel.app`.
+  * Verificación visual confirmada vía Chrome DevTools en `/reembolsos` (Sección 02) y `/terminos` (Sección 04).
+  * Enlaces accesibles discretamente desde el pie de página de la web oficial sin interferir en la primera página comercial ni en los llamados a la acción de venta.
+
