@@ -106,17 +106,35 @@ export default function TerminosPage() {
             </p>
           </section>
 
-          {/* Sección 4: Tiempos de Entrega */}
-          <section className="space-y-3">
+          {/* Sección 4: Tiempos de Entrega y Cláusula de Mutuo Acuerdo */}
+          <section className="space-y-4">
             <h2 className="text-lg font-bold text-slate-950 flex items-center gap-2">
               <span className="w-6 h-6 rounded-lg bg-slate-900 text-white text-xs flex items-center justify-center font-mono">
                 04
               </span>
-              Tiempos de Entrega y Envíos
+              Plazos de Fabricación, Entrega y Cláusula de Mutuo Acuerdo
             </h2>
-            <p className="text-sm text-slate-600 leading-relaxed">
-              El tiempo estándar de confección es de <strong>3 a 5 días hábiles</strong> a partir de la confirmación del anticipo y aprobación del arte final. Las entregas en el Gran Área Metropolitana (GAM) se coordinan directamente con el cliente; para envíos a zonas rurales o fuera de la meseta central, se canalizan por medio de encomiendas de transporte formalmente establecidas en Costa Rica.
-            </p>
+            <div className="space-y-3 text-sm text-slate-600 leading-relaxed">
+              <p>
+                Los plazos estimados habituales de confección en taller oscilan entre <strong>10 y 12 días hábiles</strong> a partir de la confirmación del anticipo y la aprobación formal del arte final con cajetín, pudiendo variar en función de la complejidad del troquelado o el abastecimiento de materia prima industrial Nomad de 3M. Las entregas en el Gran Área Metropolitana (GAM) se coordinan directamente con el cliente; para envíos fuera del GAM o zonas rurales, se canalizan por medio de encomiendas de transporte formalmente establecidas en Costa Rica.
+              </p>
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800 text-xs space-y-2">
+                <p className="font-bold uppercase tracking-wider text-slate-900">
+                  Política de Retrasos y Devolución por Mutuo Acuerdo (Límite de 30 Días):
+                </p>
+                <p className="leading-relaxed text-slate-600">
+                  En virtud de que cada pieza es confeccionada a la medida y con logotipos personalizados, no aplican devoluciones ordinarias de acuerdo con la legislación costarricense (Ley N° 7472). En caso de suscitarse un retraso atípico en la entrega y si ambas partes (cliente y APCR) de mutuo acuerdo y consentimiento expreso determinan la rescisión de la orden:
+                </p>
+                <ul className="list-disc pl-4 space-y-1 text-slate-600">
+                  <li>
+                    La devolución procederá <strong>siempre y cuando se tramite y formalice dentro de un plazo máximo no mayor a treinta (30) días naturales</strong> contados a partir de la fecha de entrega convenida o notificación de estado.
+                  </li>
+                  <li>
+                    Superados los 30 días naturales sin acuerdo formal previo, no procederá reembolso económico alguno y la orden mantendrá su curso obligatorio de producción y entrega física.
+                  </li>
+                </ul>
+              </div>
+            </div>
           </section>
 
           {/* Sección 5: Propiedad Intelectual */}

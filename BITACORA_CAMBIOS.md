@@ -132,12 +132,14 @@
     - Selector interactivo de etiquetas de colores con persistencia en Supabase.
     - Modal de escaneo de código QR integrado con auto-sincronización instantánea.
 
+---
 
-
-
-
-
-
-
-
-
+### 📌 13. [2026-10-14] Actualización Legal de Políticas de Reembolso y Devolución por Mutuo Acuerdo (Leyes de Costa Rica)
+* **Objetivo:**
+  * Incorporar en la documentación legal interna de la plataforma web (`/reembolsos` y `/terminos`, accesibles de forma discreta a través de los enlaces del pie de página) la regulación específica de cancelaciones y devoluciones aplicable a la confección a medida y contingencias de entrega.
+* **Marco Legal y Técnico (Costa Rica):**
+  * Conforme a la Ley N° 7472 (Ley de Promoción de la Competencia y Defensa Efectiva del Consumidor de Costa Rica), los productos confeccionados a la medida con logotipos personalizados no admiten derecho de retracto común ni devoluciones una vez cortado el material base.
+  * Se estipula la cláusula de contingencia por retrasos de taller: se admiten devoluciones únicamente cuando medie **mutuo acuerdo formal y bilateral entre las partes**, y siempre que dicha solicitud y resolución se formalicen dentro de un **plazo máximo perentorio de 30 días naturales**. Transcurridos más de 30 días, no proceden devoluciones bajo ninguna circunstancia.
+* **Archivos Afectados:**
+  * `D:\APCR-WEB-OFICIAL\app\reembolsos\page.tsx`: Actualización de la Sección 02 con desglose de la no devolución en personalizados y la cláusula formal de resolución por mutuo acuerdo con límite estricto de 30 días.
+  * `D:\APCR-WEB-OFICIAL\app\terminos\page.tsx`: Actualización de la Sección 04 con la política armónica de entregas, contingencias de tiempo y caducidad de resoluciones a 30 días.

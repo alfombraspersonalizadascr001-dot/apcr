@@ -79,8 +79,8 @@ export default function ReembolsosPage() {
             </div>
           </section>
 
-          {/* Sección 2: Excepción por Producto a Medida */}
-          <section className="space-y-3">
+          {/* Sección 2: Excepción por Producto a Medida y Cláusula de Retraso */}
+          <section className="space-y-4">
             <h2 className="text-lg font-bold text-slate-950 flex items-center gap-2">
               <span className="w-6 h-6 rounded-lg bg-slate-900 text-white text-xs flex items-center justify-center font-mono">
                 02
@@ -89,15 +89,37 @@ export default function ReembolsosPage() {
             </h2>
             <div className="space-y-3 text-sm text-slate-600 leading-relaxed">
               <p>
-                De conformidad con la Ley de Promoción de la Competencia y Defensa Efectiva del Consumidor de Costa Rica (Ley N° 7472), el derecho de retracto común no es aplicable a bienes confeccionados conforme a las <strong>especificaciones personalizadas del cliente</strong> o claramente individualizados con marcas comerciales específicas.
+                De conformidad con la <strong>Ley de Promoción de la Competencia y Defensa Efectiva del Consumidor de Costa Rica (Ley N° 7472, Artículo 34 y concordantes)</strong> y la normativa mercantil aplicable a contratos de obra por encargo, el derecho de retracto común no es aplicable a bienes confeccionados expresamente conforme a las <strong>especificaciones personalizadas del cliente</strong> o claramente individualizados con dimensiones y logotipos comerciales específicos.
               </p>
-              <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs space-y-1.5">
-                <p className="font-bold uppercase tracking-wider text-amber-800">
-                  Condición de Corte y Anticipo:
+              
+              <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-950 text-xs space-y-2">
+                <p className="font-bold uppercase tracking-wider text-amber-900">
+                  Regla General: No Devolución en Productos Personalizados
                 </p>
-                <p>
-                  Una vez que el cliente aprueba la Ficha Técnica y se realiza el corte del sustrato de alfombra en nuestro taller, el <strong>anticipo del 50% no es reembolsable</strong>, en razón de que el material ya ha sido seccionado e individualizado de forma irreversible.
+                <p className="leading-relaxed">
+                  Una vez que el cliente aprueba la Ficha Técnica Oficial y se realiza el corte del sustrato de vinil o espagueti en nuestro taller, el <strong>anticipo del 50% y los pagos parciales no son reembolsables</strong>, en razón de que el material ha sido seccionado e individualizado de forma irreversible para uso exclusivo de su marca o empresa.
                 </p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800 text-xs space-y-2">
+                <p className="font-bold uppercase tracking-wider text-slate-900 flex items-center gap-1.5">
+                  <RotateCcw className="w-3.5 h-3.5 text-amber-600" />
+                  <span>Cláusula Especial por Retraso y Devolución por Mutuo Acuerdo (Plazo Máximo de 30 Días)</span>
+                </p>
+                <p className="leading-relaxed text-slate-600">
+                  En eventualidades extraordinarias donde por fuerza mayor, contingencias logísticas o abastecimiento de materia prima se produzcan atrasos en la entrega respecto al plazo inicialmente estimado:
+                </p>
+                <ul className="list-disc pl-4 space-y-1.5 text-slate-600">
+                  <li>
+                    Se mantiene la regla de no devolución en piezas personalizadas; no obstante, <strong>si ambas partes (el cliente y la administración de APCR) alcanzan un acuerdo formal y bilateral</strong> para la rescisión del pedido, se podrá proceder con la devolución correspondiente.
+                  </li>
+                  <li>
+                    <strong>Condición Perentoria de 30 Días:</strong> Toda solicitud y acuerdo de devolución bajo este supuesto excepcional podrá tramitarse <strong>única y exclusivamente si se formaliza dentro de un plazo que no exceda los treinta (30) días naturales</strong> contados a partir de la fecha estimada de entrega o notificación formal del estado de la orden.
+                  </li>
+                  <li>
+                    Vencido el plazo perentorio de <strong>30 días naturales</strong> sin que medie acuerdo bilateral de anulación, no se admitirán devoluciones bajo ningún concepto y la orden continuará su proceso definitivo de confección y despacho físico.
+                  </li>
+                </ul>
               </div>
             </div>
           </section>
