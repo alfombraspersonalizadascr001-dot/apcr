@@ -152,3 +152,7 @@
   * Se clarifica el punto de partida del cómputo: la política de mutuo acuerdo se activa **cuando el retraso en la entrega supera los 30 días naturales posteriores a la fecha pactada**.
   * Cumplida esa condición de retraso mayor a 30 días, el cliente tiene la potestad de negociar y convenir de mutuo acuerdo con APCR la devolución de lo pagado.
   * Para que proceda la restitución dineraria, el acuerdo formal entre ambas partes debe concretarse dentro de un período no superior a 30 días naturales.
+* **Auditoría de Producción en Dominio Principal (100% Verificado en Vivo):**
+  * Despliegue en producción verificado con ID `dpl_FNmk6fbFGNHAXcHDBjjKYJEv7FTW`.
+  * Comprobación en vivo del dominio principal `https://www.apcr.online/reembolsos` y `https://www.apcr.online/terminos` mediante peticiones HTTP directas y capturas de pantalla reales en Chrome DevTools.
+  * Se certifica que ambas cláusulas legales están activas, renderizándose y visibles para cualquier visitante o cliente en internet en el dominio oficial de producción.
