@@ -148,5 +148,7 @@
   * Despliegue en producción en Vercel completado con ID `dpl_2xQ62zP17Mi9x938FUunkB8xUxVS`.
   * Alias asignado con éxito a `https://crm-plus-25.vercel.app` y `https://apcr-web-oficial-tau.vercel.app`.
   * Verificación visual confirmada vía Chrome DevTools en `/reembolsos` (Sección 02) y `/terminos` (Sección 04).
-  * Enlaces accesibles discretamente desde el pie de página de la web oficial sin interferir en la primera página comercial ni en los llamados a la acción de venta.
-
+* **Calibración y Ajuste de Precisión Solicitado por el Cliente:**
+  * Se clarifica el punto de partida del cómputo: la política de mutuo acuerdo se activa **cuando el retraso en la entrega supera los 30 días naturales posteriores a la fecha pactada**.
+  * Cumplida esa condición de retraso mayor a 30 días, el cliente tiene la potestad de negociar y convenir de mutuo acuerdo con APCR la devolución de lo pagado.
+  * Para que proceda la restitución dineraria, el acuerdo formal entre ambas partes debe concretarse dentro de un período no superior a 30 días naturales.

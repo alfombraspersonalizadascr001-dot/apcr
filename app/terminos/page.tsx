@@ -120,17 +120,20 @@ export default function TerminosPage() {
               </p>
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800 text-xs space-y-2">
                 <p className="font-bold uppercase tracking-wider text-slate-900">
-                  Política de Retrasos y Devolución por Mutuo Acuerdo (Límite de 30 Días):
+                  Política de Retrasos y Devolución por Mutuo Acuerdo:
                 </p>
                 <p className="leading-relaxed text-slate-600">
-                  En virtud de que cada pieza es confeccionada a la medida y con logotipos personalizados, no aplican devoluciones ordinarias de acuerdo con la legislación costarricense (Ley N° 7472). En caso de suscitarse un retraso atípico en la entrega y si ambas partes (cliente y APCR) de mutuo acuerdo y consentimiento expreso determinan la rescisión de la orden:
+                  En virtud de que cada alfombra es una obra confeccionada a la medida y troquelada con especificaciones y logotipos individuales, rige la regla de no devolución de conformidad con la Ley N° 7472. No obstante, en supuestos de retraso involuntario:
                 </p>
                 <ul className="list-disc pl-4 space-y-1 text-slate-600">
                   <li>
-                    La devolución procederá <strong>siempre y cuando se tramite y formalice dentro de un plazo máximo no mayor a treinta (30) días naturales</strong> contados a partir de la fecha de entrega convenida o notificación de estado.
+                    <strong>Activación por Retraso Mayor a 30 Días:</strong> Si el atraso en la entrega <strong>supera los treinta (30) días naturales después de la fecha pactada</strong> formalmente entre las partes, es a partir de ese momento en que el cliente adquiere el derecho de solicitar y acordar de mutuo acuerdo con APCR la devolución de su orden.
                   </li>
                   <li>
-                    Superados los 30 días naturales sin acuerdo formal previo, no procederá reembolso económico alguno y la orden mantendrá su curso obligatorio de producción y entrega física.
+                    <strong>Mutuo Acuerdo Indispensable:</strong> Toda devolución procederá única y exclusivamente cuando medie convenio formal y común acuerdo entre ambas partes.
+                  </li>
+                  <li>
+                    <strong>Plazo Máximo de Gestión:</strong> La devolución se podrá llevar a cabo <strong>siempre y cuando se tramite y formalice dentro de un plazo que no exceda los treinta (30) días naturales</strong> contados desde que se configuró el retraso. Vencido dicho término sin acuerdo, se procederá con la entrega obligatoria del producto terminado sin lugar a reintegro posterior.
                   </li>
                 </ul>
               </div>

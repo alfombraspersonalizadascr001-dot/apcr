@@ -104,20 +104,20 @@ export default function ReembolsosPage() {
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800 text-xs space-y-2">
                 <p className="font-bold uppercase tracking-wider text-slate-900 flex items-center gap-1.5">
                   <RotateCcw className="w-3.5 h-3.5 text-amber-600" />
-                  <span>Cláusula Especial por Retraso y Devolución por Mutuo Acuerdo (Plazo Máximo de 30 Días)</span>
+                  <span>Cláusula Especial por Retraso y Devolución por Mutuo Acuerdo</span>
                 </p>
                 <p className="leading-relaxed text-slate-600">
-                  En eventualidades extraordinarias donde por fuerza mayor, contingencias logísticas o abastecimiento de materia prima se produzcan atrasos en la entrega respecto al plazo inicialmente estimado:
+                  En casos donde por eventualidades operativas o contingencias de taller se presente un atraso en la confección de piezas personalizadas:
                 </p>
                 <ul className="list-disc pl-4 space-y-1.5 text-slate-600">
                   <li>
-                    Se mantiene la regla de no devolución en piezas personalizadas; no obstante, <strong>si ambas partes (el cliente y la administración de APCR) alcanzan un acuerdo formal y bilateral</strong> para la rescisión del pedido, se podrá proceder con la devolución correspondiente.
+                    <strong>Activación por Retraso Mayor a 30 Días:</strong> Si el retraso en la entrega <strong>supera los treinta (30) días naturales posteriores a la fecha formalmente pactada</strong> de entrega, es a partir de ese momento que el cliente adquiere el derecho de solicitar y acordar con la administración de APCR una devolución o rescisión comercial.
                   </li>
                   <li>
-                    <strong>Condición Perentoria de 30 Días:</strong> Toda solicitud y acuerdo de devolución bajo este supuesto excepcional podrá tramitarse <strong>única y exclusivamente si se formaliza dentro de un plazo que no exceda los treinta (30) días naturales</strong> contados a partir de la fecha estimada de entrega o notificación formal del estado de la orden.
+                    <strong>Condición Indispensable de Mutuo Acuerdo:</strong> Toda devolución en productos confeccionados a la medida procederá <strong>única y exclusivamente bajo acuerdo formal y bilateral entre ambas partes</strong> (cliente y APCR).
                   </li>
                   <li>
-                    Vencido el plazo perentorio de <strong>30 días naturales</strong> sin que medie acuerdo bilateral de anulación, no se admitirán devoluciones bajo ningún concepto y la orden continuará su proceso definitivo de confección y despacho físico.
+                    <strong>Término de Gestión:</strong> Las devoluciones acordadas se podrán hacer efectivas <strong>siempre y cuando ambas partes formalicen el convenio dentro de un plazo que no supere los treinta (30) días naturales</strong> contados desde el momento en que se configure el retraso. Si transcurre dicho período sin que se haya formalizado un acuerdo de reembolso, la orden continuará con su confección y despacho físico prioritario.
                   </li>
                 </ul>
               </div>
